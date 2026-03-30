@@ -176,13 +176,16 @@ export default function Contact() {
           <h2
             className="font-extrabold leading-none mb-6"
             style={{
-              fontFamily: "var(--font-syne)",
-              fontSize: "clamp(40px, 5vw, 80px)",
-              letterSpacing: "-3px",
+              fontFamily: "Syne, sans-serif",
+              fontWeight: 800,
+              fontSize: "clamp(36px, 4.5vw, 72px)",
+              letterSpacing: "-2px",
+              lineHeight: 1.05,
               color: "var(--text)",
-              wordBreak: "break-word",
-              overflowWrap: "break-word",
-              hyphens: "auto",
+              wordBreak: "normal",
+              overflowWrap: "normal",
+              hyphens: "none",
+              whiteSpace: "normal",
             }}
           >
             Votre projet

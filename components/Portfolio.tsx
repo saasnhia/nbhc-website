@@ -56,35 +56,31 @@ const badgeStyles: Record<string, React.CSSProperties> = {
 
 /* ─── SVG Visuals ─── */
 
-const waveHeights = [18, 26, 12, 22, 28, 14, 24, 10, 20, 26, 16, 22, 8, 28, 18, 12, 24, 20, 14, 22];
-const waveOpacities = [0.6, 0.9, 0.4, 0.7, 0.8, 0.5, 0.9, 0.4, 0.7, 0.6, 0.5, 0.8, 0.4, 0.9, 0.6, 0.5, 0.7, 0.8, 0.4, 0.7];
+const waveHeights = [12, 20, 28, 16, 24, 8, 32, 18, 26, 14, 22, 30, 10, 28, 16, 24, 20, 12, 28, 18, 24, 8, 20, 16];
 
 function VlogyzVisual() {
   return (
     <svg width="380" height="200" viewBox="0 0 380 200" fill="none" xmlns="http://www.w3.org/2000/svg" overflow="hidden" style={{ display: "block", width: "100%", height: 200 }}>
-      <rect width="380" height="200" fill="#0d0f1a" />
-      {/* Score viralité */}
-      <rect x="16" y="16" width="72" height="32" rx="8" fill="rgba(99,102,241,0.15)" stroke="#6366f1" strokeWidth="0.5" />
-      <text x="52" y="28" textAnchor="middle" fontSize="9" fill="#818cf8" fontFamily="DM Sans, sans-serif">VIRALITÉ</text>
-      <text x="52" y="41" textAnchor="middle" fontSize="13" fill="#6366f1" fontWeight="700" fontFamily="DM Sans, sans-serif">87/100</text>
-      {/* Label */}
-      <text x="364" y="28" textAnchor="end" fontSize="18" fontFamily="Syne, sans-serif" fontWeight="800" fill="#6366f1">VLOGYZ</text>
+      <rect width="380" height="200" fill="#0a0b14" />
+      {/* Score viralité pill */}
+      <rect x="16" y="16" width="80" height="28" rx="14" fill="rgba(99,102,241,0.2)" stroke="#6366f1" strokeWidth="0.5" />
+      <text x="56" y="24" textAnchor="middle" fontSize="8" fill="#6366f1" opacity="0.7">VIRALITÉ</text>
+      <text x="56" y="34" textAnchor="middle" fontSize="11" fill="#818cf8" fontWeight="600">87 / 100</text>
       {/* Waveform */}
       {waveHeights.map((h, i) => (
-        <rect key={i} x={100 + i * 9.5} y={85 - h / 2} width="3" height={h} rx="1" fill="#6366f1" opacity={waveOpacities[i]} />
+        <rect key={i} x={40 + i * 12.5} y={90 - h / 2} width="3" height={h} rx="1.5" fill="#6366f1" opacity={0.4 + (h / 32) * 0.6} />
       ))}
-      {/* Sous-titres pill */}
-      <rect x="60" y="112" width="260" height="22" rx="11" fill="#1e2235" />
-      <text x="190" y="127" textAnchor="middle" fontSize="11" fill="#e2e8f0" fontFamily="DM Sans, sans-serif">On automatise ce qui vous</text>
-      <rect x="60" y="112" width="80" height="22" rx="11" fill="#6366f1" opacity="0.8" />
-      <text x="100" y="127" textAnchor="middle" fontSize="11" fill="white" fontWeight="600" fontFamily="DM Sans, sans-serif">On automat</text>
+      {/* Sous-titres */}
+      <rect x="20" y="134" width="260" height="24" rx="12" fill="#1a1b2e" />
+      <rect x="20" y="134" width="90" height="24" rx="12" fill="#6366f1" opacity="0.9" />
+      <text x="65" y="150" textAnchor="middle" fontSize="11" fill="white" fontWeight="600">On automat...</text>
+      <text x="210" y="150" textAnchor="middle" fontSize="11" fill="#94a3b8">ce qui vous freine</text>
       {/* Timeline */}
-      <rect x="20" y="155" width="340" height="4" rx="2" fill="#1e2235" />
-      <rect x="20" y="155" width="80" height="4" rx="2" fill="#6366f1" />
-      <rect x="108" y="153" width="12" height="8" rx="1" fill="#f43f5e" opacity="0.8" />
-      <rect x="128" y="155" width="120" height="4" rx="2" fill="#6366f1" />
-      <line data-playhead x1="168" y1="140" x2="168" y2="175" stroke="#ffffff" strokeWidth="1.5" opacity="0.6" />
-      <circle data-playhead-dot cx="168" cy="140" r="4" fill="#f43f5e" />
+      <rect x="20" y="169" width="340" height="4" rx="2" fill="#1a1b2e" />
+      <rect x="20" y="169" width="160" height="4" rx="2" fill="#6366f1" />
+      <rect x="86" y="167" width="8" height="8" rx="1" fill="#f43f5e" opacity="0.8" />
+      <line data-playhead x1="178" y1="158" x2="178" y2="182" stroke="white" strokeWidth="1.5" opacity="0.5" />
+      <circle data-playhead-dot cx="178" cy="158" r="5" fill="#f43f5e" />
     </svg>
   );
 }
@@ -92,32 +88,31 @@ function VlogyzVisual() {
 function DevizlyVisual() {
   return (
     <svg width="380" height="200" viewBox="0 0 380 200" fill="none" xmlns="http://www.w3.org/2000/svg" overflow="hidden" style={{ display: "block", width: "100%", height: 200 }}>
-      <rect width="380" height="200" fill="#0d0d14" />
-      {/* Label */}
-      <text x="364" y="28" textAnchor="end" fontSize="18" fontFamily="Syne, sans-serif" fontWeight="800" fill="#5B5BD6">DEVIZLY</text>
+      <rect width="380" height="200" fill="#0d0d18" />
       {/* Document */}
-      <rect x="80" y="20" width="220" height="155" rx="8" fill="#13131f" stroke="#5B5BD6" strokeWidth="0.5" />
-      {/* Header */}
-      <rect x="80" y="20" width="220" height="32" rx="8" fill="#5B5BD6" opacity="0.2" />
-      <text x="96" y="41" fontSize="12" fontFamily="Syne, sans-serif" fontWeight="700" fill="#5B5BD6">NB</text>
-      <text x="290" y="41" textAnchor="end" fontSize="9" fill="#8b8bcc" fontFamily="DM Sans, sans-serif">DEVIS #2024-089</text>
+      <rect x="60" y="20" width="260" height="160" rx="10" fill="#13131f" stroke="rgba(91,91,214,0.3)" strokeWidth="1" />
+      {/* Header band */}
+      <rect x="60" y="20" width="260" height="36" rx="10" fill="rgba(91,91,214,0.25)" />
+      <rect x="60" y="42" width="260" height="14" rx="0" fill="rgba(91,91,214,0.25)" />
+      <text x="80" y="44" fontSize="13" fontFamily="Syne, sans-serif" fontWeight="800" fill="#8b8bff">DEVIZLY</text>
+      <text x="310" y="44" textAnchor="end" fontSize="9" fill="#5b5bd6" opacity="0.7">DEVIS #089</text>
       {/* Lignes prestation */}
-      <rect x="96" y="62" width="130" height="4" rx="2" fill="#1e1e2e" />
-      <rect x="240" y="62" width="48" height="4" rx="2" fill="#5B5BD6" opacity="0.6" />
-      <rect x="96" y="74" width="100" height="4" rx="2" fill="#1e1e2e" />
-      <rect x="240" y="74" width="40" height="4" rx="2" fill="#1e1e2e" />
-      <rect x="96" y="86" width="115" height="4" rx="2" fill="#1e1e2e" />
-      <rect x="240" y="86" width="44" height="4" rx="2" fill="#1e1e2e" />
+      <rect x="80" y="70" width="110" height="4" rx="2" fill="#252535" />
+      <rect x="240" y="70" width="60" height="4" rx="2" fill="rgba(91,91,214,0.5)" />
+      <rect x="80" y="82" width="90" height="4" rx="2" fill="#252535" />
+      <rect x="248" y="82" width="52" height="4" rx="2" fill="#252535" />
+      <rect x="80" y="94" width="100" height="4" rx="2" fill="#252535" />
+      <rect x="244" y="94" width="56" height="4" rx="2" fill="#252535" />
       {/* Séparateur */}
-      <line x1="96" y1="100" x2="284" y2="100" stroke="#2a2a3e" strokeWidth="0.5" />
+      <line x1="80" y1="108" x2="300" y2="108" stroke="#252535" strokeWidth="0.5" />
       {/* Total */}
-      <text x="96" y="118" fontSize="9" fill="#6b6b8a" fontFamily="DM Sans, sans-serif">TOTAL HT</text>
-      <text x="284" y="118" textAnchor="end" fontSize="15" fontWeight="700" fill="#5B5BD6" fontFamily="Syne, sans-serif">2 400 €</text>
+      <text x="80" y="125" fontSize="9" fill="#6b6b8a">TOTAL HT</text>
+      <text x="300" y="127" textAnchor="end" fontSize="18" fontWeight="800" fontFamily="Syne, sans-serif" fill="#7c7cf8">2 400 €</text>
       {/* Bouton signature */}
-      <rect data-sign-btn x="96" y="132" width="188" height="28" rx="14" fill="#5B5BD6" opacity="0.15" stroke="#5B5BD6" strokeWidth="0.5" />
-      <text x="190" y="150" textAnchor="middle" fontSize="10" fill="#8b8bcc" fontFamily="DM Sans, sans-serif">✍ Signer électroniquement</text>
+      <rect data-sign-btn x="80" y="140" width="220" height="28" rx="14" fill="rgba(91,91,214,0.15)" stroke="#5b5bd6" strokeWidth="0.5" />
+      <text x="190" y="159" textAnchor="middle" fontSize="11" fill="#8b8bcc">✍  Signer électroniquement</text>
       {/* Badge statut */}
-      <rect x="284" y="20" width="16" height="16" rx="8" fill="#22c55e" opacity="0.9" />
+      <circle cx="312" cy="30" r="5" fill="#22c55e" />
     </svg>
   );
 }
@@ -125,35 +120,33 @@ function DevizlyVisual() {
 function WorthifastVisual() {
   return (
     <svg width="380" height="200" viewBox="0 0 380 200" fill="none" xmlns="http://www.w3.org/2000/svg" overflow="hidden" style={{ display: "block", width: "100%", height: 200 }}>
-      <rect width="380" height="200" fill="#0d120a" />
-      {/* Titre */}
-      <text x="20" y="28" fontSize="10" fill="#4ade80" opacity="0.6" fontFamily="DM Sans, sans-serif">RÉVISION COMPTABLE — FY 2025</text>
-      {/* Label */}
-      <text x="364" y="28" textAnchor="end" fontSize="18" fontFamily="Syne, sans-serif" fontWeight="800" fill="#22c55e">WORTHIFAST</text>
-      {/* Card 1 - Écritures */}
-      <rect x="20" y="36" width="96" height="52" rx="6" fill="#0f1f0c" stroke="#22c55e" strokeWidth="0.5" />
-      <text x="68" y="54" textAnchor="middle" fontSize="8" fill="#4ade80" opacity="0.7" fontFamily="DM Sans, sans-serif">ÉCRITURES OK</text>
-      <text x="68" y="72" textAnchor="middle" fontSize="16" fontWeight="700" fill="#22c55e" fontFamily="Syne, sans-serif">1,247</text>
-      {/* Card 2 - Anomalies */}
-      <rect x="124" y="36" width="96" height="52" rx="6" fill="#1f0f0c" stroke="#f97316" strokeWidth="0.5" />
-      <text x="172" y="54" textAnchor="middle" fontSize="8" fill="#fb923c" opacity="0.7" fontFamily="DM Sans, sans-serif">ANOMALIES</text>
-      <text x="172" y="72" textAnchor="middle" fontSize="16" fontWeight="700" fill="#f97316" fontFamily="Syne, sans-serif">3</text>
-      {/* Card 3 - Progression */}
-      <rect x="228" y="36" width="96" height="52" rx="6" fill="#0f1a1f" stroke="#38bdf8" strokeWidth="0.5" />
-      <text x="276" y="54" textAnchor="middle" fontSize="8" fill="#7dd3fc" opacity="0.7" fontFamily="DM Sans, sans-serif">PROGRESSION</text>
-      <text x="276" y="72" textAnchor="middle" fontSize="16" fontWeight="700" fill="#38bdf8" fontFamily="Syne, sans-serif">94%</text>
+      <rect width="380" height="200" fill="#0b120a" />
+      {/* Section label */}
+      <text x="20" y="24" fontSize="9" fontFamily="Syne, sans-serif" fill="#4ade80" opacity="0.5" letterSpacing="2">RÉVISION COMPTABLE — FY 2025</text>
+      {/* Card Écritures */}
+      <rect x="20" y="34" width="100" height="56" rx="8" fill="#0f1f0c" stroke="rgba(34,197,94,0.3)" strokeWidth="0.5" />
+      <text x="70" y="54" textAnchor="middle" fontSize="8" fill="#4ade80" opacity="0.6">ÉCRITURES</text>
+      <text x="70" y="78" textAnchor="middle" fontSize="20" fontWeight="800" fontFamily="Syne, sans-serif" fill="#22c55e">1,247</text>
+      {/* Card Anomalies */}
+      <rect x="130" y="34" width="100" height="56" rx="8" fill="#1f0f0c" stroke="rgba(249,115,22,0.3)" strokeWidth="0.5" />
+      <text x="180" y="54" textAnchor="middle" fontSize="8" fill="#fb923c" opacity="0.6">ANOMALIES</text>
+      <text x="180" y="78" textAnchor="middle" fontSize="20" fontWeight="800" fontFamily="Syne, sans-serif" fill="#f97316">3</text>
+      {/* Card Progression */}
+      <rect x="240" y="34" width="120" height="56" rx="8" fill="#0f1a1f" stroke="rgba(56,189,248,0.3)" strokeWidth="0.5" />
+      <text x="300" y="54" textAnchor="middle" fontSize="8" fill="#7dd3fc" opacity="0.6">PROGRESSION</text>
+      <text x="300" y="78" textAnchor="middle" fontSize="20" fontWeight="800" fontFamily="Syne, sans-serif" fill="#38bdf8">94%</text>
       {/* Barre progression */}
-      <text x="20" y="108" fontSize="9" fill="#4ade80" opacity="0.5" fontFamily="DM Sans, sans-serif">Avancement mission</text>
-      <rect x="20" y="115" width="304" height="6" rx="3" fill="#1a2f17" />
-      <rect data-progress-bar x="20" y="115" width="286" height="6" rx="3" fill="#22c55e" />
-      <text x="330" y="122" fontSize="9" fill="#22c55e" fontFamily="DM Sans, sans-serif">94%</text>
+      <text x="20" y="104" fontSize="8" fill="#4ade80" opacity="0.4">Avancement mission</text>
+      <rect x="20" y="108" width="340" height="5" rx="2.5" fill="#1a2f17" />
+      <rect data-progress-bar x="20" y="108" width="320" height="5" rx="2.5" fill="#22c55e" />
+      <text x="366" y="114" textAnchor="end" fontSize="8" fill="#22c55e">94%</text>
       {/* Anomalies log */}
-      <circle cx="28" cy="140" r="3" fill="#f97316" />
-      <text x="36" y="143" fontSize="8" fill="#6b7a6b" fontFamily="DM Sans, sans-serif">Écriture orpheline — Cpte 401 — 12/03</text>
-      <circle cx="28" cy="155" r="3" fill="#f97316" />
-      <text x="36" y="158" fontSize="8" fill="#6b7a6b" fontFamily="DM Sans, sans-serif">Déséquilibre — Journal OD — 0.02€</text>
-      <circle cx="28" cy="170" r="3" fill="#22c55e" />
-      <text x="36" y="173" fontSize="8" fill="#6b7a6b" fontFamily="DM Sans, sans-serif">TVA collectée — Vérifiée ✓</text>
+      <circle cx="28" cy="130" r="3.5" fill="#f97316" />
+      <text x="38" y="134" fontSize="9" fill="#5a7a5a" fontFamily="DM Sans, sans-serif">Écriture orpheline — Cpte 401</text>
+      <circle cx="28" cy="150" r="3.5" fill="#f97316" />
+      <text x="38" y="154" fontSize="9" fill="#5a7a5a" fontFamily="DM Sans, sans-serif">Déséquilibre Journal OD — 0.02€</text>
+      <circle cx="28" cy="170" r="3.5" fill="#22c55e" />
+      <text x="38" y="174" fontSize="9" fill="#5a7a5a" fontFamily="DM Sans, sans-serif">TVA collectée — Vérifiée ✓</text>
     </svg>
   );
 }
@@ -198,14 +191,14 @@ function ProductCard({ p, isMobile }: { p: (typeof products)[number]; isMobile: 
     if (p.id === "vlogyz") {
       const playhead = el.querySelector("[data-playhead]");
       const dot = el.querySelector("[data-playhead-dot]");
-      if (playhead) svgTweensRef.current.push(gsap.to(playhead, { attr: { x1: 178, x2: 178 }, duration: 0.6, ease: "power2.out" }));
-      if (dot) svgTweensRef.current.push(gsap.to(dot, { attr: { cx: 178, cy: 137 }, duration: 0.6, ease: "power2.out" }));
+      if (playhead) svgTweensRef.current.push(gsap.to(playhead, { attr: { x1: 200, x2: 200 }, duration: 0.6, ease: "power2.out" }));
+      if (dot) svgTweensRef.current.push(gsap.to(dot, { attr: { cx: 200, cy: 155 }, duration: 0.6, ease: "power2.out" }));
     } else if (p.id === "devizly") {
       const btn = el.querySelector("[data-sign-btn]");
       if (btn) svgTweensRef.current.push(gsap.to(btn, { opacity: 0.3, duration: 0.5, repeat: -1, yoyo: true, ease: "sine.inOut" }));
     } else if (p.id === "worthifast") {
       const bar = el.querySelector("[data-progress-bar]");
-      if (bar) svgTweensRef.current.push(gsap.to(bar, { attr: { width: 300 }, duration: 0.6, ease: "power2.out" }));
+      if (bar) svgTweensRef.current.push(gsap.to(bar, { attr: { width: 340 }, duration: 0.6, ease: "power2.out" }));
     }
   };
 
@@ -221,14 +214,14 @@ function ProductCard({ p, isMobile }: { p: (typeof products)[number]; isMobile: 
     if (p.id === "vlogyz") {
       const playhead = el.querySelector("[data-playhead]");
       const dot = el.querySelector("[data-playhead-dot]");
-      if (playhead) gsap.to(playhead, { attr: { x1: 168, x2: 168 }, duration: 0.4, ease: "power2.out" });
-      if (dot) gsap.to(dot, { attr: { cx: 168, cy: 140 }, duration: 0.4, ease: "power2.out" });
+      if (playhead) gsap.to(playhead, { attr: { x1: 178, x2: 178 }, duration: 0.4, ease: "power2.out" });
+      if (dot) gsap.to(dot, { attr: { cx: 178, cy: 158 }, duration: 0.4, ease: "power2.out" });
     } else if (p.id === "devizly") {
       const btn = el.querySelector("[data-sign-btn]");
       if (btn) gsap.to(btn, { opacity: 0.15, duration: 0.3 });
     } else if (p.id === "worthifast") {
       const bar = el.querySelector("[data-progress-bar]");
-      if (bar) gsap.to(bar, { attr: { width: 286 }, duration: 0.4, ease: "power2.out" });
+      if (bar) gsap.to(bar, { attr: { width: 320 }, duration: 0.4, ease: "power2.out" });
     }
   };
 
