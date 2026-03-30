@@ -3,80 +3,56 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import gsap from "gsap";
 
-type CursorMode = "hidden" | "link" | "card" | "drag";
+type CursorState = "default" | "link" | "card" | "drag" | "contact";
 
 export default function Cursor() {
-  const containerRef = useRef<HTMLDivElement>(null);
+  const cursorRef = useRef<HTMLDivElement>(null);
+  const labelRef = useRef<HTMLDivElement>(null);
   const [enabled, setEnabled] = useState(false);
-  const modeRef = useRef<CursorMode>("hidden");
-  const xTo = useRef<gsap.QuickToFunc | null>(null);
-  const yTo = useRef<gsap.QuickToFunc | null>(null);
+  const stateRef = useRef<CursorState>("default");
 
-  const setMode = useCallback((mode: CursorMode) => {
-    if (modeRef.current === mode) return;
-    modeRef.current = mode;
+  const updateCursor = useCallback((state: CursorState) => {
+    if (stateRef.current === state) return;
+    const prev = stateRef.current;
+    stateRef.current = state;
 
-    const el = containerRef.current;
-    if (!el) return;
+    const label = labelRef.current;
+    if (!label) return;
 
-    const circle = el.querySelector("[data-cursor-circle]") as HTMLElement;
-    const label = el.querySelector("[data-cursor-label]") as HTMLElement;
-    const dot = el.querySelector("[data-cursor-dot]") as HTMLElement;
-
-    if (mode === "hidden") {
-      gsap.to(circle, { scale: 0, opacity: 0, duration: 0.2 });
+    if (state === "default") {
+      gsap.to(label, { opacity: 0, scale: 0.8, duration: 0.2, ease: "power2.out" });
       return;
     }
 
-    // Reset rotation
-    gsap.killTweensOf(circle, "rotation");
+    const config: Record<string, { text: string; bg: string; color: string; border: string }> = {
+      link: { text: "CLIQUER", bg: "#C4973A", color: "#09090b", border: "none" },
+      card: { text: "VOIR \u2192", bg: "#C4973A", color: "#09090b", border: "none" },
+      drag: { text: "DRAG", bg: "rgba(196,151,58,0.2)", color: "#C4973A", border: "1px solid #C4973A" },
+      contact: { text: "\u00C9CRIRE", bg: "#C4973A", color: "#09090b", border: "none" },
+    };
 
-    if (mode === "link") {
-      gsap.to(circle, {
-        width: 44,
-        height: 44,
-        scale: 1,
-        opacity: 1,
-        background: "transparent",
-        border: "1.5px solid #C4973A",
-        rotation: 0,
-        duration: 0.25,
+    const c = config[state];
+
+    if (prev !== "default") {
+      gsap.to(label, {
+        opacity: 0,
+        scale: 0.8,
+        duration: 0.1,
+        ease: "power2.out",
+        onComplete: () => {
+          label.textContent = c.text;
+          label.style.background = c.bg;
+          label.style.color = c.color;
+          label.style.border = c.border;
+          gsap.to(label, { opacity: 1, scale: 1, duration: 0.15, ease: "power2.out" });
+        },
       });
-      gsap.to(dot, { scale: 1, opacity: 1, duration: 0.2 });
-      gsap.to(label, { opacity: 0, duration: 0.15 });
-    } else if (mode === "card") {
-      gsap.to(circle, {
-        width: 64,
-        height: 64,
-        scale: 1,
-        opacity: 1,
-        background: "rgba(196,151,58,0.08)",
-        border: "1px solid rgba(196,151,58,0.4)",
-        rotation: 0,
-        duration: 0.25,
-      });
-      gsap.to(dot, { scale: 0, opacity: 0, duration: 0.15 });
-      label.textContent = "VOIR";
-      gsap.to(label, { opacity: 1, duration: 0.2 });
-    } else if (mode === "drag") {
-      gsap.to(circle, {
-        width: 56,
-        height: 56,
-        scale: 1,
-        opacity: 1,
-        background: "transparent",
-        border: "1.5px solid #C4973A",
-        duration: 0.25,
-      });
-      gsap.to(circle, {
-        rotation: 360,
-        duration: 8,
-        ease: "none",
-        repeat: -1,
-      });
-      gsap.to(dot, { scale: 0, opacity: 0, duration: 0.15 });
-      label.textContent = "DRAG";
-      gsap.to(label, { opacity: 1, duration: 0.2 });
+    } else {
+      label.textContent = c.text;
+      label.style.background = c.bg;
+      label.style.color = c.color;
+      label.style.border = c.border;
+      gsap.to(label, { opacity: 1, scale: 1, duration: 0.2, ease: "power2.out" });
     }
   }, []);
 
@@ -89,24 +65,24 @@ export default function Cursor() {
   useEffect(() => {
     if (!enabled) return;
 
-    const el = containerRef.current;
+    const el = cursorRef.current;
     if (!el) return;
 
-    xTo.current = gsap.quickTo(el, "left", { duration: 0.12, ease: "power2" });
-    yTo.current = gsap.quickTo(el, "top", { duration: 0.12, ease: "power2" });
+    const xTo = gsap.quickTo(el, "x", { duration: 0.35, ease: "power3" });
+    const yTo = gsap.quickTo(el, "y", { duration: 0.35, ease: "power3" });
 
     const onMove = (e: MouseEvent) => {
-      xTo.current?.(e.clientX);
-      yTo.current?.(e.clientY);
+      xTo(e.clientX - 2);
+      yTo(e.clientY - 2);
     };
 
     const onOver = (e: MouseEvent) => {
       const target = (e.target as HTMLElement).closest("[data-cursor]");
       if (target) {
-        const mode = target.getAttribute("data-cursor") as CursorMode;
-        setMode(mode);
+        const mode = target.getAttribute("data-cursor") as CursorState;
+        updateCursor(mode);
       } else {
-        setMode("hidden");
+        updateCursor("default");
       }
     };
 
@@ -117,60 +93,54 @@ export default function Cursor() {
       document.removeEventListener("mousemove", onMove);
       document.removeEventListener("mouseover", onOver);
     };
-  }, [enabled, setMode]);
+  }, [enabled, updateCursor]);
 
   if (!enabled) return null;
 
   return (
     <div
-      ref={containerRef}
+      ref={cursorRef}
       style={{
         position: "fixed",
-        left: 0,
         top: 0,
+        left: 0,
         pointerEvents: "none",
         zIndex: 9999,
-        transform: "translate(-50%, -50%)",
+        display: "flex",
+        alignItems: "flex-start",
+        gap: 6,
+        willChange: "transform",
       }}
     >
+      {/* Pointeur SVG flèche style Figma */}
+      <svg width="20" height="24" viewBox="0 0 20 24" fill="none">
+        <path
+          d="M0 0 L0 20 L5 15 L9 23 L12 22 L8 14 L15 14 Z"
+          fill="#C4973A"
+          stroke="#09090b"
+          strokeWidth="1.5"
+          strokeLinejoin="round"
+        />
+      </svg>
+
+      {/* Label pill */}
       <div
-        data-cursor-circle
+        ref={labelRef}
         style={{
-          width: 44,
-          height: 44,
-          borderRadius: "50%",
-          border: "1.5px solid #C4973A",
-          background: "transparent",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          transform: "scale(0)",
+          background: "#C4973A",
+          color: "#09090b",
+          fontSize: 11,
+          fontFamily: "Syne, sans-serif",
+          fontWeight: 700,
+          padding: "4px 10px",
+          borderRadius: 20,
+          whiteSpace: "nowrap",
+          marginTop: 2,
           opacity: 0,
-          willChange: "width, height, transform, opacity",
+          transform: "scale(0.8)",
         }}
       >
-        <div
-          data-cursor-dot
-          style={{
-            width: 4,
-            height: 4,
-            borderRadius: "50%",
-            background: "#C4973A",
-            position: "absolute",
-          }}
-        />
-        <span
-          data-cursor-label
-          style={{
-            fontSize: 10,
-            fontFamily: "var(--font-syne), Syne, sans-serif",
-            fontWeight: 600,
-            color: "#C4973A",
-            letterSpacing: "1px",
-            opacity: 0,
-            userSelect: "none",
-          }}
-        />
+        NBHC
       </div>
     </div>
   );

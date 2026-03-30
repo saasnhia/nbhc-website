@@ -61,7 +61,7 @@ const waveOpacities = [0.6, 0.9, 0.4, 0.7, 0.8, 0.5, 0.9, 0.4, 0.7, 0.6, 0.5, 0.
 
 function VlogyzVisual() {
   return (
-    <svg width="380" height="200" viewBox="0 0 380 200" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ display: "block", width: "100%", height: 200 }}>
+    <svg width="380" height="200" viewBox="0 0 380 200" fill="none" xmlns="http://www.w3.org/2000/svg" overflow="hidden" style={{ display: "block", width: "100%", height: 200 }}>
       <rect width="380" height="200" fill="#0d0f1a" />
       {/* Score viralité */}
       <rect x="16" y="16" width="72" height="32" rx="8" fill="rgba(99,102,241,0.15)" stroke="#6366f1" strokeWidth="0.5" />
@@ -91,7 +91,7 @@ function VlogyzVisual() {
 
 function DevizlyVisual() {
   return (
-    <svg width="380" height="200" viewBox="0 0 380 200" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ display: "block", width: "100%", height: 200 }}>
+    <svg width="380" height="200" viewBox="0 0 380 200" fill="none" xmlns="http://www.w3.org/2000/svg" overflow="hidden" style={{ display: "block", width: "100%", height: 200 }}>
       <rect width="380" height="200" fill="#0d0d14" />
       {/* Label */}
       <text x="364" y="28" textAnchor="end" fontSize="18" fontFamily="Syne, sans-serif" fontWeight="800" fill="#5B5BD6">DEVIZLY</text>
@@ -124,7 +124,7 @@ function DevizlyVisual() {
 
 function WorthifastVisual() {
   return (
-    <svg width="380" height="200" viewBox="0 0 380 200" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ display: "block", width: "100%", height: 200 }}>
+    <svg width="380" height="200" viewBox="0 0 380 200" fill="none" xmlns="http://www.w3.org/2000/svg" overflow="hidden" style={{ display: "block", width: "100%", height: 200 }}>
       <rect width="380" height="200" fill="#0d120a" />
       {/* Titre */}
       <text x="20" y="28" fontSize="10" fill="#4ade80" opacity="0.6" fontFamily="DM Sans, sans-serif">RÉVISION COMPTABLE — FY 2025</text>

@@ -122,3 +122,7 @@ section, nav, footer, main {
 ::-webkit-scrollbar-thumb:hover {
   background: var(--text-muted);
 }
+
+@media (pointer: fine) {
+  * { cursor: none !important; }
+}

@@ -154,6 +154,7 @@ export default function Contact() {
     <section
       id="contact"
       ref={sectionRef}
+      data-cursor="contact"
       style={{
         borderTop: "1px solid var(--border)",
         background: "var(--surface)",
@@ -176,9 +177,12 @@ export default function Contact() {
             className="font-extrabold leading-none mb-6"
             style={{
               fontFamily: "var(--font-syne)",
-              fontSize: "clamp(48px, 8vw, 120px)",
-              letterSpacing: "-4px",
+              fontSize: "clamp(40px, 5vw, 80px)",
+              letterSpacing: "-3px",
               color: "var(--text)",
+              wordBreak: "break-word",
+              overflowWrap: "break-word",
+              hyphens: "auto",
             }}
           >
             Votre projet
