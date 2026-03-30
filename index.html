@@ -1,0 +1,1227 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NBHC — Studio IA & Automatisation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #09090b;
+    --surface: #111113;
+    --card: #161619;
+    --card-hover: #1c1c20;
+    --gold: #C4973A;
+    --gold-light: #E8C97A;
+    --gold-dim: rgba(196, 151, 58, 0.15);
+    --gold-border: rgba(196, 151, 58, 0.3);
+    --text: #F0EDE6;
+    --text-muted: #8C8880;
+    --text-dim: #3E3D3A;
+    --border: rgba(255,255,255,0.07);
+    --border-accent: rgba(255,255,255,0.12);
+    --radius: 12px;
+    --radius-sm: 6px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* GRID TEXTURE */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(196,151,58,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(196,151,58,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* NOISE OVERLAY */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+    opacity: 0.4;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  section, nav, footer { position: relative; z-index: 1; }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+    height: 64px;
+    background: rgba(9,9,11,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 20px;
+    color: var(--text);
+    text-decoration: none;
+    letter-spacing: -0.5px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .nav-logo span {
+    color: var(--gold);
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 14px;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s;
+    font-weight: 400;
+  }
+
+  .nav-links a:hover { color: var(--text); }
+
+  .nav-cta {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 8px 20px;
+    background: var(--gold-dim);
+    color: var(--gold-light);
+    border: 1px solid var(--gold-border);
+    border-radius: var(--radius-sm);
+    text-decoration: none;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+
+  .nav-cta:hover {
+    background: rgba(196,151,58,0.25);
+    color: var(--gold-light);
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 120px 40px 80px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--gold);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 28px;
+  }
+
+  .hero-eyebrow::before {
+    content: '';
+    display: block;
+    width: 24px;
+    height: 1px;
+    background: var(--gold);
+  }
+
+  .hero-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(48px, 7vw, 96px);
+    font-weight: 800;
+    line-height: 1.0;
+    letter-spacing: -3px;
+    color: var(--text);
+    max-width: 900px;
+    margin-bottom: 28px;
+  }
+
+  .hero-title em {
+    font-style: normal;
+    color: var(--gold);
+    position: relative;
+  }
+
+  .hero-title em::after {
+    content: '';
+    position: absolute;
+    bottom: 2px;
+    left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--gold), transparent);
+  }
+
+  .hero-sub {
+    font-size: 18px;
+    font-weight: 300;
+    color: var(--text-muted);
+    max-width: 560px;
+    line-height: 1.7;
+    margin-bottom: 48px;
+  }
+
+  .hero-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    padding: 14px 28px;
+    background: var(--gold);
+    color: #0a0a0b;
+    border: none;
+    border-radius: var(--radius-sm);
+    text-decoration: none;
+    transition: all 0.2s;
+    cursor: pointer;
+  }
+
+  .btn-primary:hover {
+    background: var(--gold-light);
+    transform: translateY(-1px);
+  }
+
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 400;
+    padding: 14px 28px;
+    background: transparent;
+    color: var(--text-muted);
+    border: 1px solid var(--border-accent);
+    border-radius: var(--radius-sm);
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+
+  .btn-secondary:hover {
+    color: var(--text);
+    border-color: rgba(255,255,255,0.2);
+  }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 40px;
+    left: 40px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 12px;
+    color: var(--text-dim);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .scroll-line {
+    width: 32px;
+    height: 1px;
+    background: var(--text-dim);
+    animation: scrollpulse 2s infinite;
+  }
+
+  @keyframes scrollpulse {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 1; }
+  }
+
+  /* MARQUEE STRIP */
+  .marquee-strip {
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+    overflow: hidden;
+    padding: 14px 0;
+  }
+
+  .marquee-track {
+    display: flex;
+    gap: 48px;
+    animation: marquee 30s linear infinite;
+    width: max-content;
+  }
+
+  .marquee-item {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-dim);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .marquee-item::before {
+    content: '◆';
+    color: var(--gold);
+    font-size: 8px;
+  }
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* SECTION COMMON */
+  .section {
+    padding: 100px 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--gold);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .section-label::before {
+    content: '';
+    display: block;
+    width: 16px;
+    height: 1px;
+    background: var(--gold);
+  }
+
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(32px, 4vw, 52px);
+    font-weight: 700;
+    letter-spacing: -1.5px;
+    color: var(--text);
+    line-height: 1.1;
+    margin-bottom: 16px;
+  }
+
+  .section-desc {
+    font-size: 17px;
+    font-weight: 300;
+    color: var(--text-muted);
+    max-width: 500px;
+    line-height: 1.7;
+    margin-bottom: 64px;
+  }
+
+  /* STATS */
+  .stats-section {
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .stat-item {
+    padding: 48px 40px;
+    border-right: 1px solid var(--border);
+  }
+
+  .stat-item:last-child { border-right: none; }
+
+  .stat-number {
+    font-family: 'Syne', sans-serif;
+    font-size: 48px;
+    font-weight: 800;
+    color: var(--text);
+    letter-spacing: -2px;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .stat-number span { color: var(--gold); }
+
+  .stat-label {
+    font-size: 13px;
+    color: var(--text-muted);
+    font-weight: 400;
+  }
+
+  /* APPROCHE */
+  .steps-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+
+  .step-card {
+    background: var(--card);
+    padding: 48px 36px;
+    transition: background 0.3s;
+    position: relative;
+  }
+
+  .step-card:hover { background: var(--card-hover); }
+
+  .step-number {
+    font-family: 'Syne', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--gold);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .step-number::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--gold-border);
+  }
+
+  .step-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-sm);
+    background: var(--gold-dim);
+    border: 1px solid var(--gold-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    font-size: 20px;
+  }
+
+  .step-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: -0.5px;
+    margin-bottom: 12px;
+  }
+
+  .step-desc {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  /* PORTFOLIO */
+  .portfolio-section {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+
+  .product-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: all 0.3s;
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .product-card:hover {
+    border-color: var(--gold-border);
+    transform: translateY(-4px);
+    background: var(--card-hover);
+  }
+
+  .product-visual {
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 48px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .product-visual::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    opacity: 0.08;
+    background-image:
+      linear-gradient(45deg, transparent 45%, currentColor 45%, currentColor 55%, transparent 55%),
+      linear-gradient(-45deg, transparent 45%, currentColor 45%, currentColor 55%, transparent 55%);
+    background-size: 20px 20px;
+  }
+
+  .pv-vlogyz { background: #0d1117; color: #6366f1; }
+  .pv-devizly { background: #0d0d14; color: #5B5BD6; }
+  .pv-worthifast { background: #0d1209; color: #22c55e; }
+
+  .product-logo {
+    position: relative;
+    z-index: 1;
+    font-family: 'Syne', sans-serif;
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -1px;
+  }
+
+  .product-body { padding: 28px; flex: 1; display: flex; flex-direction: column; }
+
+  .product-badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-bottom: 14px;
+    letter-spacing: 0.5px;
+  }
+
+  .badge-live {
+    background: rgba(34,197,94,0.12);
+    color: #4ade80;
+    border: 1px solid rgba(34,197,94,0.2);
+  }
+
+  .badge-beta {
+    background: rgba(99,102,241,0.12);
+    color: #818cf8;
+    border: 1px solid rgba(99,102,241,0.2);
+  }
+
+  .badge-dev {
+    background: rgba(251,191,36,0.1);
+    color: #fbbf24;
+    border: 1px solid rgba(251,191,36,0.2);
+  }
+
+  .product-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: -0.5px;
+    margin-bottom: 8px;
+  }
+
+  .product-desc {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.6;
+    font-weight: 300;
+    margin-bottom: 24px;
+    flex: 1;
+  }
+
+  .product-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 20px;
+  }
+
+  .tech-pill {
+    font-size: 11px;
+    padding: 3px 10px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border-accent);
+    border-radius: 20px;
+    color: var(--text-muted);
+    font-weight: 400;
+  }
+
+  .product-link {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--gold);
+    border-top: 1px solid var(--border);
+    padding-top: 16px;
+    margin-top: auto;
+  }
+
+  .product-link svg { transition: transform 0.2s; }
+  .product-card:hover .product-link svg { transform: translateX(4px); }
+
+  /* SERVICES */
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .service-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 36px;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .service-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px;
+    height: 0;
+    background: var(--gold);
+    transition: height 0.3s;
+  }
+
+  .service-card:hover {
+    border-color: var(--border-accent);
+    background: var(--card-hover);
+  }
+
+  .service-card:hover::before { height: 100%; }
+
+  .service-icon {
+    font-size: 24px;
+    margin-bottom: 20px;
+    display: block;
+  }
+
+  .service-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: -0.5px;
+    margin-bottom: 10px;
+  }
+
+  .service-desc {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.7;
+    font-weight: 300;
+    margin-bottom: 20px;
+  }
+
+  .service-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .service-tag {
+    font-size: 11px;
+    padding: 3px 10px;
+    background: var(--gold-dim);
+    border: 1px solid var(--gold-border);
+    border-radius: 20px;
+    color: var(--gold-light);
+    font-weight: 400;
+  }
+
+  /* CTA */
+  .cta-section {
+    border-top: 1px solid var(--border);
+  }
+
+  .cta-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 100px 40px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 60px;
+    align-items: center;
+  }
+
+  .cta-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(36px, 4vw, 56px);
+    font-weight: 800;
+    letter-spacing: -2px;
+    color: var(--text);
+    line-height: 1.05;
+    max-width: 640px;
+  }
+
+  .cta-title em {
+    font-style: normal;
+    color: var(--gold);
+  }
+
+  .cta-subtitle {
+    font-size: 16px;
+    color: var(--text-muted);
+    margin-top: 16px;
+    font-weight: 300;
+    max-width: 480px;
+    line-height: 1.6;
+  }
+
+  .cta-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-width: 220px;
+  }
+
+  .contact-block {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+  }
+
+  .contact-label {
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .contact-email {
+    font-family: 'Syne', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--gold);
+    text-decoration: none;
+    display: block;
+  }
+
+  .contact-email:hover { color: var(--gold-light); }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    background: var(--surface);
+  }
+
+  .footer-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 48px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 24px;
+  }
+
+  .footer-left {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .footer-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 18px;
+    color: var(--text);
+    letter-spacing: -0.5px;
+  }
+
+  .footer-logo span { color: var(--gold); }
+
+  .footer-tagline {
+    font-size: 13px;
+    color: var(--text-dim);
+  }
+
+  .footer-right {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 24px;
+  }
+
+  .footer-links a {
+    font-size: 13px;
+    color: var(--text-muted);
+    text-decoration: none;
+  }
+
+  .footer-links a:hover { color: var(--text); }
+
+  .footer-legal {
+    font-size: 12px;
+    color: var(--text-dim);
+    border-top: 1px solid var(--border);
+    padding: 20px 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  /* DECORATIVE LINE */
+  .gold-line {
+    width: 48px;
+    height: 2px;
+    background: var(--gold);
+    margin-bottom: 40px;
+  }
+
+  /* FADE IN ANIMATION */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .fade-up { animation: fadeUp 0.7s ease forwards; }
+  .delay-1 { animation-delay: 0.1s; opacity: 0; }
+  .delay-2 { animation-delay: 0.2s; opacity: 0; }
+  .delay-3 { animation-delay: 0.3s; opacity: 0; }
+  .delay-4 { animation-delay: 0.4s; opacity: 0; }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    nav { padding: 0 20px; }
+    .nav-links { display: none; }
+    .hero { padding: 100px 20px 60px; }
+    .section { padding: 60px 20px; }
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    .stat-item { border-bottom: 1px solid var(--border); }
+    .steps-grid { grid-template-columns: 1fr; }
+    .portfolio-grid { grid-template-columns: 1fr; }
+    .services-grid { grid-template-columns: 1fr; }
+    .cta-inner { grid-template-columns: 1fr; }
+    .footer-inner { flex-direction: column; align-items: flex-start; }
+    .footer-legal { padding: 20px; }
+    .hero-title { letter-spacing: -2px; }
+  }
+
+  @media (max-width: 600px) {
+    .stats-grid { grid-template-columns: 1fr 1fr; }
+    .stat-item:nth-child(2) { border-right: none; }
+    .stat-item:nth-child(3) { border-right: 1px solid var(--border); }
+    .stat-item:last-child { border-right: none; }
+    .hero-title { font-size: 42px; letter-spacing: -1.5px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">N<span>B</span>HC</a>
+  <ul class="nav-links">
+    <li><a href="#approche">Approche</a></li>
+    <li><a href="#produits">Produits</a></li>
+    <li><a href="#services">Services</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Discuter du projet →</a>
+</nav>
+
+<!-- HERO -->
+<section style="position:relative;">
+  <div class="hero">
+    <div class="hero-eyebrow fade-up">Studio IA · SAS NBHC · France</div>
+    <h1 class="hero-title fade-up delay-1">
+      On automatise<br>
+      ce qui vous<br>
+      <em>freine.</em>
+    </h1>
+    <p class="hero-sub fade-up delay-2">
+      Nous concevons des solutions SaaS et des systèmes d'intelligence artificielle
+      sur mesure pour accélérer votre transformation digitale — du diagnostic
+      jusqu'au déploiement.
+    </p>
+    <div class="hero-actions fade-up delay-3">
+      <a href="#contact" class="btn-primary">
+        Démarrer un projet
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a href="#produits" class="btn-secondary">Voir nos réalisations</a>
+    </div>
+    <div class="hero-scroll">
+      <div class="scroll-line"></div>
+      Découvrir
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-strip">
+  <div class="marquee-track" id="marqueeTrack">
+    <div class="marquee-item">Next.js 16</div>
+    <div class="marquee-item">Supabase</div>
+    <div class="marquee-item">Mistral AI</div>
+    <div class="marquee-item">Stripe</div>
+    <div class="marquee-item">TypeScript</div>
+    <div class="marquee-item">Groq Whisper</div>
+    <div class="marquee-item">Remotion</div>
+    <div class="marquee-item">FFmpeg</div>
+    <div class="marquee-item">Vercel</div>
+    <div class="marquee-item">Tailwind CSS</div>
+    <div class="marquee-item">Hetzner</div>
+    <div class="marquee-item">PostgreSQL</div>
+    <div class="marquee-item">React</div>
+    <div class="marquee-item">Resend</div>
+    <!-- duplicate pour boucle infinie -->
+    <div class="marquee-item">Next.js 16</div>
+    <div class="marquee-item">Supabase</div>
+    <div class="marquee-item">Mistral AI</div>
+    <div class="marquee-item">Stripe</div>
+    <div class="marquee-item">TypeScript</div>
+    <div class="marquee-item">Groq Whisper</div>
+    <div class="marquee-item">Remotion</div>
+    <div class="marquee-item">FFmpeg</div>
+    <div class="marquee-item">Vercel</div>
+    <div class="marquee-item">Tailwind CSS</div>
+    <div class="marquee-item">Hetzner</div>
+    <div class="marquee-item">PostgreSQL</div>
+    <div class="marquee-item">React</div>
+    <div class="marquee-item">Resend</div>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="stats-section">
+  <div class="stats-grid">
+    <div class="stat-item">
+      <div class="stat-number">3<span>+</span></div>
+      <div class="stat-label">SaaS en production</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">33<span>+</span></div>
+      <div class="stat-label">Features déployées sur Vlogyz</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">5<span>GB</span></div>
+      <div class="stat-label">Upload max géré sans serveur intermédiaire</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">100<span>%</span></div>
+      <div class="stat-label">Hébergement France & Europe</div>
+    </div>
+  </div>
+</div>
+
+<!-- APPROCHE -->
+<section class="section" id="approche">
+  <div class="section-label">Notre méthode</div>
+  <h2 class="section-title">De votre problème<br>à la solution opérationnelle.</h2>
+  <p class="section-desc">On ne vend pas des heures de consulting. On livre des outils qui fonctionnent.</p>
+
+  <div class="steps-grid">
+    <div class="step-card">
+      <div class="step-number">01 — Diagnostic</div>
+      <div class="step-icon">🔍</div>
+      <div class="step-name">Cartographier l'existant</div>
+      <p class="step-desc">Nous analysons vos flux de travail, vos outils actuels et vos points de friction. L'objectif : identifier précisément ce qui peut être automatisé et ce qui génère le plus de valeur.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-number">02 — Conception</div>
+      <div class="step-icon">⚡</div>
+      <div class="step-name">Architecturer la solution</div>
+      <p class="step-desc">On conçoit une solution sur mesure — SaaS, API, agent IA ou pipeline de traitement — adaptée à votre secteur et à votre taille d'équipe, sans sur-ingénierie inutile.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-number">03 — Déploiement</div>
+      <div class="step-icon">🚀</div>
+      <div class="step-name">Livrer et opérer</div>
+      <p class="step-desc">Déploiement en production sur infrastructure européenne (Vercel, Hetzner, Supabase Frankfurt), avec monitoring, documentation et accompagnement sur la durée.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section class="portfolio-section" id="produits">
+  <div class="section" style="padding-bottom: 100px;">
+    <div class="section-label">Portfolio</div>
+    <h2 class="section-title">Nos produits en production.</h2>
+    <p class="section-desc">Trois SaaS conçus et opérés par NBHC — chacun comme preuve concrète de notre capacité à livrer.</p>
+
+    <div class="portfolio-grid">
+
+      <!-- VLOGYZ -->
+      <div class="product-card">
+        <div class="product-visual pv-vlogyz">
+          <div class="product-logo">VLOGYZ</div>
+        </div>
+        <div class="product-body">
+          <span class="product-badge badge-beta">MVP live</span>
+          <div class="product-name">Vlogyz</div>
+          <p class="product-desc">Montage vidéo IA français — alternative à CapCut. Pipeline complet : upload TUS, transcription Whisper, détection de fillers, sous-titres synchronisés (13 styles), B-Roll automatique, score de viralité, rendu Remotion.</p>
+          <div class="product-stack">
+            <span class="tech-pill">Next.js 16</span>
+            <span class="tech-pill">Groq Whisper</span>
+            <span class="tech-pill">Mistral</span>
+            <span class="tech-pill">Remotion</span>
+            <span class="tech-pill">FFmpeg</span>
+            <span class="tech-pill">Hetzner</span>
+          </div>
+          <div class="product-link">
+            vlogyz.vercel.app
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- DEVIZLY -->
+      <div class="product-card">
+        <div class="product-visual pv-devizly">
+          <div class="product-logo">DEVIZLY</div>
+        </div>
+        <div class="product-body">
+          <span class="product-badge badge-live">Live</span>
+          <div class="product-name">Devizly</div>
+          <p class="product-desc">Générateur de devis IA pour artisans et freelances. L'utilisateur décrit sa prestation en langage naturel → devis conforme loi française → signature eIDAS → paiement acompte Stripe intégré.</p>
+          <div class="product-stack">
+            <span class="tech-pill">Next.js 14</span>
+            <span class="tech-pill">Mistral</span>
+            <span class="tech-pill">Stripe</span>
+            <span class="tech-pill">Supabase</span>
+            <span class="tech-pill">Resend</span>
+            <span class="tech-pill">Upstash</span>
+          </div>
+          <div class="product-link">
+            devizly.fr
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- WORTHIFAST -->
+      <div class="product-card">
+        <div class="product-visual pv-worthifast">
+          <div class="product-logo">WORTHIFAST</div>
+        </div>
+        <div class="product-body">
+          <span class="product-badge badge-dev">En développement</span>
+          <div class="product-name">Worthifast</div>
+          <p class="product-desc">Automatisation des tâches comptables et d'audit pour cabinets experts. Import FEC/CSV/Excel, détection d'anomalies IA, rapports de révision, tableau de bord multi-missions. Cible : PME et cabinets 5–50 personnes.</p>
+          <div class="product-stack">
+            <span class="tech-pill">Next.js 16</span>
+            <span class="tech-pill">Mistral</span>
+            <span class="tech-pill">Supabase</span>
+            <span class="tech-pill">Stripe</span>
+            <span class="tech-pill">PostgreSQL</span>
+          </div>
+          <div class="product-link">
+            Bêta à venir
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES SUR MESURE -->
+<section class="section" id="services">
+  <div class="section-label">Services</div>
+  <h2 class="section-title">Ce qu'on peut<br>construire pour vous.</h2>
+  <p class="section-desc">Vous avez un problème métier. Nous avons la stack pour le résoudre.</p>
+
+  <div class="services-grid">
+    <div class="service-card">
+      <span class="service-icon">🤖</span>
+      <div class="service-name">Agents IA métier</div>
+      <p class="service-desc">Conception et déploiement d'agents IA connectés à vos données internes — traitement de documents, classification automatique, génération de rapports, assistants conversationnels sectoriels.</p>
+      <div class="service-tags">
+        <span class="service-tag">Mistral / GPT-4o</span>
+        <span class="service-tag">RAG</span>
+        <span class="service-tag">Webhooks</span>
+        <span class="service-tag">API custom</span>
+      </div>
+    </div>
+
+    <div class="service-card">
+      <span class="service-icon">⚙️</span>
+      <div class="service-name">Automatisation de flux</div>
+      <p class="service-desc">Remplacement des tâches manuelles répétitives par des pipelines automatisés — synchronisation entre outils, traitement de fichiers en masse, génération de contenu à la volée, relances automatiques.</p>
+      <div class="service-tags">
+        <span class="service-tag">Next.js API</span>
+        <span class="service-tag">Cron jobs</span>
+        <span class="service-tag">Workers</span>
+        <span class="service-tag">PM2</span>
+      </div>
+    </div>
+
+    <div class="service-card">
+      <span class="service-icon">🧾</span>
+      <div class="service-name">SaaS B2B sur mesure</div>
+      <p class="service-desc">Conception et développement full-stack d'un SaaS dédié à votre secteur — architecture Supabase, authentification, plans tarifaires Stripe, tableau de bord, gestion multi-utilisateurs.</p>
+      <div class="service-tags">
+        <span class="service-tag">Next.js</span>
+        <span class="service-tag">Supabase</span>
+        <span class="service-tag">Stripe</span>
+        <span class="service-tag">RGPD</span>
+      </div>
+    </div>
+
+    <div class="service-card">
+      <span class="service-icon">🎬</span>
+      <div class="service-name">Traitement média IA</div>
+      <p class="service-desc">Pipelines de traitement vidéo, audio et documents — transcription, résumé automatique, extraction d'informations clés, génération de sous-titres, montage automatisé à grande échelle.</p>
+      <div class="service-tags">
+        <span class="service-tag">FFmpeg</span>
+        <span class="service-tag">Whisper</span>
+        <span class="service-tag">Remotion</span>
+        <span class="service-tag">Hetzner</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="contact">
+  <div class="cta-inner">
+    <div>
+      <div class="section-label" style="margin-bottom: 20px;">Démarrer</div>
+      <h2 class="cta-title">
+        Votre prochain outil<br>
+        <em>IA commence ici.</em>
+      </h2>
+      <p class="cta-subtitle">Décrivez-nous votre problème — on vous répond sous 24h avec une première approche technique et un chiffrage indicatif.</p>
+    </div>
+    <div class="cta-actions">
+      <a href="mailto:harou@nbhc.fr" class="btn-primary" style="justify-content:center;">
+        Envoyer un message
+      </a>
+      <div class="contact-block">
+        <div class="contact-label">Email direct</div>
+        <a href="mailto:harou@nbhc.fr" class="contact-email">harou@nbhc.fr</a>
+        <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border);">
+          <div class="contact-label">SIREN</div>
+          <div style="font-size: 14px; color: var(--text-muted); font-weight: 400;">102 637 899</div>
+        </div>
+        <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border);">
+          <div class="contact-label">Siège</div>
+          <div style="font-size: 13px; color: var(--text-muted); font-weight: 300; line-height: 1.5;">55 Rue Henri Clément<br>71100 Saint-Marcel</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-left">
+      <div class="footer-logo">N<span>B</span>HC</div>
+      <div class="footer-tagline">Studio IA & Automatisation · France</div>
+    </div>
+    <div class="footer-right">
+      <div class="footer-links">
+        <a href="#approche">Approche</a>
+        <a href="#produits">Produits</a>
+        <a href="#services">Services</a>
+        <a href="mailto:harou@nbhc.fr">Contact</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-legal">
+    © 2026 SAS NBHC — SIREN 102 637 899 · 55 Rue Henri Clément, 71100 Saint-Marcel · Tous droits réservés
+  </div>
+</footer>
+
+<script>
+  // Intersection Observer pour fade-up au scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(el => {
+      if (el.isIntersecting) {
+        el.target.style.opacity = '1';
+        el.target.style.transform = 'translateY(0)';
+        el.target.style.transition = 'opacity 0.7s ease, transform 0.7s ease';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.step-card, .product-card, .service-card, .stat-item').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    observer.observe(el);
+  });
+
+  // Nav active scroll
+  const navLinks = document.querySelectorAll('.nav-links a');
+  const sections = document.querySelectorAll('section[id]');
+
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 100) current = s.id;
+    });
+    navLinks.forEach(a => {
+      a.style.color = a.getAttribute('href') === '#' + current
+        ? 'var(--text)'
+        : 'var(--text-muted)';
+    });
+  });
+</script>
+
+</body>
+</html>
