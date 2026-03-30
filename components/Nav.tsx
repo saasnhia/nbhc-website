@@ -1,8 +1,12 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
-import Image from "next/image";
+import { useState, useEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Logo from "./Logo";
+import MagneticButton from "./MagneticButton";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const links = [
   { href: "#approche", label: "Approche" },
@@ -11,13 +15,12 @@ const links = [
 ];
 
 export default function Nav() {
-  const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("");
   const [menuOpen, setMenuOpen] = useState(false);
+  const navRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     const onScroll = () => {
-      setScrolled(window.scrollY > 20);
       const sections = document.querySelectorAll("section[id]");
       let current = "";
       sections.forEach((s) => {
@@ -31,17 +34,46 @@ export default function Nav() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  useEffect(() => {
+    const nav = navRef.current;
+    if (!nav) return;
+
+    // Initial state
+    gsap.set(nav, { y: -64, opacity: 0 });
+    gsap.to(nav, { y: 0, opacity: 1, duration: 0.5, delay: 0.2 });
+
+    const st = ScrollTrigger.create({
+      start: "80px top",
+      onUpdate: (self) => {
+        const scrolled = self.progress > 0;
+        gsap.to(nav, {
+          height: scrolled ? 52 : 64,
+          duration: 0.3,
+          ease: "power2.out",
+        });
+        nav.style.background = scrolled
+          ? "rgba(9,9,11,0.95)"
+          : "rgba(9,9,11,0.85)";
+        nav.style.backdropFilter = scrolled ? "blur(30px)" : "blur(20px)";
+        nav.style.borderBottomColor = scrolled
+          ? "var(--border-accent)"
+          : "var(--border)";
+      },
+    });
+
+    return () => st.kill();
+  }, []);
+
   return (
-    <motion.nav
-      initial={{ y: -64, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.5 }}
-      className="fixed top-0 left-0 right-0 z-100 flex items-center justify-between px-10 h-16 max-md:px-5"
+    <nav
+      ref={navRef}
+      className="fixed top-0 left-0 right-0 z-100 flex items-center justify-between px-10 max-md:px-5"
       style={{
-        background: scrolled ? "rgba(9,9,11,0.92)" : "rgba(9,9,11,0.85)",
+        height: 64,
+        background: "rgba(9,9,11,0.85)",
         backdropFilter: "blur(20px)",
-        borderBottom: `1px solid ${scrolled ? "var(--border-accent)" : "var(--border)"}`,
-        transition: "background 0.3s, border-color 0.3s",
+        borderBottom: "1px solid var(--border)",
+        transition: "background 0.3s, border-color 0.3s, backdrop-filter 0.3s",
       }}
     >
       <a
@@ -49,13 +81,7 @@ export default function Nav() {
         className="font-[var(--font-syne)] font-extrabold text-xl tracking-tight no-underline flex items-center gap-2"
         style={{ fontFamily: "var(--font-syne)", color: "var(--text)" }}
       >
-        <Image
-          src="/logo.png"
-          alt="NBHC"
-          width={36}
-          height={36}
-          style={{ borderRadius: 8 }}
-        />
+        <Logo size={36} />
         N<span style={{ color: "var(--gold)" }}>B</span>HC
       </a>
 
@@ -109,7 +135,7 @@ export default function Nav() {
         />
       </button>
 
-      <a
+      <MagneticButton
         href="#contact"
         className="hidden md:inline-flex text-sm font-medium px-5 py-2 rounded-md no-underline transition-all duration-200 whitespace-nowrap hover:opacity-90"
         style={{
@@ -119,13 +145,11 @@ export default function Nav() {
         }}
       >
         Discuter du projet →
-      </a>
+      </MagneticButton>
 
       {/* Mobile menu */}
       {menuOpen && (
-        <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
+        <div
           className="absolute top-16 left-0 right-0 md:hidden flex flex-col gap-4 p-6"
           style={{
             background: "rgba(9,9,11,0.95)",
@@ -156,8 +180,8 @@ export default function Nav() {
           >
             Discuter du projet →
           </a>
-        </motion.div>
+        </div>
       )}
-    </motion.nav>
+    </nav>
   );
 }

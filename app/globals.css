@@ -37,7 +37,13 @@
 }
 
 html {
-  scroll-behavior: smooth;
+  scroll-behavior: initial;
+}
+
+@media (min-width: 769px) {
+  * {
+    cursor: none !important;
+  }
 }
 
 body {

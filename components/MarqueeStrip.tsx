@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
 
 const items = [
   "Next.js 16",
@@ -20,6 +21,34 @@ const items = [
 ];
 
 export default function MarqueeStrip() {
+  const trackRef = useRef<HTMLDivElement>(null);
+  const tweenRef = useRef<gsap.core.Tween | null>(null);
+
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track) return;
+
+    const tween = gsap.to(track, {
+      x: "-50%",
+      duration: 30,
+      ease: "none",
+      repeat: -1,
+    });
+    tweenRef.current = tween;
+
+    return () => {
+      tween.kill();
+    };
+  }, []);
+
+  const onEnter = () => {
+    if (tweenRef.current) gsap.to(tweenRef.current, { timeScale: 0.3, duration: 0.5 });
+  };
+
+  const onLeave = () => {
+    if (tweenRef.current) gsap.to(tweenRef.current, { timeScale: 1, duration: 0.5 });
+  };
+
   return (
     <div
       className="overflow-hidden py-3.5"
@@ -28,12 +57,13 @@ export default function MarqueeStrip() {
         borderBottom: "1px solid var(--border)",
         background: "var(--surface)",
       }}
+      onMouseEnter={onEnter}
+      onMouseLeave={onLeave}
     >
-      <motion.div
+      <div
+        ref={trackRef}
         className="flex gap-12"
         style={{ width: "max-content" }}
-        animate={{ x: ["0%", "-50%"] }}
-        transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
       >
         {[...items, ...items].map((item, i) => (
           <span
@@ -47,7 +77,7 @@ export default function MarqueeStrip() {
             {item}
           </span>
         ))}
-      </motion.div>
+      </div>
     </div>
   );
 }

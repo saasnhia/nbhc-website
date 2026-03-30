@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Logo from "./Logo";
 
 export default function Footer() {
   return (
@@ -14,20 +14,14 @@ export default function Footer() {
       >
         <div className="flex flex-col gap-2">
           <div
-            className="font-extrabold text-lg"
+            className="font-extrabold text-lg flex items-center gap-2"
             style={{
               fontFamily: "var(--font-syne)",
               color: "var(--text)",
               letterSpacing: "-0.5px",
             }}
           >
-            <Image
-              src="/logo.png"
-              alt="NBHC"
-              width={32}
-              height={32}
-              style={{ borderRadius: 8, display: "inline-block", verticalAlign: "middle", marginRight: 8 }}
-            />
+            <Logo size={32} />
             N<span style={{ color: "var(--gold)" }}>B</span>HC
           </div>
           <div className="text-[13px]" style={{ color: "var(--text-dim)" }}>

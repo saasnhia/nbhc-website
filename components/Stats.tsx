@@ -1,31 +1,45 @@
 "use client";
 
-import { useRef, useEffect, useState } from "react";
-import { useInView } from "framer-motion";
+import { useRef, useEffect } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-function AnimatedNumber({
-  value,
-  suffix,
-}: {
-  value: number;
-  suffix: string;
-}) {
+gsap.registerPlugin(ScrollTrigger);
+
+const stats = [
+  { value: 3, suffix: "+", label: "SaaS en production" },
+  { value: 33, suffix: "+", label: "Features déployées sur Vlogyz" },
+  { value: 5, suffix: "GB", label: "Upload max géré sans serveur intermédiaire" },
+  { value: 100, suffix: "%", label: "Hébergement France & Europe" },
+];
+
+function AnimatedNumber({ value, suffix }: { value: number; suffix: string }) {
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-50px" });
-  const [display, setDisplay] = useState(0);
 
   useEffect(() => {
-    if (!isInView) return;
-    const duration = 1500;
-    const start = performance.now();
-    const step = (now: number) => {
-      const progress = Math.min((now - start) / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3);
-      setDisplay(Math.round(eased * value));
-      if (progress < 1) requestAnimationFrame(step);
-    };
-    requestAnimationFrame(step);
-  }, [isInView, value]);
+    const el = ref.current;
+    if (!el) return;
+
+    const obj = { val: 0 };
+
+    const st = ScrollTrigger.create({
+      trigger: el,
+      start: "top 85%",
+      once: true,
+      onEnter: () => {
+        gsap.to(obj, {
+          val: value,
+          duration: 2,
+          ease: "power2.out",
+          onUpdate: () => {
+            el.textContent = `${Math.round(obj.val)}${suffix}`;
+          },
+        });
+      },
+    });
+
+    return () => st.kill();
+  }, [value, suffix]);
 
   return (
     <div
@@ -38,18 +52,10 @@ function AnimatedNumber({
         letterSpacing: "-2px",
       }}
     >
-      {display}
-      <span style={{ color: "var(--gold)" }}>{suffix}</span>
+      0{suffix}
     </div>
   );
 }
-
-const stats = [
-  { value: 3, suffix: "+", label: "SaaS en production" },
-  { value: 33, suffix: "+", label: "Features déployées sur Vlogyz" },
-  { value: 5, suffix: "GB", label: "Upload max géré sans serveur intermédiaire" },
-  { value: 100, suffix: "%", label: "Hébergement France & Europe" },
-];
 
 export default function Stats() {
   return (

@@ -1,7 +1,11 @@
 "use client";
 
-import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import { useRef, useEffect } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useRevealWords } from "../hooks/useReveal";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const products = [
   {
@@ -57,18 +61,190 @@ const badgeStyles: Record<string, React.CSSProperties> = {
   },
 };
 
+function ProductCard({ p }: { p: typeof products[number] }) {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const glowRef = useRef<HTMLDivElement>(null);
+
+  const onMouseMove = (e: React.MouseEvent) => {
+    const el = cardRef.current;
+    const glow = glowRef.current;
+    if (!el || !glow) return;
+    const rect = el.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const rotateY = ((x / rect.width) - 0.5) * 16;
+    const rotateX = ((y / rect.height) - 0.5) * -16;
+
+    gsap.to(el, {
+      rotateX,
+      rotateY,
+      duration: 0.4,
+      ease: "power2.out",
+    });
+    gsap.to(glow, {
+      background: `radial-gradient(circle at ${x}px ${y}px, rgba(255,255,255,0.15) 0%, transparent 60%)`,
+      opacity: 1,
+      duration: 0.3,
+    });
+  };
+
+  const onMouseLeave = () => {
+    gsap.to(cardRef.current, {
+      rotateX: 0,
+      rotateY: 0,
+      duration: 0.6,
+      ease: "power2.out",
+    });
+    gsap.to(glowRef.current, { opacity: 0, duration: 0.3 });
+  };
+
+  return (
+    <div
+      ref={cardRef}
+      data-reveal-card
+      onMouseMove={onMouseMove}
+      onMouseLeave={onMouseLeave}
+      className="flex flex-col overflow-hidden no-underline transition-all duration-300 group cursor-default"
+      style={{
+        background: "var(--card)",
+        border: "1px solid var(--border)",
+        borderRadius: "var(--radius)",
+        transformStyle: "preserve-3d",
+      }}
+    >
+      <div
+        className="h-[200px] flex items-center justify-center relative overflow-hidden"
+        style={visualStyles[p.visualClass]}
+      >
+        <div
+          className="absolute inset-0 opacity-[0.08]"
+          style={{
+            backgroundImage:
+              "linear-gradient(45deg, transparent 45%, currentColor 45%, currentColor 55%, transparent 55%), linear-gradient(-45deg, transparent 45%, currentColor 45%, currentColor 55%, transparent 55%)",
+            backgroundSize: "20px 20px",
+          }}
+        />
+        <span
+          className="relative z-10 text-[28px] font-extrabold"
+          style={{
+            fontFamily: "var(--font-syne)",
+            letterSpacing: "-1px",
+          }}
+        >
+          {p.logo}
+        </span>
+      </div>
+
+      <div className="p-7 flex-1 flex flex-col relative">
+        <div
+          ref={glowRef}
+          className="absolute inset-0 pointer-events-none"
+          style={{ opacity: 0 }}
+        />
+        <span
+          className="inline-block text-[11px] font-medium px-2.5 py-0.5 rounded-full mb-3.5 tracking-wide w-fit"
+          style={badgeStyles[p.badge.type]}
+        >
+          {p.badge.label}
+        </span>
+        <div
+          className="text-[22px] font-bold mb-2"
+          style={{
+            fontFamily: "var(--font-syne)",
+            color: "var(--text)",
+            letterSpacing: "-0.5px",
+          }}
+        >
+          {p.name}
+        </div>
+        <p
+          className="text-sm font-light mb-6 flex-1"
+          style={{ color: "var(--text-muted)", lineHeight: 1.6 }}
+        >
+          {p.desc}
+        </p>
+        <div className="flex flex-wrap gap-1.5 mb-5">
+          {p.stack.map((t) => (
+            <span
+              key={t}
+              className="text-[11px] px-2.5 py-0.5 rounded-full"
+              style={{
+                background: "rgba(255,255,255,0.04)",
+                border: "1px solid var(--border-accent)",
+                color: "var(--text-muted)",
+              }}
+            >
+              {t}
+            </span>
+          ))}
+        </div>
+        <div
+          className="flex items-center gap-1.5 text-[13px] font-medium pt-4 mt-auto"
+          style={{
+            color: "var(--gold)",
+            borderTop: "1px solid var(--border)",
+          }}
+        >
+          {p.link}
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 14 14"
+            fill="none"
+            className="transition-transform duration-200 group-hover:translate-x-1"
+          >
+            <path
+              d="M2 7h10M7 2l5 5-5 5"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function Portfolio() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const titleRef = useRevealWords("h2");
+  const cardsContainerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = cardsContainerRef.current;
+    if (!el) return;
+
+    const cards = el.querySelectorAll("[data-reveal-card]");
+    gsap.set(cards, { opacity: 0, y: 60 });
+
+    const st = ScrollTrigger.create({
+      trigger: el,
+      start: "top 80%",
+      once: true,
+      onEnter: () => {
+        gsap.to(cards, {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: "power3.out",
+          stagger: 0.12,
+        });
+      },
+    });
+
+    return () => st.kill();
+  }, []);
 
   return (
     <section
       id="produits"
-      ref={ref}
+      ref={titleRef as React.RefObject<HTMLElement>}
       style={{
         background: "var(--surface)",
         borderTop: "1px solid var(--border)",
         borderBottom: "1px solid var(--border)",
+        perspective: 1000,
       }}
     >
       <div
@@ -108,108 +284,13 @@ export default function Portfolio() {
           notre capacité à livrer.
         </p>
 
-        <div className="grid grid-cols-3 max-md:grid-cols-1 gap-5">
-          {products.map((p, i) => (
-            <motion.div
-              key={p.name}
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: i * 0.15 }}
-              whileHover={{ y: -4, scale: 1.02 }}
-              className="flex flex-col overflow-hidden no-underline transition-all duration-300 group cursor-default"
-              style={{
-                background: "var(--card)",
-                border: "1px solid var(--border)",
-                borderRadius: "var(--radius)",
-              }}
-            >
-              <div
-                className="h-[200px] flex items-center justify-center relative overflow-hidden"
-                style={visualStyles[p.visualClass]}
-              >
-                <div
-                  className="absolute inset-0 opacity-[0.08]"
-                  style={{
-                    backgroundImage:
-                      "linear-gradient(45deg, transparent 45%, currentColor 45%, currentColor 55%, transparent 55%), linear-gradient(-45deg, transparent 45%, currentColor 45%, currentColor 55%, transparent 55%)",
-                    backgroundSize: "20px 20px",
-                  }}
-                />
-                <span
-                  className="relative z-10 text-[28px] font-extrabold"
-                  style={{
-                    fontFamily: "var(--font-syne)",
-                    letterSpacing: "-1px",
-                  }}
-                >
-                  {p.logo}
-                </span>
-              </div>
-
-              <div className="p-7 flex-1 flex flex-col">
-                <span
-                  className="inline-block text-[11px] font-medium px-2.5 py-0.5 rounded-full mb-3.5 tracking-wide w-fit"
-                  style={badgeStyles[p.badge.type]}
-                >
-                  {p.badge.label}
-                </span>
-                <div
-                  className="text-[22px] font-bold mb-2"
-                  style={{
-                    fontFamily: "var(--font-syne)",
-                    color: "var(--text)",
-                    letterSpacing: "-0.5px",
-                  }}
-                >
-                  {p.name}
-                </div>
-                <p
-                  className="text-sm font-light mb-6 flex-1"
-                  style={{ color: "var(--text-muted)", lineHeight: 1.6 }}
-                >
-                  {p.desc}
-                </p>
-                <div className="flex flex-wrap gap-1.5 mb-5">
-                  {p.stack.map((t) => (
-                    <span
-                      key={t}
-                      className="text-[11px] px-2.5 py-0.5 rounded-full"
-                      style={{
-                        background: "rgba(255,255,255,0.04)",
-                        border: "1px solid var(--border-accent)",
-                        color: "var(--text-muted)",
-                      }}
-                    >
-                      {t}
-                    </span>
-                  ))}
-                </div>
-                <div
-                  className="flex items-center gap-1.5 text-[13px] font-medium pt-4 mt-auto"
-                  style={{
-                    color: "var(--gold)",
-                    borderTop: "1px solid var(--border)",
-                  }}
-                >
-                  {p.link}
-                  <svg
-                    width="14"
-                    height="14"
-                    viewBox="0 0 14 14"
-                    fill="none"
-                    className="transition-transform duration-200 group-hover:translate-x-1"
-                  >
-                    <path
-                      d="M2 7h10M7 2l5 5-5 5"
-                      stroke="currentColor"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                </div>
-              </div>
-            </motion.div>
+        <div
+          ref={cardsContainerRef}
+          className="grid grid-cols-3 max-md:grid-cols-1 gap-5"
+          style={{ perspective: 1000 }}
+        >
+          {products.map((p) => (
+            <ProductCard key={p.name} p={p} />
           ))}
         </div>
       </div>
