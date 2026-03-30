@@ -116,11 +116,11 @@ export default function Approche() {
           <div
             key={step.number}
             data-reveal-card
-            className="p-12 max-[900px]:p-8 transition-colors duration-300 hover:bg-[var(--card-hover)]"
+            className="p-12 max-[900px]:p-8 transition-colors duration-300 hover:bg-[var(--card-hover)] group/step"
             style={{ background: "var(--card)" }}
           >
             <div
-              className="text-[11px] font-semibold tracking-[3px] uppercase mb-6 flex items-center gap-2"
+              className="text-[11px] font-semibold tracking-[3px] uppercase mb-6 flex items-center gap-2 transition-all duration-200 opacity-50 group-hover/step:opacity-100 group-hover/step:scale-105 origin-left"
               style={{
                 fontFamily: "var(--font-syne)",
                 color: "var(--gold)",

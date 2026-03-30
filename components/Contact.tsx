@@ -22,6 +22,7 @@ export default function Contact() {
   const formRef = useRef<HTMLFormElement>(null);
   const lineRef = useRef<HTMLDivElement>(null);
 
+  const [isMobile, setIsMobile] = useState(false);
   const [status, setStatus] = useState<Status>("idle");
   const [form, setForm] = useState({
     nom: "",
@@ -65,6 +66,14 @@ export default function Contact() {
       setStatus("error");
     }
   };
+
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 900px)");
+    setIsMobile(mq.matches);
+    const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches);
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
+  }, []);
 
   // GSAP scroll reveal (replaces Framer Motion)
   useEffect(() => {
@@ -151,8 +160,16 @@ export default function Contact() {
       }}
     >
       <div
-        className="py-24 px-10 max-[900px]:px-5 max-[900px]:py-16 grid grid-cols-[1fr_auto] max-[900px]:grid-cols-1 gap-16 items-start"
-        style={{ maxWidth: 1200, margin: "0 auto" }}
+        className="py-24 max-[900px]:py-16"
+        style={{
+          display: "grid",
+          gridTemplateColumns: isMobile ? "1fr" : "minmax(0, 1fr) minmax(0, 1fr)",
+          gap: isMobile ? "40px" : "60px",
+          alignItems: "start",
+          maxWidth: 1200,
+          margin: "0 auto",
+          padding: isMobile ? "0 20px" : "0 40px",
+        }}
       >
         <div ref={leftRef} style={{ opacity: 0 }}>
           <h2
@@ -259,9 +276,11 @@ export default function Contact() {
         <form
           ref={formRef}
           onSubmit={handleSubmit}
-          className="min-w-[340px] max-[900px]:min-w-0 w-full max-w-[440px] flex flex-col gap-4 p-8"
+          className="flex flex-col gap-4 p-8"
           style={{
             opacity: 0,
+            width: "100%",
+            maxWidth: "100%",
             background: "var(--card)",
             border: "1px solid var(--border)",
             borderRadius: "var(--radius)",

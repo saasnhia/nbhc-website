@@ -231,13 +231,18 @@ export default function Hero() {
 
         <div
           data-trust
-          className="flex items-center gap-1.5 mt-12 text-xs"
-          style={{ color: "var(--text-dim)", opacity: 0 }}
+          className="flex items-center gap-2 mt-12 text-xs"
+          style={{ color: "var(--text-dim)", opacity: 0, fontFamily: "var(--font-dm-sans)", letterSpacing: "0.5px" }}
         >
-          Construit avec
-          {[" · Next.js", " · Supabase", " · Mistral", " · Stripe"].map((t) => (
-            <span key={t}>{t}</span>
-          ))}
+          <span>Construit avec</span>
+          <span style={{ opacity: 0.3 }}>·</span>
+          <span>Next.js</span>
+          <span style={{ opacity: 0.3 }}>·</span>
+          <span>Supabase</span>
+          <span style={{ opacity: 0.3 }}>·</span>
+          <span>Mistral</span>
+          <span style={{ opacity: 0.3 }}>·</span>
+          <span>Stripe</span>
         </div>
 
         <div

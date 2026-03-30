@@ -22,6 +22,8 @@ function AnimatedNumber({ value, suffix }: { value: number; suffix: string }) {
 
     const obj = { val: 0 };
 
+    const bar = el.parentElement?.querySelector("[data-stat-bar]");
+
     const st = ScrollTrigger.create({
       trigger: el,
       start: "top 85%",
@@ -35,6 +37,9 @@ function AnimatedNumber({ value, suffix }: { value: number; suffix: string }) {
             el.textContent = `${Math.round(obj.val)}${suffix}`;
           },
         });
+        if (bar) {
+          gsap.to(bar, { scaleX: 1, duration: 0.8, delay: 0.3, ease: "power2.out" });
+        }
       },
     });
 
@@ -42,17 +47,30 @@ function AnimatedNumber({ value, suffix }: { value: number; suffix: string }) {
   }, [value, suffix]);
 
   return (
-    <div
-      ref={ref}
-      className="font-extrabold leading-none mb-2"
-      style={{
-        fontFamily: "var(--font-syne)",
-        fontSize: 48,
-        color: "var(--text)",
-        letterSpacing: "-2px",
-      }}
-    >
-      0{suffix}
+    <div>
+      <div
+        ref={ref}
+        className="font-extrabold leading-none mb-2"
+        style={{
+          fontFamily: "var(--font-syne)",
+          fontSize: 48,
+          color: "var(--text)",
+          letterSpacing: "-2px",
+        }}
+      >
+        0{suffix}
+      </div>
+      <div
+        data-stat-bar
+        style={{
+          width: 40,
+          height: 2,
+          background: "var(--gold)",
+          transformOrigin: "left",
+          transform: "scaleX(0)",
+          marginBottom: 8,
+        }}
+      />
     </div>
   );
 }
