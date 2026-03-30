@@ -31,7 +31,7 @@ export default function Footer() {
               { href: "#approche", label: "Approche" },
               { href: "#produits", label: "Produits" },
               { href: "#services", label: "Services" },
-              { href: "mailto:harou@nbhc.fr", label: "Contact" },
+              { href: "mailto:contact@nbhc.fr", label: "Contact" },
             ].map((l) => (
               <a
                 key={l.label}

@@ -143,14 +143,14 @@ export default function Contact() {
               Email direct
             </div>
             <a
-              href="mailto:harou@nbhc.fr"
+              href="mailto:contact@nbhc.fr"
               className="font-semibold text-base no-underline block hover:opacity-80"
               style={{
                 fontFamily: "var(--font-syne)",
                 color: "var(--gold)",
               }}
             >
-              harou@nbhc.fr
+              contact@nbhc.fr
             </a>
             <div
               className="mt-3 pt-3"
@@ -380,10 +380,10 @@ export default function Contact() {
             >
               Erreur, réessayez ou écrivez directement à{" "}
               <a
-                href="mailto:harou@nbhc.fr"
+                href="mailto:contact@nbhc.fr"
                 style={{ color: "#f87171", textDecoration: "underline" }}
               >
-                harou@nbhc.fr
+                contact@nbhc.fr
               </a>
             </p>
           )}

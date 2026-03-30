@@ -50,7 +50,7 @@ export async function POST(req: NextRequest) {
 
     await resend.emails.send({
       from: "NBHC Contact <contact@nbhc.fr>",
-      to: "harou@nbhc.fr",
+      to: "contact@nbhc.fr",
       subject: `[NBHC] Nouveau contact — ${typeProjet || "Non spécifié"}`,
       html: `
         <div style="font-family: -apple-system, sans-serif; max-width: 600px; margin: 0 auto; padding: 32px; background: #0f0f11; color: #f0ede6; border-radius: 12px;">
