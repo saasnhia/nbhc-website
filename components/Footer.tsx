@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export default function Footer() {
   return (
     <footer
@@ -19,6 +21,13 @@ export default function Footer() {
               letterSpacing: "-0.5px",
             }}
           >
+            <Image
+              src="/logo.png"
+              alt="NBHC"
+              width={32}
+              height={32}
+              style={{ borderRadius: 8, display: "inline-block", verticalAlign: "middle", marginRight: 8 }}
+            />
             N<span style={{ color: "var(--gold)" }}>B</span>HC
           </div>
           <div className="text-[13px]" style={{ color: "var(--text-dim)" }}>

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 const links = [
   { href: "#approche", label: "Approche" },
@@ -48,6 +49,13 @@ export default function Nav() {
         className="font-[var(--font-syne)] font-extrabold text-xl tracking-tight no-underline flex items-center gap-2"
         style={{ fontFamily: "var(--font-syne)", color: "var(--text)" }}
       >
+        <Image
+          src="/logo.png"
+          alt="NBHC"
+          width={36}
+          height={36}
+          style={{ borderRadius: 8 }}
+        />
         N<span style={{ color: "var(--gold)" }}>B</span>HC
       </a>
 

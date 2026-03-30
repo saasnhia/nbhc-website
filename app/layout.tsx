@@ -43,6 +43,9 @@ export const metadata: Metadata = {
     description:
       "Studio IA français. Solutions SaaS et IA sur mesure pour automatiser votre entreprise.",
   },
+  icons: {
+    icon: "/logo.png",
+  },
   robots: {
     index: true,
     follow: true,
