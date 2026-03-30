@@ -56,31 +56,48 @@ const badgeStyles: Record<string, React.CSSProperties> = {
 
 /* ─── SVG Visuals ─── */
 
-const waveHeights = [12, 20, 28, 16, 24, 8, 32, 18, 26, 14, 22, 30, 10, 28, 16, 24, 20, 12, 28, 18, 24, 8, 20, 16];
-
 function VlogyzVisual() {
   return (
     <svg width="380" height="200" viewBox="0 0 380 200" fill="none" xmlns="http://www.w3.org/2000/svg" overflow="hidden" style={{ display: "block", width: "100%", height: 200 }}>
       <rect width="380" height="200" fill="#0a0b14" />
-      {/* Score viralité pill */}
-      <rect x="16" y="16" width="80" height="28" rx="14" fill="rgba(99,102,241,0.2)" stroke="#6366f1" strokeWidth="0.5" />
-      <text x="56" y="24" textAnchor="middle" fontSize="8" fill="#6366f1" opacity="0.7">VIRALITÉ</text>
-      <text x="56" y="34" textAnchor="middle" fontSize="11" fill="#818cf8" fontWeight="600">87 / 100</text>
-      {/* Waveform */}
-      {waveHeights.map((h, i) => (
-        <rect key={i} x={40 + i * 12.5} y={90 - h / 2} width="3" height={h} rx="1.5" fill="#6366f1" opacity={0.4 + (h / 32) * 0.6} />
-      ))}
-      {/* Sous-titres */}
-      <rect x="20" y="134" width="260" height="24" rx="12" fill="#1a1b2e" />
-      <rect x="20" y="134" width="90" height="24" rx="12" fill="#6366f1" opacity="0.9" />
-      <text x="65" y="150" textAnchor="middle" fontSize="11" fill="white" fontWeight="600">On automat...</text>
-      <text x="210" y="150" textAnchor="middle" fontSize="11" fill="#94a3b8">ce qui vous freine</text>
-      {/* Timeline */}
-      <rect x="20" y="169" width="340" height="4" rx="2" fill="#1a1b2e" />
-      <rect x="20" y="169" width="160" height="4" rx="2" fill="#6366f1" />
-      <rect x="86" y="167" width="8" height="8" rx="1" fill="#f43f5e" opacity="0.8" />
-      <line data-playhead x1="178" y1="158" x2="178" y2="182" stroke="white" strokeWidth="1.5" opacity="0.5" />
-      <circle data-playhead-dot cx="178" cy="158" r="5" fill="#f43f5e" />
+      {/* Lecteur vidéo */}
+      <rect x="20" y="16" width="180" height="108" rx="8" fill="#0d0f1c" stroke="rgba(99,102,241,0.4)" strokeWidth="1" />
+      <line x1="20" y1="16" x2="200" y2="124" stroke="rgba(99,102,241,0.08)" strokeWidth="1" />
+      <line x1="200" y1="16" x2="20" y2="124" stroke="rgba(99,102,241,0.08)" strokeWidth="1" />
+      <circle cx="110" cy="70" r="18" fill="rgba(99,102,241,0.2)" stroke="#6366f1" strokeWidth="1" />
+      <path d="M104 62 L104 78 L120 70 Z" fill="#6366f1" />
+      <rect x="178" y="20" width="20" height="14" rx="3" fill="#6366f1" />
+      <text x="188" y="30" textAnchor="middle" fontSize="8" fill="white" fontWeight="700">IA</text>
+      {/* Sous-titre stylisé */}
+      <rect x="30" y="102" width="160" height="14" rx="7" fill="#1a1b2e" />
+      <rect x="30" y="102" width="72" height="14" rx="7" fill="#6366f1" opacity="0.85" />
+      <text x="66" y="112" textAnchor="middle" fontSize="9" fill="white" fontWeight="600">On autom...</text>
+      <text x="145" y="112" textAnchor="middle" fontSize="9" fill="#94a3b8">atise</text>
+      {/* Score viralité */}
+      <rect x="212" y="16" width="152" height="108" rx="8" fill="#0d0f1c" stroke="rgba(99,102,241,0.2)" strokeWidth="0.5" />
+      <text x="288" y="34" textAnchor="middle" fontSize="8" fill="#6366f1" opacity="0.6" letterSpacing="1">SCORE VIRALITÉ</text>
+      <circle cx="288" cy="72" r="28" fill="none" stroke="#1a1b2e" strokeWidth="6" />
+      <circle cx="288" cy="72" r="28" fill="none" stroke="#6366f1" strokeWidth="6" strokeDasharray="123 176" strokeDashoffset="31" strokeLinecap="round" transform="rotate(-90 288 72)" />
+      <text x="288" y="68" textAnchor="middle" fontSize="18" fontWeight="800" fontFamily="Syne, sans-serif" fill="#e2e8f0">87</text>
+      <text x="288" y="82" textAnchor="middle" fontSize="9" fill="#6366f1" opacity="0.7">/100</text>
+      <text x="220" y="104" fontSize="8" fill="#4ade80">Hook 92</text>
+      <text x="256" y="104" fontSize="8" fill="#fbbf24">Pace 84</text>
+      <text x="292" y="104" fontSize="8" fill="#60a5fa">CTA 78</text>
+      <text x="328" y="104" fontSize="8" fill="#c084fc">Clar 91</text>
+      {/* Timeline cuts */}
+      <rect x="20" y="136" width="344" height="52" rx="8" fill="#0d0f1c" stroke="rgba(99,102,241,0.15)" strokeWidth="0.5" />
+      <text x="32" y="152" fontSize="8" fill="#6366f1" opacity="0.5">TIMELINE — CUTS SILENCES &amp; FILLERS</text>
+      <rect x="28" y="158" width="328" height="6" rx="3" fill="#1a1b2e" />
+      <rect x="28" y="158" width="60" height="6" rx="1" fill="#6366f1" />
+      <rect x="100" y="158" width="80" height="6" rx="1" fill="#6366f1" />
+      <rect x="196" y="158" width="100" height="6" rx="1" fill="#6366f1" />
+      <rect x="310" y="158" width="46" height="6" rx="1" fill="#6366f1" />
+      <rect x="88" y="156" width="12" height="10" rx="2" fill="#f43f5e" opacity="0.7" />
+      <rect x="180" y="156" width="16" height="10" rx="2" fill="#f43f5e" opacity="0.7" />
+      <rect x="296" y="156" width="14" height="10" rx="2" fill="#f43f5e" opacity="0.7" />
+      <text x="88" y="176" fontSize="7" fill="#f43f5e" opacity="0.6">silence</text>
+      <text x="178" y="176" fontSize="7" fill="#f43f5e" opacity="0.6">filler</text>
+      <text x="295" y="176" fontSize="7" fill="#f43f5e" opacity="0.6">-2.3s</text>
     </svg>
   );
 }
@@ -120,33 +137,41 @@ function DevizlyVisual() {
 function WorthifastVisual() {
   return (
     <svg width="380" height="200" viewBox="0 0 380 200" fill="none" xmlns="http://www.w3.org/2000/svg" overflow="hidden" style={{ display: "block", width: "100%", height: 200 }}>
-      <rect width="380" height="200" fill="#0b120a" />
-      {/* Section label */}
-      <text x="20" y="24" fontSize="9" fontFamily="Syne, sans-serif" fill="#4ade80" opacity="0.5" letterSpacing="2">RÉVISION COMPTABLE — FY 2025</text>
-      {/* Card Écritures */}
-      <rect x="20" y="34" width="100" height="56" rx="8" fill="#0f1f0c" stroke="rgba(34,197,94,0.3)" strokeWidth="0.5" />
-      <text x="70" y="54" textAnchor="middle" fontSize="8" fill="#4ade80" opacity="0.6">ÉCRITURES</text>
-      <text x="70" y="78" textAnchor="middle" fontSize="20" fontWeight="800" fontFamily="Syne, sans-serif" fill="#22c55e">1,247</text>
-      {/* Card Anomalies */}
-      <rect x="130" y="34" width="100" height="56" rx="8" fill="#1f0f0c" stroke="rgba(249,115,22,0.3)" strokeWidth="0.5" />
-      <text x="180" y="54" textAnchor="middle" fontSize="8" fill="#fb923c" opacity="0.6">ANOMALIES</text>
-      <text x="180" y="78" textAnchor="middle" fontSize="20" fontWeight="800" fontFamily="Syne, sans-serif" fill="#f97316">3</text>
-      {/* Card Progression */}
-      <rect x="240" y="34" width="120" height="56" rx="8" fill="#0f1a1f" stroke="rgba(56,189,248,0.3)" strokeWidth="0.5" />
-      <text x="300" y="54" textAnchor="middle" fontSize="8" fill="#7dd3fc" opacity="0.6">PROGRESSION</text>
-      <text x="300" y="78" textAnchor="middle" fontSize="20" fontWeight="800" fontFamily="Syne, sans-serif" fill="#38bdf8">94%</text>
-      {/* Barre progression */}
-      <text x="20" y="104" fontSize="8" fill="#4ade80" opacity="0.4">Avancement mission</text>
-      <rect x="20" y="108" width="340" height="5" rx="2.5" fill="#1a2f17" />
-      <rect data-progress-bar x="20" y="108" width="320" height="5" rx="2.5" fill="#22c55e" />
-      <text x="366" y="114" textAnchor="end" fontSize="8" fill="#22c55e">94%</text>
-      {/* Anomalies log */}
-      <circle cx="28" cy="130" r="3.5" fill="#f97316" />
-      <text x="38" y="134" fontSize="9" fill="#5a7a5a" fontFamily="DM Sans, sans-serif">Écriture orpheline — Cpte 401</text>
-      <circle cx="28" cy="150" r="3.5" fill="#f97316" />
-      <text x="38" y="154" fontSize="9" fill="#5a7a5a" fontFamily="DM Sans, sans-serif">Déséquilibre Journal OD — 0.02€</text>
-      <circle cx="28" cy="170" r="3.5" fill="#22c55e" />
-      <text x="38" y="174" fontSize="9" fill="#5a7a5a" fontFamily="DM Sans, sans-serif">TVA collectée — Vérifiée ✓</text>
+      <rect width="380" height="200" fill="#0b110a" />
+      {/* Header mission */}
+      <rect x="16" y="14" width="348" height="28" rx="6" fill="rgba(34,197,94,0.06)" stroke="rgba(34,197,94,0.15)" strokeWidth="0.5" />
+      <rect x="24" y="20" width="14" height="10" rx="2" fill="#22c55e" opacity="0.4" />
+      <text x="44" y="30" fontSize="9" fontFamily="Syne, sans-serif" fill="#4ade80" fontWeight="600">Mission — Cabinet Dupont &amp; Associés</text>
+      <rect x="306" y="19" width="52" height="14" rx="7" fill="rgba(34,197,94,0.15)" />
+      <text x="332" y="29" textAnchor="middle" fontSize="8" fill="#4ade80">● EN COURS</text>
+      {/* KPI Card - FEC */}
+      <rect x="16" y="52" width="106" height="60" rx="8" fill="#0f1a0e" stroke="rgba(34,197,94,0.25)" strokeWidth="0.5" />
+      <text x="69" y="70" textAnchor="middle" fontSize="8" fill="#4ade80" opacity="0.6">FEC IMPORTÉ</text>
+      <text x="69" y="92" textAnchor="middle" fontSize="22" fontWeight="800" fontFamily="Syne, sans-serif" fill="#22c55e">FEC</text>
+      <text x="69" y="106" textAnchor="middle" fontSize="8" fill="#22c55e" opacity="0.5">1 247 lignes</text>
+      {/* KPI Card - Anomalies */}
+      <rect x="130" y="52" width="106" height="60" rx="8" fill="#1a0f0a" stroke="rgba(249,115,22,0.25)" strokeWidth="0.5" />
+      <text x="183" y="70" textAnchor="middle" fontSize="8" fill="#fb923c" opacity="0.6">ANOMALIES</text>
+      <text x="183" y="92" textAnchor="middle" fontSize="28" fontWeight="800" fontFamily="Syne, sans-serif" fill="#f97316">3</text>
+      <text x="183" y="106" textAnchor="middle" fontSize="8" fill="#f97316" opacity="0.5">à vérifier</text>
+      {/* KPI Card - Avancement */}
+      <rect x="244" y="52" width="120" height="60" rx="8" fill="#0f161f" stroke="rgba(56,189,248,0.25)" strokeWidth="0.5" />
+      <text x="304" y="70" textAnchor="middle" fontSize="8" fill="#7dd3fc" opacity="0.6">AVANCEMENT</text>
+      <text x="304" y="92" textAnchor="middle" fontSize="28" fontWeight="800" fontFamily="Syne, sans-serif" fill="#38bdf8">94%</text>
+      <rect x="258" y="100" width="92" height="4" rx="2" fill="#1a2535" />
+      <rect x="258" y="100" width="86" height="4" rx="2" fill="#38bdf8" />
+      {/* Log anomalies */}
+      <rect x="16" y="124" width="348" height="64" rx="8" fill="#0d130c" stroke="rgba(34,197,94,0.1)" strokeWidth="0.5" />
+      <text x="28" y="138" fontSize="8" fill="#4ade80" opacity="0.4" letterSpacing="1">ANOMALIES DÉTECTÉES</text>
+      <rect x="24" y="144" width="2" height="12" rx="1" fill="#f97316" />
+      <text x="32" y="154" fontSize="9" fill="#94a3b8" fontFamily="DM Sans, sans-serif">401000 · Écriture orpheline · 12/03/2025</text>
+      <text x="350" y="154" textAnchor="end" fontSize="9" fill="#f97316">2 340,00 €</text>
+      <rect x="24" y="160" width="2" height="12" rx="1" fill="#f97316" />
+      <text x="32" y="170" fontSize="9" fill="#94a3b8">512000 · Déséquilibre journal OD</text>
+      <text x="350" y="170" textAnchor="end" fontSize="9" fill="#f97316">0,02 €</text>
+      <rect x="24" y="176" width="2" height="8" rx="1" fill="#22c55e" />
+      <text x="32" y="183" fontSize="9" fill="#94a3b8">445000 · TVA collectée · Vérifiée ✓</text>
+      <text x="350" y="183" textAnchor="end" fontSize="9" fill="#22c55e">OK</text>
     </svg>
   );
 }
@@ -188,17 +213,9 @@ function ProductCard({ p, isMobile }: { p: (typeof products)[number]; isMobile: 
     svgTweensRef.current.forEach((t) => t.kill());
     svgTweensRef.current = [];
 
-    if (p.id === "vlogyz") {
-      const playhead = el.querySelector("[data-playhead]");
-      const dot = el.querySelector("[data-playhead-dot]");
-      if (playhead) svgTweensRef.current.push(gsap.to(playhead, { attr: { x1: 200, x2: 200 }, duration: 0.6, ease: "power2.out" }));
-      if (dot) svgTweensRef.current.push(gsap.to(dot, { attr: { cx: 200, cy: 155 }, duration: 0.6, ease: "power2.out" }));
-    } else if (p.id === "devizly") {
+    if (p.id === "devizly") {
       const btn = el.querySelector("[data-sign-btn]");
       if (btn) svgTweensRef.current.push(gsap.to(btn, { opacity: 0.3, duration: 0.5, repeat: -1, yoyo: true, ease: "sine.inOut" }));
-    } else if (p.id === "worthifast") {
-      const bar = el.querySelector("[data-progress-bar]");
-      if (bar) svgTweensRef.current.push(gsap.to(bar, { attr: { width: 340 }, duration: 0.6, ease: "power2.out" }));
     }
   };
 
@@ -211,17 +228,9 @@ function ProductCard({ p, isMobile }: { p: (typeof products)[number]; isMobile: 
     svgTweensRef.current = [];
 
     if (!el) return;
-    if (p.id === "vlogyz") {
-      const playhead = el.querySelector("[data-playhead]");
-      const dot = el.querySelector("[data-playhead-dot]");
-      if (playhead) gsap.to(playhead, { attr: { x1: 178, x2: 178 }, duration: 0.4, ease: "power2.out" });
-      if (dot) gsap.to(dot, { attr: { cx: 178, cy: 158 }, duration: 0.4, ease: "power2.out" });
-    } else if (p.id === "devizly") {
+    if (p.id === "devizly") {
       const btn = el.querySelector("[data-sign-btn]");
       if (btn) gsap.to(btn, { opacity: 0.15, duration: 0.3 });
-    } else if (p.id === "worthifast") {
-      const bar = el.querySelector("[data-progress-bar]");
-      if (bar) gsap.to(bar, { attr: { width: 320 }, duration: 0.4, ease: "power2.out" });
     }
   };
 

@@ -3,9 +3,9 @@ interface LogoProps { variant?: 'nav' | 'footer' }
 export default function Logo({ variant = 'nav' }: LogoProps) {
   return (
     <svg
-      width={variant === 'nav' ? 90 : 78}
+      width={variant === 'nav' ? 105 : 90}
       height={variant === 'nav' ? 28 : 24}
-      viewBox="0 0 90 28"
+      viewBox="0 0 105 28"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >

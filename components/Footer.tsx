@@ -82,6 +82,8 @@ export default function Footer() {
                 { href: "#approche", label: "Approche" },
                 { href: "#produits", label: "Produits" },
                 { href: "#services", label: "Services" },
+                { href: "/blog", label: "Blog" },
+                { href: "/faq", label: "FAQ" },
                 { href: "mailto:contact@nbhc.fr", label: "Contact" },
               ].map((l) => (
                 <a
@@ -98,16 +100,51 @@ export default function Footer() {
           </div>
         </div>
         <div
-          className="text-xs py-5 px-10 max-[900px]:px-5"
+          className="px-10 max-[900px]:px-5"
           style={{
-            color: "var(--text-dim)",
-            borderTop: "1px solid var(--border)",
             maxWidth: 1200,
             margin: "0 auto",
           }}
         >
-          © 2026 SAS NBHC — SIREN 102 637 899 · 55 Rue Henri Clément, 71100
-          Saint-Marcel · Tous droits réservés
+          <div
+            style={{
+              paddingTop: 12,
+              marginBottom: 0,
+              borderTop: "1px solid var(--border)",
+              display: "flex",
+              flexWrap: "wrap",
+              gap: 4,
+              alignItems: "center",
+              fontSize: 12,
+            }}
+          >
+            {[
+              { href: "/mentions-legales", label: "Mentions légales" },
+              { href: "/politique-confidentialite", label: "Politique de confidentialité" },
+              { href: "/cgv", label: "CGV" },
+              { href: "/cgu", label: "CGU" },
+            ].map((l, i, arr) => (
+              <span key={l.label}>
+                <a
+                  href={l.href}
+                  className="no-underline hover:opacity-80"
+                  style={{ color: "var(--text-dim)" }}
+                >
+                  {l.label}
+                </a>
+                {i < arr.length - 1 && (
+                  <span style={{ color: "var(--text-dim)", margin: "0 6px" }}>·</span>
+                )}
+              </span>
+            ))}
+          </div>
+          <div
+            className="text-xs py-5"
+            style={{ color: "var(--text-dim)" }}
+          >
+            © 2026 SAS NBHC — SIREN 102 637 899 · 55 Rue Henri Clément, 71100
+            Saint-Marcel · Tous droits réservés
+          </div>
         </div>
       </footer>
     </>
