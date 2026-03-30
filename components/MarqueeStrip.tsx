@@ -59,6 +59,7 @@ export default function MarqueeStrip() {
       }}
       onMouseEnter={onEnter}
       onMouseLeave={onLeave}
+      data-cursor="drag"
     >
       <div
         ref={trackRef}

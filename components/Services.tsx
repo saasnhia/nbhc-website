@@ -3,7 +3,7 @@
 import { useRef, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useRevealWords } from "../hooks/useReveal";
+import { useRevealWords, useClipReveal } from "../hooks/useReveal";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -36,6 +36,7 @@ const services = [
 
 export default function Services() {
   const titleRef = useRevealWords("h2");
+  const clipRef = useClipReveal();
   const cardsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -66,11 +67,15 @@ export default function Services() {
   return (
     <section
       id="services"
-      ref={titleRef as React.RefObject<HTMLElement>}
-      className="py-24 px-10 max-md:px-5 max-md:py-16"
+      ref={(el) => {
+        (titleRef as React.MutableRefObject<HTMLElement | null>).current = el;
+        (clipRef as React.MutableRefObject<HTMLElement | null>).current = el;
+      }}
+      className="py-24 px-10 max-[900px]:px-5 max-[900px]:py-16"
       style={{ maxWidth: 1200, margin: "0 auto" }}
     >
       <div
+        data-clip-reveal
         className="text-[11px] font-medium tracking-[3px] uppercase mb-4 flex items-center gap-2"
         style={{ color: "var(--gold)" }}
       >
@@ -102,11 +107,12 @@ export default function Services() {
         Vous avez un problème métier. Nous avons la stack pour le résoudre.
       </p>
 
-      <div ref={cardsRef} className="grid grid-cols-2 max-md:grid-cols-1 gap-5">
+      <div ref={cardsRef} className="grid grid-cols-2 max-[900px]:grid-cols-1 gap-5">
         {services.map((s) => (
           <div
             key={s.name}
             data-reveal-card
+            data-cursor="card"
             className="p-9 relative overflow-hidden transition-colors duration-300 group hover:bg-[var(--card-hover)]"
             style={{
               background: "var(--card)",
@@ -114,7 +120,6 @@ export default function Services() {
               borderRadius: "var(--radius)",
             }}
           >
-            {/* Gold bar on hover */}
             <span
               className="absolute top-0 left-0 w-[3px] h-0 transition-all duration-300 group-hover:h-full"
               style={{ background: "var(--gold)" }}

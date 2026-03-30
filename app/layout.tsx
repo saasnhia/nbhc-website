@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { Syne, DM_Sans } from "next/font/google";
 import "./globals.css";
-import SmoothScroll from "../components/SmoothScroll";
-import Cursor from "../components/Cursor";
+import AppShell from "../components/AppShell";
 
 const syne = Syne({
   variable: "--font-syne",
@@ -66,10 +65,7 @@ export default function RootLayout({
   return (
     <html lang="fr" className={`${syne.variable} ${dmSans.variable}`}>
       <body>
-        <SmoothScroll>
-          <Cursor />
-          {children}
-        </SmoothScroll>
+        <AppShell>{children}</AppShell>
       </body>
     </html>
   );

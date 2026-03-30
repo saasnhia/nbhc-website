@@ -3,7 +3,7 @@
 import { useRef, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useRevealWords } from "../hooks/useReveal";
+import { useRevealWords, useClipReveal } from "../hooks/useReveal";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -30,6 +30,7 @@ const steps = [
 
 export default function Approche() {
   const titleRef = useRevealWords("h2");
+  const clipRef = useClipReveal();
   const cardsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -60,11 +61,15 @@ export default function Approche() {
   return (
     <section
       id="approche"
-      ref={titleRef as React.RefObject<HTMLElement>}
-      className="py-24 px-10 max-md:px-5 max-md:py-16"
+      ref={(el) => {
+        (titleRef as React.MutableRefObject<HTMLElement | null>).current = el;
+        (clipRef as React.MutableRefObject<HTMLElement | null>).current = el;
+      }}
+      className="py-24 px-10 max-[900px]:px-5 max-[900px]:py-16"
       style={{ maxWidth: 1200, margin: "0 auto" }}
     >
       <div
+        data-clip-reveal
         className="text-[11px] font-medium tracking-[3px] uppercase mb-4 flex items-center gap-2"
         style={{ color: "var(--gold)" }}
       >
@@ -99,7 +104,7 @@ export default function Approche() {
 
       <div
         ref={cardsRef}
-        className="grid grid-cols-3 max-md:grid-cols-1 overflow-hidden"
+        className="grid grid-cols-3 max-[900px]:grid-cols-1 overflow-hidden"
         style={{
           gap: 1,
           background: "var(--border)",
@@ -111,7 +116,7 @@ export default function Approche() {
           <div
             key={step.number}
             data-reveal-card
-            className="p-12 max-md:p-8 transition-colors duration-300 hover:bg-[var(--card-hover)]"
+            className="p-12 max-[900px]:p-8 transition-colors duration-300 hover:bg-[var(--card-hover)]"
             style={{ background: "var(--card)" }}
           >
             <div

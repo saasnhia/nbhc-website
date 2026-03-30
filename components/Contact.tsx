@@ -1,7 +1,10 @@
 "use client";
 
-import { useRef, useState, FormEvent } from "react";
-import { motion, useInView } from "framer-motion";
+import { useRef, useState, useEffect, FormEvent } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const projectTypes = [
   "Agent IA métier",
@@ -14,8 +17,10 @@ const projectTypes = [
 type Status = "idle" | "loading" | "success" | "error";
 
 export default function Contact() {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const sectionRef = useRef<HTMLElement>(null);
+  const leftRef = useRef<HTMLDivElement>(null);
+  const formRef = useRef<HTMLFormElement>(null);
+  const lineRef = useRef<HTMLDivElement>(null);
 
   const [status, setStatus] = useState<Status>("idle");
   const [form, setForm] = useState({
@@ -61,6 +66,68 @@ export default function Contact() {
     }
   };
 
+  // GSAP scroll reveal (replaces Framer Motion)
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      if (leftRef.current) {
+        gsap.fromTo(
+          leftRef.current,
+          { opacity: 0, y: 30 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.7,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: leftRef.current,
+              start: "top 80%",
+              once: true,
+            },
+          }
+        );
+      }
+
+      if (formRef.current) {
+        gsap.fromTo(
+          formRef.current,
+          { opacity: 0, y: 30 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.7,
+            delay: 0.2,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: formRef.current,
+              start: "top 80%",
+              once: true,
+            },
+          }
+        );
+      }
+
+      // Animated gold line
+      if (lineRef.current) {
+        gsap.fromTo(
+          lineRef.current,
+          { height: 0 },
+          {
+            height: 120,
+            duration: 1,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: lineRef.current,
+              start: "top 80%",
+              once: true,
+            },
+          }
+        );
+      }
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
   const inputStyle: React.CSSProperties = {
     width: "100%",
     padding: "12px 16px",
@@ -77,46 +144,45 @@ export default function Contact() {
   return (
     <section
       id="contact"
-      ref={ref}
-      style={{ borderTop: "1px solid var(--border)" }}
+      ref={sectionRef}
+      style={{
+        borderTop: "1px solid var(--border)",
+        background: "var(--surface)",
+      }}
     >
       <div
-        className="py-24 px-10 max-md:px-5 max-md:py-16 grid grid-cols-[1fr_auto] max-md:grid-cols-1 gap-16 items-start"
+        className="py-24 px-10 max-[900px]:px-5 max-[900px]:py-16 grid grid-cols-[1fr_auto] max-[900px]:grid-cols-1 gap-16 items-start"
         style={{ maxWidth: 1200, margin: "0 auto" }}
       >
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-        >
-          <div
-            className="text-[11px] font-medium tracking-[3px] uppercase mb-5 flex items-center gap-2"
-            style={{ color: "var(--gold)" }}
-          >
-            <span
-              className="block w-4 h-px"
-              style={{ background: "var(--gold)" }}
-            />
-            Démarrer
-          </div>
+        <div ref={leftRef} style={{ opacity: 0 }}>
           <h2
-            className="font-extrabold leading-none mb-4"
+            className="font-extrabold leading-none mb-6"
             style={{
               fontFamily: "var(--font-syne)",
-              fontSize: "clamp(36px, 4vw, 56px)",
-              letterSpacing: "-2px",
+              fontSize: "clamp(48px, 8vw, 120px)",
+              letterSpacing: "-4px",
               color: "var(--text)",
-              maxWidth: 640,
             }}
           >
-            Votre prochain outil
+            Votre projet
             <br />
-            <em className="not-italic" style={{ color: "var(--gold)" }}>
-              IA commence ici.
-            </em>
+            <span style={{ color: "var(--gold)" }}>commence ici.</span>
           </h2>
+
+          {/* Animated gold line */}
+          <div
+            ref={lineRef}
+            style={{
+              width: 2,
+              height: 0,
+              background: "var(--gold)",
+              marginLeft: 40,
+              marginBottom: 32,
+            }}
+          />
+
           <p
-            className="text-base font-light mt-4"
+            className="text-base font-light"
             style={{
               color: "var(--text-muted)",
               maxWidth: 480,
@@ -129,7 +195,7 @@ export default function Contact() {
 
           {/* Info block */}
           <div
-            className="mt-10 p-6 max-md:mt-8"
+            className="mt-10 p-6 max-[900px]:mt-8"
             style={{
               background: "var(--card)",
               border: "1px solid var(--border)",
@@ -144,6 +210,7 @@ export default function Contact() {
             </div>
             <a
               href="mailto:contact@nbhc.fr"
+              data-cursor="link"
               className="font-semibold text-base no-underline block hover:opacity-80"
               style={{
                 fontFamily: "var(--font-syne)",
@@ -186,15 +253,19 @@ export default function Contact() {
               </div>
             </div>
           </div>
-        </motion.div>
+        </div>
 
         {/* Form */}
-        <motion.form
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.2 }}
+        <form
+          ref={formRef}
           onSubmit={handleSubmit}
-          className="min-w-[340px] max-md:min-w-0 w-full max-w-[440px] flex flex-col gap-4"
+          className="min-w-[340px] max-[900px]:min-w-0 w-full max-w-[440px] flex flex-col gap-4 p-8"
+          style={{
+            opacity: 0,
+            background: "var(--card)",
+            border: "1px solid var(--border)",
+            borderRadius: "var(--radius)",
+          }}
         >
           <div>
             <label
@@ -322,6 +393,7 @@ export default function Contact() {
           <button
             type="submit"
             disabled={status === "loading"}
+            data-cursor="link"
             className="flex items-center justify-center gap-2 text-[15px] font-medium px-7 py-3.5 rounded-md transition-all duration-200 cursor-pointer hover:-translate-y-px disabled:opacity-60 disabled:cursor-not-allowed mt-2"
             style={{
               background: "var(--gold)",
@@ -381,13 +453,14 @@ export default function Contact() {
               Erreur, réessayez ou écrivez directement à{" "}
               <a
                 href="mailto:contact@nbhc.fr"
+                data-cursor="link"
                 style={{ color: "#f87171", textDecoration: "underline" }}
               >
                 contact@nbhc.fr
               </a>
             </p>
           )}
-        </motion.form>
+        </form>
       </div>
     </section>
   );

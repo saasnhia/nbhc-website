@@ -94,3 +94,35 @@ export function useRevealCards() {
 
   return containerRef;
 }
+
+export function useClipReveal() {
+  const containerRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      const el = containerRef.current;
+      if (!el) return;
+
+      el.querySelectorAll("[data-clip-reveal]").forEach((target) => {
+        gsap.set(target, { clipPath: "inset(0 100% 0 0)" });
+
+        ScrollTrigger.create({
+          trigger: target,
+          start: "top 75%",
+          once: true,
+          onEnter: () => {
+            gsap.to(target, {
+              clipPath: "inset(0 0% 0 0)",
+              duration: 0.9,
+              ease: "power4.inOut",
+            });
+          },
+        });
+      });
+    }, containerRef);
+
+    return () => ctx.revert();
+  }, []);
+
+  return containerRef;
+}

@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useRevealWords } from "../hooks/useReveal";
@@ -61,7 +61,7 @@ const badgeStyles: Record<string, React.CSSProperties> = {
   },
 };
 
-function ProductCard({ p }: { p: typeof products[number] }) {
+function ProductCard({ p }: { p: (typeof products)[number] }) {
   const cardRef = useRef<HTMLDivElement>(null);
   const glowRef = useRef<HTMLDivElement>(null);
 
@@ -101,11 +101,13 @@ function ProductCard({ p }: { p: typeof products[number] }) {
   return (
     <div
       ref={cardRef}
-      data-reveal-card
+      data-cursor="card"
       onMouseMove={onMouseMove}
       onMouseLeave={onMouseLeave}
-      className="flex flex-col overflow-hidden no-underline transition-all duration-300 group cursor-default"
+      className="flex flex-col overflow-hidden no-underline transition-all duration-300 group cursor-default max-[768px]:w-full"
       style={{
+        width: 380,
+        flexShrink: 0,
         background: "var(--card)",
         border: "1px solid var(--border)",
         borderRadius: "var(--radius)",
@@ -209,46 +211,65 @@ function ProductCard({ p }: { p: typeof products[number] }) {
 
 export default function Portfolio() {
   const titleRef = useRevealWords("h2");
-  const cardsContainerRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
+  const scrollWrapRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const progressRef = useRef<HTMLDivElement>(null);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    const el = cardsContainerRef.current;
-    if (!el) return;
+    const mq = window.matchMedia("(max-width: 768px)");
+    setIsMobile(mq.matches);
+    const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches);
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
+  }, []);
 
-    const cards = el.querySelectorAll("[data-reveal-card]");
-    gsap.set(cards, { opacity: 0, y: 60 });
+  useEffect(() => {
+    if (isMobile) return;
+
+    const track = trackRef.current;
+    const wrap = scrollWrapRef.current;
+    const progress = progressRef.current;
+    if (!track || !wrap || !progress) return;
+
+    // Calculate dynamic scroll distance
+    const totalWidth = track.scrollWidth;
+    const viewportWidth = wrap.offsetWidth;
+    const scrollDistance = totalWidth - viewportWidth;
+
+    if (scrollDistance <= 0) return;
 
     const st = ScrollTrigger.create({
-      trigger: el,
-      start: "top 80%",
-      once: true,
-      onEnter: () => {
-        gsap.to(cards, {
-          opacity: 1,
-          y: 0,
-          duration: 0.8,
-          ease: "power3.out",
-          stagger: 0.12,
-        });
+      trigger: wrap,
+      pin: true,
+      scrub: 0.5,
+      start: "top top",
+      end: `+=${scrollDistance + 200}`,
+      onUpdate: (self) => {
+        gsap.set(track, { x: -self.progress * scrollDistance });
+        gsap.set(progress, { scaleX: self.progress });
       },
     });
 
     return () => st.kill();
-  }, []);
+  }, [isMobile]);
 
   return (
     <section
       id="produits"
-      ref={titleRef as React.RefObject<HTMLElement>}
+      ref={(el) => {
+        sectionRef.current = el;
+        (titleRef as React.MutableRefObject<HTMLElement | null>).current = el;
+      }}
       style={{
         background: "var(--surface)",
         borderTop: "1px solid var(--border)",
         borderBottom: "1px solid var(--border)",
-        perspective: 1000,
       }}
     >
       <div
-        className="py-24 px-10 max-md:px-5 max-md:py-16"
+        className="py-24 px-10 max-[900px]:px-5 max-[900px]:py-16"
         style={{ maxWidth: 1200, margin: "0 auto" }}
       >
         <div
@@ -283,16 +304,48 @@ export default function Portfolio() {
           Trois SaaS conçus et opérés par NBHC — chacun comme preuve concrète de
           notre capacité à livrer.
         </p>
+      </div>
 
+      {/* Horizontal scroll wrapper */}
+      <div
+        ref={scrollWrapRef}
+        className="relative"
+        style={{ overflow: isMobile ? "visible" : "hidden" }}
+      >
         <div
-          ref={cardsContainerRef}
-          className="grid grid-cols-3 max-md:grid-cols-1 gap-5"
-          style={{ perspective: 1000 }}
+          ref={trackRef}
+          className={
+            isMobile
+              ? "flex flex-col gap-5 px-5 pb-16"
+              : "flex gap-6 px-10"
+          }
+          style={
+            isMobile
+              ? {}
+              : { width: "max-content", paddingRight: 40 }
+          }
         >
           {products.map((p) => (
             <ProductCard key={p.name} p={p} />
           ))}
         </div>
+
+        {/* Progress bar */}
+        {!isMobile && (
+          <div
+            ref={progressRef}
+            style={{
+              position: "absolute",
+              bottom: 0,
+              left: 0,
+              width: "100%",
+              height: 2,
+              background: "var(--gold)",
+              transformOrigin: "left",
+              transform: "scaleX(0)",
+            }}
+          />
+        )}
       </div>
     </section>
   );
