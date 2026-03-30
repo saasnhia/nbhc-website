@@ -1,2 +1,2 @@
 # NBHC — Site vitrine
-Site statique HTML. Déploiement via Vercel.
+Site Next.js 14 App Router + TypeScript + Tailwind CSS. Déploiement via Vercel.
