@@ -70,11 +70,12 @@ function VlogyzVisual() {
       {/* Badge IA */}
       <rect x="160" y="20" width="22" height="14" rx="3" fill="#6366f1" />
       <text x="171" y="30" textAnchor="middle" fontSize="8" fill="white" fontWeight="700">IA</text>
-      {/* Sous-titre */}
-      <rect x="24" y="138" width="154" height="14" rx="7" fill="#1a1b2e" />
-      <rect x="24" y="138" width="70" height="14" rx="7" fill="#6366f1" opacity="0.9" />
-      <text x="59" y="148" textAnchor="middle" fontSize="9" fill="white" fontWeight="600">On autom</text>
-      <text x="130" y="148" textAnchor="middle" fontSize="9" fill="#94a3b8">atise</text>
+      {/* Timecode */}
+      <rect x="20" y="20" width="72" height="16" rx="4" fill="rgba(0,0,0,0.6)" />
+      <text x="56" y="31" textAnchor="middle" fontSize="9" fill="white" fontFamily="DM Sans, sans-serif">01:24 / 01:32</text>
+      {/* Pill subtitle */}
+      <rect x="24" y="136" width="154" height="18" rx="9" fill="rgba(99,102,241,0.85)" />
+      <text x="101" y="149" textAnchor="middle" fontSize="10" fill="white" fontWeight="700">MONTAGE IA ✦</text>
       {/* Score viralité — right */}
       <rect x="196" y="16" width="168" height="140" rx="8" fill="#0d0f1c" stroke="rgba(99,102,241,0.2)" strokeWidth="0.5" />
       <text x="280" y="34" textAnchor="middle" fontSize="8" fill="#6366f1" opacity="0.6" letterSpacing="1">SCORE VIRALITÉ</text>

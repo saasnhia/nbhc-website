@@ -134,21 +134,23 @@ export default function Hero() {
           className="font-extrabold leading-none mb-7 max-[768px]:px-0"
           style={{
             fontFamily: "var(--font-syne)",
-            fontSize: "clamp(42px, 11vw, 96px)",
+            fontSize: "clamp(34px, 10vw, 96px)",
+            lineHeight: "1.0",
             letterSpacing: "-3px",
             color: "var(--text)",
             maxWidth: 900,
             width: "100%",
-            wordBreak: "break-word",
+            overflowWrap: "normal",
+            overflow: "hidden",
           }}
         >
           {titleWords.map((word, i) => (
             <span
               key={i}
               data-word
-              style={{ display: "inline-block", overflow: "hidden", verticalAlign: "top" }}
+              style={{ display: "inline-block", overflow: "hidden", verticalAlign: "top", lineHeight: "1.05", marginBottom: 0 }}
             >
-              <span style={{ display: "inline-block" }}>
+              <span style={{ display: "inline-block", lineHeight: "1.05", marginBottom: 0 }}>
                 {word}
               </span>
               {i < titleWords.length - 1 && "\u00A0"}
