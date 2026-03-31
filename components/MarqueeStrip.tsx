@@ -12,7 +12,6 @@ const items = [
   "Groq Whisper",
   "Remotion",
   "FFmpeg",
-  "Vercel",
   "Tailwind CSS",
   "Hetzner",
   "PostgreSQL",

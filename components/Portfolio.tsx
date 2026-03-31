@@ -59,45 +59,99 @@ const badgeStyles: Record<string, React.CSSProperties> = {
 function VlogyzVisual() {
   return (
     <svg width="380" height="200" viewBox="0 0 380 200" fill="none" xmlns="http://www.w3.org/2000/svg" overflow="hidden" style={{ display: "block", width: "100%", height: 200 }}>
-      <rect width="380" height="200" fill="#0a0b14" />
-      {/* Lecteur vidéo */}
-      <rect x="20" y="16" width="180" height="108" rx="8" fill="#0d0f1c" stroke="rgba(99,102,241,0.4)" strokeWidth="1" />
-      <line x1="20" y1="16" x2="200" y2="124" stroke="rgba(99,102,241,0.08)" strokeWidth="1" />
-      <line x1="200" y1="16" x2="20" y2="124" stroke="rgba(99,102,241,0.08)" strokeWidth="1" />
-      <circle cx="110" cy="70" r="18" fill="rgba(99,102,241,0.2)" stroke="#6366f1" strokeWidth="1" />
-      <path d="M104 62 L104 78 L120 70 Z" fill="#6366f1" />
-      <rect x="178" y="20" width="20" height="14" rx="3" fill="#6366f1" />
-      <text x="188" y="30" textAnchor="middle" fontSize="8" fill="white" fontWeight="700">IA</text>
-      {/* Sous-titre stylisé */}
-      <rect x="30" y="102" width="160" height="14" rx="7" fill="#1a1b2e" />
-      <rect x="30" y="102" width="72" height="14" rx="7" fill="#6366f1" opacity="0.85" />
-      <text x="66" y="112" textAnchor="middle" fontSize="9" fill="white" fontWeight="600">On autom...</text>
-      <text x="145" y="112" textAnchor="middle" fontSize="9" fill="#94a3b8">atise</text>
-      {/* Score viralité */}
-      <rect x="212" y="16" width="152" height="108" rx="8" fill="#0d0f1c" stroke="rgba(99,102,241,0.2)" strokeWidth="0.5" />
-      <text x="288" y="34" textAnchor="middle" fontSize="8" fill="#6366f1" opacity="0.6" letterSpacing="1">SCORE VIRALITÉ</text>
-      <circle cx="288" cy="72" r="28" fill="none" stroke="#1a1b2e" strokeWidth="6" />
-      <circle cx="288" cy="72" r="28" fill="none" stroke="#6366f1" strokeWidth="6" strokeDasharray="123 176" strokeDashoffset="31" strokeLinecap="round" transform="rotate(-90 288 72)" />
-      <text x="288" y="68" textAnchor="middle" fontSize="18" fontWeight="800" fontFamily="Syne, sans-serif" fill="#e2e8f0">87</text>
-      <text x="288" y="82" textAnchor="middle" fontSize="9" fill="#6366f1" opacity="0.7">/100</text>
-      <text x="220" y="104" fontSize="8" fill="#4ade80">Hook 92</text>
-      <text x="256" y="104" fontSize="8" fill="#fbbf24">Pace 84</text>
-      <text x="292" y="104" fontSize="8" fill="#60a5fa">CTA 78</text>
-      <text x="328" y="104" fontSize="8" fill="#c084fc">Clar 91</text>
-      {/* Timeline cuts */}
-      <rect x="20" y="136" width="344" height="52" rx="8" fill="#0d0f1c" stroke="rgba(99,102,241,0.15)" strokeWidth="0.5" />
-      <text x="32" y="152" fontSize="8" fill="#6366f1" opacity="0.5">TIMELINE — CUTS SILENCES &amp; FILLERS</text>
-      <rect x="28" y="158" width="328" height="6" rx="3" fill="#1a1b2e" />
-      <rect x="28" y="158" width="60" height="6" rx="1" fill="#6366f1" />
-      <rect x="100" y="158" width="80" height="6" rx="1" fill="#6366f1" />
-      <rect x="196" y="158" width="100" height="6" rx="1" fill="#6366f1" />
-      <rect x="310" y="158" width="46" height="6" rx="1" fill="#6366f1" />
-      <rect x="88" y="156" width="12" height="10" rx="2" fill="#f43f5e" opacity="0.7" />
-      <rect x="180" y="156" width="16" height="10" rx="2" fill="#f43f5e" opacity="0.7" />
-      <rect x="296" y="156" width="14" height="10" rx="2" fill="#f43f5e" opacity="0.7" />
-      <text x="88" y="176" fontSize="7" fill="#f43f5e" opacity="0.6">silence</text>
-      <text x="178" y="176" fontSize="7" fill="#f43f5e" opacity="0.6">filler</text>
-      <text x="295" y="176" fontSize="7" fill="#f43f5e" opacity="0.6">-2.3s</text>
+      <rect width="380" height="200" fill="#0a0a0f" />
+      {/* Subtle grid pattern */}
+      <defs>
+        <pattern id="vz-grid" width="20" height="20" patternUnits="userSpaceOnUse">
+          <rect width="20" height="20" fill="none" />
+          <rect width="1" height="1" x="0" y="0" fill="rgba(99,102,241,0.03)" />
+        </pattern>
+      </defs>
+      <rect width="380" height="200" fill="url(#vz-grid)" />
+      {/* Lecteur vidéo principal */}
+      <rect x="16" y="12" width="192" height="112" rx="8" fill="#0d0f1c" stroke="rgba(99,102,241,0.35)" strokeWidth="1" />
+      {/* Video thumbnail gradient */}
+      <defs>
+        <linearGradient id="vz-vid" x1="16" y1="12" x2="208" y2="124">
+          <stop offset="0%" stopColor="rgba(99,102,241,0.08)" />
+          <stop offset="100%" stopColor="rgba(99,102,241,0.02)" />
+        </linearGradient>
+      </defs>
+      <rect x="16" y="12" width="192" height="112" rx="8" fill="url(#vz-vid)" />
+      {/* Diagonal lines */}
+      <line x1="16" y1="12" x2="208" y2="124" stroke="rgba(99,102,241,0.06)" strokeWidth="1" />
+      <line x1="208" y1="12" x2="16" y2="124" stroke="rgba(99,102,241,0.06)" strokeWidth="1" />
+      {/* Play button */}
+      <circle cx="112" cy="62" r="20" fill="rgba(99,102,241,0.25)" />
+      <circle cx="112" cy="62" r="20" fill="none" stroke="#6366f1" strokeWidth="1.5" />
+      <path d="M106 52 L106 72 L122 62 Z" fill="#6366f1" />
+      {/* Badge IA */}
+      <rect x="180" y="16" width="24" height="16" rx="4" fill="#6366f1" />
+      <text x="192" y="27" textAnchor="middle" fontSize="8" fill="white" fontWeight="800">IA</text>
+      {/* Timecode */}
+      <text x="24" y="26" fontSize="8" fill="#6366f1" opacity="0.5" fontFamily="monospace">01:24 / 03:12</text>
+      {/* Sous-titre animé */}
+      <rect x="32" y="100" width="164" height="18" rx="9" fill="#1a1b2e" />
+      <rect x="32" y="100" width="78" height="18" rx="9" fill="rgba(99,102,241,0.85)" />
+      <text x="71" y="113" textAnchor="middle" fontSize="10" fill="white" fontWeight="700">On autom</text>
+      <text x="148" y="113" textAnchor="middle" fontSize="10" fill="#64668a">atise tout</text>
+      {/* Curseur clignotant */}
+      <rect x="110" y="102" width="1.5" height="12" rx="0.5" fill="#6366f1" opacity="0.8" />
+      {/* Score viralité panel */}
+      <rect x="218" y="12" width="148" height="112" rx="8" fill="#0d0f1c" stroke="rgba(99,102,241,0.2)" strokeWidth="0.5" />
+      <text x="292" y="29" textAnchor="middle" fontSize="7" fill="#6366f1" opacity="0.5" letterSpacing="2" fontWeight="600">SCORE VIRALITÉ</text>
+      {/* Score ring */}
+      <circle cx="292" cy="64" r="26" fill="none" stroke="#151728" strokeWidth="5" />
+      <circle cx="292" cy="64" r="26" fill="none" stroke="url(#vz-score-grad)" strokeWidth="5" strokeDasharray="142 164" strokeDashoffset="0" strokeLinecap="round" transform="rotate(-90 292 64)" />
+      <defs>
+        <linearGradient id="vz-score-grad" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stopColor="#818cf8" />
+          <stop offset="100%" stopColor="#6366f1" />
+        </linearGradient>
+      </defs>
+      <text x="292" y="61" textAnchor="middle" fontSize="22" fontWeight="800" fontFamily="Syne, sans-serif" fill="#e2e8f0">87</text>
+      <text x="292" y="75" textAnchor="middle" fontSize="9" fill="#6366f1" opacity="0.6">/100</text>
+      {/* Score breakdown */}
+      <rect x="226" y="96" width="28" height="22" rx="4" fill="rgba(74,222,128,0.08)" />
+      <text x="240" y="105" textAnchor="middle" fontSize="6" fill="#4ade80" opacity="0.7">HOOK</text>
+      <text x="240" y="114" textAnchor="middle" fontSize="9" fontWeight="700" fill="#4ade80">92</text>
+      <rect x="258" y="96" width="28" height="22" rx="4" fill="rgba(251,191,36,0.08)" />
+      <text x="272" y="105" textAnchor="middle" fontSize="6" fill="#fbbf24" opacity="0.7">PACE</text>
+      <text x="272" y="114" textAnchor="middle" fontSize="9" fontWeight="700" fill="#fbbf24">84</text>
+      <rect x="290" y="96" width="28" height="22" rx="4" fill="rgba(96,165,250,0.08)" />
+      <text x="304" y="105" textAnchor="middle" fontSize="6" fill="#60a5fa" opacity="0.7">CTA</text>
+      <text x="304" y="114" textAnchor="middle" fontSize="9" fontWeight="700" fill="#60a5fa">78</text>
+      <rect x="322" y="96" width="28" height="22" rx="4" fill="rgba(192,132,252,0.08)" />
+      <text x="336" y="105" textAnchor="middle" fontSize="6" fill="#c084fc" opacity="0.7">CLAR</text>
+      <text x="336" y="114" textAnchor="middle" fontSize="9" fontWeight="700" fill="#c084fc">91</text>
+      {/* Timeline panel */}
+      <rect x="16" y="132" width="350" height="56" rx="8" fill="#0d0f1c" stroke="rgba(99,102,241,0.12)" strokeWidth="0.5" />
+      <text x="28" y="146" fontSize="7" fill="#6366f1" opacity="0.4" letterSpacing="1.5" fontWeight="600">TIMELINE — CUTS SILENCES &amp; FILLERS</text>
+      {/* Track background */}
+      <rect x="24" y="152" width="334" height="6" rx="3" fill="#151728" />
+      {/* Green segments (kept) */}
+      <rect x="24" y="152" width="58" height="6" rx="1" fill="#6366f1" />
+      <rect x="96" y="152" width="76" height="6" rx="1" fill="#6366f1" />
+      <rect x="190" y="152" width="96" height="6" rx="1" fill="#6366f1" />
+      <rect x="304" y="152" width="54" height="6" rx="1" fill="#6366f1" />
+      {/* Red segments (removed) */}
+      <rect x="82" y="150" width="14" height="10" rx="2" fill="#f43f5e" opacity="0.6" />
+      <rect x="172" y="150" width="18" height="10" rx="2" fill="#f43f5e" opacity="0.6" />
+      <rect x="286" y="150" width="18" height="10" rx="2" fill="#f43f5e" opacity="0.6" />
+      {/* Waveform audio */}
+      {[24,28,32,36,40,44,48,52,56,60,64,68,72,76,80,84,88,92,96,100,104,108,112,116,120,124,128,132,136,140,144,148,152,156,160,164,168,172,176,180,184,188,192,196,200,204,208,212,216,220,224,228,232,236,240,244,248,252,256,260,264,268,272,276,280,284,288,292,296,300,304,308,312,316,320,324,328,332,336,340,344,348,352,356].map((x, i) => {
+        const h = [3,5,8,4,10,6,3,7,12,5,4,9,6,3,8,11,5,7,4,10,6,3,9,5,8,4,7,11,6,3,5,9,4,7,10,5,3,8,6,4,11,7,5,3,9,6,8,4,10,5,7,3,6,11,4,8,5,9,3,7,10,6,4,5,8,3,11,7,9,5,4,6,10,8,3,7,5,11,4,9,6,8,3,5][i];
+        return <rect key={`wf-${i}`} x={x} y={176 - h} width="2" height={h} rx="1" fill="#6366f1" opacity="0.25" />;
+      })}
+      {/* Labels */}
+      <text x="82" y="172" fontSize="6" fill="#f43f5e" opacity="0.5">silence</text>
+      <text x="172" y="172" fontSize="6" fill="#f43f5e" opacity="0.5">filler</text>
+      <text x="286" y="172" fontSize="6" fill="#f43f5e" opacity="0.5">-2.3s</text>
+      {/* Playhead */}
+      <rect x="210" y="148" width="2" height="16" rx="1" fill="#818cf8" />
+      <circle cx="211" cy="148" r="3" fill="#818cf8" />
+      {/* Watermark */}
+      <text x="358" y="194" textAnchor="end" fontSize="8" fill="rgba(99,102,241,0.15)" fontFamily="Syne, sans-serif" fontWeight="700">Vlogyz.com</text>
     </svg>
   );
 }
@@ -137,41 +191,91 @@ function DevizlyVisual() {
 function WorthifastVisual() {
   return (
     <svg width="380" height="200" viewBox="0 0 380 200" fill="none" xmlns="http://www.w3.org/2000/svg" overflow="hidden" style={{ display: "block", width: "100%", height: 200 }}>
-      <rect width="380" height="200" fill="#0b110a" />
-      {/* Header mission */}
-      <rect x="16" y="14" width="348" height="28" rx="6" fill="rgba(34,197,94,0.06)" stroke="rgba(34,197,94,0.15)" strokeWidth="0.5" />
-      <rect x="24" y="20" width="14" height="10" rx="2" fill="#22c55e" opacity="0.4" />
-      <text x="44" y="30" fontSize="9" fontFamily="Syne, sans-serif" fill="#4ade80" fontWeight="600">Mission — Cabinet Dupont &amp; Associés</text>
-      <rect x="306" y="19" width="52" height="14" rx="7" fill="rgba(34,197,94,0.15)" />
-      <text x="332" y="29" textAnchor="middle" fontSize="8" fill="#4ade80">● EN COURS</text>
-      {/* KPI Card - FEC */}
-      <rect x="16" y="52" width="106" height="60" rx="8" fill="#0f1a0e" stroke="rgba(34,197,94,0.25)" strokeWidth="0.5" />
-      <text x="69" y="70" textAnchor="middle" fontSize="8" fill="#4ade80" opacity="0.6">FEC IMPORTÉ</text>
-      <text x="69" y="92" textAnchor="middle" fontSize="22" fontWeight="800" fontFamily="Syne, sans-serif" fill="#22c55e">FEC</text>
-      <text x="69" y="106" textAnchor="middle" fontSize="8" fill="#22c55e" opacity="0.5">1 247 lignes</text>
+      <rect width="380" height="200" fill="#080d08" />
+      {/* Subtle dot grid */}
+      <defs>
+        <pattern id="wf-dots" width="16" height="16" patternUnits="userSpaceOnUse">
+          <circle cx="1" cy="1" r="0.5" fill="rgba(0,200,150,0.04)" />
+        </pattern>
+      </defs>
+      <rect width="380" height="200" fill="url(#wf-dots)" />
+      {/* Header mission bar */}
+      <rect x="14" y="10" width="352" height="30" rx="6" fill="rgba(0,200,150,0.04)" stroke="rgba(0,200,150,0.15)" strokeWidth="0.5" />
+      {/* Folder icon */}
+      <rect x="22" y="17" width="14" height="11" rx="2" fill="rgba(0,200,150,0.2)" />
+      <rect x="22" y="15" width="8" height="4" rx="1" fill="rgba(0,200,150,0.3)" />
+      <text x="42" y="29" fontSize="9" fontFamily="Syne, sans-serif" fill="#4ade80" fontWeight="600">Mission — Cabinet Dupont &amp; Associés</text>
+      {/* Badge EN COURS */}
+      <rect x="296" y="16" width="64" height="18" rx="9" fill="rgba(0,200,150,0.12)" stroke="rgba(0,200,150,0.3)" strokeWidth="0.5" />
+      <circle cx="306" cy="25" r="3" fill="#00C896" />
+      <text x="336" y="29" textAnchor="middle" fontSize="8" fill="#4ade80" fontWeight="600">EN COURS</text>
+      {/* KPI Card - FEC importé */}
+      <rect x="14" y="48" width="110" height="58" rx="8" fill="#0c140b" stroke="rgba(0,200,150,0.2)" strokeWidth="0.5" />
+      <defs>
+        <linearGradient id="wf-fec-bg" x1="14" y1="48" x2="124" y2="106">
+          <stop offset="0%" stopColor="rgba(0,200,150,0.06)" />
+          <stop offset="100%" stopColor="rgba(0,200,150,0)" />
+        </linearGradient>
+      </defs>
+      <rect x="14" y="48" width="110" height="58" rx="8" fill="url(#wf-fec-bg)" />
+      <text x="69" y="64" textAnchor="middle" fontSize="7" fill="#4ade80" opacity="0.5" letterSpacing="1" fontWeight="600">FEC IMPORTÉ</text>
+      {/* Upload icon */}
+      <rect x="52" y="70" width="34" height="22" rx="4" fill="rgba(0,200,150,0.08)" />
+      <path d="M65 86V76M60 80l5-5 5 5" stroke="#00C896" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      <text x="69" y="101" textAnchor="middle" fontSize="8" fill="#00C896" opacity="0.6" fontWeight="500">1 247 lignes</text>
       {/* KPI Card - Anomalies */}
-      <rect x="130" y="52" width="106" height="60" rx="8" fill="#1a0f0a" stroke="rgba(249,115,22,0.25)" strokeWidth="0.5" />
-      <text x="183" y="70" textAnchor="middle" fontSize="8" fill="#fb923c" opacity="0.6">ANOMALIES</text>
-      <text x="183" y="92" textAnchor="middle" fontSize="28" fontWeight="800" fontFamily="Syne, sans-serif" fill="#f97316">3</text>
-      <text x="183" y="106" textAnchor="middle" fontSize="8" fill="#f97316" opacity="0.5">à vérifier</text>
+      <rect x="132" y="48" width="110" height="58" rx="8" fill="#140d08" stroke="rgba(249,115,22,0.2)" strokeWidth="0.5" />
+      <defs>
+        <linearGradient id="wf-anom-bg" x1="132" y1="48" x2="242" y2="106">
+          <stop offset="0%" stopColor="rgba(249,115,22,0.06)" />
+          <stop offset="100%" stopColor="rgba(249,115,22,0)" />
+        </linearGradient>
+      </defs>
+      <rect x="132" y="48" width="110" height="58" rx="8" fill="url(#wf-anom-bg)" />
+      <text x="187" y="64" textAnchor="middle" fontSize="7" fill="#fb923c" opacity="0.5" letterSpacing="1" fontWeight="600">ANOMALIES</text>
+      <text x="187" y="86" textAnchor="middle" fontSize="28" fontWeight="800" fontFamily="Syne, sans-serif" fill="#f97316">3</text>
+      <text x="187" y="101" textAnchor="middle" fontSize="8" fill="#f97316" opacity="0.5">à vérifier</text>
       {/* KPI Card - Avancement */}
-      <rect x="244" y="52" width="120" height="60" rx="8" fill="#0f161f" stroke="rgba(56,189,248,0.25)" strokeWidth="0.5" />
-      <text x="304" y="70" textAnchor="middle" fontSize="8" fill="#7dd3fc" opacity="0.6">AVANCEMENT</text>
-      <text x="304" y="92" textAnchor="middle" fontSize="28" fontWeight="800" fontFamily="Syne, sans-serif" fill="#38bdf8">94%</text>
-      <rect x="258" y="100" width="92" height="4" rx="2" fill="#1a2535" />
-      <rect x="258" y="100" width="86" height="4" rx="2" fill="#38bdf8" />
-      {/* Log anomalies */}
-      <rect x="16" y="124" width="348" height="64" rx="8" fill="#0d130c" stroke="rgba(34,197,94,0.1)" strokeWidth="0.5" />
-      <text x="28" y="138" fontSize="8" fill="#4ade80" opacity="0.4" letterSpacing="1">ANOMALIES DÉTECTÉES</text>
-      <rect x="24" y="144" width="2" height="12" rx="1" fill="#f97316" />
-      <text x="32" y="154" fontSize="9" fill="#94a3b8" fontFamily="DM Sans, sans-serif">401000 · Écriture orpheline · 12/03/2025</text>
-      <text x="350" y="154" textAnchor="end" fontSize="9" fill="#f97316">2 340,00 €</text>
-      <rect x="24" y="160" width="2" height="12" rx="1" fill="#f97316" />
-      <text x="32" y="170" fontSize="9" fill="#94a3b8">512000 · Déséquilibre journal OD</text>
-      <text x="350" y="170" textAnchor="end" fontSize="9" fill="#f97316">0,02 €</text>
-      <rect x="24" y="176" width="2" height="8" rx="1" fill="#22c55e" />
-      <text x="32" y="183" fontSize="9" fill="#94a3b8">445000 · TVA collectée · Vérifiée ✓</text>
-      <text x="350" y="183" textAnchor="end" fontSize="9" fill="#22c55e">OK</text>
+      <rect x="250" y="48" width="116" height="58" rx="8" fill="#0c1018" stroke="rgba(56,189,248,0.2)" strokeWidth="0.5" />
+      <defs>
+        <linearGradient id="wf-prog-bg" x1="250" y1="48" x2="366" y2="106">
+          <stop offset="0%" stopColor="rgba(56,189,248,0.06)" />
+          <stop offset="100%" stopColor="rgba(56,189,248,0)" />
+        </linearGradient>
+      </defs>
+      <rect x="250" y="48" width="116" height="58" rx="8" fill="url(#wf-prog-bg)" />
+      <text x="308" y="64" textAnchor="middle" fontSize="7" fill="#7dd3fc" opacity="0.5" letterSpacing="1" fontWeight="600">AVANCEMENT</text>
+      <text x="308" y="86" textAnchor="middle" fontSize="28" fontWeight="800" fontFamily="Syne, sans-serif" fill="#38bdf8">94<tspan fontSize="14" fill="#7dd3fc">%</tspan></text>
+      {/* Progress bar */}
+      <rect x="262" y="96" width="92" height="5" rx="2.5" fill="#152030" />
+      <rect x="262" y="96" width="86" height="5" rx="2.5" fill="url(#wf-prog-bar)" />
+      <defs>
+        <linearGradient id="wf-prog-bar" x1="262" y1="0" x2="348" y2="0">
+          <stop offset="0%" stopColor="#38bdf8" />
+          <stop offset="100%" stopColor="#0ea5e9" />
+        </linearGradient>
+      </defs>
+      {/* Anomalies list panel */}
+      <rect x="14" y="114" width="352" height="76" rx="8" fill="#0a1009" stroke="rgba(0,200,150,0.08)" strokeWidth="0.5" />
+      <text x="26" y="128" fontSize="7" fill="#4ade80" opacity="0.35" letterSpacing="1.5" fontWeight="600">ANOMALIES DÉTECTÉES</text>
+      {/* Row 1 */}
+      <rect x="22" y="134" width="3" height="14" rx="1.5" fill="#f97316" />
+      <text x="32" y="144" fontSize="9" fill="#cbd5e1" fontFamily="DM Sans, sans-serif">401000 · Écriture orpheline</text>
+      <text x="226" y="144" fontSize="8" fill="#64748b">12/03/2025</text>
+      <text x="354" y="144" textAnchor="end" fontSize="9" fontWeight="600" fill="#f97316">2 340,00 €</text>
+      {/* Row 2 */}
+      <rect x="22" y="152" width="3" height="14" rx="1.5" fill="#f97316" />
+      <text x="32" y="162" fontSize="9" fill="#cbd5e1">512000 · Déséquilibre journal OD</text>
+      <text x="226" y="162" fontSize="8" fill="#64748b">08/03/2025</text>
+      <text x="354" y="162" textAnchor="end" fontSize="9" fontWeight="600" fill="#f97316">0,02 €</text>
+      {/* Row 3 - verified */}
+      <rect x="22" y="170" width="3" height="14" rx="1.5" fill="#00C896" />
+      <text x="32" y="180" fontSize="9" fill="#cbd5e1">445000 · TVA collectée</text>
+      <text x="226" y="180" fontSize="8" fill="#64748b">Vérifiée</text>
+      <rect x="326" y="173" width="28" height="14" rx="7" fill="rgba(0,200,150,0.1)" />
+      <text x="340" y="183" textAnchor="middle" fontSize="8" fontWeight="600" fill="#00C896">OK</text>
+      {/* Watermark */}
+      <text x="356" y="196" textAnchor="end" fontSize="7" fill="rgba(0,200,150,0.1)" fontFamily="Syne, sans-serif" fontWeight="700">Worthifast</text>
     </svg>
   );
 }

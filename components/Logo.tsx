@@ -3,11 +3,12 @@ interface LogoProps { variant?: 'nav' | 'footer' }
 export default function Logo({ variant = 'nav' }: LogoProps) {
   return (
     <svg
-      width={variant === 'nav' ? 105 : 90}
+      width={variant === 'nav' ? 110 : 94}
       height={variant === 'nav' ? 28 : 24}
-      viewBox="0 0 105 28"
+      viewBox="-2 0 110 28"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      overflow="visible"
     >
       <rect x="0" y="10" width="8" height="8"
         rx="2" fill="#C4973A" />
