@@ -34,6 +34,14 @@ export const metadata: Metadata = {
     description:
       "Studio IA français. Nous concevons des solutions SaaS et systèmes d'intelligence artificielle sur mesure pour automatiser votre entreprise.",
     url: "https://nbhc.fr",
+    images: [
+      {
+        url: "https://nbhc.fr/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "NBHC Studio IA",
+      },
+    ],
     type: "website",
     siteName: "NBHC",
     locale: "fr_FR",
@@ -43,6 +51,7 @@ export const metadata: Metadata = {
     title: "NBHC — Studio IA & Automatisation",
     description:
       "Studio IA français. Solutions SaaS et IA sur mesure pour automatiser votre entreprise.",
+    images: ["https://nbhc.fr/og-image.png"],
   },
   icons: {
     icon: "/favicon.svg",
