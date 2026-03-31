@@ -131,13 +131,15 @@ export default function Hero() {
         </div>
 
         <h1
-          className="font-extrabold leading-none mb-7"
+          className="font-extrabold leading-none mb-7 max-[768px]:px-0"
           style={{
             fontFamily: "var(--font-syne)",
-            fontSize: "clamp(48px, 7vw, 96px)",
+            fontSize: "clamp(42px, 11vw, 96px)",
             letterSpacing: "-3px",
             color: "var(--text)",
             maxWidth: 900,
+            width: "100%",
+            wordBreak: "break-word",
           }}
         >
           {titleWords.map((word, i) => (
