@@ -17,6 +17,7 @@ const products = [
     desc: "Montage vidéo IA français — alternative à CapCut. Pipeline complet : upload TUS, transcription Whisper, détection de fillers, sous-titres synchronisés (13 styles), B-Roll automatique, score de viralité, rendu Remotion.",
     stack: ["Next.js 16", "Groq Whisper", "Mistral", "Remotion", "FFmpeg", "Hetzner"],
     link: "vlogyz.vercel.app",
+    href: "https://vlogyz.vercel.app",
   },
   {
     id: "devizly",
@@ -25,6 +26,7 @@ const products = [
     desc: "Générateur de devis IA pour artisans et freelances. L'utilisateur décrit sa prestation en langage naturel → devis conforme loi française → signature eIDAS → paiement acompte Stripe intégré.",
     stack: ["Next.js 14", "Mistral", "Stripe", "Supabase", "Resend", "Upstash"],
     link: "devizly.fr",
+    href: "https://devizly.fr",
   },
   {
     id: "worthifast",
@@ -33,6 +35,7 @@ const products = [
     desc: "Automatisation des tâches comptables et d'audit pour cabinets experts. Import FEC/CSV/Excel, détection d'anomalies IA, rapports de révision, tableau de bord multi-missions. Cible : PME et cabinets 5–50 personnes.",
     stack: ["Next.js 16", "Mistral", "Supabase", "Stripe", "PostgreSQL"],
     link: "Bêta à venir",
+    href: "#",
   },
 ];
 
@@ -235,7 +238,7 @@ const visualMap: Record<string, () => React.ReactNode> = {
 /* ─── ProductCard ─── */
 
 function ProductCard({ p, isMobile }: { p: (typeof products)[number]; isMobile: boolean }) {
-  const cardRef = useRef<HTMLDivElement>(null);
+  const cardRef = useRef<HTMLAnchorElement>(null);
   const glowRef = useRef<HTMLDivElement>(null);
   const svgTweensRef = useRef<gsap.core.Tween[]>([]);
 
@@ -284,14 +287,18 @@ function ProductCard({ p, isMobile }: { p: (typeof products)[number]; isMobile: 
     }
   };
 
+  const isExternal = p.href !== "#";
+
   return (
-    <div
+    <a
       ref={cardRef}
+      href={p.href}
+      {...(isExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
       data-cursor="card"
       onMouseMove={onMouseMove}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
-      className="flex flex-col overflow-hidden no-underline transition-all duration-300 group cursor-default"
+      className="flex flex-col overflow-hidden no-underline transition-all duration-300 group cursor-pointer"
       style={{
         width: isMobile ? "100%" : 380,
         minWidth: isMobile ? "unset" : 380,
@@ -301,6 +308,8 @@ function ProductCard({ p, isMobile }: { p: (typeof products)[number]; isMobile: 
         border: "1px solid var(--border)",
         borderRadius: "var(--radius)",
         transformStyle: "preserve-3d",
+        textDecoration: "none",
+        color: "inherit",
       }}
     >
       {/* SVG Visual */}
@@ -351,7 +360,7 @@ function ProductCard({ p, isMobile }: { p: (typeof products)[number]; isMobile: 
             </span>
           ))}
         </div>
-        <div
+        <span
           className="flex items-center gap-1.5 text-[13px] font-medium pt-4 mt-auto"
           style={{
             color: "var(--gold)",
@@ -374,9 +383,9 @@ function ProductCard({ p, isMobile }: { p: (typeof products)[number]; isMobile: 
               strokeLinejoin="round"
             />
           </svg>
-        </div>
+        </span>
       </div>
-    </div>
+    </a>
   );
 }
 
