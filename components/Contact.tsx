@@ -273,7 +273,7 @@ export default function Contact() {
               >
                 55 Rue Henri Clément
                 <br />
-                71100 Saint-Marcel
+                71100 Saint-Rémy
               </div>
             </div>
           </div>

@@ -143,7 +143,7 @@ export default function Footer() {
             style={{ color: "var(--text-dim)" }}
           >
             © 2026 SAS NBHC — SIREN 102 637 899 · 55 Rue Henri Clément, 71100
-            Saint-Marcel · Tous droits réservés
+            Saint-Rémy · Tous droits réservés
           </div>
         </div>
       </footer>

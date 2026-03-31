@@ -69,7 +69,7 @@ export default function PolitiqueConfidentialite() {
         </h2>
         <p>
           Le responsable du traitement des donnees personnelles est la SAS NBHC,
-          55 Rue Henri Clement, 71100 Saint-Marcel.
+          55 Rue Henri Clement, 71100 Saint-Rémy.
           <br />
           Contact :{" "}
           <a

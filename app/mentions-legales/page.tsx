@@ -72,7 +72,7 @@ export default function MentionsLegales() {
           <br />
           SIREN : 102 637 899
           <br />
-          Siege social : 55 Rue Henri Clement, 71100 Saint-Marcel
+          Siege social : 55 Rue Henri Clement, 71100 Saint-Rémy
           <br />
           Email :{" "}
           <a
