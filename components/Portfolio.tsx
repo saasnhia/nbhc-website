@@ -56,7 +56,7 @@ const products: Product[] = [
       "Équipe d'agents IA pour le montage vidéo automatisé. Alternative française à CapCut.",
     image: "/portfolio/vlogyz.png",
     aspect: "16 / 10",
-    maxWidth: 680,
+    maxWidth: 580,
     fit: "cover",
     agents: [
       "Agent Transcription",
@@ -356,25 +356,16 @@ function FloatingMockup({ product }: { product: Product }) {
                 gap: 8,
                 zIndex: 3,
               }}
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-80px" }}
               transition={{
-                duration: 0.5,
+                duration: 0.6,
                 delay: 0.3 + i * 0.1,
                 ease: [0.16, 1, 0.3, 1],
               }}
             >
-              <motion.div
-                className="flex items-center gap-2"
-                animate={{ y: [0, -b.amp, 0] }}
-                transition={{
-                  duration: b.duration,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                  delay: b.delay,
-                }}
-              >
+              <div className="flex items-center gap-2">
                 {b.icon && (
                   <span
                     className="inline-flex items-center justify-center"
@@ -394,7 +385,7 @@ function FloatingMockup({ product }: { product: Product }) {
                   </span>
                 )}
                 <span style={{ fontWeight: 500 }}>{b.text}</span>
-              </motion.div>
+              </div>
             </motion.div>
           ))}
         </motion.div>
