@@ -27,6 +27,12 @@ type Product = {
   name: string;
   tagline: string;
   image: string;
+  /** Natural aspect ratio of the screenshot — controls the wrapper's aspect-ratio */
+  aspect: string;
+  /** Max width of the mockup in px */
+  maxWidth: number;
+  /** object-fit mode for the image (cover crops, contain keeps all) */
+  fit: "cover" | "contain";
   agents: string[];
   stack: string[];
   link: string;
@@ -49,6 +55,9 @@ const products: Product[] = [
     tagline:
       "Équipe d'agents IA pour le montage vidéo automatisé. Alternative française à CapCut.",
     image: "/portfolio/vlogyz.png",
+    aspect: "16 / 10",
+    maxWidth: 680,
+    fit: "cover",
     agents: [
       "Agent Transcription",
       "Agent Montage",
@@ -111,6 +120,9 @@ const products: Product[] = [
     tagline:
       "Équipe d'agents IA pour la génération de devis et l'encaissement automatique.",
     image: "/portfolio/deviss.png",
+    aspect: "3 / 4",
+    maxWidth: 460,
+    fit: "contain",
     agents: [
       "Agent Génération",
       "Agent Conformité",
@@ -162,6 +174,9 @@ const products: Product[] = [
     tagline:
       "Équipe d'agents IA pour l'automatisation comptable et la révision FEC.",
     image: "/portfolio/worthifast.png",
+    aspect: "16 / 10",
+    maxWidth: 620,
+    fit: "cover",
     agents: [
       "Agent FEC",
       "Agent Anomalies",
@@ -260,7 +275,7 @@ function FloatingMockup({ product }: { product: Product }) {
         className="relative"
         style={{
           width: "100%",
-          maxWidth: 580,
+          maxWidth: product.maxWidth,
           transformStyle: "preserve-3d",
           zIndex: 1,
         }}
@@ -292,8 +307,9 @@ function FloatingMockup({ product }: { product: Product }) {
             className="relative overflow-hidden"
             style={{
               width: "100%",
-              aspectRatio: "16 / 10",
-              background: "#0a0a0f",
+              aspectRatio: product.aspect,
+              background:
+                product.fit === "contain" ? "#ffffff" : "#0a0a0f",
               borderRadius: 12,
               border: "1px solid rgba(255,255,255,0.08)",
               boxShadow: `0 50px 100px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.06), 0 0 80px ${product.accent}1F`,
@@ -304,8 +320,14 @@ function FloatingMockup({ product }: { product: Product }) {
               src={product.image}
               alt={`Capture d'écran ${product.name}`}
               fill
-              sizes="(max-width: 768px) 100vw, 580px"
-              className="object-cover object-top"
+              sizes="(max-width: 768px) 100vw, 60vw"
+              quality={100}
+              className={
+                product.fit === "contain"
+                  ? "object-contain"
+                  : "object-cover object-top"
+              }
+              style={{ imageRendering: "auto" }}
               priority={false}
             />
           </div>
