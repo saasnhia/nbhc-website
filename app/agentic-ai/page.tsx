@@ -54,7 +54,7 @@ const teams = [
       "Votre problème ne rentre dans aucune case ? Nous analysons vos flux et concevons une équipe d'agents 100% adaptée à votre secteur et vos outils existants.",
     agentsList: "traitement documents, emails, CRM, ERP, e-commerce, RH, juridique...",
     cta: "Nous contacter →",
-    href: "/#contact",
+    href: "/contact",
   },
 ];
 
@@ -181,7 +181,7 @@ export default function AgenticAIPage() {
           au support client.
         </p>
         <a
-          href="#contact"
+          href="/contact"
           data-cursor="link"
           className="inline-flex items-center gap-2 text-[15px] font-medium px-7 py-3.5 rounded-md no-underline transition-all duration-200 hover:opacity-90"
           style={{ background: "var(--gold)", color: "#0a0a0b" }}

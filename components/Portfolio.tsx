@@ -14,8 +14,14 @@ const products = [
     id: "vlogyz",
     badge: { label: "MVP live", type: "beta" as const },
     name: "Vlogyz",
-    desc: "Montage vidéo IA français — alternative à CapCut. Pipeline complet : upload TUS, transcription Whisper, détection de fillers, sous-titres synchronisés (13 styles), B-Roll automatique, score de viralité, rendu Remotion.",
-    stack: ["Next.js 16", "Groq Whisper", "Mistral", "Remotion", "FFmpeg", "Hetzner"],
+    desc: "Équipe d'agents IA pour le montage vidéo automatisé — alternative française à CapCut.",
+    agents: [
+      "Agent Transcription — Whisper en français",
+      "Agent Montage — coupes silences/fillers",
+      "Agent Sous-titres — 13 styles synchronisés",
+      "Agent Score — viralité Hook/Pace/CTA/Clar",
+    ],
+    stack: ["Next.js 16", "Groq Whisper", "Mistral", "Remotion", "FFmpeg"],
     link: "vlogyz.vercel.app",
     href: "https://vlogyz.vercel.app",
   },
@@ -23,8 +29,14 @@ const products = [
     id: "devizly",
     badge: { label: "Live", type: "live" as const },
     name: "Devizly",
-    desc: "Générateur de devis IA pour artisans et freelances. L'utilisateur décrit sa prestation en langage naturel → devis conforme loi française → signature eIDAS → paiement acompte Stripe intégré.",
-    stack: ["Next.js 14", "Mistral", "Stripe", "Supabase", "Resend", "Upstash"],
+    desc: "Équipe d'agents IA pour la génération de devis et l'encaissement automatique.",
+    agents: [
+      "Agent Génération — devis depuis description",
+      "Agent Conformité — mentions légales FR",
+      "Agent Signature — eIDAS intégré",
+      "Agent Paiement — acompte Stripe automatique",
+    ],
+    stack: ["Next.js 14", "Mistral", "Stripe", "Supabase", "Resend"],
     link: "devizly.fr",
     href: "https://devizly.fr",
   },
@@ -32,7 +44,13 @@ const products = [
     id: "worthifast",
     badge: { label: "En développement", type: "dev" as const },
     name: "Worthifast",
-    desc: "Automatisation des tâches comptables et d'audit pour cabinets experts. Import FEC/CSV/Excel, détection d'anomalies IA, rapports de révision, tableau de bord multi-missions. Cible : PME et cabinets 5–50 personnes.",
+    desc: "Équipe d'agents IA pour l'automatisation comptable et la révision FEC.",
+    agents: [
+      "Agent FEC — import et analyse",
+      "Agent Anomalies — détection IA",
+      "Agent CA3 — pré-remplissage TVA",
+      "Agent Rapprochement — matching bancaire",
+    ],
     stack: ["Next.js 16", "Mistral", "Supabase", "Stripe", "PostgreSQL"],
     link: "Bêta à venir",
     href: "#",
@@ -323,12 +341,24 @@ function ProductCard({ p, isMobile }: { p: (typeof products)[number]; isMobile: 
           className="absolute inset-0 pointer-events-none"
           style={{ opacity: 0 }}
         />
-        <span
-          className="inline-block text-[11px] font-medium px-2.5 py-0.5 rounded-full mb-3.5 tracking-wide w-fit"
-          style={badgeStyles[p.badge.type]}
-        >
-          {p.badge.label}
-        </span>
+        <div className="flex items-center gap-2 mb-3.5">
+          <span
+            className="inline-block text-[10px] font-bold px-2 py-0.5 rounded-full tracking-widest uppercase"
+            style={{
+              background: "var(--gold-dim)",
+              color: "var(--gold-light)",
+              border: "1px solid var(--gold-border)",
+            }}
+          >
+            Preuve de concept
+          </span>
+          <span
+            className="inline-block text-[11px] font-medium px-2.5 py-0.5 rounded-full tracking-wide"
+            style={badgeStyles[p.badge.type]}
+          >
+            {p.badge.label}
+          </span>
+        </div>
         <div
           className="text-[22px] font-bold mb-2"
           style={{
@@ -340,12 +370,41 @@ function ProductCard({ p, isMobile }: { p: (typeof products)[number]; isMobile: 
           {p.name}
         </div>
         <p
-          className="text-sm font-light mb-6 flex-1"
+          className="text-sm font-light mb-5"
           style={{ color: "var(--text-muted)", lineHeight: 1.6 }}
         >
           {p.desc}
         </p>
-        <div className="flex flex-wrap gap-1.5 mb-5">
+        {p.agents && (
+          <div
+            className="mb-5 p-4"
+            style={{
+              background: "rgba(196,151,58,0.04)",
+              border: "1px solid var(--gold-border)",
+              borderRadius: 8,
+            }}
+          >
+            <div
+              className="text-[10px] font-bold tracking-widest uppercase mb-2"
+              style={{ color: "var(--gold)" }}
+            >
+              Ce que les agents font
+            </div>
+            <ul className="space-y-1.5">
+              {p.agents.map((a) => (
+                <li
+                  key={a}
+                  className="text-[12px] font-light flex items-start gap-2"
+                  style={{ color: "var(--text-muted)" }}
+                >
+                  <span style={{ color: "var(--gold)", marginTop: 1 }}>›</span>
+                  <span>{a}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+        <div className="flex flex-wrap gap-1.5 mb-5 mt-auto">
           {p.stack.map((t) => (
             <span
               key={t}
@@ -461,7 +520,7 @@ export default function Portfolio() {
             className="block w-4 h-px"
             style={{ background: "var(--gold)" }}
           />
-          Portfolio
+          Nos preuves
         </div>
         <h2
           className="font-bold leading-tight mb-4"
@@ -472,18 +531,18 @@ export default function Portfolio() {
             color: "var(--text)",
           }}
         >
-          Nos produits en production.
+          On l&apos;a déjà fait.
         </h2>
         <p
           className="text-[17px] font-light mb-16"
           style={{
             color: "var(--text-muted)",
-            maxWidth: 500,
+            maxWidth: 640,
             lineHeight: 1.7,
           }}
         >
-          Trois SaaS conçus et opérés par NBHC — chacun comme preuve concrète de
-          notre capacité à livrer.
+          Ces 3 produits sont des équipes d&apos;agents IA que nous avons construits
+          et opérons nous-mêmes. Votre solution sur mesure peut ressembler à ça.
         </p>
       </div>
 
@@ -505,6 +564,69 @@ export default function Portfolio() {
           {products.map((p) => (
             <ProductCard key={p.name} p={p} isMobile={isMobile} />
           ))}
+
+          {/* CTA card "Votre secteur n'est pas là ?" */}
+          <a
+            href="/contact"
+            data-cursor="link"
+            className="flex flex-col justify-between p-8 no-underline transition-all duration-300 group"
+            style={{
+              width: isMobile ? "100%" : 380,
+              minWidth: isMobile ? "unset" : 380,
+              maxWidth: isMobile ? "100%" : 380,
+              flexShrink: 0,
+              background: "rgba(196,151,58,0.04)",
+              border: "1px solid var(--gold-border)",
+              borderRadius: "var(--radius)",
+            }}
+          >
+            <div>
+              <span
+                className="inline-block text-[10px] font-bold px-2 py-0.5 rounded-full mb-5 tracking-widest uppercase"
+                style={{
+                  background: "var(--gold-dim)",
+                  color: "var(--gold-light)",
+                  border: "1px solid var(--gold-border)",
+                }}
+              >
+                Sur mesure
+              </span>
+              <div
+                className="text-[26px] font-bold mb-3"
+                style={{
+                  fontFamily: "var(--font-syne)",
+                  color: "var(--text)",
+                  letterSpacing: "-0.5px",
+                  lineHeight: 1.15,
+                }}
+              >
+                Votre secteur n&apos;est pas là&nbsp;?
+              </div>
+              <p
+                className="text-[15px] font-light mb-6"
+                style={{ color: "var(--text-muted)", lineHeight: 1.7 }}
+              >
+                On construit des équipes d&apos;agents IA pour n&apos;importe quel
+                métier. Comptabilité, juridique, e-commerce, RH — si la tâche se
+                répète, on peut l&apos;automatiser.
+              </p>
+            </div>
+            <div
+              className="flex items-center gap-1.5 text-[14px] font-semibold pt-4 transition-transform duration-200 group-hover:translate-x-1"
+              style={{ color: "var(--gold)", borderTop: "1px solid var(--gold-border)" }}
+            >
+              Parlez-nous de votre cas
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path
+                  d="M3 8h10M8 3l5 5-5 5"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </div>
+          </a>
         </div>
 
         {/* Progress bar */}

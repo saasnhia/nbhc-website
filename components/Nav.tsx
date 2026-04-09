@@ -9,9 +9,9 @@ import MagneticButton from "./MagneticButton";
 gsap.registerPlugin(ScrollTrigger);
 
 const links = [
-  { href: "#approche", label: "Approche" },
-  { href: "#produits", label: "Produits" },
-  { href: "#services", label: "Services" },
+  { href: "/#how-it-works", label: "Comment ça marche" },
+  { href: "/#produits", label: "Nos preuves" },
+  { href: "/#secteurs", label: "Secteurs" },
   { href: "/agentic-ai", label: "AaaS" },
   { href: "/blog", label: "Blog" },
 ];
@@ -165,7 +165,7 @@ export default function Nav() {
         </button>
 
         <MagneticButton
-          href="#contact"
+          href="/contact"
           data-cursor="link"
           className="hidden min-[900px]:inline-flex text-sm font-medium px-5 py-2 rounded-md no-underline transition-all duration-200 whitespace-nowrap hover:opacity-90"
           style={{
@@ -174,7 +174,7 @@ export default function Nav() {
             border: "1px solid var(--gold-border)",
           }}
         >
-          Discuter du projet →
+          Diagnostic gratuit →
         </MagneticButton>
       </nav>
 
@@ -227,7 +227,7 @@ export default function Nav() {
               </a>
             ))}
             <a
-              href="#contact"
+              href="/contact"
               data-mobile-link
               data-cursor="link"
               onClick={closeMenu}
@@ -241,7 +241,7 @@ export default function Nav() {
                 lineHeight: 1.1,
               }}
             >
-              Contact
+              Diagnostic gratuit
             </a>
           </div>
         </div>
