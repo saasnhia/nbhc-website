@@ -3,9 +3,21 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 
-/* ─── Product data ─── */
+/* ─── Types ─── */
 
 type TextSide = "left" | "right";
+
+type FloatingBadge = {
+  text: string;
+  icon?: string;
+  /** Tailwind-ish positional class to place the badge around the mockup */
+  position: React.CSSProperties;
+  color?: string;
+  /** Vertical float amplitude in px */
+  amp: number;
+  duration: number;
+  delay: number;
+};
 
 type Product = {
   id: string;
@@ -13,15 +25,16 @@ type Product = {
   name: string;
   tagline: string;
   image: string;
-  domain: string;
   agents: string[];
   stack: string[];
   link: string;
   href: string;
   accent: string;
-  bg: string;
   textSide: TextSide;
+  floating: FloatingBadge[];
 };
+
+/* ─── Products ─── */
 
 const products: Product[] = [
   {
@@ -31,7 +44,6 @@ const products: Product[] = [
     tagline:
       "Équipe d'agents IA pour le montage vidéo automatisé. Alternative française à CapCut.",
     image: "/portfolio/vlogyz.png",
-    domain: "vlogyz.vercel.app",
     agents: [
       "Agent Transcription",
       "Agent Montage",
@@ -42,8 +54,35 @@ const products: Product[] = [
     link: "vlogyz.vercel.app",
     href: "https://vlogyz.vercel.app",
     accent: "#6366f1",
-    bg: "#09090b",
     textSide: "left",
+    floating: [
+      {
+        icon: "🎬",
+        text: "Sous-titres générés — 2m 34s",
+        position: { top: "8%", left: "-6%" },
+        amp: 6,
+        duration: 3,
+        delay: 0,
+      },
+      {
+        icon: "⚡",
+        text: "Score viralité : 87/100",
+        position: { bottom: "10%", right: "-4%" },
+        amp: 8,
+        duration: 4,
+        delay: 0.5,
+        color: "#818cf8",
+      },
+      {
+        icon: "✓",
+        text: "1m 23s supprimés automatiquement",
+        position: { top: "42%", left: "-12%" },
+        amp: 5,
+        duration: 3.5,
+        delay: 1,
+        color: "#4ade80",
+      },
+    ],
   },
   {
     id: "devizly",
@@ -52,7 +91,6 @@ const products: Product[] = [
     tagline:
       "Équipe d'agents IA pour la génération de devis et l'encaissement automatique.",
     image: "/portfolio/devizly.png",
-    domain: "devizly.fr",
     agents: [
       "Agent Génération",
       "Agent Conformité",
@@ -63,8 +101,35 @@ const products: Product[] = [
     link: "devizly.fr",
     href: "https://devizly.fr",
     accent: "#5B5BD6",
-    bg: "#08090e",
     textSide: "right",
+    floating: [
+      {
+        icon: "✓",
+        text: "Signature reçue — il y a 2 min",
+        position: { top: "6%", right: "-6%" },
+        amp: 7,
+        duration: 3.5,
+        delay: 0,
+        color: "#4ade80",
+      },
+      {
+        icon: "S",
+        text: "Acompte Stripe — 4 978,80 €",
+        position: { bottom: "12%", left: "-4%" },
+        amp: 6,
+        duration: 4,
+        delay: 0.8,
+        color: "#8b8bff",
+      },
+      {
+        icon: "📄",
+        text: "Devis DEV-0020 — Conforme CGI",
+        position: { top: "46%", right: "-10%" },
+        amp: 5,
+        duration: 3,
+        delay: 0.3,
+      },
+    ],
   },
   {
     id: "worthifast",
@@ -73,7 +138,6 @@ const products: Product[] = [
     tagline:
       "Équipe d'agents IA pour l'automatisation comptable et la révision FEC.",
     image: "/portfolio/worthifast.png",
-    domain: "worthifast.fr",
     agents: [
       "Agent FEC",
       "Agent Anomalies",
@@ -84,8 +148,35 @@ const products: Product[] = [
     link: "Bêta à venir",
     href: "#",
     accent: "#22c55e",
-    bg: "#080e09",
     textSide: "left",
+    floating: [
+      {
+        icon: "⚠",
+        text: "3 anomalies détectées — FEC",
+        position: { top: "8%", left: "-6%" },
+        amp: 6,
+        duration: 3.5,
+        delay: 0,
+        color: "#fb923c",
+      },
+      {
+        icon: "✓",
+        text: "TVA CA3 pré-remplie — 8 036 €",
+        position: { bottom: "10%", right: "-8%" },
+        amp: 8,
+        duration: 4,
+        delay: 0.6,
+        color: "#4ade80",
+      },
+      {
+        icon: "🔄",
+        text: "Rapprochement 95% — 12 tx",
+        position: { top: "44%", right: "-10%" },
+        amp: 5,
+        duration: 3,
+        delay: 1.2,
+      },
+    ],
   },
 ];
 
@@ -107,117 +198,154 @@ const badgeStyles: Record<string, React.CSSProperties> = {
   },
 };
 
-/* ─── BrowserFrame ─── */
+/* ─── FloatingBadge component ─── */
 
-function BrowserFrame({ product }: { product: Product }) {
-  const restShadow = `0 0 0 1px rgba(255,255,255,0.06), 0 30px 60px rgba(0,0,0,0.5), 0 0 80px ${product.accent}1F`;
-  const hoverShadow = `0 0 0 1px ${product.accent}40, 0 40px 80px rgba(0,0,0,0.6), 0 0 100px ${product.accent}33`;
-
+function FloatingBadgeView({
+  badge,
+  index,
+}: {
+  badge: FloatingBadge;
+  index: number;
+}) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 40, scale: 0.96 }}
-      whileInView={{ opacity: 1, y: 0, scale: 1 }}
-      transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-      viewport={{ once: true, margin: "-100px" }}
-      whileHover={{ scale: 1.02 }}
-      className="relative overflow-hidden w-full"
+      className="absolute pointer-events-none hidden md:flex"
       style={{
-        background: "#0d0d18",
+        ...badge.position,
+        background: "rgba(15,15,20,0.9)",
+        backdropFilter: "blur(12px)",
+        WebkitBackdropFilter: "blur(12px)",
+        border: "1px solid rgba(255,255,255,0.1)",
         borderRadius: 10,
-        border: "1px solid rgba(255,255,255,0.08)",
-        boxShadow: restShadow,
-        willChange: "transform",
+        padding: "10px 14px",
+        boxShadow: "0 8px 32px rgba(0,0,0,0.4)",
+        fontSize: 12,
+        color: "#F0EDE6",
+        fontFamily: "var(--font-dm-sans)",
+        whiteSpace: "nowrap",
+        alignItems: "center",
+        gap: 8,
+        zIndex: 3,
       }}
-      onMouseEnter={(e) => {
-        (e.currentTarget as HTMLElement).style.boxShadow = hoverShadow;
-      }}
-      onMouseLeave={(e) => {
-        (e.currentTarget as HTMLElement).style.boxShadow = restShadow;
+      initial={{ opacity: 0, scale: 0.8 }}
+      whileInView={{ opacity: 1, scale: 1 }}
+      viewport={{ once: true, margin: "-80px" }}
+      transition={{
+        duration: 0.5,
+        delay: 0.3 + index * 0.1,
+        ease: [0.16, 1, 0.3, 1],
       }}
     >
-      {/* macOS title bar */}
-      <div
-        className="flex items-center gap-2 px-4"
-        style={{
-          height: 36,
-          background: "#1c1c2e",
-          borderBottom: "1px solid rgba(255,255,255,0.05)",
+      <motion.div
+        className="flex items-center gap-2"
+        animate={{ y: [0, -badge.amp, 0] }}
+        transition={{
+          duration: badge.duration,
+          repeat: Infinity,
+          ease: "easeInOut",
+          delay: badge.delay,
         }}
       >
-        <span
-          className="block rounded-full"
-          style={{
-            width: 11,
-            height: 11,
-            background: "radial-gradient(circle at 30% 30%, rgba(255,255,255,0.4) 0%, #ff5f57 60%)",
-          }}
-        />
-        <span
-          className="block rounded-full"
-          style={{
-            width: 11,
-            height: 11,
-            background: "radial-gradient(circle at 30% 30%, rgba(255,255,255,0.4) 0%, #febc2e 60%)",
-          }}
-        />
-        <span
-          className="block rounded-full"
-          style={{
-            width: 11,
-            height: 11,
-            background: "radial-gradient(circle at 30% 30%, rgba(255,255,255,0.4) 0%, #28c840 60%)",
-          }}
-        />
-        <div
-          className="flex-1 flex items-center justify-center gap-1.5 mx-4 rounded-full"
-          style={{
-            height: 20,
-            background: "rgba(255,255,255,0.05)",
-            border: "1px solid rgba(255,255,255,0.08)",
-            fontSize: 11,
-            color: "#8C8880",
-            fontFamily: "var(--font-dm-sans)",
-          }}
-        >
-          <svg width="9" height="9" viewBox="0 0 10 10" fill="none">
-            <rect
-              x="2"
-              y="4.5"
-              width="6"
-              height="4"
-              rx="0.8"
-              stroke="#8C8880"
-              strokeWidth="0.8"
-            />
-            <path
-              d="M3.5 4.5V3a1.5 1.5 0 013 0v1.5"
-              stroke="#8C8880"
-              strokeWidth="0.8"
-            />
-          </svg>
-          {product.domain}
-        </div>
-        <div style={{ width: 40 }} />
-      </div>
+        {badge.icon && (
+          <span
+            className="inline-flex items-center justify-center"
+            style={{
+              width: 18,
+              height: 18,
+              borderRadius: 4,
+              background: badge.color ? `${badge.color}26` : "rgba(255,255,255,0.06)",
+              color: badge.color ?? "#F0EDE6",
+              fontSize: 11,
+              fontWeight: 700,
+            }}
+          >
+            {badge.icon}
+          </span>
+        )}
+        <span style={{ fontWeight: 500 }}>{badge.text}</span>
+      </motion.div>
+    </motion.div>
+  );
+}
 
-      {/* Screenshot */}
-      <div
+/* ─── FloatingMockup — 3D tilted screenshot with floating badges ─── */
+
+function FloatingMockup({ product }: { product: Product }) {
+  const tiltY = product.textSide === "left" ? -15 : 15;
+  const hoverRotY = product.textSide === "left" ? -8 : 8;
+
+  return (
+    <div
+      className="relative w-full flex items-center justify-center"
+      style={{
+        perspective: "1200px",
+        minHeight: 460,
+      }}
+    >
+      <motion.div
         className="relative"
         style={{
-          height: 440,
-          background: "linear-gradient(180deg, #0a0a0f 0%, #161619 100%)",
-          overflow: "hidden",
+          width: "100%",
+          maxWidth: 580,
+          transformStyle: "preserve-3d",
         }}
+        initial={{ opacity: 0, y: 60, scale: 0.92 }}
+        whileInView={{ opacity: 1, y: 0, scale: 1 }}
+        transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+        viewport={{ once: true, margin: "-80px" }}
       >
-        <Image
-          src={product.image}
-          alt={`Capture d'écran ${product.name}`}
-          fill
-          sizes="(max-width: 768px) 100vw, 720px"
-          className="object-cover object-top"
-        />
-      </div>
-    </motion.div>
+        {/* The tilted screenshot */}
+        <motion.div
+          className="relative overflow-hidden"
+          style={{
+            width: "100%",
+            borderRadius: 12,
+            border: "1px solid rgba(255,255,255,0.08)",
+            boxShadow: `0 50px 100px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.06), 0 0 80px ${product.accent}1F`,
+            // Initial 3D tilt (md+ only — reset on mobile via className override below)
+            transform: `rotateY(${tiltY}deg) rotateX(5deg)`,
+          }}
+          whileHover={{
+            rotateY: hoverRotY,
+            rotateX: 2,
+            scale: 1.02,
+          }}
+          transition={{ type: "spring", stiffness: 200, damping: 20 }}
+        >
+          <div
+            className="relative"
+            style={{
+              width: "100%",
+              aspectRatio: "16 / 10",
+              background: "#0a0a0f",
+            }}
+          >
+            <Image
+              src={product.image}
+              alt={`Capture d'écran ${product.name}`}
+              fill
+              sizes="(max-width: 768px) 100vw, 580px"
+              className="object-cover object-top"
+              priority={false}
+            />
+          </div>
+        </motion.div>
+
+        {/* Floating badges around the mockup */}
+        {product.floating.map((b, i) => (
+          <FloatingBadgeView key={i} badge={b} index={i} />
+        ))}
+      </motion.div>
+
+      {/* Disable 3D tilt on mobile */}
+      <style jsx>{`
+        @media (max-width: 767px) {
+          .relative > div > div[style*="rotateY"] {
+            transform: none !important;
+          }
+        }
+      `}</style>
+    </div>
   );
 }
 
@@ -230,21 +358,22 @@ function TextColumn({ product }: { product: Product }) {
     <motion.div
       initial={{
         opacity: 0,
-        x: product.textSide === "left" ? -40 : 40,
+        x: product.textSide === "left" ? -30 : 30,
       }}
       whileInView={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-      viewport={{ once: true, margin: "-100px" }}
+      viewport={{ once: true, margin: "-80px" }}
       className="flex flex-col justify-center"
     >
-      {/* Badges */}
+      {/* Badges row */}
       <div className="flex items-center gap-2 mb-5 flex-wrap">
         <span
-          className="inline-block text-[10px] font-bold px-2.5 py-1 rounded-full tracking-widest uppercase"
+          className="inline-block text-[11px] font-bold px-2.5 py-1 tracking-[1px] uppercase"
           style={{
-            background: `${product.accent}1A`,
+            background: `${product.accent}26`,
             color: product.accent,
-            border: `1px solid ${product.accent}33`,
+            border: `1px solid ${product.accent}40`,
+            borderRadius: 6,
           }}
         >
           Preuve de concept
@@ -262,9 +391,9 @@ function TextColumn({ product }: { product: Product }) {
         className="font-bold mb-3"
         style={{
           fontFamily: "var(--font-syne)",
-          fontSize: 40,
-          lineHeight: 1.05,
-          letterSpacing: "-1.5px",
+          fontSize: 44,
+          lineHeight: 1.0,
+          letterSpacing: "-2px",
           color: "var(--text)",
         }}
       >
@@ -273,41 +402,52 @@ function TextColumn({ product }: { product: Product }) {
 
       {/* Tagline */}
       <p
-        className="text-[15px] font-light mb-6"
+        className="text-[16px] font-light mb-6"
         style={{
           color: "var(--text-muted)",
           lineHeight: 1.6,
-          maxWidth: 440,
+          maxWidth: 420,
         }}
       >
         {product.tagline}
       </p>
 
+      {/* Separator */}
+      <div
+        className="mb-6"
+        style={{
+          height: 1,
+          background: "rgba(196,151,58,0.2)",
+          maxWidth: 420,
+        }}
+      />
+
       {/* Agents block */}
       <div
-        className="mb-6 p-4"
+        className="mb-6"
         style={{
-          background: "rgba(255,255,255,0.02)",
-          border: `1px solid ${product.accent}26`,
+          background: "rgba(255,255,255,0.03)",
+          border: "1px solid rgba(255,255,255,0.06)",
           borderRadius: 8,
-          maxWidth: 440,
+          padding: 16,
+          maxWidth: 420,
         }}
       >
         <div
-          className="text-[10px] font-bold tracking-widest uppercase mb-3"
+          className="text-[10px] font-bold tracking-[1.5px] uppercase mb-3"
           style={{ color: product.accent }}
         >
           Ce que les agents font
         </div>
-        <ul className="grid grid-cols-2 gap-y-1.5 gap-x-3">
+        <ul className="grid grid-cols-1 gap-y-1.5">
           {product.agents.map((a) => (
             <li
               key={a}
-              className="text-[12px] font-light flex items-start gap-1.5"
-              style={{ color: "var(--text-muted)" }}
+              className="text-[13px] font-light flex items-start gap-2"
+              style={{ color: "var(--text)" }}
             >
               <span
-                style={{ color: product.accent, fontSize: 8, marginTop: 3 }}
+                style={{ color: product.accent, fontSize: 9, marginTop: 4 }}
               >
                 ◆
               </span>
@@ -318,14 +458,15 @@ function TextColumn({ product }: { product: Product }) {
       </div>
 
       {/* Stack */}
-      <div className="flex flex-wrap gap-1.5 mb-6" style={{ maxWidth: 440 }}>
+      <div className="flex flex-wrap gap-1.5 mb-6" style={{ maxWidth: 420 }}>
         {product.stack.map((t) => (
           <span
             key={t}
-            className="text-[11px] px-2.5 py-0.5 rounded-full"
+            className="text-[12px] px-2.5 py-1"
             style={{
-              background: "rgba(255,255,255,0.04)",
-              border: "1px solid var(--border-accent)",
+              background: "rgba(255,255,255,0.05)",
+              border: "1px solid rgba(255,255,255,0.1)",
+              borderRadius: 20,
               color: "var(--text-muted)",
             }}
           >
@@ -341,8 +482,8 @@ function TextColumn({ product }: { product: Product }) {
           ? { target: "_blank", rel: "noopener noreferrer" }
           : {})}
         data-cursor="link"
-        className="inline-flex items-center gap-1.5 text-[14px] font-semibold no-underline w-fit group"
-        style={{ color: product.accent }}
+        className="inline-flex items-center gap-1.5 text-[14px] no-underline w-fit group"
+        style={{ color: product.accent, fontWeight: 600 }}
       >
         {product.link}
         <svg
@@ -365,45 +506,30 @@ function TextColumn({ product }: { product: Product }) {
   );
 }
 
-/* ─── ProductSection — 2 columns side by side ─── */
+/* ─── ProductSection ─── */
 
 function ProductSection({ product }: { product: Product }) {
   const textOnLeft = product.textSide === "left";
 
   return (
-    <div
-      className="px-10 max-[768px]:px-5 py-20 max-[768px]:py-12"
-      style={{ background: product.bg }}
-    >
+    <div className="py-16 md:py-20">
       <div
-        style={{ maxWidth: 1200, margin: "0 auto" }}
-        className="grid items-center gap-12 max-[768px]:gap-8"
+        className="grid gap-10 md:gap-16 items-center"
+        style={{
+          gridTemplateColumns: "minmax(0, 1fr)",
+        }}
       >
         <div
-          className="grid gap-12 max-[768px]:gap-8 items-center"
-          style={{
-            gridTemplateColumns: "minmax(0, 45fr) minmax(0, 55fr)",
-            minHeight: 520,
-          }}
+          className="grid gap-10 md:gap-16 items-center md:grid-cols-[minmax(0,40fr)_minmax(0,60fr)]"
         >
-          {/* Desktop: alternating via order. Mobile: stack, frame first. */}
-          <div
-            className="max-[768px]:col-span-full"
-            style={{ order: textOnLeft ? 0 : 1 }}
-          >
-            <div className="max-[768px]:hidden">
-              <TextColumn product={product} />
-            </div>
-          </div>
-          <div
-            className="max-[768px]:col-span-full"
-            style={{ order: textOnLeft ? 1 : 0 }}
-          >
-            <BrowserFrame product={product} />
-          </div>
-          {/* Mobile text column — rendered after the frame */}
-          <div className="hidden max-[768px]:block col-span-full">
+          <div style={{ order: textOnLeft ? 0 : 1 }} className="max-md:order-2">
             <TextColumn product={product} />
+          </div>
+          <div
+            style={{ order: textOnLeft ? 1 : 0 }}
+            className="max-md:order-1"
+          >
+            <FloatingMockup product={product} />
           </div>
         </div>
       </div>
@@ -411,7 +537,7 @@ function ProductSection({ product }: { product: Product }) {
   );
 }
 
-/* ─── Portfolio Section ─── */
+/* ─── Portfolio ─── */
 
 export default function Portfolio() {
   return (
@@ -419,147 +545,140 @@ export default function Portfolio() {
       id="produits"
       className="relative"
       style={{
+        background: "#09090b",
         borderTop: "1px solid var(--border)",
         borderBottom: "1px solid var(--border)",
       }}
     >
-      {/* Section header */}
       <div
-        className="pt-24 pb-12 px-10 max-[768px]:pt-16 max-[768px]:pb-8 max-[768px]:px-5"
-        style={{ background: "#09090b" }}
+        className="mx-auto py-24 md:py-32 px-6"
+        style={{ maxWidth: 1200 }}
       >
-        <div style={{ maxWidth: 1200, margin: "0 auto" }}>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+        {/* Section header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          className="mb-16 md:mb-20"
+        >
+          <div
+            className="text-[11px] font-medium tracking-[3px] uppercase mb-4 flex items-center gap-2"
+            style={{ color: "var(--gold)" }}
           >
-            <div
-              className="text-[11px] font-medium tracking-[3px] uppercase mb-4 flex items-center gap-2"
-              style={{ color: "var(--gold)" }}
-            >
-              <span
-                className="block w-4 h-px"
-                style={{ background: "var(--gold)" }}
-              />
-              Nos preuves
-            </div>
-            <h2
-              className="font-bold leading-tight mb-4"
-              style={{
-                fontFamily: "var(--font-syne)",
-                fontSize: "clamp(32px, 4vw, 52px)",
-                letterSpacing: "-1.5px",
-                color: "var(--text)",
-              }}
-            >
-              On l&apos;a déjà fait.
-            </h2>
-            <p
-              className="text-[17px] font-light"
-              style={{
-                color: "var(--text-muted)",
-                maxWidth: 640,
-                lineHeight: 1.65,
-              }}
-            >
-              Trois équipes d&apos;agents IA que nous avons conçues, déployées
-              et opérons nous-mêmes. Chaque capture est une interface réelle en
-              production.
-            </p>
-          </motion.div>
-        </div>
-      </div>
-
-      {/* Product sections with dividers */}
-      {products.map((p, i) => (
-        <div key={p.id}>
-          <ProductSection product={p} />
-          {i < products.length - 1 && (
-            <div
-              aria-hidden
-              style={{
-                height: 1,
-                background:
-                  "linear-gradient(90deg, transparent 0%, rgba(196,151,58,0.15) 50%, transparent 100%)",
-              }}
+            <span
+              className="block w-4 h-px"
+              style={{ background: "var(--gold)" }}
             />
-          )}
-        </div>
-      ))}
-
-      {/* Final CTA */}
-      <div
-        className="px-10 max-[768px]:px-5 pt-12 pb-24 max-[768px]:pb-16"
-        style={{ background: "#09090b" }}
-      >
-        <div style={{ maxWidth: 1200, margin: "0 auto" }}>
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-            className="text-center relative overflow-hidden"
+            Nos preuves
+          </div>
+          <h2
+            className="font-bold leading-tight mb-4"
             style={{
-              background: "rgba(196,151,58,0.04)",
-              border: "1px solid rgba(196,151,58,0.15)",
-              borderRadius: 12,
-              padding: "60px 40px",
+              fontFamily: "var(--font-syne)",
+              fontSize: "clamp(32px, 4vw, 52px)",
+              letterSpacing: "-1.5px",
+              color: "var(--text)",
             }}
           >
-            <div
-              className="text-[11px] font-medium tracking-[3px] uppercase mb-3"
-              style={{ color: "var(--gold)" }}
-            >
-              Sur mesure
-            </div>
-            <h3
-              className="font-bold mb-4"
-              style={{
-                fontFamily: "var(--font-syne)",
-                fontSize: "clamp(28px, 3.5vw, 42px)",
-                letterSpacing: "-1px",
-                color: "var(--text)",
-                lineHeight: 1.1,
-              }}
-            >
-              Votre secteur n&apos;est pas là&nbsp;?
-            </h3>
-            <p
-              className="text-[16px] font-light mb-8 mx-auto"
-              style={{
-                color: "var(--text-muted)",
-                lineHeight: 1.65,
-                maxWidth: 560,
-              }}
-            >
-              On construit des équipes d&apos;agents IA pour n&apos;importe quel
-              métier.
-            </p>
-            <a
-              href="/contact"
-              data-cursor="link"
-              className="inline-flex items-center gap-2 text-[15px] font-medium px-7 py-3.5 rounded-md no-underline transition-all duration-200 hover:opacity-90"
-              style={{
-                background: "var(--gold)",
-                color: "#0a0a0b",
-                border: "none",
-              }}
-            >
-              Parlez-nous de votre cas
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                <path
-                  d="M2 7h10M7 2l5 5-5 5"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </a>
-          </motion.div>
-        </div>
+            On l&apos;a déjà fait.
+          </h2>
+          <p
+            className="text-[17px] font-light"
+            style={{
+              color: "var(--text-muted)",
+              maxWidth: 640,
+              lineHeight: 1.65,
+            }}
+          >
+            Trois équipes d&apos;agents IA construites et opérées par NBHC.
+            Chaque interface est en production.
+          </p>
+        </motion.div>
+
+        {/* Product sections with dividers */}
+        {products.map((p, i) => (
+          <div key={p.id}>
+            <ProductSection product={p} />
+            {i < products.length - 1 && (
+              <div
+                aria-hidden
+                style={{
+                  height: 1,
+                  background:
+                    "linear-gradient(90deg, transparent 0%, rgba(196,151,58,0.2) 50%, transparent 100%)",
+                  margin: "40px 0",
+                }}
+              />
+            )}
+          </div>
+        ))}
+
+        {/* Final CTA */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          className="mt-20 md:mt-24 text-center relative overflow-hidden"
+          style={{
+            background: "rgba(196,151,58,0.04)",
+            border: "1px solid rgba(196,151,58,0.2)",
+            borderRadius: 12,
+            padding: "60px 40px",
+          }}
+        >
+          <div
+            className="text-[11px] font-medium tracking-[3px] uppercase mb-3"
+            style={{ color: "var(--gold)" }}
+          >
+            Sur mesure
+          </div>
+          <h3
+            className="font-bold mb-4"
+            style={{
+              fontFamily: "var(--font-syne)",
+              fontSize: "clamp(28px, 3.5vw, 42px)",
+              letterSpacing: "-1px",
+              color: "var(--text)",
+              lineHeight: 1.1,
+            }}
+          >
+            Votre secteur n&apos;est pas là&nbsp;?
+          </h3>
+          <p
+            className="text-[16px] font-light mb-8 mx-auto"
+            style={{
+              color: "var(--text-muted)",
+              lineHeight: 1.65,
+              maxWidth: 560,
+            }}
+          >
+            On construit des équipes d&apos;agents IA pour n&apos;importe quel
+            métier.
+          </p>
+          <a
+            href="/contact"
+            data-cursor="link"
+            className="inline-flex items-center gap-2 text-[15px] font-medium px-7 py-3.5 rounded-md no-underline transition-all duration-200 hover:opacity-90"
+            style={{
+              background: "var(--gold)",
+              color: "#0a0a0b",
+              border: "none",
+            }}
+          >
+            Parlez-nous de votre cas
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <path
+                d="M2 7h10M7 2l5 5-5 5"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </a>
+        </motion.div>
       </div>
     </section>
   );
