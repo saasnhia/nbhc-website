@@ -10,9 +10,11 @@ type TextSide = "left" | "right";
 type FloatingBadge = {
   text: string;
   icon?: string;
-  /** Tailwind-ish positional class to place the badge around the mockup */
+  /** Absolute positioning around the mockup */
   position: React.CSSProperties;
   color?: string;
+  /** Depth in px for translateZ (higher = more "in front") */
+  depth: number;
   /** Vertical float amplitude in px */
   amp: number;
   duration: number;
@@ -31,6 +33,9 @@ type Product = {
   href: string;
   accent: string;
   textSide: TextSide;
+  /** Rest rotateY in degrees — sign must match textSide */
+  restRotY: number;
+  glow?: boolean;
   floating: FloatingBadge[];
 };
 
@@ -55,20 +60,24 @@ const products: Product[] = [
     href: "https://vlogyz.vercel.app",
     accent: "#6366f1",
     textSide: "left",
+    restRotY: -12,
+    glow: true,
     floating: [
       {
         icon: "🎬",
         text: "Sous-titres générés — 2m 34s",
-        position: { top: "8%", left: "-6%" },
-        amp: 6,
+        position: { top: "6%", left: "-8%" },
+        depth: 60,
+        amp: 12,
         duration: 3,
         delay: 0,
       },
       {
         icon: "⚡",
         text: "Score viralité : 87/100",
-        position: { bottom: "10%", right: "-4%" },
-        amp: 8,
+        position: { bottom: "8%", right: "-6%" },
+        depth: 80,
+        amp: 14,
         duration: 4,
         delay: 0.5,
         color: "#818cf8",
@@ -76,11 +85,22 @@ const products: Product[] = [
       {
         icon: "✓",
         text: "1m 23s supprimés automatiquement",
-        position: { top: "42%", left: "-12%" },
-        amp: 5,
+        position: { top: "42%", left: "-14%" },
+        depth: 40,
+        amp: 10,
         duration: 3.5,
         delay: 1,
         color: "#4ade80",
+      },
+      {
+        icon: "🎯",
+        text: "Profil : Vlog voyage",
+        position: { top: "-4%", right: "-4%" },
+        depth: 60,
+        amp: 12,
+        duration: 3.2,
+        delay: 0.2,
+        color: "#a78bfa",
       },
     ],
   },
@@ -90,7 +110,7 @@ const products: Product[] = [
     name: "Devizly",
     tagline:
       "Équipe d'agents IA pour la génération de devis et l'encaissement automatique.",
-    image: "/portfolio/devizly.png",
+    image: "/portfolio/deviss.png",
     agents: [
       "Agent Génération",
       "Agent Conformité",
@@ -102,11 +122,13 @@ const products: Product[] = [
     href: "https://devizly.fr",
     accent: "#5B5BD6",
     textSide: "right",
+    restRotY: 15,
     floating: [
       {
         icon: "✓",
         text: "Signature reçue — il y a 2 min",
-        position: { top: "6%", right: "-6%" },
+        position: { top: "6%", right: "-8%" },
+        depth: 60,
         amp: 7,
         duration: 3.5,
         delay: 0,
@@ -115,8 +137,9 @@ const products: Product[] = [
       {
         icon: "S",
         text: "Acompte Stripe — 4 978,80 €",
-        position: { bottom: "12%", left: "-4%" },
-        amp: 6,
+        position: { bottom: "10%", left: "-6%" },
+        depth: 80,
+        amp: 8,
         duration: 4,
         delay: 0.8,
         color: "#8b8bff",
@@ -124,8 +147,9 @@ const products: Product[] = [
       {
         icon: "📄",
         text: "Devis DEV-0020 — Conforme CGI",
-        position: { top: "46%", right: "-10%" },
-        amp: 5,
+        position: { top: "44%", right: "-12%" },
+        depth: 40,
+        amp: 6,
         duration: 3,
         delay: 0.3,
       },
@@ -149,12 +173,14 @@ const products: Product[] = [
     href: "#",
     accent: "#22c55e",
     textSide: "left",
+    restRotY: -15,
     floating: [
       {
         icon: "⚠",
         text: "3 anomalies détectées — FEC",
-        position: { top: "8%", left: "-6%" },
-        amp: 6,
+        position: { top: "8%", left: "-8%" },
+        depth: 60,
+        amp: 7,
         duration: 3.5,
         delay: 0,
         color: "#fb923c",
@@ -162,8 +188,9 @@ const products: Product[] = [
       {
         icon: "✓",
         text: "TVA CA3 pré-remplie — 8 036 €",
-        position: { bottom: "10%", right: "-8%" },
-        amp: 8,
+        position: { bottom: "10%", right: "-10%" },
+        depth: 80,
+        amp: 9,
         duration: 4,
         delay: 0.6,
         color: "#4ade80",
@@ -171,8 +198,9 @@ const products: Product[] = [
       {
         icon: "🔄",
         text: "Rapprochement 95% — 12 tx",
-        position: { top: "44%", right: "-10%" },
-        amp: 5,
+        position: { top: "44%", right: "-12%" },
+        depth: 40,
+        amp: 6,
         duration: 3,
         delay: 1.2,
       },
@@ -198,126 +226,78 @@ const badgeStyles: Record<string, React.CSSProperties> = {
   },
 };
 
-/* ─── FloatingBadge component ─── */
-
-function FloatingBadgeView({
-  badge,
-  index,
-}: {
-  badge: FloatingBadge;
-  index: number;
-}) {
-  return (
-    <motion.div
-      className="absolute pointer-events-none hidden md:flex"
-      style={{
-        ...badge.position,
-        background: "rgba(15,15,20,0.9)",
-        backdropFilter: "blur(12px)",
-        WebkitBackdropFilter: "blur(12px)",
-        border: "1px solid rgba(255,255,255,0.1)",
-        borderRadius: 10,
-        padding: "10px 14px",
-        boxShadow: "0 8px 32px rgba(0,0,0,0.4)",
-        fontSize: 12,
-        color: "#F0EDE6",
-        fontFamily: "var(--font-dm-sans)",
-        whiteSpace: "nowrap",
-        alignItems: "center",
-        gap: 8,
-        zIndex: 3,
-      }}
-      initial={{ opacity: 0, scale: 0.8 }}
-      whileInView={{ opacity: 1, scale: 1 }}
-      viewport={{ once: true, margin: "-80px" }}
-      transition={{
-        duration: 0.5,
-        delay: 0.3 + index * 0.1,
-        ease: [0.16, 1, 0.3, 1],
-      }}
-    >
-      <motion.div
-        className="flex items-center gap-2"
-        animate={{ y: [0, -badge.amp, 0] }}
-        transition={{
-          duration: badge.duration,
-          repeat: Infinity,
-          ease: "easeInOut",
-          delay: badge.delay,
-        }}
-      >
-        {badge.icon && (
-          <span
-            className="inline-flex items-center justify-center"
-            style={{
-              width: 18,
-              height: 18,
-              borderRadius: 4,
-              background: badge.color ? `${badge.color}26` : "rgba(255,255,255,0.06)",
-              color: badge.color ?? "#F0EDE6",
-              fontSize: 11,
-              fontWeight: 700,
-            }}
-          >
-            {badge.icon}
-          </span>
-        )}
-        <span style={{ fontWeight: 500 }}>{badge.text}</span>
-      </motion.div>
-    </motion.div>
-  );
-}
-
-/* ─── FloatingMockup — 3D tilted screenshot with floating badges ─── */
+/* ─── FloatingMockup — 3D tilted screenshot with badges that follow the transform ─── */
 
 function FloatingMockup({ product }: { product: Product }) {
-  const tiltY = product.textSide === "left" ? -15 : 15;
-  const hoverRotY = product.textSide === "left" ? -8 : 8;
+  const restRotY = product.restRotY;
+  const hoverRotY = product.textSide === "left" ? -4 : 4;
 
   return (
     <div
       className="relative w-full flex items-center justify-center"
       style={{
         perspective: "1200px",
-        minHeight: 460,
+        minHeight: 480,
       }}
     >
+      {/* Background glow (only for products flagged) */}
+      {product.glow && (
+        <div
+          aria-hidden
+          className="absolute pointer-events-none hidden md:block"
+          style={{
+            width: "85%",
+            height: "85%",
+            background: `radial-gradient(circle, ${product.accent}40 0%, transparent 70%)`,
+            filter: "blur(80px)",
+            zIndex: 0,
+          }}
+        />
+      )}
+
+      {/* Outer wrapper — reveal only */}
       <motion.div
         className="relative"
         style={{
           width: "100%",
           maxWidth: 580,
           transformStyle: "preserve-3d",
+          zIndex: 1,
         }}
         initial={{ opacity: 0, y: 60, scale: 0.92 }}
         whileInView={{ opacity: 1, y: 0, scale: 1 }}
         transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
         viewport={{ once: true, margin: "-80px" }}
       >
-        {/* The tilted screenshot */}
+        {/* Inner wrapper — holds screenshot + badges, handles hover rotation.
+            transformStyle preserve-3d ensures that translateZ on children creates
+            real depth that follows this element's rotation. */}
         <motion.div
-          className="relative overflow-hidden"
+          className="relative mockup-3d-wrapper"
           style={{
+            transformStyle: "preserve-3d",
             width: "100%",
-            borderRadius: 12,
-            border: "1px solid rgba(255,255,255,0.08)",
-            boxShadow: `0 50px 100px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.06), 0 0 80px ${product.accent}1F`,
-            // Initial 3D tilt (md+ only — reset on mobile via className override below)
-            transform: `rotateY(${tiltY}deg) rotateX(5deg)`,
           }}
+          initial={{ rotateY: restRotY, rotateX: 5 }}
+          animate={{ rotateY: restRotY, rotateX: 5 }}
           whileHover={{
             rotateY: hoverRotY,
             rotateX: 2,
-            scale: 1.02,
+            scale: 1.03,
           }}
-          transition={{ type: "spring", stiffness: 200, damping: 20 }}
+          transition={{ type: "spring", stiffness: 150, damping: 20 }}
         >
+          {/* Screenshot */}
           <div
-            className="relative"
+            className="relative overflow-hidden"
             style={{
               width: "100%",
               aspectRatio: "16 / 10",
               background: "#0a0a0f",
+              borderRadius: 12,
+              border: "1px solid rgba(255,255,255,0.08)",
+              boxShadow: `0 50px 100px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.06), 0 0 80px ${product.accent}1F`,
+              transform: "translateZ(0)",
             }}
           >
             <Image
@@ -329,19 +309,83 @@ function FloatingMockup({ product }: { product: Product }) {
               priority={false}
             />
           </div>
-        </motion.div>
 
-        {/* Floating badges around the mockup */}
-        {product.floating.map((b, i) => (
-          <FloatingBadgeView key={i} badge={b} index={i} />
-        ))}
+          {/* Floating badges — INSIDE the rotating wrapper so they inherit the 3D transform */}
+          {product.floating.map((b, i) => (
+            <motion.div
+              key={i}
+              className="absolute pointer-events-none hidden md:flex badge-3d"
+              style={{
+                ...b.position,
+                transform: `translateZ(${b.depth}px)`,
+                transformStyle: "preserve-3d",
+                background: "rgba(15,15,20,0.9)",
+                backdropFilter: "blur(12px)",
+                WebkitBackdropFilter: "blur(12px)",
+                border: "1px solid rgba(255,255,255,0.1)",
+                borderRadius: 10,
+                padding: "10px 14px",
+                boxShadow: "0 8px 32px rgba(0,0,0,0.4)",
+                fontSize: 12,
+                color: "#F0EDE6",
+                fontFamily: "var(--font-dm-sans)",
+                whiteSpace: "nowrap",
+                alignItems: "center",
+                gap: 8,
+                zIndex: 3,
+              }}
+              initial={{ opacity: 0, scale: 0.8 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{
+                duration: 0.5,
+                delay: 0.3 + i * 0.1,
+                ease: [0.16, 1, 0.3, 1],
+              }}
+            >
+              <motion.div
+                className="flex items-center gap-2"
+                animate={{ y: [0, -b.amp, 0] }}
+                transition={{
+                  duration: b.duration,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  delay: b.delay,
+                }}
+              >
+                {b.icon && (
+                  <span
+                    className="inline-flex items-center justify-center"
+                    style={{
+                      width: 18,
+                      height: 18,
+                      borderRadius: 4,
+                      background: b.color
+                        ? `${b.color}26`
+                        : "rgba(255,255,255,0.06)",
+                      color: b.color ?? "#F0EDE6",
+                      fontSize: 11,
+                      fontWeight: 700,
+                    }}
+                  >
+                    {b.icon}
+                  </span>
+                )}
+                <span style={{ fontWeight: 500 }}>{b.text}</span>
+              </motion.div>
+            </motion.div>
+          ))}
+        </motion.div>
       </motion.div>
 
-      {/* Disable 3D tilt on mobile */}
+      {/* Mobile: disable all 3D transforms */}
       <style jsx>{`
         @media (max-width: 767px) {
-          .relative > div > div[style*="rotateY"] {
+          :global(.mockup-3d-wrapper) {
             transform: none !important;
+          }
+          :global(.badge-3d) {
+            display: none !important;
           }
         }
       `}</style>
@@ -513,24 +557,12 @@ function ProductSection({ product }: { product: Product }) {
 
   return (
     <div className="py-16 md:py-20">
-      <div
-        className="grid gap-10 md:gap-16 items-center"
-        style={{
-          gridTemplateColumns: "minmax(0, 1fr)",
-        }}
-      >
-        <div
-          className="grid gap-10 md:gap-16 items-center md:grid-cols-[minmax(0,40fr)_minmax(0,60fr)]"
-        >
-          <div style={{ order: textOnLeft ? 0 : 1 }} className="max-md:order-2">
-            <TextColumn product={product} />
-          </div>
-          <div
-            style={{ order: textOnLeft ? 1 : 0 }}
-            className="max-md:order-1"
-          >
-            <FloatingMockup product={product} />
-          </div>
+      <div className="grid gap-10 md:gap-16 items-center md:grid-cols-[minmax(0,40fr)_minmax(0,60fr)]">
+        <div style={{ order: textOnLeft ? 0 : 1 }} className="max-md:order-2">
+          <TextColumn product={product} />
+        </div>
+        <div style={{ order: textOnLeft ? 1 : 0 }} className="max-md:order-1">
+          <FloatingMockup product={product} />
         </div>
       </div>
     </div>
@@ -550,10 +582,7 @@ export default function Portfolio() {
         borderBottom: "1px solid var(--border)",
       }}
     >
-      <div
-        className="mx-auto py-24 md:py-32 px-6"
-        style={{ maxWidth: 1200 }}
-      >
+      <div className="mx-auto py-24 md:py-32 px-6" style={{ maxWidth: 1200 }}>
         {/* Section header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
