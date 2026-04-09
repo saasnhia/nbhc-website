@@ -12,6 +12,7 @@ const links = [
   { href: "#approche", label: "Approche" },
   { href: "#produits", label: "Produits" },
   { href: "#services", label: "Services" },
+  { href: "/agentic-ai", label: "AaaS" },
   { href: "/blog", label: "Blog" },
 ];
 

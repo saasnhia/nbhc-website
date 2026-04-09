@@ -32,6 +32,13 @@ const services = [
     desc: "Pipelines de traitement vidéo, audio et documents — transcription, résumé automatique, extraction d'informations clés, génération de sous-titres, montage automatisé à grande échelle.",
     tags: ["FFmpeg", "Whisper", "Remotion", "Hetzner"],
   },
+  {
+    icon: "\uD83E\uDD16",
+    name: "Agentic AI as a Service",
+    desc: "Des équipes d'agents IA déployées et opérées pour votre entreprise. Automatisation complète de vos flux métier — comptabilité, commercial, contenu, support.",
+    tags: ["Multi-agents", "Opéré par NBHC", "Sur mesure", "RGPD EU"],
+    href: "/agentic-ai",
+  },
 ];
 
 export default function Services() {
@@ -108,57 +115,72 @@ export default function Services() {
       </p>
 
       <div ref={cardsRef} className="grid grid-cols-2 max-[900px]:grid-cols-1 gap-5">
-        {services.map((s) => (
-          <div
-            key={s.name}
-            data-reveal-card
-            data-cursor="card"
-            className="p-9 relative overflow-hidden transition-colors duration-300 group hover:bg-[var(--card-hover)]"
-            style={{
-              background: "var(--card)",
-              border: "1px solid var(--border)",
-              borderRadius: "var(--radius)",
-            }}
-          >
-            <span
-              className="absolute top-0 left-0 w-[3px] h-0 transition-all duration-300 group-hover:h-full"
-              style={{ background: "var(--gold)" }}
-            />
-
-            <span className="text-2xl block mb-5">{s.icon}</span>
-            <div
-              className="text-xl font-bold mb-2.5"
+        {services.map((s) => {
+          const Wrapper = s.href ? "a" : "div";
+          const wrapperProps = s.href
+            ? { href: s.href, className: "no-underline" }
+            : {};
+          return (
+            <Wrapper
+              key={s.name}
+              data-reveal-card
+              data-cursor="card"
+              className={`p-9 relative overflow-hidden transition-colors duration-300 group hover:bg-[var(--card-hover)] ${s.href ? "no-underline block" : ""}`}
               style={{
-                fontFamily: "var(--font-syne)",
-                color: "var(--text)",
-                letterSpacing: "-0.5px",
+                background: "var(--card)",
+                border: "1px solid var(--border)",
+                borderRadius: "var(--radius)",
               }}
+              {...wrapperProps}
             >
-              {s.name}
-            </div>
-            <p
-              className="text-sm font-light mb-5"
-              style={{ color: "var(--text-muted)", lineHeight: 1.7 }}
-            >
-              {s.desc}
-            </p>
-            <div className="flex flex-wrap gap-1.5">
-              {s.tags.map((t) => (
-                <span
-                  key={t}
-                  className="text-[11px] px-2.5 py-0.5 rounded-full"
-                  style={{
-                    background: "var(--gold-dim)",
-                    border: "1px solid var(--gold-border)",
-                    color: "var(--gold-light)",
-                  }}
+              <span
+                className="absolute top-0 left-0 w-[3px] h-0 transition-all duration-300 group-hover:h-full"
+                style={{ background: "var(--gold)" }}
+              />
+
+              <span className="text-2xl block mb-5">{s.icon}</span>
+              <div
+                className="text-xl font-bold mb-2.5"
+                style={{
+                  fontFamily: "var(--font-syne)",
+                  color: "var(--text)",
+                  letterSpacing: "-0.5px",
+                }}
+              >
+                {s.name}
+              </div>
+              <p
+                className="text-sm font-light mb-5"
+                style={{ color: "var(--text-muted)", lineHeight: 1.7 }}
+              >
+                {s.desc}
+              </p>
+              <div className="flex flex-wrap gap-1.5">
+                {s.tags.map((t) => (
+                  <span
+                    key={t}
+                    className="text-[11px] px-2.5 py-0.5 rounded-full"
+                    style={{
+                      background: "var(--gold-dim)",
+                      border: "1px solid var(--gold-border)",
+                      color: "var(--gold-light)",
+                    }}
+                  >
+                    {t}
+                  </span>
+                ))}
+              </div>
+              {s.href && (
+                <div
+                  className="mt-5 text-[13px] font-medium flex items-center gap-1.5 transition-transform duration-200 group-hover:translate-x-1"
+                  style={{ color: "var(--gold)" }}
                 >
-                  {t}
-                </span>
-              ))}
-            </div>
-          </div>
-        ))}
+                  Découvrir l&apos;offre →
+                </div>
+              )}
+            </Wrapper>
+          );
+        })}
       </div>
     </section>
   );

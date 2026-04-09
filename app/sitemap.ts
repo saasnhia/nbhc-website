@@ -9,6 +9,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1,
     },
     {
+      url: "https://nbhc.fr/agentic-ai",
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.9,
+    },
+    {
       url: "https://nbhc.fr/faq",
       lastModified: new Date(),
       changeFrequency: "monthly",
