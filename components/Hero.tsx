@@ -99,12 +99,12 @@ export default function Hero() {
       </svg>
 
       <div
-        className="min-h-screen flex flex-col justify-center items-center px-10 max-[900px]:px-5 pt-28 pb-16 max-[900px]:pt-24 max-[900px]:pb-12 relative z-1 text-center"
-        style={{ maxWidth: 1200, margin: "0 auto" }}
+        className="flex flex-col justify-center items-center px-10 max-[900px]:px-5 pt-28 pb-12 max-[900px]:pt-20 max-[900px]:pb-8 relative z-1 text-center"
+        style={{ maxWidth: 1200, margin: "0 auto", minHeight: "auto" }}
       >
         <div
           data-eyebrow
-          className="inline-flex items-center gap-2 text-xs font-medium tracking-widest uppercase mb-7"
+          className="inline-flex items-center gap-2 text-[11px] font-medium tracking-widest uppercase mb-5"
           style={{ color: "var(--gold)", opacity: 0 }}
         >
           <span className="block w-6 h-px" style={{ background: "var(--gold)" }} />
@@ -112,14 +112,14 @@ export default function Hero() {
         </div>
 
         <h1
-          className="font-extrabold mb-7"
+          className="font-extrabold mb-5"
           style={{
             fontFamily: "var(--font-syne)",
-            fontSize: "clamp(32px, 6.5vw, 78px)",
-            lineHeight: "1.05",
-            letterSpacing: "-2.5px",
+            fontSize: "clamp(26px, 4.2vw, 52px)",
+            lineHeight: "0.95",
+            letterSpacing: "-2px",
             color: "var(--text)",
-            maxWidth: 1000,
+            maxWidth: 880,
           }}
         >
           <span data-hero-line style={{ display: "block", opacity: 0 }}>
@@ -135,11 +135,11 @@ export default function Hero() {
 
         <p
           data-subtitle
-          className="text-lg font-light mb-12 max-[900px]:mb-10"
+          className="text-base font-light mb-8 max-[900px]:mb-7"
           style={{
             color: "var(--text-muted)",
-            maxWidth: 680,
-            lineHeight: 1.7,
+            maxWidth: 620,
+            lineHeight: 1.6,
             opacity: 0,
           }}
         >
@@ -148,7 +148,7 @@ export default function Hero() {
         </p>
 
         {/* Interactive flow diagram */}
-        <div data-flow className="w-full mb-12 max-[900px]:mb-10" style={{ opacity: 0 }}>
+        <div data-flow className="w-full mb-8 max-[900px]:mb-7" style={{ opacity: 0 }}>
           <AgentFlowIllustration />
         </div>
 
@@ -191,7 +191,7 @@ export default function Hero() {
 
         <div
           data-trust
-          className="flex items-center justify-center gap-2 mt-10 text-xs flex-wrap"
+          className="flex items-center justify-center gap-2 mt-7 text-xs flex-wrap"
           style={{
             color: "var(--text-dim)",
             opacity: 0,
