@@ -2,6 +2,11 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import {
+  AgentAnatomyIllustration,
+  MultiAgentWorkflowIllustration,
+  WithoutVsWithAgentsIllustration,
+} from "../../components/AgenticIllustrations";
 
 const teams = [
   {
@@ -217,7 +222,7 @@ export default function AgenticAIPage() {
             Concept
           </div>
           <h2
-            className="font-bold leading-tight mb-16"
+            className="font-bold leading-tight mb-10"
             style={{
               fontFamily: "var(--font-syne)",
               fontSize: "clamp(28px, 4vw, 48px)",
@@ -228,6 +233,12 @@ export default function AgenticAIPage() {
           >
             Pas un chatbot. Une équipe qui travaille pour vous.
           </h2>
+
+          {/* Illustration 1 — Agent anatomy */}
+          <div className="mb-16">
+            <AgentAnatomyIllustration />
+          </div>
+
           <div className="grid grid-cols-3 max-[900px]:grid-cols-1 gap-6">
             {[
               {
@@ -307,12 +318,17 @@ export default function AgenticAIPage() {
           Choisissez votre équipe.
         </h2>
         <p
-          className="text-[17px] font-light mb-16"
+          className="text-[17px] font-light mb-12"
           style={{ color: "var(--text-muted)", maxWidth: 600, lineHeight: 1.7 }}
         >
           Quatre équipes packagées prêtes à déployer, ou une équipe sur mesure
           conçue pour votre métier.
         </p>
+
+        {/* Illustration 2 — Multi-agent workflow */}
+        <div className="mb-16">
+          <MultiAgentWorkflowIllustration />
+        </div>
 
         <div className="grid grid-cols-2 max-[900px]:grid-cols-1 gap-5">
           {teams.map((t) => (
@@ -419,7 +435,7 @@ export default function AgenticAIPage() {
             Process
           </div>
           <h2
-            className="font-bold leading-tight mb-16"
+            className="font-bold leading-tight mb-10"
             style={{
               fontFamily: "var(--font-syne)",
               fontSize: "clamp(28px, 4vw, 48px)",
@@ -430,6 +446,12 @@ export default function AgenticAIPage() {
           >
             De votre problème à vos agents opérationnels.
           </h2>
+
+          {/* Illustration 3 — Sans vs Avec agents */}
+          <div className="mb-16">
+            <WithoutVsWithAgentsIllustration />
+          </div>
+
           <div className="grid grid-cols-4 max-[900px]:grid-cols-1 gap-5">
             {steps.map((s) => (
               <div
