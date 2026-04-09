@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -10,12 +10,26 @@ gsap.registerPlugin(ScrollTrigger);
 
 /* ─── Product data ─── */
 
-const products = [
+type Product = {
+  id: string;
+  badge: { label: string; type: "live" | "beta" | "dev" };
+  name: string;
+  image: string;
+  domain: string;
+  desc: string;
+  agents: string[];
+  stack: string[];
+  link: string;
+  href: string;
+};
+
+const products: Product[] = [
   {
     id: "vlogyz",
-    badge: { label: "MVP live", type: "beta" as const },
+    badge: { label: "MVP live", type: "beta" },
     name: "Vlogyz",
     image: "/portfolio/vlogyz.png",
+    domain: "vlogyz.vercel.app",
     desc: "Équipe d'agents IA pour le montage vidéo automatisé — alternative française à CapCut.",
     agents: [
       "Agent Transcription — Whisper en français",
@@ -29,9 +43,10 @@ const products = [
   },
   {
     id: "devizly",
-    badge: { label: "Live", type: "live" as const },
+    badge: { label: "Live", type: "live" },
     name: "Devizly",
     image: "/portfolio/devizly.png",
+    domain: "devizly.fr",
     desc: "Équipe d'agents IA pour la génération de devis et l'encaissement automatique.",
     agents: [
       "Agent Génération — devis depuis description",
@@ -45,9 +60,10 @@ const products = [
   },
   {
     id: "worthifast",
-    badge: { label: "En développement", type: "dev" as const },
+    badge: { label: "En développement", type: "dev" },
     name: "Worthifast",
     image: "/portfolio/worthifast.png",
+    domain: "worthifast.fr",
     desc: "Équipe d'agents IA pour l'automatisation comptable et la révision FEC.",
     agents: [
       "Agent FEC — import et analyse",
@@ -79,46 +95,67 @@ const badgeStyles: Record<string, React.CSSProperties> = {
   },
 };
 
+/* ─── BrowserFrame — the 3D window containing the screenshot ─── */
 
-/* ─── ProductCard ─── */
+function BrowserFrame({
+  product,
+  textOnLeft,
+}: {
+  product: Product;
+  textOnLeft: boolean;
+}) {
+  const wrapperRef = useRef<HTMLDivElement>(null);
+  const frameRef = useRef<HTMLDivElement>(null);
+  const imageRef = useRef<HTMLDivElement>(null);
 
-function ProductCard({ p, isMobile }: { p: (typeof products)[number]; isMobile: boolean }) {
-  const cardRef = useRef<HTMLAnchorElement>(null);
-  const glowRef = useRef<HTMLDivElement>(null);
-  const screenshotRef = useRef<HTMLDivElement>(null);
-
-  // Scroll-in 3D reveal + parallax on screenshot
   useEffect(() => {
-    const card = cardRef.current;
-    const shot = screenshotRef.current;
-    if (!card) return;
+    const wrapper = wrapperRef.current;
+    const frame = frameRef.current;
+    const img = imageRef.current;
+    if (!wrapper || !frame) return;
 
-    // Initial 3D state
-    gsap.set(card, { rotateY: -8, opacity: 0, y: 20 });
+    // Initial 3D state — tilt depends on which side the text sits on
+    const initialRotateY = textOnLeft ? -18 : 18;
+    const initialRotateZ = textOnLeft ? 2 : -2;
+
+    gsap.set(frame, {
+      rotateX: 12,
+      rotateY: initialRotateY,
+      rotateZ: initialRotateZ,
+      y: 60,
+      opacity: 0,
+      scale: 0.92,
+      transformPerspective: 1200,
+    });
+
     const reveal = ScrollTrigger.create({
-      trigger: card,
-      start: "top 85%",
+      trigger: wrapper,
+      start: "top 80%",
       once: true,
       onEnter: () => {
-        gsap.to(card, {
+        gsap.to(frame, {
+          rotateX: 0,
           rotateY: 0,
-          opacity: 1,
+          rotateZ: 0,
           y: 0,
-          duration: 1.1,
+          opacity: 1,
+          scale: 1,
+          duration: 1.2,
           ease: "power3.out",
         });
       },
     });
 
+    // Parallax on the inner image
     let parallax: ScrollTrigger | undefined;
-    if (shot) {
+    if (img) {
       parallax = ScrollTrigger.create({
-        trigger: card,
+        trigger: wrapper,
         start: "top bottom",
         end: "bottom top",
         scrub: 1,
         onUpdate: (self) => {
-          gsap.set(shot, { y: -20 + self.progress * 40 });
+          gsap.set(img, { y: -15 + self.progress * 30 });
         },
       });
     }
@@ -127,216 +164,275 @@ function ProductCard({ p, isMobile }: { p: (typeof products)[number]; isMobile: 
       reveal.kill();
       parallax?.kill();
     };
-  }, []);
+  }, [textOnLeft]);
 
   const onMouseMove = (e: React.MouseEvent) => {
-    const el = cardRef.current;
-    const glow = glowRef.current;
-    if (!el || !glow) return;
+    const el = frameRef.current;
+    if (!el) return;
     const rect = el.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    const rotateY = ((x / rect.width) - 0.5) * 12;
-    const rotateX = ((y / rect.height) - 0.5) * -12;
-
+    const mouseX = e.clientX - rect.left - rect.width / 2;
+    const mouseY = e.clientY - rect.top - rect.height / 2;
     gsap.to(el, {
-      rotateX,
-      rotateY,
-      scale: 1.02,
-      duration: 0.4,
+      rotateX: -mouseY * 0.008,
+      rotateY: mouseX * 0.012,
+      duration: 0.5,
       ease: "power2.out",
-      boxShadow: "0 30px 60px -20px rgba(196,151,58,0.25)",
-    });
-    gsap.to(glow, {
-      background: `radial-gradient(circle at ${x}px ${y}px, rgba(255,255,255,0.15) 0%, transparent 60%)`,
-      opacity: 1,
-      duration: 0.3,
+      boxShadow:
+        "0 0 0 1px rgba(255,255,255,0.05), 0 40px 80px rgba(0,0,0,0.6), 0 0 120px rgba(196,151,58,0.18), 0 0 80px rgba(196,151,58,0.15)",
     });
   };
 
   const onMouseLeave = () => {
-    gsap.to(cardRef.current, {
+    const el = frameRef.current;
+    if (!el) return;
+    gsap.to(el, {
       rotateX: 0,
       rotateY: 0,
-      scale: 1,
-      duration: 0.6,
-      ease: "power2.out",
-      boxShadow: "0 0 0 rgba(0,0,0,0)",
+      duration: 0.8,
+      ease: "power3.out",
+      boxShadow:
+        "0 0 0 1px rgba(255,255,255,0.05), 0 40px 80px rgba(0,0,0,0.6), 0 0 120px rgba(196,151,58,0.08)",
     });
-    gsap.to(glowRef.current, { opacity: 0, duration: 0.3 });
   };
 
-  const isExternal = p.href !== "#";
-
   return (
-    <a
-      ref={cardRef}
-      href={p.href}
-      {...(isExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-      data-cursor="card"
+    <div
+      ref={wrapperRef}
       onMouseMove={onMouseMove}
       onMouseLeave={onMouseLeave}
-      className="flex flex-col overflow-hidden no-underline group cursor-pointer"
-      style={{
-        width: isMobile ? "100%" : 380,
-        minWidth: isMobile ? "unset" : 380,
-        maxWidth: isMobile ? "100%" : 380,
-        flexShrink: 0,
-        background: "var(--card)",
-        border: "1px solid var(--border)",
-        borderRadius: "var(--radius)",
-        perspective: 1000,
-        transformStyle: "preserve-3d",
-        textDecoration: "none",
-        color: "inherit",
-        willChange: "transform",
-      }}
+      style={{ perspective: "1200px" }}
+      className="w-full"
     >
-      {/* Real screenshot with parallax */}
       <div
+        ref={frameRef}
         className="relative overflow-hidden"
         style={{
-          height: 240,
-          background: "linear-gradient(180deg, #0a0a0f 0%, #161619 100%)",
+          background: "#111118",
+          borderRadius: 12,
+          border: "1px solid rgba(255,255,255,0.08)",
+          boxShadow:
+            "0 0 0 1px rgba(255,255,255,0.05), 0 40px 80px rgba(0,0,0,0.6), 0 0 120px rgba(196,151,58,0.08)",
+          transformStyle: "preserve-3d",
+          willChange: "transform",
+        }}
+      >
+        {/* Browser bar */}
+        <div
+          className="flex items-center gap-2 px-3"
+          style={{
+            height: 28,
+            background: "#1a1a2e",
+            borderBottom: "1px solid rgba(255,255,255,0.04)",
+          }}
+        >
+          <span
+            className="block rounded-full"
+            style={{ width: 10, height: 10, background: "#ff5f56" }}
+          />
+          <span
+            className="block rounded-full"
+            style={{ width: 10, height: 10, background: "#ffbd2e" }}
+          />
+          <span
+            className="block rounded-full"
+            style={{ width: 10, height: 10, background: "#27c93f" }}
+          />
+          <div
+            className="flex-1 flex items-center justify-center text-[10px] rounded-sm mx-3"
+            style={{
+              background: "#0d0d18",
+              color: "#8C8880",
+              height: 16,
+              fontFamily: "var(--font-dm-sans)",
+              letterSpacing: "0.2px",
+            }}
+          >
+            {product.domain}
+          </div>
+          <div style={{ width: 30 }} />
+        </div>
+
+        {/* Screenshot */}
+        <div
+          ref={imageRef}
+          className="relative"
+          style={{
+            height: 380,
+            background: "linear-gradient(180deg, #0a0a0f 0%, #161619 100%)",
+            willChange: "transform",
+          }}
+        >
+          <Image
+            src={product.image}
+            alt={`Capture d'écran ${product.name}`}
+            fill
+            sizes="(max-width: 900px) 100vw, 560px"
+            className="object-cover object-top"
+          />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ─── ProductBlock — one product row (2 cols alternating) ─── */
+
+function ProductBlock({
+  product,
+  index,
+}: {
+  product: Product;
+  index: number;
+}) {
+  const textOnLeft = index % 2 === 0;
+  const isExternal = product.href !== "#";
+
+  const TextColumn = (
+    <div className="flex flex-col justify-center">
+      {/* Badges */}
+      <div className="flex items-center gap-2 mb-5 flex-wrap">
+        <span
+          className="inline-block text-[10px] font-bold px-2 py-0.5 rounded-full tracking-widest uppercase"
+          style={{
+            background: "var(--gold-dim)",
+            color: "var(--gold-light)",
+            border: "1px solid var(--gold-border)",
+          }}
+        >
+          Preuve de concept
+        </span>
+        <span
+          className="inline-block text-[11px] font-medium px-2.5 py-0.5 rounded-full tracking-wide"
+          style={badgeStyles[product.badge.type]}
+        >
+          {product.badge.label}
+        </span>
+      </div>
+
+      {/* Title */}
+      <div
+        className="mb-3 font-bold"
+        style={{
+          fontFamily: "var(--font-syne)",
+          fontSize: 32,
+          lineHeight: 1.1,
+          letterSpacing: "-1px",
+          color: "var(--text)",
+        }}
+      >
+        {product.name}
+      </div>
+
+      {/* Description */}
+      <p
+        className="text-[15px] font-light mb-6"
+        style={{ color: "var(--text-muted)", lineHeight: 1.65, maxWidth: 460 }}
+      >
+        {product.desc}
+      </p>
+
+      {/* Agents */}
+      <div
+        className="mb-6 p-4"
+        style={{
+          background: "rgba(196,151,58,0.04)",
+          border: "1px solid var(--gold-border)",
+          borderRadius: 8,
+          maxWidth: 460,
         }}
       >
         <div
-          ref={screenshotRef}
-          className="absolute inset-0"
-          style={{ willChange: "transform" }}
+          className="text-[10px] font-bold tracking-widest uppercase mb-2.5"
+          style={{ color: "var(--gold)" }}
         >
-          {p.image && (
-            <Image
-              src={p.image}
-              alt={`Capture d'écran ${p.name}`}
-              fill
-              sizes="(max-width: 900px) 100vw, 380px"
-              className="object-cover object-top"
-              priority={false}
-            />
-          )}
+          Ce que les agents font
         </div>
-        {/* Subtle gradient overlay for legibility */}
-        <div
-          className="absolute inset-x-0 bottom-0 pointer-events-none"
-          style={{
-            height: 60,
-            background:
-              "linear-gradient(180deg, rgba(10,10,15,0) 0%, rgba(10,10,15,0.8) 100%)",
-          }}
-        />
+        <ul className="space-y-1.5">
+          {product.agents.map((a) => (
+            <li
+              key={a}
+              className="text-[12px] font-light flex items-start gap-2"
+              style={{ color: "var(--text-muted)" }}
+            >
+              <span style={{ color: "var(--gold)", marginTop: 1 }}>›</span>
+              <span>{a}</span>
+            </li>
+          ))}
+        </ul>
       </div>
 
-      <div className="p-7 flex-1 flex flex-col relative">
-        <div
-          ref={glowRef}
-          className="absolute inset-0 pointer-events-none"
-          style={{ opacity: 0 }}
-        />
-        <div className="flex items-center gap-2 mb-3.5">
+      {/* Stack */}
+      <div className="flex flex-wrap gap-1.5 mb-6" style={{ maxWidth: 460 }}>
+        {product.stack.map((t) => (
           <span
-            className="inline-block text-[10px] font-bold px-2 py-0.5 rounded-full tracking-widest uppercase"
+            key={t}
+            className="text-[11px] px-2.5 py-0.5 rounded-full"
             style={{
-              background: "var(--gold-dim)",
-              color: "var(--gold-light)",
-              border: "1px solid var(--gold-border)",
+              background: "rgba(255,255,255,0.04)",
+              border: "1px solid var(--border-accent)",
+              color: "var(--text-muted)",
             }}
           >
-            Preuve de concept
+            {t}
           </span>
-          <span
-            className="inline-block text-[11px] font-medium px-2.5 py-0.5 rounded-full tracking-wide"
-            style={badgeStyles[p.badge.type]}
-          >
-            {p.badge.label}
-          </span>
-        </div>
-        <div
-          className="text-[22px] font-bold mb-2"
-          style={{
-            fontFamily: "var(--font-syne)",
-            color: "var(--text)",
-            letterSpacing: "-0.5px",
-          }}
-        >
-          {p.name}
-        </div>
-        <p
-          className="text-sm font-light mb-5"
-          style={{ color: "var(--text-muted)", lineHeight: 1.6 }}
-        >
-          {p.desc}
-        </p>
-        {p.agents && (
-          <div
-            className="mb-5 p-4"
-            style={{
-              background: "rgba(196,151,58,0.04)",
-              border: "1px solid var(--gold-border)",
-              borderRadius: 8,
-            }}
-          >
-            <div
-              className="text-[10px] font-bold tracking-widest uppercase mb-2"
-              style={{ color: "var(--gold)" }}
-            >
-              Ce que les agents font
-            </div>
-            <ul className="space-y-1.5">
-              {p.agents.map((a) => (
-                <li
-                  key={a}
-                  className="text-[12px] font-light flex items-start gap-2"
-                  style={{ color: "var(--text-muted)" }}
-                >
-                  <span style={{ color: "var(--gold)", marginTop: 1 }}>›</span>
-                  <span>{a}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
-        <div className="flex flex-wrap gap-1.5 mb-5 mt-auto">
-          {p.stack.map((t) => (
-            <span
-              key={t}
-              className="text-[11px] px-2.5 py-0.5 rounded-full"
-              style={{
-                background: "rgba(255,255,255,0.04)",
-                border: "1px solid var(--border-accent)",
-                color: "var(--text-muted)",
-              }}
-            >
-              {t}
-            </span>
-          ))}
-        </div>
-        <span
-          className="flex items-center gap-1.5 text-[13px] font-medium pt-4 mt-auto"
-          style={{
-            color: "var(--gold)",
-            borderTop: "1px solid var(--border)",
-          }}
-        >
-          {p.link}
-          <svg
-            width="14"
-            height="14"
-            viewBox="0 0 14 14"
-            fill="none"
-            className="transition-transform duration-200 group-hover:translate-x-1"
-          >
-            <path
-              d="M2 7h10M7 2l5 5-5 5"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </span>
+        ))}
       </div>
-    </a>
+
+      {/* Link */}
+      <a
+        href={product.href}
+        {...(isExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+        data-cursor="link"
+        className="inline-flex items-center gap-1.5 text-[14px] font-semibold no-underline w-fit group"
+        style={{ color: "var(--gold)" }}
+      >
+        {product.link}
+        <svg
+          width="14"
+          height="14"
+          viewBox="0 0 14 14"
+          fill="none"
+          className="transition-transform duration-200 group-hover:translate-x-1"
+        >
+          <path
+            d="M2 7h10M7 2l5 5-5 5"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      </a>
+    </div>
+  );
+
+  const FrameColumn = (
+    <div className="flex items-center justify-center">
+      <BrowserFrame product={product} textOnLeft={textOnLeft} />
+    </div>
+  );
+
+  return (
+    <div
+      className="grid gap-12 max-[900px]:gap-8 items-center"
+      style={{
+        gridTemplateColumns: "minmax(0, 1fr) minmax(0, 1fr)",
+      }}
+    >
+      {/* Mobile: always text then frame. Desktop: alternate via order. */}
+      <div
+        className="max-[900px]:col-span-full"
+        style={{ order: textOnLeft ? 0 : 1 }}
+      >
+        {TextColumn}
+      </div>
+      <div
+        className="max-[900px]:col-span-full"
+        style={{ order: textOnLeft ? 1 : 0 }}
+      >
+        {FrameColumn}
+      </div>
+    </div>
   );
 }
 
@@ -345,47 +441,6 @@ function ProductCard({ p, isMobile }: { p: (typeof products)[number]; isMobile: 
 export default function Portfolio() {
   const titleRef = useRevealWords("h2");
   const sectionRef = useRef<HTMLElement>(null);
-  const scrollWrapRef = useRef<HTMLDivElement>(null);
-  const trackRef = useRef<HTMLDivElement>(null);
-  const progressRef = useRef<HTMLDivElement>(null);
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const mq = window.matchMedia("(max-width: 768px)");
-    setIsMobile(mq.matches);
-    const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches);
-    mq.addEventListener("change", handler);
-    return () => mq.removeEventListener("change", handler);
-  }, []);
-
-  useEffect(() => {
-    if (isMobile) return;
-
-    const track = trackRef.current;
-    const wrap = scrollWrapRef.current;
-    const progress = progressRef.current;
-    if (!track || !wrap || !progress) return;
-
-    const totalWidth = track.scrollWidth;
-    const viewportWidth = wrap.offsetWidth;
-    const scrollDistance = totalWidth - viewportWidth;
-
-    if (scrollDistance <= 0) return;
-
-    const st = ScrollTrigger.create({
-      trigger: wrap,
-      pin: true,
-      scrub: 0.5,
-      start: "top top",
-      end: `+=${scrollDistance + 200}`,
-      onUpdate: (self) => {
-        gsap.set(track, { x: -self.progress * scrollDistance });
-        gsap.set(progress, { scaleX: self.progress });
-      },
-    });
-
-    return () => st.kill();
-  }, [isMobile]);
 
   return (
     <section
@@ -395,7 +450,7 @@ export default function Portfolio() {
         (titleRef as React.MutableRefObject<HTMLElement | null>).current = el;
       }}
       style={{
-        background: "var(--surface)",
+        background: "#09090b",
         borderTop: "1px solid var(--border)",
         borderBottom: "1px solid var(--border)",
       }}
@@ -404,139 +459,122 @@ export default function Portfolio() {
         className="py-24 px-10 max-[900px]:px-5 max-[900px]:py-16"
         style={{ maxWidth: 1200, margin: "0 auto" }}
       >
-        <div
-          className="text-[11px] font-medium tracking-[3px] uppercase mb-4 flex items-center gap-2"
-          style={{ color: "var(--gold)" }}
-        >
-          <span
-            className="block w-4 h-px"
-            style={{ background: "var(--gold)" }}
-          />
-          Nos preuves
+        {/* Section header */}
+        <div className="mb-20 max-[900px]:mb-14">
+          <div
+            className="text-[11px] font-medium tracking-[3px] uppercase mb-4 flex items-center gap-2"
+            style={{ color: "var(--gold)" }}
+          >
+            <span
+              className="block w-4 h-px"
+              style={{ background: "var(--gold)" }}
+            />
+            Nos preuves
+          </div>
+          <h2
+            className="font-bold leading-tight mb-4"
+            style={{
+              fontFamily: "var(--font-syne)",
+              fontSize: "clamp(32px, 4vw, 52px)",
+              letterSpacing: "-1.5px",
+              color: "var(--text)",
+            }}
+          >
+            On l&apos;a déjà fait.
+          </h2>
+          <p
+            className="text-[17px] font-light"
+            style={{
+              color: "var(--text-muted)",
+              maxWidth: 640,
+              lineHeight: 1.7,
+            }}
+          >
+            Ces 3 produits sont des équipes d&apos;agents IA que nous avons
+            construits et opérons nous-mêmes. Votre solution sur mesure peut
+            ressembler à ça.
+          </p>
         </div>
-        <h2
-          className="font-bold leading-tight mb-4"
-          style={{
-            fontFamily: "var(--font-syne)",
-            fontSize: "clamp(32px, 4vw, 52px)",
-            letterSpacing: "-1.5px",
-            color: "var(--text)",
-          }}
-        >
-          On l&apos;a déjà fait.
-        </h2>
-        <p
-          className="text-[17px] font-light mb-16"
-          style={{
-            color: "var(--text-muted)",
-            maxWidth: 640,
-            lineHeight: 1.7,
-          }}
-        >
-          Ces 3 produits sont des équipes d&apos;agents IA que nous avons construits
-          et opérons nous-mêmes. Votre solution sur mesure peut ressembler à ça.
-        </p>
-      </div>
 
-      {/* Horizontal scroll wrapper */}
-      <div
-        ref={scrollWrapRef}
-        className="relative"
-        style={{ overflow: isMobile ? "visible" : "hidden" }}
-      >
+        {/* Vertical stack of products with dividers */}
+        {products.map((p, i) => (
+          <div key={p.id}>
+            <ProductBlock product={p} index={i} />
+            {i < products.length - 1 && (
+              <div
+                aria-hidden
+                style={{
+                  height: 1,
+                  background:
+                    "linear-gradient(90deg, transparent, rgba(196,151,58,0.2), transparent)",
+                  margin: "80px 0",
+                }}
+                className="max-[900px]:!my-14"
+              />
+            )}
+          </div>
+        ))}
+
+        {/* Final CTA block */}
         <div
-          ref={trackRef}
-          className={isMobile ? "flex flex-col gap-5 px-5 pb-16" : "px-10"}
-          style={
-            isMobile
-              ? {}
-              : { display: "flex", flexDirection: "row" as const, gap: 24, width: "max-content", paddingRight: 40 }
-          }
+          className="mt-24 max-[900px]:mt-16 p-[60px] max-[900px]:p-8 text-center relative overflow-hidden"
+          style={{
+            background: "rgba(196,151,58,0.05)",
+            border: "1px solid rgba(196,151,58,0.2)",
+            borderRadius: 16,
+          }}
         >
-          {products.map((p) => (
-            <ProductCard key={p.name} p={p} isMobile={isMobile} />
-          ))}
-
-          {/* CTA card "Votre secteur n'est pas là ?" */}
+          <div
+            className="text-[11px] font-medium tracking-[3px] uppercase mb-3"
+            style={{ color: "var(--gold)" }}
+          >
+            Sur mesure
+          </div>
+          <h3
+            className="font-bold mb-4"
+            style={{
+              fontFamily: "var(--font-syne)",
+              fontSize: "clamp(28px, 3.5vw, 42px)",
+              letterSpacing: "-1px",
+              color: "var(--text)",
+              lineHeight: 1.1,
+            }}
+          >
+            Votre secteur n&apos;est pas là&nbsp;?
+          </h3>
+          <p
+            className="text-[16px] font-light mb-8 mx-auto"
+            style={{
+              color: "var(--text-muted)",
+              lineHeight: 1.65,
+              maxWidth: 560,
+            }}
+          >
+            On construit des équipes d&apos;agents IA pour n&apos;importe quel
+            métier.
+          </p>
           <a
             href="/contact"
             data-cursor="link"
-            className="flex flex-col justify-between p-8 no-underline transition-all duration-300 group"
+            className="inline-flex items-center gap-2 text-[15px] font-medium px-7 py-3.5 rounded-md no-underline transition-all duration-200 hover:opacity-90"
             style={{
-              width: isMobile ? "100%" : 380,
-              minWidth: isMobile ? "unset" : 380,
-              maxWidth: isMobile ? "100%" : 380,
-              flexShrink: 0,
-              background: "rgba(196,151,58,0.04)",
-              border: "1px solid var(--gold-border)",
-              borderRadius: "var(--radius)",
+              background: "var(--gold)",
+              color: "#0a0a0b",
+              border: "none",
             }}
           >
-            <div>
-              <span
-                className="inline-block text-[10px] font-bold px-2 py-0.5 rounded-full mb-5 tracking-widest uppercase"
-                style={{
-                  background: "var(--gold-dim)",
-                  color: "var(--gold-light)",
-                  border: "1px solid var(--gold-border)",
-                }}
-              >
-                Sur mesure
-              </span>
-              <div
-                className="text-[26px] font-bold mb-3"
-                style={{
-                  fontFamily: "var(--font-syne)",
-                  color: "var(--text)",
-                  letterSpacing: "-0.5px",
-                  lineHeight: 1.15,
-                }}
-              >
-                Votre secteur n&apos;est pas là&nbsp;?
-              </div>
-              <p
-                className="text-[15px] font-light mb-6"
-                style={{ color: "var(--text-muted)", lineHeight: 1.7 }}
-              >
-                On construit des équipes d&apos;agents IA pour n&apos;importe quel
-                métier. Comptabilité, juridique, e-commerce, RH — si la tâche se
-                répète, on peut l&apos;automatiser.
-              </p>
-            </div>
-            <div
-              className="flex items-center gap-1.5 text-[14px] font-semibold pt-4 transition-transform duration-200 group-hover:translate-x-1"
-              style={{ color: "var(--gold)", borderTop: "1px solid var(--gold-border)" }}
-            >
-              Parlez-nous de votre cas
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                <path
-                  d="M3 8h10M8 3l5 5-5 5"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </div>
+            Parlez-nous de votre cas
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <path
+                d="M2 7h10M7 2l5 5-5 5"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
           </a>
         </div>
-
-        {/* Progress bar */}
-        {!isMobile && (
-          <div
-            ref={progressRef}
-            style={{
-              position: "absolute",
-              bottom: 0,
-              left: 0,
-              width: "100%",
-              height: 2,
-              background: "var(--gold)",
-              transformOrigin: "left",
-              transform: "scaleX(0)",
-            }}
-          />
-        )}
       </div>
     </section>
   );
