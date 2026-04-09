@@ -49,10 +49,10 @@ function StepVisual({ kind }: { kind: string }) {
         </div>
         <div className="space-y-2.5">
           {[
-            { label: "Entreprise", value: "Cabinet Moreau & Associés" },
-            { label: "Secteur", value: "Comptabilité" },
-            { label: "Tâche n°1", value: "Révision FEC mensuelle (3j)" },
-            { label: "Tâche n°2", value: "Pré-remplissage TVA CA3" },
+            { label: "Secteur", value: "Votre métier" },
+            { label: "Tâches identifiées", value: "12" },
+            { label: "Heures récupérables", value: "≈ 80h / mois" },
+            { label: "Périmètre", value: "Validé sous 48h" },
           ].map((f) => (
             <div key={f.label}>
               <div className="text-[9px]" style={{ color: "var(--text-dim)" }}>
@@ -84,7 +84,7 @@ function StepVisual({ kind }: { kind: string }) {
           Agents déployés
         </div>
         <div className="space-y-2">
-          {["Agent FEC", "Agent Anomalies", "Agent CA3"].map((a) => (
+          {["Agent #1", "Agent #2", "Agent #3"].map((a) => (
             <div
               key={a}
               className="flex items-center justify-between p-2 rounded"
@@ -124,8 +124,8 @@ function StepVisual({ kind }: { kind: string }) {
       <div className="space-y-2.5">
         {[
           { k: "−40%", v: "Temps de traitement" },
-          { k: "+65%", v: "Rétention clients" },
-          { k: "0", v: "Oubli de relance" },
+          { k: "+80h", v: "Heures économisées / mois" },
+          { k: "100%", v: "Tâches automatisées" },
         ].map((m) => (
           <div key={m.v} className="flex items-baseline gap-2">
             <span
