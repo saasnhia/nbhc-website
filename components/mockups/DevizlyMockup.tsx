@@ -37,9 +37,6 @@ export default function DevizlyMockup() {
         border: "1px solid rgba(255,255,255,0.06)",
         borderRadius: 12,
         overflow: "hidden",
-        height: 400,
-        display: "flex",
-        flexDirection: "column",
         fontSize: 11,
         fontFamily: "var(--font-dm-sans)",
         color: "#1a1a2e",
@@ -50,8 +47,8 @@ export default function DevizlyMockup() {
     >
       {/* Header */}
       <div
-        className="flex items-center justify-between px-4 flex-shrink-0"
-        style={{ height: 36, borderBottom: "1px solid #e5e5e5" }}
+        className="flex items-center justify-between px-3.5"
+        style={{ height: 32, borderBottom: "1px solid #e5e5e5" }}
       >
         <div className="flex items-center gap-2">
           <span className="font-bold text-[13px]" style={{ color: "#5B5BD6" }}>
@@ -67,7 +64,7 @@ export default function DevizlyMockup() {
       </div>
 
       {/* Body — scrollable */}
-      <div className="flex-1 overflow-y-auto mockup-scroll px-4 py-3">
+      <div className="px-3.5 py-2.5">
         {/* Title */}
         <div className="mb-0.5">
           <div className="font-bold text-[14px]" style={{ color: "#111" }}>
@@ -80,7 +77,7 @@ export default function DevizlyMockup() {
         </div>
 
         {/* Table */}
-        <table className="w-full mt-2" style={{ borderCollapse: "collapse" }}>
+        <table className="w-full mt-1.5" style={{ borderCollapse: "collapse" }}>
           <thead>
             <tr style={{ borderBottom: "1px solid #e5e5e5" }}>
               <th className="text-left text-[9px] font-semibold py-1 pr-2" style={{ color: "#6b7280" }}>Description</th>
@@ -102,7 +99,7 @@ export default function DevizlyMockup() {
         </table>
 
         {/* Totals */}
-        <div className="mt-2 space-y-0.5" style={{ textAlign: "right" }}>
+        <div className="mt-1.5 space-y-0" style={{ textAlign: "right" }}>
           <div className="text-[10px]" style={{ color: "#6b7280" }}>
             Total HT <span className="ml-3 font-medium" style={{ color: "#374151" }}>{fmt(totalHT)} €</span>
           </div>
@@ -116,7 +113,7 @@ export default function DevizlyMockup() {
 
         {/* Notes */}
         <div
-          className="mt-3 p-2.5 rounded text-[9px]"
+          className="mt-2 p-2 rounded text-[8px]"
           style={{ background: "#f9fafb", border: "1px solid #e5e5e5", color: "#6b7280" }}
         >
           <div className="font-semibold mb-0.5" style={{ color: "#374151" }}>Notes</div>
@@ -124,7 +121,7 @@ export default function DevizlyMockup() {
         </div>
 
         {/* Buttons — hover reveal */}
-        <div className="mt-3 space-y-1.5" style={{ opacity: hovered ? 1 : 0.35, transition: "opacity 0.3s" }}>
+        <div className="mt-2 space-y-1" style={{ opacity: hovered ? 1 : 0.35, transition: "opacity 0.3s" }}>
           <button
             className="w-full text-[10px] font-medium py-1.5 rounded"
             style={{ background: "#f3f4f6", color: "#374151", border: "1px solid #d1d5db", cursor: "pointer" }}
