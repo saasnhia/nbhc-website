@@ -53,6 +53,126 @@ const useCases: UseCase[] = [
   },
 ];
 
+/* ─── Shared card sub-components ─── */
+
+function AgentCard({
+  icon,
+  name,
+  desc,
+  badge,
+  variant,
+}: {
+  icon: string;
+  name: string;
+  desc: string;
+  badge?: string;
+  variant?: "input" | "output";
+}) {
+  const isOutput = variant === "output";
+  const isInput = variant === "input";
+  return (
+    <div
+      data-agent-card
+      className={`${isInput || isOutput ? "p-4" : "p-3"} text-center`}
+      style={{
+        background: isOutput
+          ? "rgba(34,197,94,0.06)"
+          : isInput
+            ? "#161619"
+            : "#111113",
+        border: isOutput
+          ? "1px solid rgba(34,197,94,0.35)"
+          : "1px solid var(--gold-border)",
+        borderRadius: 12,
+        minHeight: isInput || isOutput ? undefined : 96,
+      }}
+    >
+      <div className={`${isInput || isOutput ? "text-2xl" : "text-xl"} mb-1`}>
+        {icon}
+      </div>
+      <div
+        className="text-[11px] font-bold mb-0.5 leading-tight"
+        style={{
+          color: isOutput ? "#4ade80" : "var(--text)",
+          fontFamily: "var(--font-syne)",
+          fontSize: isInput || isOutput ? 12 : 11,
+        }}
+      >
+        {name}
+      </div>
+      <div
+        className="text-[9px] leading-tight"
+        style={{ color: isOutput ? "rgba(74,222,128,0.6)" : "var(--text-dim)" }}
+      >
+        {desc}
+      </div>
+      {badge && (
+        <span
+          className="inline-block text-[8px] px-1.5 py-0.5 rounded-full mt-1.5"
+          style={{
+            background: "var(--gold-dim)",
+            color: "var(--gold-light)",
+            border: "1px solid var(--gold-border)",
+          }}
+        >
+          {badge}
+        </span>
+      )}
+    </div>
+  );
+}
+
+function MobileCard({
+  icon,
+  name,
+  desc,
+  variant,
+}: {
+  icon: string;
+  name: string;
+  desc: string;
+  variant?: "input" | "output";
+}) {
+  const isOutput = variant === "output";
+  const isInput = variant === "input";
+  return (
+    <div
+      className="flex-shrink-0 p-4 text-center"
+      style={{
+        width: "70vw",
+        maxWidth: 280,
+        scrollSnapAlign: "center",
+        background: isOutput
+          ? "rgba(34,197,94,0.06)"
+          : isInput
+            ? "#161619"
+            : "#111113",
+        border: isOutput
+          ? "1px solid rgba(34,197,94,0.35)"
+          : "1px solid var(--gold-border)",
+        borderRadius: 12,
+      }}
+    >
+      <div className="text-2xl mb-1">{icon}</div>
+      <div
+        className="text-[12px] font-bold mb-0.5 leading-tight"
+        style={{
+          color: isOutput ? "#4ade80" : "var(--text)",
+          fontFamily: "var(--font-syne)",
+        }}
+      >
+        {name}
+      </div>
+      <div
+        className="text-[10px] leading-tight"
+        style={{ color: isOutput ? "rgba(74,222,128,0.6)" : "var(--text-dim)" }}
+      >
+        {desc}
+      </div>
+    </div>
+  );
+}
+
 export default function AgentFlowIllustration() {
   const [active, setActive] = useState(0);
   const flowRef = useRef<HTMLDivElement>(null);
@@ -111,7 +231,7 @@ export default function AgentFlowIllustration() {
         ))}
       </div>
 
-      {/* Flow diagram — hidden on mobile to prevent horizontal overflow */}
+      {/* ── Desktop Flow diagram (grid) ── */}
       <div
         ref={flowRef}
         className="hidden md:grid items-center gap-3"
@@ -119,93 +239,35 @@ export default function AgentFlowIllustration() {
           gridTemplateColumns: "minmax(140px, 1.2fr) auto repeat(3, minmax(0, 1fr) auto) minmax(140px, 1.2fr)",
         }}
       >
-        {/* Entreprise */}
-        <div
-          data-agent-card
-          className="p-4 text-center"
-          style={{
-            background: "#161619",
-            border: "1px solid var(--gold-border)",
-            borderRadius: 12,
-          }}
-        >
-          <div className="text-2xl mb-1">🏢</div>
-          <div
-            className="text-[12px] font-bold mb-0.5"
-            style={{ color: "var(--text)", fontFamily: "var(--font-syne)" }}
-          >
-            Vos données
-          </div>
-          <div className="text-[10px]" style={{ color: "var(--text-dim)" }}>
-            emails, docs, factures
-          </div>
-        </div>
-
-        {/* Arrow 1 */}
+        <AgentCard icon="🏢" name="Vos données" desc="emails, docs, factures" variant="input" />
         <Arrow refCb={(el) => (arrowRefs.current[0] = el)} />
-
-        {/* 3 Agents */}
         {current.agents.map((agent, i) => (
           <Fragment key={`${current.id}-${i}`}>
-            <div
-              data-agent-card
-              className="p-3 text-center"
-              style={{
-                background: "#111113",
-                border: "1px solid var(--gold-border)",
-                borderRadius: 12,
-                minHeight: 96,
-              }}
-            >
-              <div className="text-xl mb-1">{agent.icon}</div>
-              <div
-                className="text-[11px] font-bold mb-0.5 leading-tight"
-                style={{ color: "var(--text)", fontFamily: "var(--font-syne)" }}
-              >
-                {agent.name}
-              </div>
-              <div
-                className="text-[9px] leading-tight mb-1.5"
-                style={{ color: "var(--text-dim)" }}
-              >
-                {agent.desc}
-              </div>
-              <span
-                className="inline-block text-[8px] px-1.5 py-0.5 rounded-full"
-                style={{
-                  background: "var(--gold-dim)",
-                  color: "var(--gold-light)",
-                  border: "1px solid var(--gold-border)",
-                }}
-              >
-                {agent.badge}
-              </span>
-            </div>
+            <AgentCard icon={agent.icon} name={agent.name} desc={agent.desc} badge={agent.badge} />
             <Arrow refCb={(el) => (arrowRefs.current[i + 1] = el)} />
           </Fragment>
         ))}
+        <AgentCard icon="✅" name={current.output} desc="en quelques secondes" variant="output" />
+      </div>
 
-        {/* Output */}
-        <div
-          data-agent-card
-          className="p-4 text-center"
-          style={{
-            background: "rgba(34,197,94,0.06)",
-            border: "1px solid rgba(34,197,94,0.35)",
-            borderRadius: 12,
-          }}
-        >
-          <div className="text-2xl mb-1">✅</div>
-          <div
-            className="text-[12px] font-bold mb-0.5 leading-tight"
-            style={{ color: "#4ade80", fontFamily: "var(--font-syne)" }}
-          >
-            {current.output}
-          </div>
-          <div className="text-[10px]" style={{ color: "rgba(74,222,128,0.6)" }}>
-            en quelques secondes
-          </div>
-        </div>
+      {/* ── Mobile Flow diagram (horizontal scroll) ── */}
+      <div
+        className="flex md:hidden gap-3 overflow-x-auto pb-3 -mx-2 px-2"
+        style={{
+          scrollSnapType: "x mandatory",
+          WebkitOverflowScrolling: "touch",
+          scrollbarWidth: "none",
+          msOverflowStyle: "none",
+        }}
+      >
+        <style jsx>{`
+          div::-webkit-scrollbar { display: none; }
+        `}</style>
+        <MobileCard icon="🏢" name="Vos données" desc="emails, docs, factures" variant="input" />
+        {current.agents.map((agent, i) => (
+          <MobileCard key={`${current.id}-m-${i}`} icon={agent.icon} name={agent.name} desc={agent.desc} />
+        ))}
+        <MobileCard icon="✅" name={current.output} desc="en quelques secondes" variant="output" />
       </div>
     </div>
   );

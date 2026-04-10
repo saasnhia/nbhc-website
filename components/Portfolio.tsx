@@ -1,6 +1,7 @@
 "use client";
 
 import { ComponentType } from "react";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import DevizlyFlow from "./illustrations/DevizlyFlow";
 import VlogyzFlow from "./illustrations/VlogyzFlow";
@@ -22,6 +23,8 @@ type Product = {
   href: string;
   accent: string;
   textSide: TextSide;
+  /** Screenshot for 3D tilt display alongside the flow */
+  screenshot: { src: string; w: number; h: number; maxW: number; rotY: number };
 };
 
 /* ─── Products ─── */
@@ -45,6 +48,7 @@ const products: Product[] = [
     href: "https://vlogyz.vercel.app",
     accent: "#6366f1",
     textSide: "left",
+    screenshot: { src: "/portfolio/vlogyz.png", w: 1918, h: 912, maxW: 340, rotY: -12 },
   },
   {
     id: "devizly",
@@ -64,6 +68,7 @@ const products: Product[] = [
     href: "https://devizly.fr",
     accent: "#5B5BD6",
     textSide: "right",
+    screenshot: { src: "/portfolio/deviss.png", w: 475, h: 656, maxW: 280, rotY: 12 },
   },
   {
     id: "worthifast",
@@ -83,6 +88,7 @@ const products: Product[] = [
     href: "#",
     accent: "#22c55e",
     textSide: "left",
+    screenshot: { src: "/portfolio/worthifast.png", w: 1912, h: 908, maxW: 320, rotY: -12 },
   },
 ];
 
@@ -274,7 +280,44 @@ function ProductSection({ product }: { product: Product }) {
           <TextColumn product={product} />
         </div>
         <div style={{ order: textOnLeft ? 1 : 0 }} className="max-md:order-1">
-          <Flow />
+          <div className="flex gap-6 items-center">
+            <div className="flex-1 min-w-0">
+              <Flow />
+            </div>
+            {/* 3D screenshot — hidden on mobile + tablet, visible on lg+ */}
+            <div
+              className="hidden lg:block flex-shrink-0"
+              style={{ perspective: "1200px" }}
+            >
+              <motion.div
+                whileHover={{
+                  rotateY: product.screenshot.rotY > 0 ? 4 : -4,
+                  rotateX: 2,
+                  scale: 1.02,
+                }}
+                transition={{ type: "spring", stiffness: 150, damping: 20 }}
+              >
+                <Image
+                  src={product.screenshot.src}
+                  alt={`${product.name} interface`}
+                  width={product.screenshot.w}
+                  height={product.screenshot.h}
+                  unoptimized
+                  style={{
+                    maxWidth: product.screenshot.maxW,
+                    height: "auto",
+                    transform: `rotateY(${product.screenshot.rotY}deg) rotateX(4deg)`,
+                    backfaceVisibility: "hidden",
+                    WebkitBackfaceVisibility: "hidden",
+                    willChange: "transform",
+                    borderRadius: 16,
+                    boxShadow: "0 25px 60px rgba(0,0,0,0.35)",
+                    imageRendering: "auto",
+                  }}
+                />
+              </motion.div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
