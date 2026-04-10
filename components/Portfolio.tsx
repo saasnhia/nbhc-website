@@ -1,11 +1,8 @@
 "use client";
 
-import { ComponentType } from "react";
-import Image from "next/image";
 import { motion } from "framer-motion";
-import DevizlyFlow from "./illustrations/DevizlyFlow";
-import VlogyzFlow from "./illustrations/VlogyzFlow";
-import WorthifastFlow from "./illustrations/WorthifastFlow";
+import ProductShowcase from "./ProductShowcase";
+import type { Callout } from "./ProductShowcase";
 
 /* ─── Types ─── */
 
@@ -16,15 +13,20 @@ type Product = {
   badge: { label: string; type: "live" | "beta" | "dev" };
   name: string;
   tagline: string;
-  Flow: ComponentType;
   agents: string[];
   stack: string[];
   link: string;
   href: string;
   accent: string;
   textSide: TextSide;
-  /** Screenshot for 3D tilt display alongside the flow */
-  screenshot: { src: string; w: number; h: number; maxW: number; rotY: number };
+  showcase: {
+    screenshot: string;
+    screenshotW: number;
+    screenshotH: number;
+    maxWidth: number;
+    rotateY: number;
+    callouts: Callout[];
+  };
 };
 
 /* ─── Products ─── */
@@ -36,7 +38,6 @@ const products: Product[] = [
     name: "Vlogyz",
     tagline:
       "Équipe d'agents IA pour le montage vidéo automatisé. Alternative française à CapCut.",
-    Flow: VlogyzFlow,
     agents: [
       "Agent Transcription",
       "Agent Montage",
@@ -48,7 +49,34 @@ const products: Product[] = [
     href: "https://vlogyz.vercel.app",
     accent: "#6366f1",
     textSide: "left",
-    screenshot: { src: "/portfolio/vlogyz.png", w: 1918, h: 912, maxW: 340, rotY: -12 },
+    showcase: {
+      screenshot: "/portfolio/vlogyz.png",
+      screenshotW: 1918,
+      screenshotH: 912,
+      maxWidth: 650,
+      rotateY: -8,
+      callouts: [
+        {
+          icon: "🎙",
+          title: "Transcription IA",
+          subtitle: "502 mots détectés en 12s",
+          position: { top: "-5%", left: "-3%" },
+        },
+        {
+          icon: "✂️",
+          title: "Coupes intelligentes",
+          subtitle: "1m23s de silences supprimés",
+          position: { top: "45%", left: "-15%" },
+        },
+        {
+          icon: "🔥",
+          title: "Score viralité",
+          subtitle: "87/100",
+          score: 87,
+          position: { bottom: "-5%", right: "-3%" },
+        },
+      ],
+    },
   },
   {
     id: "devizly",
@@ -56,7 +84,6 @@ const products: Product[] = [
     name: "Devizly",
     tagline:
       "Équipe d'agents IA pour la génération de devis et l'encaissement automatique.",
-    Flow: DevizlyFlow,
     agents: [
       "Agent Génération",
       "Agent Conformité",
@@ -68,7 +95,35 @@ const products: Product[] = [
     href: "https://devizly.fr",
     accent: "#5B5BD6",
     textSide: "right",
-    screenshot: { src: "/portfolio/deviss.png", w: 475, h: 656, maxW: 280, rotY: 12 },
+    showcase: {
+      screenshot: "/portfolio/deviss.png",
+      screenshotW: 475,
+      screenshotH: 656,
+      maxWidth: 380,
+      rotateY: 8,
+      callouts: [
+        {
+          icon: "✅",
+          title: "Signature reçue",
+          subtitle: "il y a 2 min",
+          position: { top: "-3%", right: "-20%" },
+        },
+        {
+          icon: "📄",
+          title: "Devis DEV-0020",
+          subtitle: "Conforme CGI",
+          position: { top: "40%", right: "-25%" },
+        },
+        {
+          icon: "💳",
+          title: "Acompte Stripe",
+          subtitle: "4 978,80 €",
+          countUp: 4978.8,
+          countUpSuffix: "€",
+          position: { bottom: "5%", left: "-15%" },
+        },
+      ],
+    },
   },
   {
     id: "worthifast",
@@ -76,7 +131,6 @@ const products: Product[] = [
     name: "Worthifast",
     tagline:
       "Équipe d'agents IA pour l'automatisation comptable et la révision FEC.",
-    Flow: WorthifastFlow,
     agents: [
       "Agent FEC",
       "Agent Anomalies",
@@ -88,7 +142,33 @@ const products: Product[] = [
     href: "#",
     accent: "#22c55e",
     textSide: "left",
-    screenshot: { src: "/portfolio/worthifast.png", w: 1912, h: 908, maxW: 320, rotY: -12 },
+    showcase: {
+      screenshot: "/portfolio/worthifast.png",
+      screenshotW: 1912,
+      screenshotH: 908,
+      maxWidth: 650,
+      rotateY: -8,
+      callouts: [
+        {
+          icon: "⚠️",
+          title: "3 anomalies détectées",
+          subtitle: "FEC 2025",
+          position: { top: "-5%", left: "-3%" },
+        },
+        {
+          icon: "🔄",
+          title: "Rapprochement 95%",
+          subtitle: "12 tx",
+          position: { top: "40%", right: "-10%" },
+        },
+        {
+          icon: "✅",
+          title: "TVA CA3 pré-remplie",
+          subtitle: "8 036 €",
+          position: { bottom: "-5%", right: "-3%" },
+        },
+      ],
+    },
   },
 ];
 
@@ -117,16 +197,12 @@ function TextColumn({ product }: { product: Product }) {
 
   return (
     <motion.div
-      initial={{
-        opacity: 0,
-        x: product.textSide === "left" ? -30 : 30,
-      }}
+      initial={{ opacity: 0, x: product.textSide === "left" ? -30 : 30 }}
       whileInView={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
       viewport={{ once: true, margin: "-80px" }}
       className="flex flex-col justify-center"
     >
-      {/* Badges row */}
       <div className="flex items-center gap-2 mb-5 flex-wrap">
         <span
           className="inline-block text-[11px] font-bold px-2.5 py-1 tracking-[1px] uppercase"
@@ -147,7 +223,6 @@ function TextColumn({ product }: { product: Product }) {
         </span>
       </div>
 
-      {/* Title */}
       <h3
         className="font-bold mb-3"
         style={{
@@ -161,29 +236,18 @@ function TextColumn({ product }: { product: Product }) {
         {product.name}
       </h3>
 
-      {/* Tagline */}
       <p
         className="text-[16px] font-light mb-6"
-        style={{
-          color: "var(--text-muted)",
-          lineHeight: 1.6,
-          maxWidth: 420,
-        }}
+        style={{ color: "var(--text-muted)", lineHeight: 1.6, maxWidth: 420 }}
       >
         {product.tagline}
       </p>
 
-      {/* Separator */}
       <div
         className="mb-6"
-        style={{
-          height: 1,
-          background: "rgba(196,151,58,0.2)",
-          maxWidth: 420,
-        }}
+        style={{ height: 1, background: "rgba(196,151,58,0.2)", maxWidth: 420 }}
       />
 
-      {/* Agents block */}
       <div
         className="mb-6"
         style={{
@@ -207,18 +271,13 @@ function TextColumn({ product }: { product: Product }) {
               className="text-[13px] font-light flex items-start gap-2"
               style={{ color: "var(--text)" }}
             >
-              <span
-                style={{ color: product.accent, fontSize: 9, marginTop: 4 }}
-              >
-                ◆
-              </span>
+              <span style={{ color: product.accent, fontSize: 9, marginTop: 4 }}>◆</span>
               <span>{a}</span>
             </li>
           ))}
         </ul>
       </div>
 
-      {/* Stack */}
       <div className="flex flex-wrap gap-1.5 mb-6" style={{ maxWidth: 420 }}>
         {product.stack.map((t) => (
           <span
@@ -236,12 +295,9 @@ function TextColumn({ product }: { product: Product }) {
         ))}
       </div>
 
-      {/* Link */}
       <a
         href={product.href}
-        {...(isExternal
-          ? { target: "_blank", rel: "noopener noreferrer" }
-          : {})}
+        {...(isExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
         data-cursor="link"
         className="inline-flex items-center gap-1.5 text-[14px] no-underline w-fit group"
         style={{ color: product.accent, fontWeight: 600 }}
@@ -271,53 +327,26 @@ function TextColumn({ product }: { product: Product }) {
 
 function ProductSection({ product }: { product: Product }) {
   const textOnLeft = product.textSide === "left";
-  const Flow = product.Flow;
 
   return (
-    <div className="py-16 md:py-20">
-      <div className="grid gap-10 md:gap-16 items-start md:grid-cols-[minmax(0,40fr)_minmax(0,60fr)]">
-        <div style={{ order: textOnLeft ? 0 : 1 }} className="max-md:order-2">
+    <div className="py-16 md:py-20" style={{ overflow: "hidden" }}>
+      <div className="grid gap-10 lg:gap-16 items-center lg:grid-cols-[minmax(0,40fr)_minmax(0,60fr)]">
+        <div style={{ order: textOnLeft ? 0 : 1 }} className="max-lg:order-2">
           <TextColumn product={product} />
         </div>
-        <div style={{ order: textOnLeft ? 1 : 0 }} className="max-md:order-1">
-          <div className="flex gap-6 items-center">
-            <div className="flex-1 min-w-0">
-              <Flow />
-            </div>
-            {/* 3D screenshot — hidden on mobile + tablet, visible on lg+ */}
-            <div
-              className="hidden lg:block flex-shrink-0"
-              style={{ perspective: "1200px" }}
-            >
-              <motion.div
-                whileHover={{
-                  rotateY: product.screenshot.rotY > 0 ? 4 : -4,
-                  rotateX: 2,
-                  scale: 1.02,
-                }}
-                transition={{ type: "spring", stiffness: 150, damping: 20 }}
-              >
-                <Image
-                  src={product.screenshot.src}
-                  alt={`${product.name} interface`}
-                  width={product.screenshot.w}
-                  height={product.screenshot.h}
-                  unoptimized
-                  style={{
-                    maxWidth: product.screenshot.maxW,
-                    height: "auto",
-                    transform: `rotateY(${product.screenshot.rotY}deg) rotateX(4deg)`,
-                    backfaceVisibility: "hidden",
-                    WebkitBackfaceVisibility: "hidden",
-                    willChange: "transform",
-                    borderRadius: 16,
-                    boxShadow: "0 25px 60px rgba(0,0,0,0.35)",
-                    imageRendering: "auto",
-                  }}
-                />
-              </motion.div>
-            </div>
-          </div>
+        <div
+          style={{ order: textOnLeft ? 1 : 0, overflow: "visible" }}
+          className="max-lg:order-1"
+        >
+          <ProductShowcase
+            screenshot={product.showcase.screenshot}
+            screenshotW={product.showcase.screenshotW}
+            screenshotH={product.showcase.screenshotH}
+            maxWidth={product.showcase.maxWidth}
+            rotateY={product.showcase.rotateY}
+            accentColor={product.accent}
+            callouts={product.showcase.callouts}
+          />
         </div>
       </div>
     </div>
@@ -338,7 +367,6 @@ export default function Portfolio() {
       }}
     >
       <div className="mx-auto py-24 md:py-32 px-6" style={{ maxWidth: 1200 }}>
-        {/* Section header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -350,10 +378,7 @@ export default function Portfolio() {
             className="text-[11px] font-medium tracking-[3px] uppercase mb-4 flex items-center gap-2"
             style={{ color: "var(--gold)" }}
           >
-            <span
-              className="block w-4 h-px"
-              style={{ background: "var(--gold)" }}
-            />
+            <span className="block w-4 h-px" style={{ background: "var(--gold)" }} />
             Nos preuves
           </div>
           <h2
@@ -369,18 +394,13 @@ export default function Portfolio() {
           </h2>
           <p
             className="text-[17px] font-light"
-            style={{
-              color: "var(--text-muted)",
-              maxWidth: 640,
-              lineHeight: 1.65,
-            }}
+            style={{ color: "var(--text-muted)", maxWidth: 640, lineHeight: 1.65 }}
           >
             Trois équipes d&apos;agents IA construites et opérées par NBHC.
-            Chaque étape est un agent en production.
+            Chaque interface est en production.
           </p>
         </motion.div>
 
-        {/* Product sections with dividers */}
         {products.map((p, i) => (
           <div key={p.id}>
             <ProductSection product={p} />
@@ -398,13 +418,12 @@ export default function Portfolio() {
           </div>
         ))}
 
-        {/* Final CTA */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-          className="mt-20 md:mt-24 text-center relative overflow-hidden"
+          className="mt-20 md:mt-24 text-center"
           style={{
             background: "rgba(196,151,58,0.04)",
             border: "1px solid rgba(196,151,58,0.2)",
@@ -432,24 +451,15 @@ export default function Portfolio() {
           </h3>
           <p
             className="text-[16px] font-light mb-8 mx-auto"
-            style={{
-              color: "var(--text-muted)",
-              lineHeight: 1.65,
-              maxWidth: 560,
-            }}
+            style={{ color: "var(--text-muted)", lineHeight: 1.65, maxWidth: 560 }}
           >
-            On construit des équipes d&apos;agents IA pour n&apos;importe quel
-            métier.
+            On construit des équipes d&apos;agents IA pour n&apos;importe quel métier.
           </p>
           <a
             href="/contact"
             data-cursor="link"
             className="inline-flex items-center gap-2 text-[15px] font-medium px-7 py-3.5 rounded-md no-underline transition-all duration-200 hover:opacity-90"
-            style={{
-              background: "var(--gold)",
-              color: "#0a0a0b",
-              border: "none",
-            }}
+            style={{ background: "var(--gold)", color: "#0a0a0b", border: "none" }}
           >
             Parlez-nous de votre cas
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
