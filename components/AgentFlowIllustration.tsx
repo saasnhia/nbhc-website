@@ -111,10 +111,10 @@ export default function AgentFlowIllustration() {
         ))}
       </div>
 
-      {/* Flow diagram */}
+      {/* Flow diagram — hidden on mobile to prevent horizontal overflow */}
       <div
         ref={flowRef}
-        className="grid items-center gap-3 max-[900px]:grid-cols-1"
+        className="hidden md:grid items-center gap-3"
         style={{
           gridTemplateColumns: "minmax(140px, 1.2fr) auto repeat(3, minmax(0, 1fr) auto) minmax(140px, 1.2fr)",
         }}
