@@ -1,15 +1,14 @@
 "use client";
 
-import { ComponentType } from "react";
+import React, { ComponentType, useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
 import VlogyzMockup from "./mockups/VlogyzMockup";
 import DevizlyMockup from "./mockups/DevizlyMockup";
 import WorthifastMockup from "./mockups/WorthifastMockup";
 
 /* ─── SVG Icons (16px stroke 1.5) ─── */
 
-const svgIcons: Record<string, JSX.Element> = {
+const svgIcons: Record<string, React.ReactNode> = {
   mic: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0014 0"/><line x1="12" y1="17" x2="12" y2="22"/></svg>,
   scissors: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/><line x1="8.12" y1="8.12" x2="12" y2="12"/></svg>,
   flame: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2c.5 4-2 6-2 10a4 4 0 008 0c0-4-2.5-6-2-10"/></svg>,
