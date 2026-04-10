@@ -249,7 +249,7 @@ function Step03() {
               animate={inView ? { opacity: 1 } : { opacity: 0 }}
               transition={{ delay: 0.4, duration: 0.5 }}
             >
-              {["JAPON,", "SHIBUYA"].map((w, i) => (
+              {["Salut", "tous"].map((w, i) => (
                 <motion.span
                   key={w}
                   animate={inView ? { color: ["#f0ede6", ACCENT, "#f0ede6"] } : {}}
