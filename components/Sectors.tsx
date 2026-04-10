@@ -129,7 +129,7 @@ export default function Sectors() {
         adaptés à votre secteur.
       </p>
 
-      <div className="grid grid-cols-3 max-[900px]:grid-cols-1 gap-5">
+      <div className="grid grid-cols-3 max-[900px]:grid-cols-2 max-[480px]:grid-cols-1 gap-5">
         {sectors.map((s) => {
           const isCustom = s.custom;
           const Tag = isCustom ? "a" : "div";

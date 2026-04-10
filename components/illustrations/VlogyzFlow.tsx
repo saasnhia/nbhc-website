@@ -249,20 +249,31 @@ function Step03() {
               animate={inView ? { opacity: 1 } : { opacity: 0 }}
               transition={{ delay: 0.4, duration: 0.5 }}
             >
-              {["Salut", "tous"].map((w, i) => (
-                <motion.span
-                  key={w}
-                  animate={inView ? { color: ["#f0ede6", ACCENT, "#f0ede6"] } : {}}
-                  transition={{
-                    duration: 1.2,
-                    delay: 0.6 + i * 0.6,
-                    repeat: Infinity,
-                    repeatDelay: 1.2,
-                  }}
-                >
-                  {w}
-                </motion.span>
-              ))}
+              {["Salut", "à", "tous"].map((w, i) => {
+                const highlight = w !== "à";
+                return (
+                  <motion.span
+                    key={w}
+                    animate={
+                      inView && highlight
+                        ? { color: ["#f0ede6", ACCENT, "#f0ede6"] }
+                        : {}
+                    }
+                    transition={
+                      highlight
+                        ? {
+                            duration: 1.2,
+                            delay: 0.6 + (i === 2 ? 1 : 0) * 0.6,
+                            repeat: Infinity,
+                            repeatDelay: 1.2,
+                          }
+                        : undefined
+                    }
+                  >
+                    {w}
+                  </motion.span>
+                );
+              })}
             </motion.div>
           </div>
         </div>

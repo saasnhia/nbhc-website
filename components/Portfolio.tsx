@@ -1,7 +1,6 @@
 "use client";
 
 import { ComponentType } from "react";
-import Image from "next/image";
 import { motion } from "framer-motion";
 import DevizlyFlow from "./illustrations/DevizlyFlow";
 import VlogyzFlow from "./illustrations/VlogyzFlow";
@@ -275,32 +274,7 @@ function ProductSection({ product }: { product: Product }) {
           <TextColumn product={product} />
         </div>
         <div style={{ order: textOnLeft ? 1 : 0 }} className="max-md:order-1">
-          {product.id === "devizly" ? (
-            <div className="flex gap-6 items-center">
-              <div className="flex-1 min-w-0">
-                <Flow />
-              </div>
-              <div
-                className="hidden md:block flex-shrink-0"
-                style={{ perspective: "1200px" }}
-              >
-                <Image
-                  src="/portfolio/deviss.png"
-                  alt="Devis Devizly"
-                  width={300}
-                  height={400}
-                  quality={100}
-                  style={{
-                    borderRadius: 16,
-                    transform: "rotateY(12deg) rotateX(4deg)",
-                    boxShadow: "0 25px 50px rgba(0,0,0,0.4)",
-                  }}
-                />
-              </div>
-            </div>
-          ) : (
-            <Flow />
-          )}
+          <Flow />
         </div>
       </div>
     </div>
