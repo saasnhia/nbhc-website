@@ -51,9 +51,9 @@ const products: Product[] = [
     textSide: "left",
     showcase: {
       screenshot: "/portfolio/vlogyz.png",
-      screenshotW: 1918,
-      screenshotH: 912,
-      maxWidth: 650,
+      screenshotW: 912,
+      screenshotH: 865,
+      maxWidth: 580,
       rotateY: -8,
       callouts: [
         {
@@ -231,12 +231,12 @@ function TextColumn({ product }: { product: Product }) {
       </div>
 
       <h3
-        className="font-bold mb-3"
+        className="font-extrabold mb-3"
         style={{
           fontFamily: "var(--font-syne)",
-          fontSize: 44,
+          fontSize: "clamp(28px, 3vw, 42px)",
           lineHeight: 1.0,
-          letterSpacing: "-2px",
+          letterSpacing: "-1.5px",
           color: "var(--text)",
         }}
       >
@@ -244,8 +244,8 @@ function TextColumn({ product }: { product: Product }) {
       </h3>
 
       <p
-        className="text-[16px] font-light mb-6"
-        style={{ color: "var(--text-muted)", lineHeight: 1.6, maxWidth: 420 }}
+        className="text-[15px] font-light mb-6"
+        style={{ color: "#8C8880", lineHeight: 1.6, maxWidth: 420 }}
       >
         {product.tagline}
       </p>
@@ -266,7 +266,7 @@ function TextColumn({ product }: { product: Product }) {
         }}
       >
         <div
-          className="text-[10px] font-bold tracking-[1.5px] uppercase mb-3"
+          className="text-[11px] font-bold tracking-[0.15em] uppercase mb-3"
           style={{ color: product.accent }}
         >
           Ce que les agents font
@@ -336,8 +336,8 @@ function ProductSection({ product }: { product: Product }) {
   const textOnLeft = product.textSide === "left";
 
   return (
-    <div className="py-16 md:py-20" style={{ overflow: "hidden" }}>
-      <div className="grid gap-10 lg:gap-16 items-center lg:grid-cols-[minmax(0,40fr)_minmax(0,60fr)]">
+    <div className="py-20 lg:py-28" style={{ overflow: "hidden" }}>
+      <div className="grid gap-12 lg:gap-16 items-center lg:grid-cols-[minmax(0,40fr)_minmax(0,60fr)]">
         <div style={{ order: textOnLeft ? 0 : 1 }} className="max-lg:order-2">
           <TextColumn product={product} />
         </div>
@@ -417,8 +417,8 @@ export default function Portfolio() {
                 style={{
                   height: 1,
                   background:
-                    "linear-gradient(90deg, transparent 0%, rgba(196,151,58,0.2) 50%, transparent 100%)",
-                  margin: "40px 0",
+                    "linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.04) 50%, transparent 100%)",
+                  margin: "0",
                 }}
               />
             )}
