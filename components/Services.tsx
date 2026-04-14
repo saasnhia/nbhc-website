@@ -1,51 +1,34 @@
 "use client";
 
 import { useRef, useEffect } from "react";
+import { useTranslations, useLocale } from "next-intl";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useRevealWords, useClipReveal } from "../hooks/useReveal";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const services = [
-  {
-    icon: "\uD83E\uDD16",
-    name: "Agents IA métier",
-    desc: "Conception et déploiement d'agents IA connectés à vos données internes — traitement de documents, classification automatique, génération de rapports, assistants conversationnels sectoriels.",
-    tags: ["Mistral / GPT-4o", "RAG", "Webhooks", "API custom"],
-  },
-  {
-    icon: "\u2699\uFE0F",
-    name: "Automatisation de flux",
-    desc: "Remplacement des tâches manuelles répétitives par des pipelines automatisés — synchronisation entre outils, traitement de fichiers en masse, génération de contenu à la volée, relances automatiques.",
-    tags: ["Next.js API", "Cron jobs", "Workers", "PM2"],
-  },
-  {
-    icon: "\uD83E\uDDFE",
-    name: "SaaS B2B sur mesure",
-    desc: "Conception et développement full-stack d'un SaaS dédié à votre secteur — architecture Supabase, authentification, plans tarifaires Stripe, tableau de bord, gestion multi-utilisateurs.",
-    tags: ["Next.js", "Supabase", "Stripe", "RGPD"],
-  },
-  {
-    icon: "\uD83C\uDFAC",
-    name: "Traitement média IA",
-    desc: "Pipelines de traitement vidéo, audio et documents — transcription, résumé automatique, extraction d'informations clés, génération de sous-titres, montage automatisé à grande échelle.",
-    tags: ["FFmpeg", "Whisper", "Remotion", "Hetzner"],
-  },
-];
-
-const aaasOffer = {
-  icon: "\uD83E\uDD16",
-  name: "Agentic AI as a Service",
-  desc: "Des équipes d'agents IA déployées et opérées pour votre entreprise. Automatisation complète de vos flux métier — comptabilité, commercial, contenu, support.",
-  tags: ["Multi-agents", "Opéré par NBHC", "Sur mesure", "RGPD EU"],
-  href: "/agentic-ai",
-};
-
 export default function Services() {
   const titleRef = useRevealWords("h2");
   const clipRef = useClipReveal();
   const cardsRef = useRef<HTMLDivElement>(null);
+  const t = useTranslations("services");
+  const locale = useLocale();
+
+  const services = [
+    { icon: "\uD83E\uDD16", name: t("s1Name"), desc: t("s1Desc"), tags: ["Mistral / GPT-4o", "RAG", "Webhooks", "API custom"] },
+    { icon: "\u2699\uFE0F", name: t("s2Name"), desc: t("s2Desc"), tags: ["Next.js API", "Cron jobs", "Workers", "PM2"] },
+    { icon: "\uD83E\uDDFE", name: t("s3Name"), desc: t("s3Desc"), tags: ["Next.js", "Supabase", "Stripe", "RGPD"] },
+    { icon: "\uD83C\uDFAC", name: t("s4Name"), desc: t("s4Desc"), tags: ["FFmpeg", "Whisper", "Remotion", "Hetzner"] },
+  ];
+
+  const aaasOffer = {
+    icon: "\uD83E\uDD16",
+    name: t("aaasName"),
+    desc: t("aaasDesc"),
+    tags: ["Multi-agents", "Opéré par NBHC", "Sur mesure", "RGPD EU"],
+    href: `/${locale}/agentic-ai`,
+  };
 
   useEffect(() => {
     const el = cardsRef.current;
@@ -91,7 +74,7 @@ export default function Services() {
           className="block w-4 h-px"
           style={{ background: "var(--gold)" }}
         />
-        Services
+        {t("eyebrow")}
       </div>
       <h2
         className="font-bold leading-tight mb-4"
@@ -102,7 +85,7 @@ export default function Services() {
           color: "var(--text)",
         }}
       >
-        Ce qu&apos;on peut construire pour vous.
+        {t("title")}
       </h2>
       <p
         className="text-[17px] font-light mb-16"
@@ -112,7 +95,7 @@ export default function Services() {
           lineHeight: 1.7,
         }}
       >
-        Vous avez un problème métier. Nous avons la stack pour le résoudre.
+        {t("subtitle")}
       </p>
 
       <div ref={cardsRef} className="grid grid-cols-2 max-[900px]:grid-cols-1 gap-5">
@@ -213,7 +196,7 @@ export default function Services() {
                   color: "#0a0a0b",
                 }}
               >
-                Offre phare
+                {t("aaasFeatured")}
               </span>
             </div>
             <div
@@ -259,7 +242,7 @@ export default function Services() {
                 border: "none",
               }}
             >
-              Découvrir l&apos;offre
+              {t("aaasCta")}
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                 <path
                   d="M2 7h10M7 2l5 5-5 5"

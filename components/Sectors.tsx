@@ -1,53 +1,25 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { useTranslations, useLocale } from "next-intl";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const sectors = [
-  {
-    icon: "📊",
-    name: "Comptabilité & Finance",
-    problem: "Révision FEC, anomalies, TVA, rapprochement — automatisés",
-    gain: "−3 jours/mois de révision",
-  },
-  {
-    icon: "🔨",
-    name: "Artisans & BTP",
-    problem: "Devis automatiques, relances clients, suivi chantier",
-    gain: "+2h/jour récupérées",
-  },
-  {
-    icon: "🎬",
-    name: "Créateurs & Médias",
-    problem: "Montage vidéo, sous-titres, distribution multi-canal",
-    gain: "10h de travail → 2 minutes",
-  },
-  {
-    icon: "🛒",
-    name: "E-commerce & Retail",
-    problem: "Fiches produits, service client, gestion des retours",
-    gain: "Support client 24/7",
-  },
-  {
-    icon: "⚖️",
-    name: "Juridique & RH",
-    problem: "Analyse de contrats, onboarding, génération de documents",
-    gain: "0 document oublié",
-  },
-  {
-    icon: "✨",
-    name: "Votre secteur",
-    problem: "Votre métier n'est pas dans la liste ?",
-    gain: "On construit sur mesure",
-    custom: true,
-  },
-];
-
 export default function Sectors() {
   const sectionRef = useRef<HTMLElement>(null);
+  const t = useTranslations("sectors");
+  const locale = useLocale();
+
+  const sectors = [
+    { icon: "📊", name: t("accounting"), problem: t("accountingProblem"), gain: t("accountingGain") },
+    { icon: "🔨", name: t("btp"), problem: t("btpProblem"), gain: t("btpGain") },
+    { icon: "🎬", name: t("media"), problem: t("mediaProblem"), gain: t("mediaGain") },
+    { icon: "🛒", name: t("ecommerce"), problem: t("ecommerceProblem"), gain: t("ecommerceGain") },
+    { icon: "⚖️", name: t("legal"), problem: t("legalProblem"), gain: t("legalGain") },
+    { icon: "✨", name: t("custom"), problem: t("customProblem"), gain: t("customGain"), custom: true },
+  ];
 
   useEffect(() => {
     const el = sectionRef.current;
@@ -108,7 +80,7 @@ export default function Sectors() {
         style={{ color: "var(--gold)" }}
       >
         <span className="block w-4 h-px" style={{ background: "var(--gold)" }} />
-        Secteurs
+        {t("eyebrow")}
       </div>
       <h2
         className="font-bold leading-tight mb-4"
@@ -119,14 +91,13 @@ export default function Sectors() {
           color: "var(--text)",
         }}
       >
-        Des agents pour chaque métier.
+        {t("title")}
       </h2>
       <p
         className="text-[17px] font-light mb-16"
         style={{ color: "var(--text-muted)", maxWidth: 600, lineHeight: 1.7 }}
       >
-        Des équipes packagées prêtes à déployer ou des agents 100% sur mesure
-        adaptés à votre secteur.
+        {t("subtitle")}
       </p>
 
       <div className="grid grid-cols-3 max-[900px]:grid-cols-2 max-[480px]:grid-cols-1 gap-5">
@@ -134,7 +105,7 @@ export default function Sectors() {
           const isCustom = s.custom;
           const Tag = isCustom ? "a" : "div";
           const props = isCustom
-            ? { href: "/contact", "data-cursor": "link" as const, className: "no-underline" }
+            ? { href: `/${locale}/contact`, "data-cursor": "link" as const, className: "no-underline" }
             : { "data-cursor": "card" as const };
           return (
             <Tag

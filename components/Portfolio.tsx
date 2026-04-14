@@ -1,6 +1,7 @@
 "use client";
 
 import React, { ComponentType, useRef } from "react";
+import { useTranslations, useLocale } from "next-intl";
 import { motion, useInView } from "framer-motion";
 import VlogyzMockup from "./mockups/VlogyzMockup";
 import DevizlyMockup from "./mockups/DevizlyMockup";
@@ -156,6 +157,7 @@ function CalloutCard({ c, accent, index, inView }: { c: CalloutDef; accent: stri
 
 function TextColumn({ p }: { p: Product }) {
   const isExternal = p.href !== "#";
+  const t = useTranslations("portfolio");
   return (
     <motion.div
       initial={{ opacity: 0, x: p.textSide === "left" ? -30 : 30 }}
@@ -165,14 +167,14 @@ function TextColumn({ p }: { p: Product }) {
       className="flex flex-col justify-center"
     >
       <div className="flex items-center gap-2 mb-5 flex-wrap">
-        <span className="inline-block text-[11px] font-bold px-2.5 py-1 tracking-[1px] uppercase" style={{ background: `${p.accent}26`, color: p.accent, border: `1px solid ${p.accent}40`, borderRadius: 6 }}>Preuve de concept</span>
+        <span className="inline-block text-[11px] font-bold px-2.5 py-1 tracking-[1px] uppercase" style={{ background: `${p.accent}26`, color: p.accent, border: `1px solid ${p.accent}40`, borderRadius: 6 }}>{t("proofOfConcept")}</span>
         <span className="inline-block text-[11px] font-medium px-2.5 py-0.5 rounded-full tracking-wide" style={statusBadge[p.badge.type]}>{p.badge.label}</span>
       </div>
       <h3 className="font-extrabold mb-3" style={{ fontFamily: "var(--font-syne)", fontSize: "clamp(28px,3vw,42px)", lineHeight: 1.0, letterSpacing: "-1.5px", color: "var(--text)" }}>{p.name}</h3>
       <p className="text-[15px] font-light mb-6" style={{ color: "#8C8880", lineHeight: 1.6, maxWidth: 420 }}>{p.tagline}</p>
       <div className="mb-6" style={{ height: 1, background: "rgba(196,151,58,0.2)", maxWidth: 420 }} />
       <div className="mb-6" style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)", borderRadius: 8, padding: 16, maxWidth: 420 }}>
-        <div className="text-[11px] font-bold tracking-[0.15em] uppercase mb-3" style={{ color: p.accent }}>Ce que les agents font</div>
+        <div className="text-[11px] font-bold tracking-[0.15em] uppercase mb-3" style={{ color: p.accent }}>{t("whatAgentsDo")}</div>
         <ul className="grid grid-cols-1 gap-y-1.5">
           {p.agents.map((a) => (
             <li key={a} className="text-[13px] font-light flex items-start gap-2" style={{ color: "var(--text)" }}>
@@ -238,15 +240,17 @@ function ProductSection({ p }: { p: Product }) {
 /* ─── Portfolio ─── */
 
 export default function Portfolio() {
+  const t = useTranslations("portfolio");
+  const locale = useLocale();
   return (
     <section id="produits" className="relative" style={{ background: "#09090b", borderTop: "1px solid var(--border)", borderBottom: "1px solid var(--border)" }}>
       <div className="mx-auto py-24 md:py-32 px-6" style={{ maxWidth: 1200 }}>
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-50px" }} transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }} className="mb-16 md:mb-20">
           <div className="text-[11px] font-medium tracking-[3px] uppercase mb-4 flex items-center gap-2" style={{ color: "var(--gold)" }}>
-            <span className="block w-4 h-px" style={{ background: "var(--gold)" }} />Nos preuves
+            <span className="block w-4 h-px" style={{ background: "var(--gold)" }} />{t("eyebrow")}
           </div>
-          <h2 className="font-bold leading-tight mb-4" style={{ fontFamily: "var(--font-syne)", fontSize: "clamp(32px,4vw,52px)", letterSpacing: "-1.5px", color: "var(--text)" }}>On l&apos;a déjà fait.</h2>
-          <p className="text-[17px] font-light" style={{ color: "var(--text-muted)", maxWidth: 640, lineHeight: 1.65 }}>Trois équipes d&apos;agents IA construites et opérées par NBHC. Chaque interface est en production.</p>
+          <h2 className="font-bold leading-tight mb-4" style={{ fontFamily: "var(--font-syne)", fontSize: "clamp(32px,4vw,52px)", letterSpacing: "-1.5px", color: "var(--text)" }}>{t("title")}</h2>
+          <p className="text-[17px] font-light" style={{ color: "var(--text-muted)", maxWidth: 640, lineHeight: 1.65 }}>{t("subtitle")}</p>
         </motion.div>
 
         {products.map((p, i) => (
@@ -257,11 +261,11 @@ export default function Portfolio() {
         ))}
 
         <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-50px" }} transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }} className="mt-20 md:mt-24 text-center" style={{ background: "rgba(196,151,58,0.04)", border: "1px solid rgba(196,151,58,0.2)", borderRadius: 12, padding: "60px 40px" }}>
-          <div className="text-[11px] font-medium tracking-[3px] uppercase mb-3" style={{ color: "var(--gold)" }}>Sur mesure</div>
-          <h3 className="font-bold mb-4" style={{ fontFamily: "var(--font-syne)", fontSize: "clamp(28px,3.5vw,42px)", letterSpacing: "-1px", color: "var(--text)", lineHeight: 1.1 }}>Votre secteur n&apos;est pas là&nbsp;?</h3>
-          <p className="text-[16px] font-light mb-8 mx-auto" style={{ color: "var(--text-muted)", lineHeight: 1.65, maxWidth: 560 }}>On construit des équipes d&apos;agents IA pour n&apos;importe quel métier.</p>
-          <a href="/contact" data-cursor="link" className="inline-flex items-center gap-2 text-[15px] font-medium px-7 py-3.5 rounded-md no-underline transition-all duration-200 hover:opacity-90" style={{ background: "var(--gold)", color: "#0a0a0b", border: "none" }}>
-            Parlez-nous de votre cas
+          <div className="text-[11px] font-medium tracking-[3px] uppercase mb-3" style={{ color: "var(--gold)" }}>{t("ctaEyebrow")}</div>
+          <h3 className="font-bold mb-4" style={{ fontFamily: "var(--font-syne)", fontSize: "clamp(28px,3.5vw,42px)", letterSpacing: "-1px", color: "var(--text)", lineHeight: 1.1 }}>{t("ctaTitle")}</h3>
+          <p className="text-[16px] font-light mb-8 mx-auto" style={{ color: "var(--text-muted)", lineHeight: 1.65, maxWidth: 560 }}>{t("ctaSubtitle")}</p>
+          <a href={`/${locale}/contact`} data-cursor="link" className="inline-flex items-center gap-2 text-[15px] font-medium px-7 py-3.5 rounded-md no-underline transition-all duration-200 hover:opacity-90" style={{ background: "var(--gold)", color: "#0a0a0b", border: "none" }}>
+            {t("ctaButton")}
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
           </a>
         </motion.div>

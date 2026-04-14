@@ -1,6 +1,7 @@
 "use client";
 
 import { Fragment, useEffect, useRef, useState } from "react";
+import { useTranslations } from "next-intl";
 import gsap from "gsap";
 
 type UseCase = {
@@ -177,6 +178,14 @@ export default function AgentFlowIllustration() {
   const [active, setActive] = useState(0);
   const flowRef = useRef<HTMLDivElement>(null);
   const arrowRefs = useRef<(SVGPathElement | null)[]>([]);
+  const t = useTranslations("agentFlow");
+
+  const pillLabels = [
+    t("pillAccounting"),
+    t("pillDevis"),
+    t("pillContent"),
+    t("pillCustom"),
+  ];
 
   const current = useCases[active];
 
@@ -226,7 +235,7 @@ export default function AgentFlowIllustration() {
               fontFamily: "var(--font-dm-sans)",
             }}
           >
-            {uc.label}
+            {pillLabels[i]}
           </button>
         ))}
       </div>
@@ -239,7 +248,7 @@ export default function AgentFlowIllustration() {
           gridTemplateColumns: "minmax(140px, 1.2fr) auto repeat(3, minmax(0, 1fr) auto) minmax(140px, 1.2fr)",
         }}
       >
-        <AgentCard icon="🏢" name="Vos données" desc="emails, docs, factures" variant="input" />
+        <AgentCard icon="🏢" name={t("yourData")} desc={t("yourDataDesc")} variant="input" />
         <Arrow refCb={(el) => (arrowRefs.current[0] = el)} />
         {current.agents.map((agent, i) => (
           <Fragment key={`${current.id}-${i}`}>
@@ -247,7 +256,7 @@ export default function AgentFlowIllustration() {
             <Arrow refCb={(el) => (arrowRefs.current[i + 1] = el)} />
           </Fragment>
         ))}
-        <AgentCard icon="✅" name={current.output} desc="en quelques secondes" variant="output" />
+        <AgentCard icon="✅" name={current.output} desc={t("inSeconds")} variant="output" />
       </div>
 
       {/* ── Mobile Flow diagram (horizontal scroll) ── */}
@@ -263,11 +272,11 @@ export default function AgentFlowIllustration() {
         <style jsx>{`
           div::-webkit-scrollbar { display: none; }
         `}</style>
-        <MobileCard icon="🏢" name="Vos données" desc="emails, docs, factures" variant="input" />
+        <MobileCard icon="🏢" name={t("yourData")} desc={t("yourDataDesc")} variant="input" />
         {current.agents.map((agent, i) => (
           <MobileCard key={`${current.id}-m-${i}`} icon={agent.icon} name={agent.name} desc={agent.desc} />
         ))}
-        <MobileCard icon="✅" name={current.output} desc="en quelques secondes" variant="output" />
+        <MobileCard icon="✅" name={current.output} desc={t("inSeconds")} variant="output" />
       </div>
     </div>
   );

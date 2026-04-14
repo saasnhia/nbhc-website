@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { useTranslations, useLocale } from "next-intl";
 import gsap from "gsap";
 import Logo from "./Logo";
 
@@ -8,6 +9,8 @@ const marqueeText = "NBHC \u00B7 STUDIO IA \u00B7 FRANCE \u00B7 ";
 
 export default function Footer() {
   const marqueeTrackRef = useRef<HTMLDivElement>(null);
+  const t = useTranslations("footer");
+  const locale = useLocale();
 
   useEffect(() => {
     const track = marqueeTrackRef.current;
@@ -73,18 +76,18 @@ export default function Footer() {
           <div className="flex flex-col gap-2">
             <Logo variant="footer" />
             <div className="text-[13px]" style={{ color: "var(--text-dim)" }}>
-              Studio IA & Automatisation · France
+              {t("tagline")}
             </div>
           </div>
           <div className="flex items-center gap-8 flex-wrap">
             <div className="flex gap-6">
               {[
-                { href: "#approche", label: "Approche" },
-                { href: "#produits", label: "Produits" },
-                { href: "#services", label: "Services" },
-                { href: "/blog", label: "Blog" },
-                { href: "/faq", label: "FAQ" },
-                { href: "mailto:contact@nbhc.fr", label: "Contact" },
+                { href: `/${locale}#approche`, label: t("approche") },
+                { href: `/${locale}#produits`, label: t("produits") },
+                { href: `/${locale}#services`, label: t("services") },
+                { href: `/${locale}/blog`, label: t("blog") },
+                { href: `/${locale}/faq`, label: t("faq") },
+                { href: "mailto:contact@nbhc.fr", label: t("contact") },
               ].map((l) => (
                 <a
                   key={l.label}
@@ -119,10 +122,10 @@ export default function Footer() {
             }}
           >
             {[
-              { href: "/mentions-legales", label: "Mentions légales" },
-              { href: "/politique-confidentialite", label: "Politique de confidentialité" },
-              { href: "/cgv", label: "CGV" },
-              { href: "/cgu", label: "CGU" },
+              { href: `/${locale}/mentions-legales`, label: t("legal") },
+              { href: `/${locale}/politique-confidentialite`, label: t("privacy") },
+              { href: `/${locale}/cgv`, label: t("cgv") },
+              { href: `/${locale}/cgu`, label: t("cgu") },
             ].map((l, i, arr) => (
               <span key={l.label}>
                 <a
@@ -142,8 +145,7 @@ export default function Footer() {
             className="text-xs py-5"
             style={{ color: "var(--text-dim)" }}
           >
-            © 2026 SAS NBHC — SIREN 102 637 899 · 55 Rue Henri Clément, 71100
-            Saint-Rémy · Tous droits réservés
+            {t("copyright")}
           </div>
         </div>
       </footer>

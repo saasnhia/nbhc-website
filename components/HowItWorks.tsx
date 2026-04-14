@@ -1,34 +1,11 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { useTranslations } from "next-intl";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
-
-const steps = [
-  {
-    n: "01",
-    icon: "🧠",
-    title: "On cartographie votre problème",
-    desc: "En 30 minutes, on identifie exactement quelles tâches répétitives vous font perdre du temps et ce que des agents IA peuvent automatiser.",
-    visual: "diagnostic",
-  },
-  {
-    n: "02",
-    icon: "⚙️",
-    title: "On déploie votre équipe d'agents",
-    desc: "En 2 à 4 semaines, vos agents sont opérationnels. Connectés à vos outils existants (email, ERP, CRM). Testés et validés.",
-    visual: "agents",
-  },
-  {
-    n: "03",
-    icon: "📈",
-    title: "Vous gagnez en efficacité chaque jour",
-    desc: "Vos agents travaillent en continu. Nous monitorons les performances et améliorons les modèles. Vous consommez les résultats.",
-    visual: "metrics",
-  },
-];
 
 function StepVisual({ kind }: { kind: string }) {
   if (kind === "diagnostic") {
@@ -150,6 +127,13 @@ function StepVisual({ kind }: { kind: string }) {
 
 export default function HowItWorks() {
   const sectionRef = useRef<HTMLElement>(null);
+  const t = useTranslations("howItWorks");
+
+  const steps = [
+    { n: "01", icon: "🧠", title: t("step1Title"), desc: t("step1Desc"), visual: "diagnostic" },
+    { n: "02", icon: "⚙️", title: t("step2Title"), desc: t("step2Desc"), visual: "agents" },
+    { n: "03", icon: "📈", title: t("step3Title"), desc: t("step3Desc"), visual: "metrics" },
+  ];
 
   useEffect(() => {
     const el = sectionRef.current;
@@ -188,7 +172,7 @@ export default function HowItWorks() {
         style={{ color: "var(--gold)" }}
       >
         <span className="block w-4 h-px" style={{ background: "var(--gold)" }} />
-        Comment ça marche
+        {t("eyebrow")}
       </div>
       <h2
         className="font-bold leading-tight mb-4"
@@ -200,14 +184,13 @@ export default function HowItWorks() {
           maxWidth: 900,
         }}
       >
-        Une équipe qui travaille pendant que vous dormez.
+        {t("title")}
       </h2>
       <p
         className="text-[17px] font-light mb-16"
         style={{ color: "var(--text-muted)", maxWidth: 600, lineHeight: 1.7 }}
       >
-        De votre problème à vos agents en production — un process en trois étapes,
-        sans jargon et sans surprise.
+        {t("subtitle")}
       </p>
 
       <div className="grid grid-cols-3 max-[900px]:grid-cols-1 gap-5">
