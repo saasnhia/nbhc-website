@@ -6,7 +6,7 @@ import {
   AgentAnatomyIllustration,
   MultiAgentWorkflowIllustration,
   WithoutVsWithAgentsIllustration,
-} from "../../components/AgenticIllustrations";
+} from "../../../components/AgenticIllustrations";
 
 const teams = [
   {

@@ -3,7 +3,7 @@ import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
 import Link from "next/link";
-import Logo from "../../../components/Logo";
+import Logo from "../../../../components/Logo";
 
 const contentDir = path.join(process.cwd(), "content", "blog");
 

@@ -1,20 +1,14 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback } from "react";
+import { useTranslations, useLocale } from "next-intl";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Logo from "./Logo";
 import MagneticButton from "./MagneticButton";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 gsap.registerPlugin(ScrollTrigger);
-
-const links = [
-  { href: "/#how-it-works", label: "Comment ça marche" },
-  { href: "/#produits", label: "Nos preuves" },
-  { href: "/#secteurs", label: "Secteurs" },
-  { href: "/agentic-ai", label: "AaaS" },
-  { href: "/blog", label: "Blog" },
-];
 
 export default function Nav() {
   const [activeSection, setActiveSection] = useState("");
@@ -22,6 +16,16 @@ export default function Nav() {
   const navRef = useRef<HTMLElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
   const tlRef = useRef<gsap.core.Timeline | null>(null);
+  const t = useTranslations("nav");
+  const locale = useLocale();
+
+  const links = [
+    { href: `/${locale}#how-it-works`, label: t("howItWorks") },
+    { href: `/${locale}#produits`, label: t("proof") },
+    { href: `/${locale}#secteurs`, label: t("sectors") },
+    { href: `/${locale}/agentic-ai`, label: t("aaas") },
+    { href: `/${locale}/blog`, label: t("blog") },
+  ];
 
   useEffect(() => {
     const onScroll = () => {
@@ -125,7 +129,7 @@ export default function Nav() {
         }}
       >
         <a
-          href="#"
+          href={`/${locale}`}
           data-cursor="link"
           className="no-underline flex items-center"
         >
@@ -164,18 +168,21 @@ export default function Nav() {
           <span className="block w-5 h-0.5" style={{ background: "var(--gold)" }} />
         </button>
 
-        <MagneticButton
-          href="/contact"
-          data-cursor="link"
-          className="hidden min-[900px]:inline-flex text-sm font-medium px-5 py-2 rounded-md no-underline transition-all duration-200 whitespace-nowrap hover:opacity-90"
-          style={{
-            background: "var(--gold-dim)",
-            color: "var(--gold-light)",
-            border: "1px solid var(--gold-border)",
-          }}
-        >
-          Diagnostic gratuit →
-        </MagneticButton>
+        <div className="hidden min-[900px]:flex items-center gap-5">
+          <LanguageSwitcher />
+          <MagneticButton
+            href={`/${locale}/contact`}
+            data-cursor="link"
+            className="inline-flex text-sm font-medium px-5 py-2 rounded-md no-underline transition-all duration-200 whitespace-nowrap hover:opacity-90"
+            style={{
+              background: "var(--gold-dim)",
+              color: "var(--gold-light)",
+              border: "1px solid var(--gold-border)",
+            }}
+          >
+            {t("cta")} →
+          </MagneticButton>
+        </div>
       </nav>
 
       {/* Mobile fullscreen overlay */}
@@ -227,7 +234,7 @@ export default function Nav() {
               </a>
             ))}
             <a
-              href="/contact"
+              href={`/${locale}/contact`}
               data-mobile-link
               data-cursor="link"
               onClick={closeMenu}
@@ -241,7 +248,7 @@ export default function Nav() {
                 lineHeight: 1.1,
               }}
             >
-              Diagnostic gratuit
+              {t("cta")}
             </a>
           </div>
         </div>

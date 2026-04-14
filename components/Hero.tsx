@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { useTranslations, useLocale } from "next-intl";
 import gsap from "gsap";
 import Link from "next/link";
 import AgentFlowIllustration from "./AgentFlowIllustration";
@@ -9,6 +10,8 @@ export default function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
   const circle1Ref = useRef<SVGSVGElement>(null);
   const circle2Ref = useRef<SVGSVGElement>(null);
+  const t = useTranslations("hero");
+  const locale = useLocale();
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -108,7 +111,7 @@ export default function Hero() {
           style={{ color: "var(--gold)", opacity: 0 }}
         >
           <span className="block w-6 h-px" style={{ background: "var(--gold)" }} />
-          AGENTIC AI AS A SERVICE
+          {t("eyebrow")}
         </div>
 
         <h1
@@ -123,13 +126,13 @@ export default function Hero() {
           }}
         >
           <span data-hero-line style={{ display: "block", opacity: 0 }}>
-            Vos équipes passent des heures
+            {t("titleLine1")}
           </span>
           <span data-hero-line style={{ display: "block", opacity: 0 }}>
-            sur des tâches que
+            {t("titleLine2")}
           </span>
           <span data-hero-line style={{ display: "block", opacity: 0, color: "var(--gold)" }}>
-            des agents IA font en secondes.
+            {t("titleLine3")}
           </span>
         </h1>
 
@@ -143,8 +146,7 @@ export default function Hero() {
             opacity: 0,
           }}
         >
-          NBHC conçoit et déploie des équipes d&apos;agents IA dans votre entreprise —
-          connectés à vos outils, opérés par nos soins, conformes RGPD.
+          {t("subtitle")}
         </p>
 
         {/* Interactive flow diagram */}
@@ -159,12 +161,12 @@ export default function Hero() {
           style={{ opacity: 0 }}
         >
           <Link
-            href="/contact"
+            href={`/${locale}/contact`}
             data-cursor="link"
             className="inline-flex items-center gap-2 text-[15px] font-medium px-7 py-3.5 rounded-md no-underline transition-all duration-200 hover:opacity-90"
             style={{ background: "var(--gold)", color: "#0a0a0b", border: "none" }}
           >
-            Réserver mon diagnostic gratuit
+            {t("ctaPrimary")}
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
               <path
                 d="M2 7h10M7 2l5 5-5 5"
@@ -185,7 +187,7 @@ export default function Hero() {
               border: "1px solid var(--border-accent)",
             }}
           >
-            Voir comment ça marche ↓
+            {t("ctaSecondary")} ↓
           </a>
         </div>
 
@@ -199,13 +201,13 @@ export default function Hero() {
             letterSpacing: "0.5px",
           }}
         >
-          <span>Hébergé en France</span>
+          <span>{t("trust1")}</span>
           <span style={{ opacity: 0.3 }}>·</span>
-          <span>RGPD</span>
+          <span>{t("trust2")}</span>
           <span style={{ opacity: 0.3 }}>·</span>
-          <span>Mistral AI</span>
+          <span>{t("trust3")}</span>
           <span style={{ opacity: 0.3 }}>·</span>
-          <span>Next.js</span>
+          <span>{t("trust4")}</span>
         </div>
       </div>
     </section>

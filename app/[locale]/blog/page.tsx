@@ -3,7 +3,7 @@ import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
 import Link from "next/link";
-import Logo from "../../components/Logo";
+import Logo from "../../../components/Logo";
 
 export const metadata: Metadata = {
   title: "Blog — NBHC Studio IA & Automatisation",

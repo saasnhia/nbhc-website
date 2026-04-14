@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import Logo from "../../components/Logo";
+import Logo from "../../../components/Logo";
 
 export const metadata: Metadata = {
-  title: "Conditions Generales de Vente — NBHC",
+  title: "Conditions Generales d'Utilisation — NBHC",
   description:
-    "CGV des services SaaS edites par NBHC — Vlogyz, Devizly, Worthifast.",
+    "CGU des plateformes SaaS editees par NBHC — conditions d'acces et d'utilisation.",
 };
 
-export default function CGV() {
+export default function CGU() {
   return (
     <main
       style={{
@@ -52,7 +52,7 @@ export default function CGV() {
           marginBottom: 48,
         }}
       >
-        Conditions Generales de Vente
+        Conditions Generales d&apos;Utilisation
       </h1>
 
       <section style={{ marginBottom: 40 }}>
@@ -65,13 +65,14 @@ export default function CGV() {
             marginBottom: 16,
           }}
         >
-          Objet
+          Acces aux services
         </h2>
         <p>
-          Les presentes Conditions Generales de Vente (CGV) regissent la vente
-          de licences d&apos;acces aux plateformes SaaS editees par la SAS NBHC,
-          notamment Vlogyz, Devizly et Worthifast. Toute souscription a un
-          service implique l&apos;acceptation sans reserve des presentes CGV.
+          L&apos;acces aux plateformes SaaS editees par NBHC (Vlogyz, Devizly,
+          Worthifast) necessite une inscription prealable. L&apos;utilisateur
+          doit creer un compte personnel avec une adresse email valide. Chaque
+          compte est strictement personnel et ne peut etre partage avec des
+          tiers.
         </p>
       </section>
 
@@ -85,20 +86,25 @@ export default function CGV() {
             marginBottom: 16,
           }}
         >
-          Prix et paiement
+          Obligations de l&apos;utilisateur
         </h2>
-        <ul style={{ paddingLeft: 20, listStyleType: "disc" }}>
-          <li>Les prix sont affiches toutes taxes comprises (TTC).</li>
+        <p>L&apos;utilisateur s&apos;engage a :</p>
+        <ul style={{ paddingLeft: 20, listStyleType: "disc", marginTop: 12 }}>
           <li>
-            Le paiement s&apos;effectue par carte bancaire via la plateforme
-            securisee Stripe.
+            Utiliser les services de maniere licite et conforme aux presentes
+            CGU.
           </li>
           <li>
-            Les abonnements sont disponibles en formule mensuelle ou annuelle.
+            Ne pas tenter de proceder a du reverse engineering, decompilation ou
+            desassemblage des plateformes.
           </li>
           <li>
-            La facturation est automatique au debut de chaque periode de
-            renouvellement.
+            Ne pas surcharger volontairement les serveurs (attaques DDoS, abus
+            d&apos;API, scraping massif).
+          </li>
+          <li>
+            Garder ses identifiants de connexion confidentiels et etre
+            responsable de toute activite effectuee sous son compte.
           </li>
         </ul>
       </section>
@@ -113,43 +119,18 @@ export default function CGV() {
             marginBottom: 16,
           }}
         >
-          Droit de retractation
+          Donnees et confidentialite
         </h2>
         <p>
-          Conformement au Code de la consommation, les consommateurs (B2C)
-          disposent d&apos;un delai de 14 jours a compter de la souscription
-          pour exercer leur droit de retractation, sans avoir a justifier de
-          motifs.
-        </p>
-        <p style={{ marginTop: 12 }}>
-          Pour exercer ce droit, envoyez votre demande par email a{" "}
-          <a
-            href="mailto:contact@nbhc.fr"
+          Le traitement des donnees personnelles est decrit dans notre{" "}
+          <Link
+            href="/politique-confidentialite"
             style={{ color: "var(--gold)", textDecoration: "none" }}
           >
-            contact@nbhc.fr
-          </a>
-          .
-        </p>
-      </section>
-
-      <section style={{ marginBottom: 40 }}>
-        <h2
-          style={{
-            fontFamily: "var(--font-syne)",
-            fontSize: 22,
-            fontWeight: 600,
-            color: "var(--gold)",
-            marginBottom: 16,
-          }}
-        >
-          Resiliation
-        </h2>
-        <p>
-          L&apos;utilisateur peut resilier son abonnement a tout moment depuis
-          son espace client. La resiliation prend effet a la fin de la periode
-          d&apos;abonnement en cours. Aucun remboursement au prorata ne sera
-          effectue pour la periode restante.
+            Politique de confidentialite
+          </Link>
+          . En utilisant nos services, vous reconnaissez en avoir pris
+          connaissance.
         </p>
       </section>
 
@@ -166,11 +147,10 @@ export default function CGV() {
           Propriete intellectuelle
         </h2>
         <p>
-          NBHC conserve l&apos;integralite des droits de propriete
-          intellectuelle sur ses plateformes, incluant le code source, le design,
-          les algorithmes et les marques. L&apos;utilisateur conserve
-          l&apos;entiere propriete de ses donnees et des contenus generes via
-          les services.
+          L&apos;ensemble du code source, du design, des algorithmes, des
+          marques et de tout element constitutif des plateformes NBHC est la
+          propriete exclusive de la SAS NBHC. Toute reproduction ou utilisation
+          non autorisee est interdite.
         </p>
       </section>
 
@@ -184,14 +164,14 @@ export default function CGV() {
             marginBottom: 16,
           }}
         >
-          Responsabilite
+          Limitation de responsabilite
         </h2>
         <p>
-          NBHC est soumise a une obligation de moyens. Les services SaaS
-          integrant des fonctionnalites d&apos;intelligence artificielle, NBHC
-          ne garantit pas un resultat specifique sur les outputs generes par
-          l&apos;IA. L&apos;utilisateur reste responsable de la verification et
-          de l&apos;utilisation des contenus generes.
+          NBHC met tout en oeuvre pour assurer la disponibilite de ses services.
+          Toutefois, des interruptions peuvent survenir pour des raisons de
+          maintenance programmee ou d&apos;incidents techniques. NBHC ne saurait
+          etre tenue responsable de pertes de donnees resultant d&apos;un cas de
+          force majeure.
         </p>
       </section>
 
@@ -205,12 +185,35 @@ export default function CGV() {
             marginBottom: 16,
           }}
         >
-          Loi applicable et juridiction competente
+          Suspension de compte
         </h2>
         <p>
-          Les presentes CGV sont soumises au droit francais. En cas de litige,
-          et apres tentative de resolution amiable, le Tribunal de Commerce de
-          Macon (Saone-et-Loire) sera seul competent.
+          En cas de violation des presentes CGU, NBHC se reserve le droit de
+          suspendre ou de supprimer le compte de l&apos;utilisateur, avec
+          notification prealable par email. En cas d&apos;urgence (atteinte a la
+          securite des systemes, activite frauduleuse), la suspension peut etre
+          immediate et sans preavis.
+        </p>
+      </section>
+
+      <section style={{ marginBottom: 40 }}>
+        <h2
+          style={{
+            fontFamily: "var(--font-syne)",
+            fontSize: 22,
+            fontWeight: 600,
+            color: "var(--gold)",
+            marginBottom: 16,
+          }}
+        >
+          Modifications des CGU
+        </h2>
+        <p>
+          NBHC se reserve le droit de modifier les presentes CGU a tout moment.
+          Les utilisateurs seront notifies des modifications au moins 30 jours
+          avant leur entree en vigueur. La poursuite de l&apos;utilisation des
+          services apres l&apos;entree en vigueur des modifications vaut
+          acceptation des nouvelles conditions.
         </p>
       </section>
 
