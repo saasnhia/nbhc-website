@@ -119,13 +119,14 @@ export default function Nav() {
     <>
       <nav
         ref={navRef}
-        className="fixed top-0 left-0 right-0 z-100 flex items-center justify-between px-10 max-[900px]:px-5"
+        className="fixed left-0 right-0 z-100 flex items-center justify-between px-10 max-[900px]:px-5"
         style={{
+          top: "var(--banner-h, 0px)",
           height: 64,
           background: "rgba(9,9,11,0.85)",
           backdropFilter: "blur(20px)",
           borderBottom: "1px solid var(--border)",
-          transition: "background 0.3s, border-color 0.3s, backdrop-filter 0.3s",
+          transition: "top 0.2s, background 0.3s, border-color 0.3s, backdrop-filter 0.3s",
         }}
       >
         <a
@@ -211,6 +212,18 @@ export default function Nav() {
               />
             </svg>
           </button>
+
+          {/* Language switcher — top of mobile menu */}
+          <div
+            className="self-center mb-8 pb-4"
+            style={{
+              borderBottom: "1px solid rgba(255,255,255,0.06)",
+              paddingLeft: 16,
+              paddingRight: 16,
+            }}
+          >
+            <LanguageSwitcher size="md" onSwitch={closeMenu} />
+          </div>
 
           <div className="flex flex-col gap-6">
             {links.map((l) => (

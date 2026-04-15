@@ -179,6 +179,11 @@
       "other": "Other"
     }
   },
+  "globalBanner": {
+    "text": "🎯 Founder offer — Lifetime locked price for the first 10 clients · {spots} spots left →",
+    "textShort": "🎯 Founder offer — {spots} spots →",
+    "close": "Close"
+  },
   "pricing": {
     "founderBanner": "🎯 Founder offer — Lifetime locked price for the first 10 clients · {spots} spots left →",
     "founderBannerAria": "Book my Founder spot — {spots} spots available",

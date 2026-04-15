@@ -4,6 +4,7 @@ import { useState, useCallback } from "react";
 import SmoothScroll, { useLenis } from "./SmoothScroll";
 import Cursor from "./Cursor";
 import Loader from "./Loader";
+import FounderBanner from "./FounderBanner";
 
 function AppContent({ children }: { children: React.ReactNode }) {
   const [loaded, setLoaded] = useState(false);
@@ -25,6 +26,7 @@ function AppContent({ children }: { children: React.ReactNode }) {
           transition: "opacity 0.4s ease",
         }}
       >
+        <FounderBanner />
         {children}
       </div>
     </>

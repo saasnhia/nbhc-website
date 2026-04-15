@@ -4,17 +4,27 @@ import { useLocale } from "next-intl";
 import { usePathname, useRouter } from "../i18n/navigation";
 import { useTransition } from "react";
 
-export default function LanguageSwitcher() {
+type Props = {
+  onSwitch?: () => void;
+  size?: "sm" | "md";
+};
+
+export default function LanguageSwitcher({ onSwitch, size = "sm" }: Props) {
   const locale = useLocale();
   const pathname = usePathname();
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
+  const fontSize = size === "md" ? 14 : 12;
 
   const switchTo = (newLocale: "fr" | "en") => {
-    if (newLocale === locale || isPending) return;
+    if (newLocale === locale || isPending) {
+      onSwitch?.();
+      return;
+    }
     startTransition(() => {
       router.replace(pathname, { locale: newLocale });
     });
+    onSwitch?.();
   };
 
   const linkStyle = (target: string): React.CSSProperties => ({
@@ -22,7 +32,7 @@ export default function LanguageSwitcher() {
     background: "transparent",
     border: "none",
     padding: 0,
-    fontSize: 12,
+    fontSize,
     fontWeight: 600,
     fontFamily: "var(--font-dm-sans)",
     color: locale === target ? "var(--text)" : "#8C8880",
@@ -31,8 +41,10 @@ export default function LanguageSwitcher() {
     transition: "color 0.2s",
   });
 
+  const gap = size === "md" ? "gap-3" : "gap-1.5";
+
   return (
-    <div className="flex items-center gap-1.5">
+    <div className={`flex items-center ${gap}`}>
       <button
         type="button"
         onClick={() => switchTo("fr")}
@@ -41,7 +53,7 @@ export default function LanguageSwitcher() {
       >
         FR
       </button>
-      <span style={{ color: "#3E3D3A", fontSize: 12 }}>|</span>
+      <span style={{ color: "#3E3D3A", fontSize }}>|</span>
       <button
         type="button"
         onClick={() => switchTo("en")}

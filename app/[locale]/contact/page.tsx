@@ -133,15 +133,12 @@ function ContactPageInner() {
     <main>
       <Nav />
       <section
-        className="pt-36 pb-24 px-10 max-[900px]:px-5 max-[900px]:pt-28 max-[900px]:pb-16"
+        className="pt-36 pb-24 px-4 sm:px-5 md:px-10 max-[900px]:pt-28 max-[900px]:pb-16"
         style={{ maxWidth: 1200, margin: "0 auto" }}
       >
-        <div
-          className="grid gap-16 max-[900px]:gap-10"
-          style={{ gridTemplateColumns: "minmax(0, 1fr) minmax(0, 1.1fr)" }}
-        >
+        <div className="grid gap-10 lg:gap-16 grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)]">
           {/* LEFT — Reassurance */}
-          <div className="max-[900px]:col-span-full">
+          <div>
             <div
               className="inline-flex items-center gap-2 text-xs font-medium tracking-widest uppercase mb-6"
               style={{ color: "var(--gold)" }}
@@ -267,7 +264,7 @@ function ContactPageInner() {
           {/* RIGHT — Form */}
           <form
             onSubmit={handleSubmit}
-            className="flex flex-col gap-4 p-8 max-[900px]:p-6"
+            className="w-full flex flex-col gap-4 p-6 sm:p-8"
             style={{
               background: "var(--card)",
               border: "1px solid var(--border)",
@@ -459,7 +456,7 @@ function ContactPageInner() {
               type="submit"
               disabled={status === "loading"}
               data-cursor="link"
-              className="flex items-center justify-center gap-2 text-[15px] font-medium px-7 py-3.5 rounded-md transition-all duration-200 cursor-pointer hover:-translate-y-px disabled:opacity-60 disabled:cursor-not-allowed mt-2"
+              className="w-full flex items-center justify-center gap-2 text-[15px] font-medium px-6 py-4 rounded-md transition-all duration-200 cursor-pointer hover:-translate-y-px disabled:opacity-60 disabled:cursor-not-allowed mt-2 whitespace-nowrap"
               style={{
                 background: "var(--gold)",
                 color: "#0a0a0b",

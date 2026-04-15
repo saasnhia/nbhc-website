@@ -527,6 +527,7 @@ export default function AgenticAIPage() {
 
       {/* SECTION 5 — Tarification */}
       <section
+        id="pricing"
         className="py-24 px-10 max-[900px]:px-5 max-[900px]:py-16"
         style={{ maxWidth: 1200, margin: "0 auto" }}
       >

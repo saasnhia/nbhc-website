@@ -179,6 +179,11 @@
       "other": "Autre"
     }
   },
+  "globalBanner": {
+    "text": "🎯 Offre Fondateur — Prix bloqué à vie pour les 10 premiers clients · Plus que {spots} places →",
+    "textShort": "🎯 Offre Fondateur — {spots} places →",
+    "close": "Fermer"
+  },
   "pricing": {
     "founderBanner": "🎯 Offre Fondateur — Prix bloqué à vie pour les 10 premiers clients · Plus que {spots} places →",
     "founderBannerAria": "Réserver ma place Fondateur — {spots} places disponibles",
