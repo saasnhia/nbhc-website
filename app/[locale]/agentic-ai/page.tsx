@@ -174,6 +174,8 @@ export default function AgenticAIPage() {
   const [openFaq, setOpenFaq] = useState<number | null>(0);
   const locale = useLocale();
   const tp = useTranslations("pricing");
+  const isEn = locale === "en";
+  const tr = (fr: string, en: string) => (isEn ? en : fr);
 
   return (
     <main style={{ background: "var(--bg)", minHeight: "100vh" }}>
@@ -199,24 +201,27 @@ export default function AgenticAIPage() {
             maxWidth: 900,
           }}
         >
-          Une équipe d&apos;agents IA{" "}
-          <span style={{ color: "var(--gold)" }}>dédiée à votre métier.</span>
+          {tr("Une équipe d'agents IA ", "An AI agent team ")}
+          <span style={{ color: "var(--gold)" }}>
+            {tr("dédiée à votre métier.", "dedicated to your trade.")}
+          </span>
         </h1>
         <p
           className="text-lg font-light mb-10"
           style={{ color: "var(--text-muted)", maxWidth: 640, lineHeight: 1.7 }}
         >
-          Nous concevons, déployons et opérons des systèmes multi-agents IA qui
-          automatisent vos flux de travail — du devis à la comptabilité, du contenu
-          au support client.
+          {tr(
+            "Nous concevons, déployons et opérons des systèmes multi-agents IA qui automatisent vos flux de travail — du devis à la comptabilité, du contenu au support client.",
+            "We design, deploy and operate multi-agent AI systems that automate your workflows — from quotes to accounting, from content to customer support."
+          )}
         </p>
         <a
-          href="/contact"
+          href={`/${locale}/contact`}
           data-cursor="link"
           className="inline-flex items-center gap-2 text-[15px] font-medium px-7 py-3.5 rounded-md no-underline transition-all duration-200 hover:opacity-90"
           style={{ background: "var(--gold)", color: "#0a0a0b" }}
         >
-          Discuter de mon projet
+          {tr("Discuter de mon projet", "Discuss my project")}
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
             <path
               d="M2 7h10M7 2l5 5-5 5"
@@ -244,7 +249,7 @@ export default function AgenticAIPage() {
             style={{ color: "var(--gold)" }}
           >
             <span className="block w-4 h-px" style={{ background: "var(--gold)" }} />
-            Concept
+            {tr("Concept", "Concept")}
           </div>
           <h2
             className="font-bold leading-tight mb-10"
@@ -256,7 +261,7 @@ export default function AgenticAIPage() {
               maxWidth: 800,
             }}
           >
-            Pas un chatbot. Une équipe qui travaille pour vous.
+            {tr("Pas un chatbot. Une équipe qui travaille pour vous.", "Not a chatbot. A team that works for you.")}
           </h2>
 
           {/* Illustration 1 — Agent anatomy */}
@@ -329,7 +334,7 @@ export default function AgenticAIPage() {
           style={{ color: "var(--gold)" }}
         >
           <span className="block w-4 h-px" style={{ background: "var(--gold)" }} />
-          Équipes
+          {tr("Équipes", "Teams")}
         </div>
         <h2
           className="font-bold leading-tight mb-4"
@@ -340,7 +345,7 @@ export default function AgenticAIPage() {
             color: "var(--text)",
           }}
         >
-          Choisissez votre équipe.
+          {tr("Choisissez votre équipe.", "Choose your team.")}
         </h2>
         <p
           className="text-[17px] font-light mb-12"
@@ -457,7 +462,7 @@ export default function AgenticAIPage() {
             style={{ color: "var(--gold)" }}
           >
             <span className="block w-4 h-px" style={{ background: "var(--gold)" }} />
-            Process
+            {tr("Process", "Process")}
           </div>
           <h2
             className="font-bold leading-tight mb-10"
@@ -469,7 +474,7 @@ export default function AgenticAIPage() {
               maxWidth: 800,
             }}
           >
-            De votre problème à vos agents opérationnels.
+            {tr("De votre problème à vos agents opérationnels.", "From your problem to agents in production.")}
           </h2>
 
           {/* Illustration 3 — Sans vs Avec agents */}
@@ -536,7 +541,7 @@ export default function AgenticAIPage() {
           style={{ color: "var(--gold)" }}
         >
           <span className="block w-4 h-px" style={{ background: "var(--gold)" }} />
-          Tarification
+          {tr("Tarification", "Pricing")}
         </div>
         <h2
           className="font-bold leading-tight mb-10"
@@ -547,7 +552,7 @@ export default function AgenticAIPage() {
             color: "var(--text)",
           }}
         >
-          Un modèle simple et transparent.
+          {tr("Un modèle simple et transparent.", "A simple, transparent pricing model.")}
         </h2>
 
         {/* Founder offer banner */}
@@ -747,7 +752,7 @@ export default function AgenticAIPage() {
             style={{ color: "var(--gold)" }}
           >
             <span className="block w-4 h-px" style={{ background: "var(--gold)" }} />
-            FAQ
+            {tr("FAQ", "FAQ")}
           </div>
           <h2
             className="font-bold leading-tight mb-12"

@@ -12,24 +12,7 @@ const planLabels: Record<string, string> = {
   enterprise: "Enterprise",
 };
 
-const sectors = [
-  "Comptabilité & Finance",
-  "Artisans & BTP",
-  "Créateurs & Médias",
-  "E-commerce & Retail",
-  "Juridique & RH",
-  "Autre",
-];
-
 const teamSizes = ["1-5", "6-20", "21-50", "50+"];
-
-const sources = [
-  "Recherche Google",
-  "LinkedIn",
-  "Bouche à oreille",
-  "Article / Blog",
-  "Autre",
-];
 
 type Status = "idle" | "loading" | "success" | "error";
 
@@ -47,6 +30,25 @@ function ContactPageInner() {
   const planKey = planParam && planLabels[planParam] ? planParam : null;
   const planLabel = planKey ? planLabels[planKey] : null;
   const tp = useTranslations("pricing");
+  const tc = useTranslations("contactPage");
+  const ts = useTranslations("sectors");
+
+  const sectors = [
+    ts("accounting"),
+    ts("btp"),
+    ts("media"),
+    ts("ecommerce"),
+    ts("legal"),
+    tc("sectorOther"),
+  ];
+
+  const sources = [
+    tc("sources.google"),
+    tc("sources.linkedin"),
+    tc("sources.word"),
+    tc("sources.article"),
+    tc("sources.other"),
+  ];
 
   const [status, setStatus] = useState<Status>("idle");
   const [form, setForm] = useState({
@@ -147,7 +149,7 @@ function ContactPageInner() {
                 className="block w-6 h-px"
                 style={{ background: "var(--gold)" }}
               />
-              Diagnostic gratuit
+              {tc("eyebrow")}
             </div>
             <h1
               className="font-extrabold mb-6"
@@ -159,24 +161,19 @@ function ContactPageInner() {
                 color: "var(--text)",
               }}
             >
-              Diagnostic gratuit.{" "}
-              <span style={{ color: "var(--gold)" }}>30 minutes.</span>
+              {tc("title")}{" "}
+              <span style={{ color: "var(--gold)" }}>{tc("titleGold")}</span>
             </h1>
             <p
               className="text-[17px] font-light mb-10"
               style={{ color: "var(--text-muted)", lineHeight: 1.7, maxWidth: 480 }}
             >
-              On analyse vos flux de travail et on vous dit exactement quels agents
-              IA peuvent automatiser vos tâches — sans jargon technique.
+              {tc("description")}
             </p>
 
             {/* 3 steps */}
             <ol className="space-y-5 mb-10">
-              {[
-                "Vous décrivez vos tâches répétitives",
-                "On identifie les opportunités d'agents IA",
-                "On vous remet un plan d'action concret",
-              ].map((step, i) => (
+              {[tc("step1"), tc("step2"), tc("step3")].map((step, i) => (
                 <li key={step} className="flex items-start gap-4">
                   <span
                     className="shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-[13px] font-bold"
@@ -209,11 +206,7 @@ function ContactPageInner() {
               }}
             >
               <ul className="space-y-2.5">
-                {[
-                  "Aucun engagement après le diagnostic",
-                  "Réponse sous 24h",
-                  "Hébergé en France, données RGPD",
-                ].map((r) => (
+                {[tc("guarantee1"), tc("guarantee2"), tc("guarantee3")].map((r) => (
                   <li
                     key={r}
                     className="flex items-center gap-3 text-sm"
@@ -239,7 +232,7 @@ function ContactPageInner() {
                 className="text-[10px] tracking-widest uppercase mb-1"
                 style={{ color: "var(--text-dim)" }}
               >
-                Contact direct
+                {tc("contactDirect")}
               </div>
               <a
                 href="mailto:contact@nbhc.fr"
@@ -296,7 +289,7 @@ function ContactPageInner() {
                   className="block text-xs mb-1.5 tracking-wide"
                   style={{ color: "var(--text-muted)" }}
                 >
-                  Prénom *
+                  {tc("firstName")} *
                 </label>
                 <input
                   type="text"
@@ -314,7 +307,7 @@ function ContactPageInner() {
                   className="block text-xs mb-1.5 tracking-wide"
                   style={{ color: "var(--text-muted)" }}
                 >
-                  Nom *
+                  {tc("lastName")} *
                 </label>
                 <input
                   type="text"
@@ -334,7 +327,7 @@ function ContactPageInner() {
                 className="block text-xs mb-1.5 tracking-wide"
                 style={{ color: "var(--text-muted)" }}
               >
-                Email professionnel *
+                {tc("proEmail")} *
               </label>
               <input
                 type="email"
@@ -342,7 +335,7 @@ function ContactPageInner() {
                 required
                 value={form.email}
                 onChange={handleChange}
-                placeholder="vous@entreprise.fr"
+                placeholder={tc("emailPh")}
                 style={inputStyle}
                 onFocus={(e) => (e.target.style.borderColor = "var(--gold)")}
                 onBlur={(e) => (e.target.style.borderColor = "var(--border)")}
@@ -354,7 +347,7 @@ function ContactPageInner() {
                 className="block text-xs mb-1.5 tracking-wide"
                 style={{ color: "var(--text-muted)" }}
               >
-                Entreprise *
+                {tc("companyReq")} *
               </label>
               <input
                 type="text"
@@ -374,7 +367,7 @@ function ContactPageInner() {
                   className="block text-xs mb-1.5 tracking-wide"
                   style={{ color: "var(--text-muted)" }}
                 >
-                  Secteur d&apos;activité
+                  {tc("sector")}
                 </label>
                 <select
                   name="secteur"
@@ -394,7 +387,7 @@ function ContactPageInner() {
                   className="block text-xs mb-1.5 tracking-wide"
                   style={{ color: "var(--text-muted)" }}
                 >
-                  Taille d&apos;équipe
+                  {tc("teamSize")}
                 </label>
                 <select
                   name="taille"
@@ -416,7 +409,7 @@ function ContactPageInner() {
                 className="block text-xs mb-1.5 tracking-wide"
                 style={{ color: "var(--text-muted)" }}
               >
-                Ma principale tâche répétitive *
+                {tc("mainTask")} *
               </label>
               <textarea
                 name="tache"
@@ -424,7 +417,7 @@ function ContactPageInner() {
                 value={form.tache}
                 onChange={handleChange}
                 rows={5}
-                placeholder="Ex: Je passe 3h par semaine à faire des devis manuellement et relancer mes clients..."
+                placeholder={tc("mainTaskPh")}
                 style={{ ...inputStyle, resize: "vertical" }}
                 onFocus={(e) => (e.target.style.borderColor = "var(--gold)")}
                 onBlur={(e) => (e.target.style.borderColor = "var(--border)")}
@@ -436,7 +429,7 @@ function ContactPageInner() {
                 className="block text-xs mb-1.5 tracking-wide"
                 style={{ color: "var(--text-muted)" }}
               >
-                Comment vous nous avez trouvés
+                {tc("source")}
               </label>
               <select
                 name="source"
@@ -463,9 +456,7 @@ function ContactPageInner() {
                 border: "none",
               }}
             >
-              {status === "loading"
-                ? "Envoi en cours..."
-                : "Demander mon diagnostic gratuit →"}
+              {status === "loading" ? tc("submitting") : `${tc("submit")} →`}
             </button>
 
             {status === "success" && (
@@ -477,7 +468,7 @@ function ContactPageInner() {
                   border: "1px solid rgba(34,197,94,0.2)",
                 }}
               >
-                Demande reçue. On revient vers vous sous 24h.
+                {tc("success")}
               </p>
             )}
 
@@ -490,7 +481,7 @@ function ContactPageInner() {
                   border: "1px solid rgba(248,113,113,0.2)",
                 }}
               >
-                Erreur, réessayez ou écrivez à{" "}
+                {tc("error")}{" "}
                 <a
                   href="mailto:contact@nbhc.fr"
                   style={{ color: "#f87171", textDecoration: "underline" }}

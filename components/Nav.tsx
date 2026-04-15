@@ -157,20 +157,24 @@ export default function Nav() {
           ))}
         </ul>
 
-        {/* Mobile hamburger */}
-        <button
-          onClick={() => setMenuOpen(true)}
-          data-cursor="link"
-          className="min-[900px]:hidden flex flex-col gap-1.5 p-2 bg-transparent border-none cursor-pointer"
-          aria-label="Menu"
-        >
-          <span className="block w-5 h-0.5" style={{ background: "var(--gold)" }} />
-          <span className="block w-5 h-0.5" style={{ background: "var(--gold)" }} />
-          <span className="block w-5 h-0.5" style={{ background: "var(--gold)" }} />
-        </button>
+        {/* Mobile: LanguageSwitcher + hamburger visible in nav bar */}
+        <div className="flex min-[900px]:hidden items-center gap-3">
+          <LanguageSwitcher size="sm" />
+          <button
+            onClick={() => setMenuOpen(true)}
+            data-cursor="link"
+            className="flex flex-col gap-1.5 p-2 bg-transparent border-none cursor-pointer"
+            aria-label="Menu"
+          >
+            <span className="block w-5 h-0.5" style={{ background: "var(--gold)" }} />
+            <span className="block w-5 h-0.5" style={{ background: "var(--gold)" }} />
+            <span className="block w-5 h-0.5" style={{ background: "var(--gold)" }} />
+          </button>
+        </div>
 
-        <div className="hidden min-[900px]:flex items-center gap-5">
-          <LanguageSwitcher />
+        {/* Desktop: LanguageSwitcher + CTA */}
+        <div className="hidden min-[900px]:flex items-center gap-4">
+          <LanguageSwitcher size="md" />
           <MagneticButton
             href={`/${locale}/contact`}
             data-cursor="link"
