@@ -1,8 +1,16 @@
 "use client";
 
-import { useState, FormEvent } from "react";
+import { useState, FormEvent, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
+import { useTranslations } from "next-intl";
 import Nav from "../../../components/Nav";
 import Footer from "../../../components/Footer";
+
+const planLabels: Record<string, string> = {
+  starter: "Starter",
+  growth: "Growth",
+  enterprise: "Enterprise",
+};
 
 const sectors = [
   "Comptabilité & Finance",
@@ -26,6 +34,20 @@ const sources = [
 type Status = "idle" | "loading" | "success" | "error";
 
 export default function ContactPage() {
+  return (
+    <Suspense fallback={null}>
+      <ContactPageInner />
+    </Suspense>
+  );
+}
+
+function ContactPageInner() {
+  const searchParams = useSearchParams();
+  const planParam = searchParams.get("plan");
+  const planKey = planParam && planLabels[planParam] ? planParam : null;
+  const planLabel = planKey ? planLabels[planKey] : null;
+  const tp = useTranslations("pricing");
+
   const [status, setStatus] = useState<Status>("idle");
   const [form, setForm] = useState({
     prenom: "",
@@ -51,11 +73,12 @@ export default function ContactPage() {
     setStatus("loading");
     try {
       // Map new fields onto existing API contract (nom, email, societe, message, typeProjet)
+      const planPrefix = planLabel ? `[FONDATEUR · ${planLabel}] ` : "";
       const payload = {
         nom: `${form.prenom} ${form.nom}`.trim(),
         email: form.email,
         societe: form.societe,
-        typeProjet: `${form.secteur} · ${form.taille} pers. · via ${form.source}`,
+        typeProjet: `${planPrefix}${form.secteur} · ${form.taille} pers. · via ${form.source}`,
         message: form.tache,
       };
       const res = await fetch("/api/contact", {
@@ -252,6 +275,24 @@ export default function ContactPage() {
               alignSelf: "start",
             }}
           >
+            {planLabel && (
+              <div
+                className="flex items-center gap-2.5 mb-2 px-4 py-3 rounded-md"
+                style={{
+                  background:
+                    "linear-gradient(135deg, rgba(196,151,58,0.12) 0%, rgba(196,151,58,0.04) 100%)",
+                  border: "1px solid rgba(196,151,58,0.35)",
+                }}
+              >
+                <span style={{ fontSize: 18 }}>🎯</span>
+                <span
+                  className="text-[13px] font-semibold"
+                  style={{ color: "var(--gold-light)" }}
+                >
+                  {tp("leadBadge", { plan: planLabel })}
+                </span>
+              </div>
+            )}
             <div className="grid grid-cols-2 gap-4 max-[600px]:grid-cols-1">
               <div>
                 <label

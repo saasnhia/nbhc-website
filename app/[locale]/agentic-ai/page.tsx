@@ -2,11 +2,14 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useLocale, useTranslations } from "next-intl";
 import {
   AgentAnatomyIllustration,
   MultiAgentWorkflowIllustration,
   WithoutVsWithAgentsIllustration,
 } from "../../../components/AgenticIllustrations";
+
+const FOUNDER_SPOTS_LEFT = 10;
 
 const teams = [
   {
@@ -90,23 +93,40 @@ const steps = [
   },
 ];
 
-const plans = [
+type Plan = {
+  key: "starter" | "growth" | "enterprise";
+  name: string;
+  priceOld?: string;
+  priceNew: string;
+  period: string;
+  subtitle?: string;
+  features: string[];
+  recommended: boolean;
+  hasFounderRate: boolean;
+};
+
+const plans: Plan[] = [
   {
+    key: "starter",
     name: "Starter",
-    price: "490€",
+    priceOld: "590€",
+    priceNew: "490€",
     period: "/mois",
     features: [
       "1 équipe d'agents (3-4 agents)",
       "Infrastructure hébergée par NBHC",
-      "10 000 opérations/mois",
+      "5 000 opérations/mois (Mistral Large) · 50 000 (Mistral Small)",
       "Support email",
       "Idéal pour tester",
     ],
     recommended: false,
+    hasFounderRate: true,
   },
   {
+    key: "growth",
     name: "Growth",
-    price: "990€",
+    priceOld: "1 690€",
+    priceNew: "1 290€",
     period: "/mois",
     features: [
       "2 équipes d'agents (6-8 agents)",
@@ -116,10 +136,12 @@ const plans = [
       "Onboarding accompagné",
     ],
     recommended: true,
+    hasFounderRate: true,
   },
   {
+    key: "enterprise",
     name: "Enterprise",
-    price: "Sur devis",
+    priceNew: "Sur devis",
     period: "",
     features: [
       "Équipes illimitées",
@@ -129,6 +151,7 @@ const plans = [
       "Intégrations ERP/CRM",
     ],
     recommended: false,
+    hasFounderRate: false,
   },
 ];
 
@@ -149,6 +172,8 @@ const faq = [
 
 export default function AgenticAIPage() {
   const [openFaq, setOpenFaq] = useState<number | null>(0);
+  const locale = useLocale();
+  const tp = useTranslations("pricing");
 
   return (
     <main style={{ background: "var(--bg)", minHeight: "100vh" }}>
@@ -513,7 +538,7 @@ export default function AgenticAIPage() {
           Tarification
         </div>
         <h2
-          className="font-bold leading-tight mb-16"
+          className="font-bold leading-tight mb-10"
           style={{
             fontFamily: "var(--font-syne)",
             fontSize: "clamp(28px, 4vw, 48px)",
@@ -523,11 +548,45 @@ export default function AgenticAIPage() {
         >
           Un modèle simple et transparent.
         </h2>
+
+        {/* Founder offer banner */}
+        <Link
+          href={`/${locale}/contact`}
+          aria-label={tp("founderBannerAria", { spots: FOUNDER_SPOTS_LEFT })}
+          className="founder-banner group block mb-12 mx-auto"
+          style={{
+            maxWidth: 800,
+            background: "linear-gradient(135deg, #C4973A 0%, #B8862E 100%)",
+            borderRadius: 8,
+            padding: "14px 20px",
+            minHeight: 56,
+            textAlign: "center",
+            cursor: "pointer",
+            transition: "all 0.2s ease-out",
+            boxShadow: "0 4px 16px rgba(196,151,58,0.25)",
+            textDecoration: "none",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <span
+            className="font-semibold"
+            style={{
+              color: "#09090b",
+              fontSize: "clamp(13px, 1.3vw, 15px)",
+              lineHeight: 1.4,
+            }}
+          >
+            {tp("founderBanner", { spots: FOUNDER_SPOTS_LEFT })}
+          </span>
+        </Link>
+
         <div className="grid grid-cols-3 max-[900px]:grid-cols-1 gap-5">
           {plans.map((p) => (
             <div
-              key={p.name}
-              className="p-9 relative"
+              key={p.key}
+              className="p-9 relative flex flex-col"
               style={{
                 background: p.recommended ? "var(--card-hover)" : "var(--card)",
                 border: p.recommended
@@ -539,10 +598,7 @@ export default function AgenticAIPage() {
               {p.recommended && (
                 <span
                   className="absolute -top-3 left-1/2 -translate-x-1/2 text-[10px] font-bold px-3 py-1 rounded-full tracking-widest uppercase"
-                  style={{
-                    background: "var(--gold)",
-                    color: "#0a0a0b",
-                  }}
+                  style={{ background: "var(--gold)", color: "#0a0a0b" }}
                 >
                   Recommandé
                 </span>
@@ -553,16 +609,32 @@ export default function AgenticAIPage() {
               >
                 {p.name}
               </div>
+
+              {p.hasFounderRate && (
+                <span
+                  className="inline-block text-[10px] font-bold px-2 py-0.5 rounded mb-2 tracking-widest uppercase w-fit"
+                  style={{
+                    background: "rgba(196,151,58,0.15)",
+                    color: "var(--gold)",
+                    border: "1px solid rgba(196,151,58,0.4)",
+                  }}
+                >
+                  {tp("founderBadge")}
+                </span>
+              )}
+
               <div
-                className="font-extrabold mb-6"
+                className="font-extrabold mb-1"
                 style={{
                   fontFamily: "var(--font-syne)",
                   color: "var(--text)",
                   letterSpacing: "-1.5px",
-                  fontSize: "clamp(28px, 3vw, 40px)",
+                  fontSize: "clamp(28px, 3.5vw, 42px)",
+                  lineHeight: 1,
+                  whiteSpace: "nowrap",
                 }}
               >
-                {p.price}
+                {p.priceNew}
                 <span
                   className="text-sm font-normal"
                   style={{ color: "var(--text-dim)" }}
@@ -570,7 +642,39 @@ export default function AgenticAIPage() {
                   {p.period}
                 </span>
               </div>
-              <ul className="space-y-3 mb-6">
+
+              {p.priceOld && (
+                <div
+                  className="text-xs mb-1"
+                  style={{
+                    color: "var(--text-dim)",
+                    textDecoration: "line-through",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  {p.priceOld}{p.period}
+                </div>
+              )}
+
+              {p.hasFounderRate && (
+                <div
+                  className="text-[11px] mb-5"
+                  style={{ color: "var(--gold)", opacity: 0.8 }}
+                >
+                  {tp("lifetimeLocked")}
+                </div>
+              )}
+
+              {p.key === "enterprise" && (
+                <div
+                  className="text-[12px] mb-5"
+                  style={{ color: "var(--text-dim)" }}
+                >
+                  {tp("enterpriseFrom")}
+                </div>
+              )}
+
+              <ul className="space-y-3 mb-6 flex-1">
                 {p.features.map((f) => (
                   <li
                     key={f}
@@ -582,16 +686,49 @@ export default function AgenticAIPage() {
                   </li>
                 ))}
               </ul>
+
+              <Link
+                href={`/${locale}/contact?plan=${p.key}`}
+                data-cursor="link"
+                className="inline-flex items-center justify-center gap-1.5 text-[14px] font-semibold px-5 py-3 rounded-md no-underline transition-all duration-200 hover:opacity-90 mt-auto"
+                style={{
+                  background: p.recommended ? "var(--gold)" : "var(--gold-dim)",
+                  color: p.recommended ? "#0a0a0b" : "var(--gold-light)",
+                  border: p.recommended ? "none" : "1px solid var(--gold-border)",
+                }}
+              >
+                {p.key === "enterprise" ? tp("ctaEnterprise") : tp("ctaButton")}
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                  <path
+                    d="M2 7h10M7 2l5 5-5 5"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </Link>
             </div>
           ))}
         </div>
         <p
           className="text-sm font-light text-center mt-10"
-          style={{ color: "var(--text-dim)", maxWidth: 600, margin: "40px auto 0" }}
+          style={{ color: "var(--text-dim)", maxWidth: 640, margin: "40px auto 0", lineHeight: 1.6 }}
         >
-          Chaque projet commence par un diagnostic gratuit de 30 minutes. Aucun
-          engagement avant validation du périmètre.
+          {tp("note")}
         </p>
+        <style jsx>{`
+          .founder-banner:hover {
+            background: linear-gradient(135deg, #d1a947 0%, #c4973a 100%) !important;
+            transform: scale(1.01);
+            box-shadow: 0 8px 28px rgba(196,151,58,0.4);
+          }
+          @media (max-width: 768px) {
+            .founder-banner {
+              padding: 14px 16px !important;
+            }
+          }
+        `}</style>
       </section>
 
       {/* SECTION 6 — FAQ */}

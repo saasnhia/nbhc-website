@@ -179,6 +179,17 @@
       "other": "Other"
     }
   },
+  "pricing": {
+    "founderBanner": "🎯 Founder offer — Lifetime locked price for the first 10 clients · {spots} spots left →",
+    "founderBannerAria": "Book my Founder spot — {spots} spots available",
+    "founderBadge": "FOUNDER PRICE",
+    "lifetimeLocked": "Lifetime locked price · No commitment",
+    "note": "Each project starts with a free 30-minute diagnostic. The Founder offer locks your current rate for life as long as you stay subscribed. 10 spots limited — first come, first served.",
+    "enterpriseFrom": "Starting from 3,500€/month",
+    "ctaButton": "Get started",
+    "ctaEnterprise": "Contact us",
+    "leadBadge": "Request for {plan} plan — Founder Rate"
+  },
   "contactPage": {
     "eyebrow": "Free diagnostic",
     "title": "Free diagnostic.",

@@ -179,6 +179,17 @@
       "other": "Autre"
     }
   },
+  "pricing": {
+    "founderBanner": "🎯 Offre Fondateur — Prix bloqué à vie pour les 10 premiers clients · Plus que {spots} places →",
+    "founderBannerAria": "Réserver ma place Fondateur — {spots} places disponibles",
+    "founderBadge": "TARIF FONDATEUR",
+    "lifetimeLocked": "Prix bloqué à vie · Sans engagement",
+    "note": "Chaque projet commence par un diagnostic gratuit de 30 minutes. L'offre Fondateur garantit votre tarif actuel à vie tant que vous restez abonné. 10 places limitées — réservées en ordre d'arrivée.",
+    "enterpriseFrom": "À partir de 3 500€/mois",
+    "ctaButton": "Démarrer",
+    "ctaEnterprise": "Nous contacter",
+    "leadBadge": "Demande pour le plan {plan} — Tarif Fondateur"
+  },
   "contactPage": {
     "eyebrow": "Diagnostic gratuit",
     "title": "Diagnostic gratuit.",

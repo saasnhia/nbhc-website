@@ -48,10 +48,19 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    // Detect Founder-plan leads from the typeProjet prefix added by the contact form
+    const founderMatch =
+      typeof typeProjet === "string"
+        ? typeProjet.match(/\[FONDATEUR · (Starter|Growth|Enterprise)\]/)
+        : null;
+    const subject = founderMatch
+      ? `[NBHC] Nouveau lead Fondateur — Plan ${founderMatch[1]}`
+      : `[NBHC] Nouveau contact — ${typeProjet || "Non spécifié"}`;
+
     await resend.emails.send({
       from: "NBHC Contact <contact@nbhc.fr>",
       to: "contact@nbhc.fr",
-      subject: `[NBHC] Nouveau contact — ${typeProjet || "Non spécifié"}`,
+      subject,
       html: `
         <div style="font-family: -apple-system, sans-serif; max-width: 600px; margin: 0 auto; padding: 32px; background: #0f0f11; color: #f0ede6; border-radius: 12px;">
           <h2 style="color: #C4973A; margin-bottom: 24px; font-size: 20px;">Nouveau message depuis nbhc.fr</h2>
