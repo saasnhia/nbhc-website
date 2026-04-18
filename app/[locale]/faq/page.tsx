@@ -4,6 +4,8 @@ import { useState } from "react";
 import Link from "next/link";
 import { useLocale } from "next-intl";
 import Logo from "../../../components/Logo";
+import JsonLd from "../../../components/JsonLd";
+import { faqPageSchema, breadcrumbSchema } from "../../../lib/schema";
 
 const faqFr = [
   { question: "Combien coute une solution IA sur mesure ?", answer: "Chaque projet est unique. Nos tarifs dependent de la complexite, du perimetre fonctionnel et du delai. Un MVP SaaS demarre generalement entre 5 000 \u20ac et 15 000 \u20ac. Nous fournissons un chiffrage detaille sous 48h apres votre premier echange." },
@@ -151,6 +153,19 @@ export default function FAQPage() {
           </div>
         ))}
       </div>
+
+      <JsonLd
+        data={[
+          faqPageSchema(faqItems),
+          breadcrumbSchema([
+            {
+              name: locale === "en" ? "Home" : "Accueil",
+              url: `https://nbhc.fr/${locale}`,
+            },
+            { name: "FAQ", url: `https://nbhc.fr/${locale}/faq` },
+          ]),
+        ]}
+      />
     </main>
   );
 }

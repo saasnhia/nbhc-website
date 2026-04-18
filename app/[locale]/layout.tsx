@@ -5,7 +5,13 @@ import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import "../globals.css";
 import AppShell from "../../components/AppShell";
+import JsonLd from "../../components/JsonLd";
 import { routing } from "../../i18n/routing";
+import {
+  organizationSchema,
+  websiteSchema,
+  professionalServiceSchema,
+} from "../../lib/schema";
 
 const syne = Syne({
   variable: "--font-syne",
@@ -73,15 +79,30 @@ export async function generateMetadata({
       shortcut: "/favicon.svg",
       apple: "/apple-touch-icon.svg",
     },
-    robots: { index: true, follow: true },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+        "max-video-preview": -1,
+      },
+    },
     alternates: {
       canonical: `https://nbhc.fr/${locale}`,
       languages: {
-        fr: "https://nbhc.fr/fr",
-        en: "https://nbhc.fr/en",
+        "fr-FR": "https://nbhc.fr/fr",
+        "en-US": "https://nbhc.fr/en",
+        "x-default": "https://nbhc.fr/fr",
       },
     },
     metadataBase: new URL("https://nbhc.fr"),
+    authors: [{ name: "NBHC", url: "https://nbhc.fr" }],
+    creator: "NBHC",
+    publisher: "NBHC",
+    category: "technology",
   };
 }
 
@@ -103,6 +124,13 @@ export default async function LocaleLayout({
   return (
     <html lang={locale} className={`${syne.variable} ${dmSans.variable}`}>
       <body>
+        <JsonLd
+          data={[
+            organizationSchema(),
+            websiteSchema(locale as "fr" | "en"),
+            professionalServiceSchema(),
+          ]}
+        />
         <NextIntlClientProvider>
           <AppShell>{children}</AppShell>
         </NextIntlClientProvider>

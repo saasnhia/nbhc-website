@@ -4,6 +4,12 @@ import path from "path";
 import matter from "gray-matter";
 import Link from "next/link";
 import Logo from "../../../../components/Logo";
+import JsonLd from "../../../../components/JsonLd";
+import {
+  blogPostingSchema,
+  breadcrumbSchema,
+  localeCanonical,
+} from "../../../../lib/schema";
 
 const contentDir = path.join(process.cwd(), "content", "blog");
 
@@ -164,24 +170,48 @@ export function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ locale: string; slug: string }>;
 }): Promise<Metadata> {
-  const { slug } = await params;
+  const { locale, slug } = await params;
   const post = getPost(slug);
+  const isFr = locale === "fr";
   return {
     title: `${post.title} — NBHC`,
     description: post.description,
+    keywords: post.tags,
+    alternates: localeCanonical(locale, `/blog/${slug}`),
+    openGraph: {
+      title: post.title,
+      description: post.description,
+      url: `https://nbhc.fr/${locale}/blog/${slug}`,
+      type: "article",
+      siteName: "NBHC",
+      locale: isFr ? "fr_FR" : "en_US",
+      publishedTime: post.date,
+      authors: ["NBHC"],
+      tags: post.tags,
+      images: [{ url: "https://nbhc.fr/og-image.png", width: 1200, height: 630, alt: post.title }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.description,
+      images: ["https://nbhc.fr/og-image.png"],
+    },
   };
 }
 
 export default async function BlogPostPage({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ locale: string; slug: string }>;
 }) {
-  const { slug } = await params;
+  const { locale, slug } = await params;
   const post = getPost(slug);
   const htmlContent = renderMarkdown(post.content);
+  const postUrl = `https://nbhc.fr/${locale}/blog/${slug}`;
+  const blogIndexUrl = `https://nbhc.fr/${locale}/blog`;
+  const homeUrl = `https://nbhc.fr/${locale}`;
 
   return (
     <main
@@ -258,6 +288,24 @@ export default async function BlogPostPage({
       </div>
 
       <article dangerouslySetInnerHTML={{ __html: htmlContent }} />
+
+      <JsonLd
+        data={[
+          blogPostingSchema({
+            title: post.title,
+            description: post.description,
+            datePublished: post.date,
+            url: postUrl,
+            tags: post.tags,
+            locale: locale as "fr" | "en",
+          }),
+          breadcrumbSchema([
+            { name: locale === "en" ? "Home" : "Accueil", url: homeUrl },
+            { name: "Blog", url: blogIndexUrl },
+            { name: post.title, url: postUrl },
+          ]),
+        ]}
+      />
     </main>
   );
 }

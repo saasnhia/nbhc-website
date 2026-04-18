@@ -40,3 +40,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 .design-references/
+
+# SEO audit report (local only)
+SEO-AUDIT-REPORT.md

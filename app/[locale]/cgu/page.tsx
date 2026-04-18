@@ -1,12 +1,24 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Logo from "../../../components/Logo";
+import { localeCanonical } from "../../../lib/schema";
 
-export const metadata: Metadata = {
-  title: "Conditions Generales d'Utilisation — NBHC",
-  description:
-    "CGU des plateformes SaaS editees par NBHC — conditions d'acces et d'utilisation.",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const isFr = locale === "fr";
+  return {
+    title: isFr ? "Conditions Générales d'Utilisation — NBHC" : "Terms of Use — NBHC",
+    description: isFr
+      ? "CGU des plateformes SaaS éditées par NBHC — conditions d'accès et d'utilisation."
+      : "Terms of Use for the SaaS platforms published by NBHC — access and usage conditions.",
+    alternates: localeCanonical(locale, "/cgu"),
+    robots: { index: true, follow: true },
+  };
+}
 
 export default function CGU() {
   return (

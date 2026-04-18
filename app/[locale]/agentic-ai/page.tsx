@@ -8,6 +8,12 @@ import {
   MultiAgentWorkflowIllustration,
   WithoutVsWithAgentsIllustration,
 } from "../../../components/AgenticIllustrations";
+import JsonLd from "../../../components/JsonLd";
+import {
+  serviceSchema,
+  faqPageSchema,
+  breadcrumbSchema,
+} from "../../../lib/schema";
 
 const FOUNDER_SPOTS_LEFT = 10;
 
@@ -867,6 +873,45 @@ export default function AgenticAIPage() {
           </Link>
         </div>
       </section>
+
+      <JsonLd
+        data={[
+          serviceSchema(locale as "fr" | "en", [
+            {
+              name: "Starter",
+              price: "490",
+              description:
+                "1 équipe d'agents (3-4 agents), infrastructure hébergée par NBHC, 5 000 opérations/mois Mistral Large, support email.",
+              url: `https://nbhc.fr/${locale}/contact?plan=starter`,
+            },
+            {
+              name: "Growth",
+              price: "1290",
+              description:
+                "2 équipes d'agents (6-8 agents), infrastructure dédiée, 50 000 opérations/mois, support prioritaire + 1 call mensuel, onboarding accompagné.",
+              url: `https://nbhc.fr/${locale}/contact?plan=growth`,
+            },
+            {
+              name: "Enterprise",
+              price: "0",
+              description:
+                "Équipes illimitées, agents sur mesure, infrastructure on-premise possible, SLA 99.9%, support dédié, intégrations ERP/CRM.",
+              url: `https://nbhc.fr/${locale}/contact?plan=enterprise`,
+            },
+          ]),
+          faqPageSchema(faq.map((f) => ({ question: f.q, answer: f.a }))),
+          breadcrumbSchema([
+            {
+              name: locale === "en" ? "Home" : "Accueil",
+              url: `https://nbhc.fr/${locale}`,
+            },
+            {
+              name: "Agentic AI",
+              url: `https://nbhc.fr/${locale}/agentic-ai`,
+            },
+          ]),
+        ]}
+      />
     </main>
   );
 }

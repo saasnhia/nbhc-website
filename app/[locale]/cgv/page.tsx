@@ -1,12 +1,24 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Logo from "../../../components/Logo";
+import { localeCanonical } from "../../../lib/schema";
 
-export const metadata: Metadata = {
-  title: "Conditions Generales de Vente — NBHC",
-  description:
-    "CGV des services SaaS edites par NBHC — Vlogyz, Devizly, Worthifast.",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const isFr = locale === "fr";
+  return {
+    title: isFr ? "Conditions Générales de Vente — NBHC" : "Terms of Sale — NBHC",
+    description: isFr
+      ? "CGV des services SaaS et prestations édités par NBHC — Vlogyz, Devizly, Worthifast et agents IA sur mesure."
+      : "Terms of Sale for SaaS services and custom engagements by NBHC — Vlogyz, Devizly, Worthifast and custom AI agents.",
+    alternates: localeCanonical(locale, "/cgv"),
+    robots: { index: true, follow: true },
+  };
+}
 
 export default function CGV() {
   return (

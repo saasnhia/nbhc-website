@@ -1,12 +1,24 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Logo from "../../../components/Logo";
+import { localeCanonical } from "../../../lib/schema";
 
-export const metadata: Metadata = {
-  title: "Mentions legales — NBHC",
-  description:
-    "Mentions legales du site nbhc.fr — SAS NBHC, studio IA & automatisation.",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const isFr = locale === "fr";
+  return {
+    title: isFr ? "Mentions légales — NBHC" : "Legal notice — NBHC",
+    description: isFr
+      ? "Mentions légales du site nbhc.fr — SAS NBHC (SIREN 102 637 899), studio IA & automatisation basé en France."
+      : "Legal notice for nbhc.fr — SAS NBHC (SIREN 102 637 899), France-based AI & automation studio.",
+    alternates: localeCanonical(locale, "/mentions-legales"),
+    robots: { index: true, follow: true },
+  };
+}
 
 export default function MentionsLegales() {
   return (

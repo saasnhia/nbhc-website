@@ -1,12 +1,24 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Logo from "../../../components/Logo";
+import { localeCanonical } from "../../../lib/schema";
 
-export const metadata: Metadata = {
-  title: "Politique de confidentialite — NBHC",
-  description:
-    "Politique de confidentialite et protection des donnees personnelles — NBHC.",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const isFr = locale === "fr";
+  return {
+    title: isFr ? "Politique de confidentialité — NBHC" : "Privacy policy — NBHC",
+    description: isFr
+      ? "Protection des données personnelles, RGPD, cookies — NBHC. Données hébergées en Europe, traitement IA via Mistral AI (France)."
+      : "Personal data protection, GDPR, cookies — NBHC. Data hosted in Europe, AI processing via Mistral AI (France).",
+    alternates: localeCanonical(locale, "/politique-confidentialite"),
+    robots: { index: true, follow: true },
+  };
+}
 
 export default function PolitiqueConfidentialite() {
   return (

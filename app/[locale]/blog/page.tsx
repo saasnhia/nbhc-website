@@ -4,12 +4,43 @@ import path from "path";
 import matter from "gray-matter";
 import Link from "next/link";
 import Logo from "../../../components/Logo";
+import { localeCanonical } from "../../../lib/schema";
 
-export const metadata: Metadata = {
-  title: "Blog — NBHC Studio IA & Automatisation",
-  description:
-    "Articles sur l'IA, l'automatisation et nos produits SaaS.",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const isFr = locale === "fr";
+  const title = isFr
+    ? "Blog IA & automatisation — NBHC Studio"
+    : "AI & automation blog — NBHC Studio";
+  const description = isFr
+    ? "Articles, retours d'expérience et guides pratiques sur l'IA, les agents autonomes, l'automatisation des TPE/PME et nos SaaS (Worthifast, Devizly, Vlogyz)."
+    : "Articles, case studies and practical guides on AI, autonomous agents, SME automation and our SaaS products (Worthifast, Devizly, Vlogyz).";
+
+  return {
+    title,
+    description,
+    alternates: localeCanonical(locale, "/blog"),
+    openGraph: {
+      title,
+      description,
+      url: `https://nbhc.fr/${locale}/blog`,
+      type: "website",
+      siteName: "NBHC",
+      locale: isFr ? "fr_FR" : "en_US",
+      images: [{ url: "https://nbhc.fr/og-image.png", width: 1200, height: 630, alt: "NBHC Blog" }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: ["https://nbhc.fr/og-image.png"],
+    },
+  };
+}
 
 interface BlogPost {
   slug: string;
