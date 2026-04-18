@@ -116,7 +116,7 @@ function ContactPageInner() {
     border: "1px solid var(--border)",
     borderRadius: "var(--radius-sm)",
     color: "var(--text)",
-    fontSize: 14,
+    fontSize: 16,
     fontFamily: "inherit",
     outline: "none",
     transition: "border-color 0.2s",

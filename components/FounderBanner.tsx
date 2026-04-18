@@ -5,7 +5,6 @@ import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
 
-const FOUNDER_SPOTS_LEFT = 10;
 const STORAGE_KEY = "nbhc-founder-banner-closed";
 
 export default function FounderBanner() {
@@ -56,9 +55,7 @@ export default function FounderBanner() {
     ? `/${locale}/agentic-ai#pricing`
     : `/${locale}/agentic-ai#pricing`;
 
-  const text = isMobile
-    ? t("textShort", { spots: FOUNDER_SPOTS_LEFT })
-    : t("text", { spots: FOUNDER_SPOTS_LEFT });
+  const text = isMobile ? t("textShort") : t("text");
 
   return (
     <div

@@ -180,8 +180,8 @@
     }
   },
   "globalBanner": {
-    "text": "🎯 Founder offer — Lifetime locked price for the first 10 clients · {spots} spots left →",
-    "textShort": "🎯 Founder offer — {spots} spots →",
+    "text": "🎯 Founder offer — Lifetime locked price →",
+    "textShort": "🎯 Founder offer — Lifetime locked price →",
     "close": "Close"
   },
   "pricing": {

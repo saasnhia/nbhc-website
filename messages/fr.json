@@ -180,8 +180,8 @@
     }
   },
   "globalBanner": {
-    "text": "🎯 Offre Fondateur — Prix bloqué à vie pour les 10 premiers clients · Plus que {spots} places →",
-    "textShort": "🎯 Offre Fondateur — {spots} places →",
+    "text": "🎯 Offre Fondateur — Prix bloqué à vie →",
+    "textShort": "🎯 Offre Fondateur — Prix bloqué à vie →",
     "close": "Fermer"
   },
   "pricing": {
