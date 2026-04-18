@@ -1,0 +1,36 @@
+# NBHC — Studio IA & Automatisation
+
+> NBHC est un studio IA français (SAS, SIREN 102 637 899) basé à Saint-Rémy, France. Nous concevons, déployons et opérons des équipes d'agents IA sur mesure pour les TPE, PME et indépendants. Données hébergées en France, conformité RGPD.
+
+## Produits SaaS
+
+- [Vlogyz](https://vlogyz.vercel.app): Montage vidéo IA automatisé. Alternative française à CapCut. Transcription Whisper, coupes intelligentes, sous-titres karaoké, score viralité. Stack: Next.js, Groq Whisper, Mistral, Remotion, FFmpeg.
+- [Devizly](https://devizly.fr): Générateur de devis et factures IA pour artisans et freelances français. Conforme Factur-X, signature électronique, encaissement Stripe, intégration Pennylane. Stack: Next.js, Mistral, Supabase, Stripe.
+- Worthifast (en développement): Automatisation comptable IA pour cabinets. Agents FEC, anomalies, TVA CA3, rapprochement bancaire. Stack: Next.js, Mistral, Supabase, PostgreSQL.
+
+## Services (Agentic AI as a Service)
+
+NBHC propose des équipes d'agents IA sur mesure déployées dans l'entreprise du client :
+- Starter: 490€/mois (offre Fondateur) — 1 équipe de 3-4 agents, 5 000 opérations/mois
+- Growth: 1 290€/mois (offre Fondateur) — 2 équipes de 6-8 agents, 50 000 opérations/mois
+- Enterprise: sur devis à partir de 3 500€/mois — équipes illimitées, on-premise possible, SLA 99.9%
+
+## Secteurs ciblés
+
+Comptabilité et cabinets d'expertise, BTP et artisans, création de contenu vidéo, e-commerce, santé, immobilier.
+
+## Contact
+
+- Site: https://nbhc.fr
+- Email: contact@nbhc.fr
+- Fondateur: Nhia (Haroun CHIKH)
+- LinkedIn: https://www.linkedin.com/company/nbhc-fr
+
+## Pages principales
+
+- https://nbhc.fr/fr — Accueil (français)
+- https://nbhc.fr/en — Home (English)
+- https://nbhc.fr/fr/agentic-ai — Offre Agentic AI as a Service + tarifs
+- https://nbhc.fr/fr/contact — Diagnostic gratuit 30 minutes
+- https://nbhc.fr/fr/blog — Articles IA & automatisation
+- https://nbhc.fr/fr/faq — Questions fréquentes
