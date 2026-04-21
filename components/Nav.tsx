@@ -252,10 +252,11 @@ export default function Nav() {
     <>
       <nav
         ref={navRef}
-        className="fixed left-0 right-0 z-100 flex items-center justify-between px-10 max-[900px]:px-5"
+        className="fixed left-0 right-0 flex items-center justify-between px-10 max-[900px]:px-5"
         style={{
           top: "var(--banner-h, 0px)",
           height: 64,
+          zIndex: 100,
           background: "rgba(9,9,11,0.85)",
           backdropFilter: "blur(20px)",
           borderBottom: "1px solid var(--border)",
