@@ -1,3 +1,4 @@
+// cache-bust v2 — force Vercel rebuild + CDN invalidation
 import type { Metadata } from "next";
 import { Syne, DM_Sans } from "next/font/google";
 import { notFound } from "next/navigation";

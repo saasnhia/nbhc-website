@@ -8,6 +8,14 @@ const nextConfig: NextConfig = {
   turbopack: {
     root: process.cwd(),
   },
+  async headers() {
+    return [
+      {
+        source: "/:path*",
+        headers: [{ key: "X-DNS-Prefetch-Control", value: "on" }],
+      },
+    ];
+  },
 };
 
 export default withNextIntl(nextConfig);
