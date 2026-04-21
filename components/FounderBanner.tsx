@@ -66,10 +66,11 @@ export default function FounderBanner() {
         top: 0,
         left: 0,
         right: 0,
-        zIndex: 110,
+        zIndex: 50,
         background: "linear-gradient(135deg, #C4973A 0%, #B8862E 100%)",
         transition: "background 0.2s",
         height: 40,
+        overflow: "hidden",
       }}
     >
       <Link
