@@ -1,6 +1,8 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useTranslations, useLocale } from "next-intl";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -10,6 +12,10 @@ import LanguageSwitcher from "./LanguageSwitcher";
 
 gsap.registerPlugin(ScrollTrigger);
 
+type ScrollLink = { kind: "scroll"; id: string; label: string };
+type PageLink = { kind: "page"; href: string; label: string };
+type NavLink = ScrollLink | PageLink;
+
 export default function Nav() {
   const [activeSection, setActiveSection] = useState("");
   const [menuOpen, setMenuOpen] = useState(false);
@@ -18,13 +24,17 @@ export default function Nav() {
   const tlRef = useRef<gsap.core.Timeline | null>(null);
   const t = useTranslations("nav");
   const locale = useLocale();
+  const pathname = usePathname();
 
-  const links = [
-    { href: `/${locale}#how-it-works`, label: t("howItWorks") },
-    { href: `/${locale}#produits`, label: t("proof") },
-    { href: `/${locale}#secteurs`, label: t("sectors") },
-    { href: `/${locale}/agentic-ai`, label: t("aaas") },
-    { href: `/${locale}/blog`, label: t("blog") },
+  const homePath = `/${locale}`;
+  const isOnHome = pathname === homePath || pathname === `${homePath}/`;
+
+  const links: NavLink[] = [
+    { kind: "scroll", id: "how-it-works", label: t("howItWorks") },
+    { kind: "scroll", id: "produits", label: t("proof") },
+    { kind: "scroll", id: "secteurs", label: t("sectors") },
+    { kind: "page", href: `/${locale}/agentic-ai`, label: t("aaas") },
+    { kind: "page", href: `/${locale}/blog`, label: t("blog") },
   ];
 
   useEffect(() => {
@@ -115,6 +125,129 @@ export default function Nav() {
     });
   }, []);
 
+  const scrollToSection = useCallback(
+    (id: string, afterClose?: boolean) => {
+      const doScroll = () => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        const bannerH =
+          parseInt(
+            getComputedStyle(document.documentElement).getPropertyValue(
+              "--banner-h"
+            )
+          ) || 0;
+        const navH = 64;
+        const offset = bannerH + navH + 8;
+        const y = el.getBoundingClientRect().top + window.scrollY - offset;
+        window.scrollTo({ top: y, behavior: "smooth" });
+      };
+
+      if (afterClose) {
+        // Wait for mobile overlay to close so body scroll is re-enabled
+        setTimeout(doScroll, 450);
+      } else {
+        doScroll();
+      }
+    },
+    []
+  );
+
+  const handleScrollClick = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    id: string,
+    fromMobile = false
+  ) => {
+    if (isOnHome) {
+      e.preventDefault();
+      if (fromMobile) {
+        closeMenu();
+        scrollToSection(id, true);
+      } else {
+        scrollToSection(id);
+      }
+    } else if (fromMobile) {
+      // Let navigation happen to /fr#id, but still close the menu
+      closeMenu();
+    }
+  };
+
+  const renderDesktopLink = (l: NavLink) => {
+    if (l.kind === "scroll") {
+      const href = isOnHome ? `#${l.id}` : `${homePath}#${l.id}`;
+      return (
+        <li key={`scroll-${l.id}`}>
+          <a
+            href={href}
+            onClick={(e) => handleScrollClick(e, l.id)}
+            data-cursor="link"
+            className="text-sm no-underline transition-colors duration-200"
+            style={{
+              color:
+                activeSection === l.id
+                  ? "var(--text)"
+                  : "var(--text-muted)",
+            }}
+          >
+            {l.label}
+          </a>
+        </li>
+      );
+    }
+    return (
+      <li key={`page-${l.href}`}>
+        <Link
+          href={l.href}
+          data-cursor="link"
+          className="text-sm no-underline transition-colors duration-200"
+          style={{ color: "var(--text-muted)" }}
+        >
+          {l.label}
+        </Link>
+      </li>
+    );
+  };
+
+  const renderMobileLink = (l: NavLink) => {
+    const style = {
+      fontFamily: "var(--font-syne)",
+      fontWeight: 700,
+      fontSize: 48,
+      color: "var(--text)",
+      letterSpacing: "-2px",
+      lineHeight: 1.1,
+    };
+
+    if (l.kind === "scroll") {
+      const href = isOnHome ? `#${l.id}` : `${homePath}#${l.id}`;
+      return (
+        <a
+          key={`m-scroll-${l.id}`}
+          href={href}
+          data-mobile-link
+          data-cursor="link"
+          onClick={(e) => handleScrollClick(e, l.id, true)}
+          className="no-underline block"
+          style={style}
+        >
+          {l.label}
+        </a>
+      );
+    }
+    return (
+      <Link
+        key={`m-page-${l.href}`}
+        href={l.href}
+        data-mobile-link
+        data-cursor="link"
+        onClick={closeMenu}
+        className="no-underline block"
+        style={style}
+      >
+        {l.label}
+      </Link>
+    );
+  };
+
   return (
     <>
       <nav
@@ -129,32 +262,16 @@ export default function Nav() {
           transition: "top 0.2s, background 0.3s, border-color 0.3s, backdrop-filter 0.3s",
         }}
       >
-        <a
+        <Link
           href={`/${locale}`}
           data-cursor="link"
           className="no-underline flex items-center"
         >
           <Logo variant="nav" />
-        </a>
+        </Link>
 
         <ul className="hidden min-[900px]:flex items-center gap-8 list-none">
-          {links.map((l) => (
-            <li key={l.href}>
-              <a
-                href={l.href}
-                data-cursor="link"
-                className="text-sm no-underline transition-colors duration-200"
-                style={{
-                  color:
-                    activeSection === l.href.slice(1)
-                      ? "var(--text)"
-                      : "var(--text-muted)",
-                }}
-              >
-                {l.label}
-              </a>
-            </li>
-          ))}
+          {links.map(renderDesktopLink)}
         </ul>
 
         {/* Mobile: LanguageSwitcher + hamburger visible in nav bar */}
@@ -230,27 +347,8 @@ export default function Nav() {
           </div>
 
           <div className="flex flex-col gap-6">
-            {links.map((l) => (
-              <a
-                key={l.href}
-                href={l.href}
-                data-mobile-link
-                data-cursor="link"
-                onClick={closeMenu}
-                className="no-underline block"
-                style={{
-                  fontFamily: "var(--font-syne)",
-                  fontWeight: 700,
-                  fontSize: 48,
-                  color: "var(--text)",
-                  letterSpacing: "-2px",
-                  lineHeight: 1.1,
-                }}
-              >
-                {l.label}
-              </a>
-            ))}
-            <a
+            {links.map(renderMobileLink)}
+            <Link
               href={`/${locale}/contact`}
               data-mobile-link
               data-cursor="link"
@@ -266,7 +364,7 @@ export default function Nav() {
               }}
             >
               {t("cta")}
-            </a>
+            </Link>
           </div>
         </div>
       )}
