@@ -260,6 +260,8 @@ export default function Nav() {
           backdropFilter: "blur(20px)",
           borderBottom: "1px solid var(--border)",
           transition: "top 0.2s, background 0.3s, border-color 0.3s, backdrop-filter 0.3s",
+          isolation: "isolate",
+          pointerEvents: "auto",
         }}
       >
         <Link

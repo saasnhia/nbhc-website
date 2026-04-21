@@ -105,6 +105,12 @@ section, nav, footer, main {
   z-index: 1;
 }
 
+/* Main must NOT create a stacking context, or fixed Nav gets trapped
+   inside main (z:1) and overlays like FounderBanner/Loader paint on top. */
+main {
+  z-index: auto;
+}
+
 /* Scrollbar */
 ::-webkit-scrollbar {
   width: 6px;

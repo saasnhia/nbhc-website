@@ -46,6 +46,7 @@ export default function Loader({ onComplete }: LoaderProps) {
         alignItems: 'center',
         justifyContent: 'center',
         gap: '12px',
+        pointerEvents: 'none',
       }}
     >
       <div
