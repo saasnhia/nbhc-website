@@ -250,6 +250,33 @@ export default function Nav() {
 
   return (
     <>
+      {/* DEBUG: remove after hydration test in prod */}
+      <button
+        type="button"
+        onClick={() => {
+          // eslint-disable-next-line no-alert
+          alert("JS works! Hydration OK.");
+          // eslint-disable-next-line no-console
+          console.log("[debug] test button clicked", { locale, pathname, isOnHome });
+        }}
+        style={{
+          position: "fixed",
+          bottom: 20,
+          right: 20,
+          zIndex: 99999,
+          padding: "10px 20px",
+          background: "red",
+          color: "white",
+          border: "none",
+          borderRadius: 8,
+          cursor: "pointer",
+          fontWeight: 700,
+          fontFamily: "system-ui, sans-serif",
+          boxShadow: "0 4px 12px rgba(0,0,0,0.4)",
+        }}
+      >
+        TEST JS
+      </button>
       <nav
         ref={navRef}
         className="fixed left-0 right-0 z-100 flex items-center justify-between px-10 max-[900px]:px-5"
