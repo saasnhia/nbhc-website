@@ -118,7 +118,7 @@ export default function Hero() {
           className="font-extrabold mb-5"
           style={{
             fontFamily: "var(--font-syne)",
-            fontSize: "clamp(26px, 4.2vw, 52px)",
+            fontSize: "clamp(32px, 5.2vw, 64px)",
             lineHeight: "0.95",
             letterSpacing: "-2px",
             color: "var(--text)",
@@ -128,10 +128,10 @@ export default function Hero() {
           <span data-hero-line style={{ display: "block", opacity: 0 }}>
             {t("titleLine1")}
           </span>
-          <span data-hero-line style={{ display: "block", opacity: 0 }}>
+          <span data-hero-line style={{ display: "block", opacity: 0, color: "var(--gold)" }}>
             {t("titleLine2")}
           </span>
-          <span data-hero-line style={{ display: "block", opacity: 0, color: "var(--gold)" }}>
+          <span data-hero-line style={{ display: "block", opacity: 0 }}>
             {t("titleLine3")}
           </span>
         </h1>
