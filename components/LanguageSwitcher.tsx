@@ -43,6 +43,7 @@ export default function LanguageSwitcher({ onSwitch, size = "md" }: Props) {
       onClick={toggle}
       aria-label={ariaLabel}
       aria-pressed={!isFr}
+      data-lang-switcher
       className="lang-toggle group relative block"
       style={{
         width: dims.width,

@@ -34,6 +34,13 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
     const lenis = new Lenis({
       lerp: 0.08,
       duration: 1.2,
+      prevent: (node) => {
+        if (node.closest("nav")) return true;
+        if (node.closest("[data-lang-switcher]")) return true;
+        if (node.closest("[data-founder-banner]")) return true;
+        if (node.tagName === "BUTTON") return true;
+        return false;
+      },
     });
     lenisRef.current = lenis;
 

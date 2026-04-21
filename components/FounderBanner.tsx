@@ -60,6 +60,7 @@ export default function FounderBanner() {
   return (
     <div
       className="founder-banner-root"
+      data-founder-banner
       style={{
         position: "fixed",
         top: 0,
