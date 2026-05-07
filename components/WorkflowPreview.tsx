@@ -66,25 +66,32 @@ function ArrowMobile() {
 
 function NbhcLogoMark() {
   return (
-    <svg
-      width="32"
-      height="32"
-      viewBox="0 0 32 32"
-      fill="none"
+    <div
       aria-hidden
+      style={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        width: 40,
+        height: 40,
+        borderRadius: 10,
+        background: "linear-gradient(135deg, #C4973A 0%, #B8862E 100%)",
+        boxShadow: "0 4px 16px rgba(196,151,58,0.3)",
+      }}
     >
-      <rect x="6" y="12" width="9" height="9" rx="2" fill="#C4973A" />
-      <text
-        x="18"
-        y="22"
-        fontFamily="Syne, sans-serif"
-        fontWeight="800"
-        fontSize="14"
-        fill="#F0EDE6"
+      <span
+        style={{
+          fontSize: 20,
+          fontWeight: 900,
+          color: "#fff",
+          fontFamily: "var(--font-syne), system-ui, sans-serif",
+          lineHeight: 1,
+          letterSpacing: "-1px",
+        }}
       >
         N
-      </text>
-    </svg>
+      </span>
+    </div>
   );
 }
 
@@ -263,15 +270,13 @@ export default function WorkflowPreview() {
               boxShadow: "0 0 40px rgba(196,151,58,0.08)",
               display: "flex",
               flexDirection: "column",
-              alignItems: "flex-start",
+              alignItems: "center",
               justifyContent: "center",
+              textAlign: "center",
               transform: "scale(1.02)",
             }}
           >
-            <div
-              aria-hidden
-              style={{ marginBottom: 12, display: "flex", alignItems: "center" }}
-            >
+            <div style={{ marginBottom: 12 }}>
               <NbhcLogoMark />
             </div>
             <div
@@ -281,7 +286,7 @@ export default function WorkflowPreview() {
                 fontSize: 15,
                 color: "var(--gold)",
                 letterSpacing: "-0.3px",
-                marginBottom: 6,
+                marginBottom: 8,
                 lineHeight: 1.25,
               }}
             >
@@ -289,7 +294,7 @@ export default function WorkflowPreview() {
             </div>
             <div
               style={{
-                display: "flex",
+                display: "inline-flex",
                 alignItems: "center",
                 gap: 6,
                 fontSize: 12,
