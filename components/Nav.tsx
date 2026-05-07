@@ -30,10 +30,10 @@ export default function Nav() {
   const isOnHome = pathname === homePath || pathname === `${homePath}/`;
 
   const links: NavLink[] = [
-    { kind: "scroll", id: "how-it-works", label: t("howItWorks") },
-    { kind: "scroll", id: "produits", label: t("proof") },
+    { kind: "scroll", id: "comment-ca-marche", label: t("howItWorks") },
     { kind: "scroll", id: "secteurs", label: t("sectors") },
-    { kind: "page", href: `/${locale}/agentic-ai`, label: t("aaas") },
+    { kind: "scroll", id: "pricing", label: t("pricing") },
+    { kind: "scroll", id: "faq", label: t("faq") },
     { kind: "page", href: `/${locale}/blog`, label: t("blog") },
   ];
 
@@ -296,7 +296,9 @@ export default function Nav() {
         <div className="hidden min-[900px]:flex items-center gap-4">
           <LanguageSwitcher size="md" />
           <MagneticButton
-            href={`/${locale}/contact`}
+            href="https://calendly.com/saasnhia/30min"
+            target="_blank"
+            rel="noopener noreferrer"
             data-cursor="link"
             className="inline-flex text-sm font-medium px-5 py-2 rounded-md no-underline transition-all duration-200 whitespace-nowrap hover:opacity-90"
             style={{
@@ -351,8 +353,10 @@ export default function Nav() {
 
           <div className="flex flex-col gap-6">
             {links.map(renderMobileLink)}
-            <Link
-              href={`/${locale}/contact`}
+            <a
+              href="https://calendly.com/saasnhia/30min"
+              target="_blank"
+              rel="noopener noreferrer"
               data-mobile-link
               data-cursor="link"
               onClick={closeMenu}
@@ -367,7 +371,7 @@ export default function Nav() {
               }}
             >
               {t("cta")}
-            </Link>
+            </a>
           </div>
         </div>
       )}

@@ -17,8 +17,8 @@ export async function generateMetadata({
     ? "Blog IA & automatisation — NBHC Studio"
     : "AI & automation blog — NBHC Studio";
   const description = isFr
-    ? "Articles, retours d'expérience et guides pratiques sur l'IA, les agents autonomes, l'automatisation des TPE/PME et nos SaaS (Worthifast, Devizly, Vlogyz)."
-    : "Articles, case studies and practical guides on AI, autonomous agents, SME automation and our SaaS products (Worthifast, Devizly, Vlogyz).";
+    ? "Articles, retours d'expérience et guides pratiques sur l'IA, l'automatisation des TPE/PME et nos SaaS (Devizly, Vlogyz)."
+    : "Articles, case studies and practical guides on AI, SME automation and our SaaS products (Devizly, Vlogyz).";
 
   return {
     title,

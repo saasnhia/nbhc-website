@@ -94,7 +94,7 @@ export default function MentionsLegales() {
             contact@nbhc.fr
           </a>
           <br />
-          Activite : Edition de logiciels SaaS (Vlogyz, Devizly, Worthifast)
+          Activite : Edition de logiciels SaaS (Devizly, Vlogyz) et automatisation IA sur mesure
         </p>
       </section>
 

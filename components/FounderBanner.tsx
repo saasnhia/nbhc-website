@@ -1,16 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Link from "next/link";
-import { useLocale, useTranslations } from "next-intl";
-import { usePathname } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 const STORAGE_KEY = "nbhc-founder-banner-closed";
+const CALENDLY_URL = "https://calendly.com/saasnhia/30min";
 
 export default function FounderBanner() {
-  const locale = useLocale();
   const t = useTranslations("globalBanner");
-  const pathname = usePathname();
   const [visible, setVisible] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
@@ -49,12 +46,7 @@ export default function FounderBanner() {
 
   if (!visible) return null;
 
-  // Target: if already on /agentic-ai, scroll to #pricing; otherwise link to that section
-  const isOnAgenticAi = pathname.includes("/agentic-ai");
-  const href = isOnAgenticAi
-    ? `/${locale}/agentic-ai#pricing`
-    : `/${locale}/agentic-ai#pricing`;
-
+  const href = CALENDLY_URL;
   const text = isMobile ? t("textShort") : t("text");
 
   return (
@@ -73,8 +65,10 @@ export default function FounderBanner() {
         overflow: "hidden",
       }}
     >
-      <Link
+      <a
         href={href}
+        target="_blank"
+        rel="noopener noreferrer"
         aria-label={text}
         className="founder-banner-link block"
         style={{
@@ -103,7 +97,7 @@ export default function FounderBanner() {
         >
           {text}
         </span>
-      </Link>
+      </a>
       <button
         type="button"
         onClick={close}

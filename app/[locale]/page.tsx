@@ -1,13 +1,14 @@
 import { setRequestLocale } from "next-intl/server";
 import Nav from "@/components/Nav";
 import Hero from "@/components/Hero";
-import MarqueeStrip from "@/components/MarqueeStrip";
-import Stats from "@/components/Stats";
+import WhyNow from "@/components/WhyNow";
+import Sectors from "@/components/Sectors";
 import HowItWorks from "@/components/HowItWorks";
 import Portfolio from "@/components/Portfolio";
-import Sectors from "@/components/Sectors";
-import Services from "@/components/Services";
-import Approche from "@/components/Approche";
+import Pricing from "@/components/Pricing";
+import Differentiators from "@/components/Differentiators";
+import FAQ from "@/components/FAQ";
+import FinalCta from "@/components/FinalCta";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import JsonLd from "@/components/JsonLd";
@@ -33,8 +34,8 @@ export default async function Home({
       ? "NBHC — Studio IA & Automatisation"
       : "NBHC — AI Studio & Automation",
     description: isFr
-      ? "Studio IA français. Nous concevons et opérons des agents IA et des SaaS métiers pour automatiser votre entreprise."
-      : "French AI studio. We design and operate AI agents and business SaaS products to automate your company.",
+      ? "Studio IA français. Nous concevons et opérons des workflows d'automatisation IA sur mesure pour automatiser les tâches répétitives de votre entreprise."
+      : "French AI studio. We design and operate custom AI automation workflows to automate the repetitive tasks of your business.",
     inLanguage: isFr ? "fr-FR" : "en-US",
     isPartOf: { "@id": "https://nbhc.fr/#website" },
     about: { "@id": "https://nbhc.fr/#organization" },
@@ -44,22 +45,67 @@ export default async function Home({
     },
   };
 
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: [
+      {
+        "@type": "Question",
+        name: isFr
+          ? "Je n'y connais rien en IA, c'est grave ?"
+          : "I don't know anything about AI, is that a problem?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: isFr
+            ? "Pas du tout. C'est justement pour ça qu'on existe. On s'occupe de toute la partie technique. Vous, vous nous expliquez votre métier et ce qui vous prend du temps."
+            : "Not at all. That's exactly why we exist. We handle the entire technical side. You just explain your trade and what's taking up your time.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: isFr
+          ? "Combien de temps avant de voir les résultats ?"
+          : "How long before I see results?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: isFr
+            ? "Entre 2 et 12 semaines selon la complexité. Un Quick Win (devis automatiques, relances) est livré en 2-3 semaines. Un projet plus complexe (rapprochement comptable) prend 8-12 semaines."
+            : "Between 2 and 12 weeks depending on complexity. A Quick Win (automated quotes, follow-ups) is delivered in 2-3 weeks. A more complex project (accounting reconciliation) takes 8-12 weeks.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: isFr
+          ? "Mes données sont en sécurité ?"
+          : "Is my data safe?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: isFr
+            ? "Oui. On utilise Mistral, un modèle IA français. Vos données sont traitées et hébergées en France, conformément au RGPD."
+            : "Yes. We use Mistral, a French AI model. Your data is processed and hosted in France, GDPR-compliant.",
+        },
+      },
+    ],
+  };
+
   return (
     <main>
       <Nav />
       <Hero />
-      <MarqueeStrip />
-      <Stats />
+      <WhyNow />
+      <Sectors />
       <HowItWorks />
       <Portfolio />
-      <Sectors />
-      <Services />
-      <Approche />
+      <Pricing />
+      <Differentiators />
+      <FAQ />
+      <FinalCta />
       <Contact />
       <Footer />
       <JsonLd
         data={[
           webPageSchema,
+          faqSchema,
           breadcrumbSchema([
             { name: isFr ? "Accueil" : "Home", url: homeUrl },
           ]),

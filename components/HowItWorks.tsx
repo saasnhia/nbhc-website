@@ -7,150 +7,61 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-function StepVisual({ kind }: { kind: string }) {
-  if (kind === "diagnostic") {
-    return (
-      <div
-        className="p-4 mt-5"
-        style={{
-          background: "#0d0d12",
-          border: "1px solid var(--border)",
-          borderRadius: 8,
-        }}
-      >
-        <div
-          className="text-[9px] uppercase tracking-widest mb-3"
-          style={{ color: "var(--gold)", opacity: 0.6 }}
-        >
-          Diagnostic NBHC
-        </div>
-        <div className="space-y-2.5">
-          {[
-            { label: "Secteur", value: "Votre métier" },
-            { label: "Tâches identifiées", value: "12" },
-            { label: "Heures récupérables", value: "≈ 80h / mois" },
-            { label: "Périmètre", value: "Validé sous 48h" },
-          ].map((f) => (
-            <div key={f.label}>
-              <div className="text-[9px]" style={{ color: "var(--text-dim)" }}>
-                {f.label}
-              </div>
-              <div className="text-[11px] font-medium" style={{ color: "var(--text)" }}>
-                {f.value}
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    );
-  }
-  if (kind === "agents") {
-    return (
-      <div
-        className="p-4 mt-5"
-        style={{
-          background: "#0d0d12",
-          border: "1px solid var(--border)",
-          borderRadius: 8,
-        }}
-      >
-        <div
-          className="text-[9px] uppercase tracking-widest mb-3"
-          style={{ color: "var(--gold)", opacity: 0.6 }}
-        >
-          Agents déployés
-        </div>
-        <div className="space-y-2">
-          {["Agent #1", "Agent #2", "Agent #3"].map((a) => (
-            <div
-              key={a}
-              className="flex items-center justify-between p-2 rounded"
-              style={{
-                background: "rgba(34,197,94,0.04)",
-                border: "1px solid rgba(34,197,94,0.15)",
-              }}
-            >
-              <span className="text-[11px] font-medium" style={{ color: "var(--text)" }}>
-                {a}
-              </span>
-              <span className="text-[10px]" style={{ color: "#4ade80" }}>
-                ✓ Actif
-              </span>
-            </div>
-          ))}
-        </div>
-      </div>
-    );
-  }
-  // metrics
-  return (
-    <div
-      className="p-4 mt-5"
-      style={{
-        background: "#0d0d12",
-        border: "1px solid var(--border)",
-        borderRadius: 8,
-      }}
-    >
-      <div
-        className="text-[9px] uppercase tracking-widest mb-3"
-        style={{ color: "var(--gold)", opacity: 0.6 }}
-      >
-        Performance · 30 derniers jours
-      </div>
-      <div className="space-y-2.5">
-        {[
-          { k: "−40%", v: "Temps de traitement" },
-          { k: "+80h", v: "Heures économisées / mois" },
-          { k: "100%", v: "Tâches automatisées" },
-        ].map((m) => (
-          <div key={m.v} className="flex items-baseline gap-2">
-            <span
-              className="text-[18px] font-extrabold"
-              style={{
-                color: "#4ade80",
-                fontFamily: "var(--font-syne)",
-                letterSpacing: "-0.5px",
-              }}
-            >
-              {m.k}
-            </span>
-            <span className="text-[11px]" style={{ color: "var(--text-muted)" }}>
-              {m.v}
-            </span>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
 export default function HowItWorks() {
   const sectionRef = useRef<HTMLElement>(null);
   const t = useTranslations("howItWorks");
 
   const steps = [
-    { n: "01", icon: "🧠", title: t("step1Title"), desc: t("step1Desc"), visual: "diagnostic" },
-    { n: "02", icon: "⚙️", title: t("step2Title"), desc: t("step2Desc"), visual: "agents" },
-    { n: "03", icon: "📈", title: t("step3Title"), desc: t("step3Desc"), visual: "metrics" },
+    {
+      n: t("step1Number"),
+      title: t("step1Title"),
+      desc: t("step1Desc"),
+      badge: t("step1Badge"),
+    },
+    {
+      n: t("step2Number"),
+      title: t("step2Title"),
+      desc: t("step2Desc"),
+      badge: t("step2Badge"),
+    },
+    {
+      n: t("step3Number"),
+      title: t("step3Title"),
+      desc: t("step3Desc"),
+      badge: t("step3Badge"),
+    },
+    {
+      n: t("step4Number"),
+      title: t("step4Title"),
+      desc: t("step4Desc"),
+      badge: t("step4Badge"),
+    },
   ];
 
   useEffect(() => {
     const el = sectionRef.current;
     if (!el) return;
     const cards = el.querySelectorAll("[data-step-card]");
-    gsap.set(cards, { opacity: 0, y: 50 });
+    const line = el.querySelector("[data-step-line]");
+
+    gsap.set(cards, { opacity: 0, x: -30 });
+    if (line) gsap.set(line, { scaleY: 0, transformOrigin: "top center" });
+
     const st = ScrollTrigger.create({
       trigger: el,
       start: "top 75%",
       once: true,
       onEnter: () => {
+        if (line) {
+          gsap.to(line, { scaleY: 1, duration: 1.2, ease: "power3.out" });
+        }
         gsap.to(cards, {
           opacity: 1,
-          y: 0,
-          duration: 0.8,
+          x: 0,
+          duration: 0.7,
           ease: "power3.out",
           stagger: 0.15,
+          delay: 0.2,
         });
       },
     });
@@ -159,13 +70,10 @@ export default function HowItWorks() {
 
   return (
     <section
-      id="how-it-works"
+      id="comment-ca-marche"
       ref={sectionRef}
       className="py-24 px-10 max-[900px]:px-5 max-[900px]:py-16"
-      style={{
-        maxWidth: 1200,
-        margin: "0 auto",
-      }}
+      style={{ maxWidth: 1200, margin: "0 auto" }}
     >
       <div
         className="text-[11px] font-medium tracking-[3px] uppercase mb-4 flex items-center gap-2"
@@ -187,56 +95,99 @@ export default function HowItWorks() {
         {t("title")}
       </h2>
       <p
-        className="text-[17px] font-light mb-16"
-        style={{ color: "var(--text-muted)", maxWidth: 600, lineHeight: 1.7 }}
+        className="text-[16px] font-light mb-16"
+        style={{ color: "var(--text-muted)", maxWidth: 700, lineHeight: 1.7 }}
       >
         {t("subtitle")}
       </p>
 
-      <div className="grid grid-cols-3 max-[900px]:grid-cols-1 gap-5">
-        {steps.map((s) => (
-          <div
-            key={s.n}
-            data-step-card
-            className="p-7 relative overflow-hidden"
-            style={{
-              background: "var(--card)",
-              border: "1px solid var(--border)",
-              borderRadius: "var(--radius)",
-            }}
-          >
-            <div className="flex items-baseline gap-3 mb-4">
+      <div className="relative" style={{ paddingLeft: 8 }}>
+        {/* Vertical gold line */}
+        <div
+          data-step-line
+          aria-hidden
+          className="absolute max-[700px]:left-[15px]"
+          style={{
+            left: 31,
+            top: 28,
+            bottom: 28,
+            width: 2,
+            background:
+              "linear-gradient(180deg, var(--gold) 0%, rgba(196,151,58,0.2) 100%)",
+            borderRadius: 2,
+          }}
+        />
+
+        <div className="flex flex-col gap-10 max-[900px]:gap-8">
+          {steps.map((s) => (
+            <div
+              key={s.n}
+              data-step-card
+              className="relative flex gap-6 max-[700px]:gap-4"
+            >
+              {/* Number bubble on the line */}
               <div
-                className="text-3xl font-extrabold"
+                className="flex-shrink-0 flex items-center justify-center max-[700px]:w-8 max-[700px]:h-8"
                 style={{
+                  width: 64,
+                  height: 64,
+                  borderRadius: "50%",
+                  background: "var(--bg)",
+                  border: "2px solid var(--gold)",
                   fontFamily: "var(--font-syne)",
+                  fontWeight: 800,
+                  fontSize: 18,
                   color: "var(--gold)",
-                  letterSpacing: "-1.5px",
+                  letterSpacing: "-0.5px",
+                  position: "relative",
+                  zIndex: 2,
                 }}
               >
                 {s.n}
               </div>
-              <div className="text-2xl">{s.icon}</div>
+
+              {/* Content */}
+              <div
+                className="flex-1 p-6 max-[700px]:p-4"
+                style={{
+                  background: "rgba(255,255,255,0.02)",
+                  border: "1px solid var(--border)",
+                  borderRadius: "var(--radius)",
+                  backdropFilter: "blur(8px)",
+                }}
+              >
+                <div className="flex items-start justify-between gap-3 mb-3 flex-wrap">
+                  <div
+                    className="text-lg font-bold"
+                    style={{
+                      fontFamily: "var(--font-syne)",
+                      color: "var(--text)",
+                      letterSpacing: "-0.5px",
+                    }}
+                  >
+                    {s.title}
+                  </div>
+                  <span
+                    className="text-[11px] font-medium tracking-wide uppercase px-3 py-1 rounded-full whitespace-nowrap"
+                    style={{
+                      background: "var(--gold-dim)",
+                      color: "var(--gold-light)",
+                      border: "1px solid var(--gold-border)",
+                    }}
+                  >
+                    {s.badge}
+                  </span>
+                </div>
+                <p
+                  className="text-sm font-light"
+                  style={{ color: "var(--text-muted)", lineHeight: 1.7 }}
+                >
+                  {s.desc}
+                </p>
+              </div>
             </div>
-            <div
-              className="text-lg font-bold mb-3"
-              style={{
-                fontFamily: "var(--font-syne)",
-                color: "var(--text)",
-                letterSpacing: "-0.5px",
-              }}
-            >
-              {s.title}
-            </div>
-            <p
-              className="text-sm font-light"
-              style={{ color: "var(--text-muted)", lineHeight: 1.65 }}
-            >
-              {s.desc}
-            </p>
-            <StepVisual kind={s.visual} />
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </section>
   );

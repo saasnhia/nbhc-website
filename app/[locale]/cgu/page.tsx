@@ -80,8 +80,8 @@ export default function CGU() {
           Acces aux services
         </h2>
         <p>
-          L&apos;acces aux plateformes SaaS editees par NBHC (Vlogyz, Devizly,
-          Worthifast) necessite une inscription prealable. L&apos;utilisateur
+          L&apos;acces aux plateformes SaaS editees par NBHC (Devizly, Vlogyz)
+          necessite une inscription prealable. L&apos;utilisateur
           doit creer un compte personnel avec une adresse email valide. Chaque
           compte est strictement personnel et ne peut etre partage avec des
           tiers.

@@ -137,8 +137,8 @@ export default function PolitiqueConfidentialite() {
         <ul style={{ paddingLeft: 20, listStyleType: "disc" }}>
           <li>Repondre aux demandes envoyees via le formulaire de contact.</li>
           <li>
-            Fournir et maintenir les services SaaS (Vlogyz, Devizly,
-            Worthifast).
+            Fournir et maintenir les services SaaS (Devizly, Vlogyz) et les
+            workflows IA sur mesure.
           </li>
           <li>Ameliorer nos services et l&apos;experience utilisateur.</li>
         </ul>

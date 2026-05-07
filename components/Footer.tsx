@@ -5,7 +5,8 @@ import { useTranslations, useLocale } from "next-intl";
 import gsap from "gsap";
 import Logo from "./Logo";
 
-const marqueeText = "NBHC \u00B7 STUDIO IA \u00B7 FRANCE \u00B7 ";
+const marqueeText = "NBHC · STUDIO IA · FRANCE · ";
+const CALENDLY_URL = "https://calendly.com/saasnhia/30min";
 
 export default function Footer() {
   const marqueeTrackRef = useRef<HTMLDivElement>(null);
@@ -28,6 +29,31 @@ export default function Footer() {
     };
   }, []);
 
+  const navLinks = [
+    { href: `/${locale}#comment-ca-marche`, label: t("howItWorks") },
+    { href: `/${locale}#secteurs`, label: t("sectors") },
+    { href: `/${locale}#pricing`, label: t("pricing") },
+    { href: `/${locale}#produits`, label: t("products") },
+    { href: `/${locale}#faq`, label: t("faq") },
+    { href: `/${locale}/blog`, label: t("blog") },
+  ];
+
+  const productLinks = [
+    { href: "https://devizly.fr", label: t("devizly"), external: true },
+    { href: "https://vlogyz.vercel.app", label: t("vlogyz"), external: true },
+  ];
+
+  const contactLinks = [
+    { href: CALENDLY_URL, label: t("diagnostic"), external: true },
+    { href: "mailto:contact@nbhc.fr", label: t("email"), external: false },
+    {
+      href: "https://www.linkedin.com/company/nbhc",
+      label: t("linkedin"),
+      external: true,
+    },
+    { href: "https://x.com/harounNbhc", label: t("twitter"), external: true },
+  ];
+
   return (
     <>
       {/* Giant marquee above footer */}
@@ -40,10 +66,7 @@ export default function Footer() {
           padding: "24px 0",
         }}
       >
-        <div
-          ref={marqueeTrackRef}
-          style={{ display: "flex", width: "max-content" }}
-        >
+        <div ref={marqueeTrackRef} style={{ display: "flex", width: "max-content" }}>
           {Array.from({ length: 8 }).map((_, i) => (
             <span
               key={i}
@@ -70,45 +93,93 @@ export default function Footer() {
         }}
       >
         <div
-          className="flex items-center justify-between flex-wrap gap-6 py-12 px-10 max-[900px]:px-5 max-[900px]:flex-col max-[900px]:items-start"
-          style={{ maxWidth: 1200, margin: "0 auto" }}
-        >
-          <div className="flex flex-col gap-2">
-            <Logo variant="footer" />
-            <div className="text-[13px]" style={{ color: "var(--text-dim)" }}>
-              {t("tagline")}
-            </div>
-          </div>
-          <div className="flex items-center gap-8 flex-wrap">
-            <div className="flex gap-6">
-              {[
-                { href: `/${locale}#approche`, label: t("approche") },
-                { href: `/${locale}#produits`, label: t("produits") },
-                { href: `/${locale}#services`, label: t("services") },
-                { href: `/${locale}/blog`, label: t("blog") },
-                { href: `/${locale}/faq`, label: t("faq") },
-                { href: "mailto:contact@nbhc.fr", label: t("contact") },
-              ].map((l) => (
-                <a
-                  key={l.label}
-                  href={l.href}
-                  data-cursor="link"
-                  className="text-[13px] no-underline hover:opacity-80"
-                  style={{ color: "var(--text-muted)" }}
-                >
-                  {l.label}
-                </a>
-              ))}
-            </div>
-          </div>
-        </div>
-        <div
-          className="px-10 max-[900px]:px-5"
+          className="grid gap-10 py-14 px-10 max-[900px]:px-5 max-[900px]:py-10 max-[900px]:gap-8"
           style={{
             maxWidth: 1200,
             margin: "0 auto",
+            gridTemplateColumns: "1.5fr 1fr 1fr 1fr",
           }}
         >
+          {/* Brand */}
+          <div className="flex flex-col gap-3 max-[900px]:col-span-full">
+            <Logo variant="footer" />
+            <div
+              className="text-[13px]"
+              style={{ color: "var(--text-dim)", lineHeight: 1.5 }}
+            >
+              {t("tagline")}
+            </div>
+          </div>
+
+          {/* Navigation */}
+          <div className="flex flex-col gap-3 max-[900px]:col-span-2 max-[600px]:col-span-full">
+            <div
+              className="text-[11px] tracking-widest uppercase mb-1"
+              style={{ color: "var(--gold)" }}
+            >
+              {t("navTitle")}
+            </div>
+            {navLinks.map((l) => (
+              <a
+                key={l.label}
+                href={l.href}
+                data-cursor="link"
+                className="text-[13px] no-underline hover:opacity-80 transition-opacity"
+                style={{ color: "var(--text-muted)" }}
+              >
+                {l.label}
+              </a>
+            ))}
+          </div>
+
+          {/* Products */}
+          <div className="flex flex-col gap-3">
+            <div
+              className="text-[11px] tracking-widest uppercase mb-1"
+              style={{ color: "var(--gold)" }}
+            >
+              {t("productsTitle")}
+            </div>
+            {productLinks.map((l) => (
+              <a
+                key={l.label}
+                href={l.href}
+                target={l.external ? "_blank" : undefined}
+                rel={l.external ? "noopener noreferrer" : undefined}
+                data-cursor="link"
+                className="text-[13px] no-underline hover:opacity-80 transition-opacity"
+                style={{ color: "var(--text-muted)" }}
+              >
+                {l.label}
+              </a>
+            ))}
+          </div>
+
+          {/* Contact */}
+          <div className="flex flex-col gap-3">
+            <div
+              className="text-[11px] tracking-widest uppercase mb-1"
+              style={{ color: "var(--gold)" }}
+            >
+              {t("contactTitle")}
+            </div>
+            {contactLinks.map((l) => (
+              <a
+                key={l.label}
+                href={l.href}
+                target={l.external ? "_blank" : undefined}
+                rel={l.external ? "noopener noreferrer" : undefined}
+                data-cursor="link"
+                className="text-[13px] no-underline hover:opacity-80 transition-opacity"
+                style={{ color: "var(--text-muted)" }}
+              >
+                {l.label}
+              </a>
+            ))}
+          </div>
+        </div>
+
+        <div className="px-10 max-[900px]:px-5" style={{ maxWidth: 1200, margin: "0 auto" }}>
           <div
             style={{
               paddingTop: 12,
@@ -141,10 +212,7 @@ export default function Footer() {
               </span>
             ))}
           </div>
-          <div
-            className="text-xs py-5"
-            style={{ color: "var(--text-dim)" }}
-          >
+          <div className="text-xs py-5" style={{ color: "var(--text-dim)" }}>
             {t("copyright")}
           </div>
         </div>

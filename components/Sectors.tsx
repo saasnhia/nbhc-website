@@ -1,24 +1,47 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { useTranslations, useLocale } from "next-intl";
+import { useTranslations } from "next-intl";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
+const CALENDLY_URL = "https://calendly.com/saasnhia/30min";
+
 export default function Sectors() {
   const sectionRef = useRef<HTMLElement>(null);
   const t = useTranslations("sectors");
-  const locale = useLocale();
 
   const sectors = [
-    { icon: "📊", name: t("accounting"), problem: t("accountingProblem"), gain: t("accountingGain") },
-    { icon: "🔨", name: t("btp"), problem: t("btpProblem"), gain: t("btpGain") },
-    { icon: "🎬", name: t("media"), problem: t("mediaProblem"), gain: t("mediaGain") },
-    { icon: "🛒", name: t("ecommerce"), problem: t("ecommerceProblem"), gain: t("ecommerceGain") },
-    { icon: "⚖️", name: t("legal"), problem: t("legalProblem"), gain: t("legalGain") },
-    { icon: "✨", name: t("custom"), problem: t("customProblem"), gain: t("customGain"), custom: true },
+    {
+      icon: "🏗️",
+      name: t("btpName"),
+      pain: t("btpPain"),
+      solution: t("btpSolution"),
+      roi: t("btpRoi"),
+    },
+    {
+      icon: "📣",
+      name: t("agenciesName"),
+      pain: t("agenciesPain"),
+      solution: t("agenciesSolution"),
+      roi: t("agenciesRoi"),
+    },
+    {
+      icon: "📊",
+      name: t("accountingName"),
+      pain: t("accountingPain"),
+      solution: t("accountingSolution"),
+      roi: t("accountingRoi"),
+    },
+    {
+      icon: "⚖️",
+      name: t("legalName"),
+      pain: t("legalPain"),
+      solution: t("legalSolution"),
+      roi: t("legalRoi"),
+    },
   ];
 
   useEffect(() => {
@@ -41,7 +64,6 @@ export default function Sectors() {
       },
     });
 
-    // Hover lift
     cards.forEach((card) => {
       const c = card as HTMLElement;
       const onEnter = () =>
@@ -65,15 +87,23 @@ export default function Sectors() {
     };
   }, []);
 
+  const scrollToPricing = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    const el = document.getElementById("pricing");
+    if (!el) return;
+    const bannerH =
+      parseInt(getComputedStyle(document.documentElement).getPropertyValue("--banner-h")) || 0;
+    const offset = bannerH + 64 + 8;
+    const y = el.getBoundingClientRect().top + window.scrollY - offset;
+    window.scrollTo({ top: y, behavior: "smooth" });
+  };
+
   return (
     <section
       id="secteurs"
       ref={sectionRef}
       className="py-24 px-10 max-[900px]:px-5 max-[900px]:py-16"
-      style={{
-        maxWidth: 1200,
-        margin: "0 auto",
-      }}
+      style={{ maxWidth: 1200, margin: "0 auto" }}
     >
       <div
         className="text-[11px] font-medium tracking-[3px] uppercase mb-4 flex items-center gap-2"
@@ -94,60 +124,89 @@ export default function Sectors() {
         {t("title")}
       </h2>
       <p
-        className="text-[17px] font-light mb-16"
-        style={{ color: "var(--text-muted)", maxWidth: 600, lineHeight: 1.7 }}
+        className="text-[16px] font-light mb-14"
+        style={{ color: "var(--text-muted)", maxWidth: 700, lineHeight: 1.7 }}
       >
         {t("subtitle")}
       </p>
 
-      <div className="grid grid-cols-3 max-[900px]:grid-cols-2 max-[480px]:grid-cols-1 gap-5">
-        {sectors.map((s) => {
-          const isCustom = s.custom;
-          const Tag = isCustom ? "a" : "div";
-          const props = isCustom
-            ? { href: `/${locale}/contact`, "data-cursor": "link" as const, className: "no-underline" }
-            : { "data-cursor": "card" as const };
-          return (
-            <Tag
-              key={s.name}
-              data-sector-card
-              {...props}
-              className={`p-7 transition-colors duration-300 block ${isCustom ? "no-underline" : ""}`}
+      <div className="grid grid-cols-2 max-[700px]:grid-cols-1 gap-5">
+        {sectors.map((s) => (
+          <a
+            key={s.name}
+            href="#pricing"
+            onClick={scrollToPricing}
+            data-sector-card
+            data-cursor="card"
+            className="p-7 block no-underline transition-colors duration-300 group"
+            style={{
+              background: "rgba(255,255,255,0.02)",
+              border: "1px solid var(--border)",
+              borderRadius: "var(--radius)",
+              backdropFilter: "blur(8px)",
+            }}
+          >
+            <div className="text-4xl mb-5">{s.icon}</div>
+            <div
+              className="text-xl font-bold mb-4"
               style={{
-                background: isCustom ? "var(--gold-dim)" : "var(--card)",
-                border: isCustom
-                  ? "1px solid var(--gold-border)"
-                  : "1px solid var(--border)",
-                borderRadius: "var(--radius)",
-                cursor: isCustom ? "pointer" : "default",
+                fontFamily: "var(--font-syne)",
+                color: "var(--text)",
+                letterSpacing: "-0.5px",
               }}
             >
-              <div className="text-3xl mb-4">{s.icon}</div>
-              <div
-                className="text-lg font-bold mb-3"
-                style={{
-                  fontFamily: "var(--font-syne)",
-                  color: isCustom ? "var(--gold-light)" : "var(--text)",
-                  letterSpacing: "-0.5px",
-                }}
-              >
-                {s.name}
-              </div>
-              <p
-                className="text-sm font-light mb-4"
-                style={{ color: "var(--text-muted)", lineHeight: 1.65 }}
-              >
-                {s.problem}
-              </p>
-              <div
-                className="text-[12px] font-bold tracking-wide"
-                style={{ color: isCustom ? "var(--gold)" : "#4ade80" }}
-              >
-                {isCustom ? `${s.gain} →` : `↗ ${s.gain}`}
-              </div>
-            </Tag>
-          );
-        })}
+              {s.name}
+            </div>
+            <p
+              className="text-sm mb-3"
+              style={{ color: "var(--text-muted)", lineHeight: 1.65 }}
+            >
+              <span style={{ color: "#f87171", fontWeight: 600 }}>↳</span>{" "}
+              {s.pain}
+            </p>
+            <p
+              className="text-sm mb-5"
+              style={{ color: "var(--text)", lineHeight: 1.65 }}
+            >
+              <span style={{ color: "#4ade80", fontWeight: 600 }}>✓</span>{" "}
+              {s.solution}
+            </p>
+            <div
+              className="text-[12px] font-bold tracking-wide pt-4"
+              style={{
+                color: "var(--gold)",
+                borderTop: "1px solid var(--border)",
+              }}
+            >
+              {s.roi}
+            </div>
+            <div
+              className="mt-4 text-[13px] font-medium transition-transform duration-200 group-hover:translate-x-1"
+              style={{ color: "var(--gold-light)" }}
+            >
+              {t("learnMore")}
+            </div>
+          </a>
+        ))}
+      </div>
+
+      <div className="mt-14 text-center">
+        <p
+          className="text-[15px] font-light mb-5"
+          style={{ color: "var(--text-muted)", maxWidth: 600, margin: "0 auto 20px" }}
+        >
+          {t("outroText")}
+        </p>
+        <a
+          href={CALENDLY_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          data-cursor="link"
+          className="inline-flex items-center gap-2 text-[15px] font-medium px-7 py-3.5 rounded-md no-underline transition-all duration-200 hover:opacity-90"
+          style={{ background: "var(--gold)", color: "#0a0a0b" }}
+        >
+          {t("outroCta")}
+        </a>
       </div>
     </section>
   );

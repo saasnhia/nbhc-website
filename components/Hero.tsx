@@ -1,17 +1,17 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { useTranslations, useLocale } from "next-intl";
+import { useTranslations } from "next-intl";
 import gsap from "gsap";
-import Link from "next/link";
 import AgentFlowIllustration from "./AgentFlowIllustration";
+
+const CALENDLY_URL = "https://calendly.com/saasnhia/30min";
 
 export default function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
   const circle1Ref = useRef<SVGSVGElement>(null);
   const circle2Ref = useRef<SVGSVGElement>(null);
   const t = useTranslations("hero");
-  const locale = useLocale();
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -58,7 +58,7 @@ export default function Hero() {
       tl.fromTo(
         el.querySelector("[data-trust]"),
         { opacity: 0 },
-        { opacity: 0.5, duration: 0.6 },
+        { opacity: 1, duration: 0.6 },
         1.15
       );
 
@@ -72,6 +72,18 @@ export default function Hero() {
 
     return () => ctx.revert();
   }, []);
+
+  const scrollToHowItWorks = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    const el = document.getElementById("comment-ca-marche");
+    if (!el) return;
+    const bannerH =
+      parseInt(getComputedStyle(document.documentElement).getPropertyValue("--banner-h")) || 0;
+    const navH = 64;
+    const offset = bannerH + navH + 8;
+    const y = el.getBoundingClientRect().top + window.scrollY - offset;
+    window.scrollTo({ top: y, behavior: "smooth" });
+  };
 
   return (
     <section ref={sectionRef} className="relative overflow-hidden">
@@ -141,8 +153,8 @@ export default function Hero() {
           className="text-base font-light mb-8 max-[900px]:mb-7"
           style={{
             color: "var(--text-muted)",
-            maxWidth: 620,
-            lineHeight: 1.6,
+            maxWidth: 660,
+            lineHeight: 1.65,
             opacity: 0,
           }}
         >
@@ -160,8 +172,10 @@ export default function Hero() {
           className="flex items-center justify-center gap-4 flex-wrap"
           style={{ opacity: 0 }}
         >
-          <Link
-            href={`/${locale}/contact`}
+          <a
+            href={CALENDLY_URL}
+            target="_blank"
+            rel="noopener noreferrer"
             data-cursor="link"
             className="inline-flex items-center gap-2 text-[15px] font-medium px-7 py-3.5 rounded-md no-underline transition-all duration-200 hover:opacity-90"
             style={{ background: "var(--gold)", color: "#0a0a0b", border: "none" }}
@@ -176,9 +190,10 @@ export default function Hero() {
                 strokeLinejoin="round"
               />
             </svg>
-          </Link>
+          </a>
           <a
-            href="#how-it-works"
+            href="#comment-ca-marche"
+            onClick={scrollToHowItWorks}
             data-cursor="link"
             className="inline-flex items-center gap-2 text-[15px] font-normal px-7 py-3.5 rounded-md no-underline transition-all duration-200"
             style={{
@@ -193,21 +208,19 @@ export default function Hero() {
 
         <div
           data-trust
-          className="flex items-center justify-center gap-2 mt-7 text-xs flex-wrap"
+          className="flex items-center justify-center gap-3 mt-7 text-xs flex-wrap"
           style={{
-            color: "var(--text-dim)",
+            color: "var(--text-muted)",
             opacity: 0,
             fontFamily: "var(--font-dm-sans)",
-            letterSpacing: "0.5px",
+            letterSpacing: "0.3px",
           }}
         >
           <span>{t("trust1")}</span>
-          <span style={{ opacity: 0.3 }}>·</span>
+          <span style={{ opacity: 0.4 }}>·</span>
           <span>{t("trust2")}</span>
-          <span style={{ opacity: 0.3 }}>·</span>
+          <span style={{ opacity: 0.4 }}>·</span>
           <span>{t("trust3")}</span>
-          <span style={{ opacity: 0.3 }}>·</span>
-          <span>{t("trust4")}</span>
         </div>
       </div>
     </section>

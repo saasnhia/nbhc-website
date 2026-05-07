@@ -13,8 +13,8 @@ export async function generateMetadata({
   return {
     title: isFr ? "Conditions Générales de Vente — NBHC" : "Terms of Sale — NBHC",
     description: isFr
-      ? "CGV des services SaaS et prestations édités par NBHC — Vlogyz, Devizly, Worthifast et agents IA sur mesure."
-      : "Terms of Sale for SaaS services and custom engagements by NBHC — Vlogyz, Devizly, Worthifast and custom AI agents.",
+      ? "CGV des services SaaS et prestations édités par NBHC — Devizly, Vlogyz et workflows IA sur mesure."
+      : "Terms of Sale for SaaS services and custom engagements by NBHC — Devizly, Vlogyz and custom AI workflows.",
     alternates: localeCanonical(locale, "/cgv"),
     robots: { index: true, follow: true },
   };
@@ -82,7 +82,7 @@ export default function CGV() {
         <p>
           Les presentes Conditions Generales de Vente (CGV) regissent la vente
           de licences d&apos;acces aux plateformes SaaS editees par la SAS NBHC,
-          notamment Vlogyz, Devizly et Worthifast. Toute souscription a un
+          notamment Devizly et Vlogyz. Toute souscription a un
           service implique l&apos;acceptation sans reserve des presentes CGV.
         </p>
       </section>

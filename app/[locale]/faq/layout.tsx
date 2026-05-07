@@ -13,8 +13,8 @@ export async function generateMetadata({
     ? "FAQ — Questions fréquentes · NBHC Studio IA"
     : "FAQ — Frequently asked questions · NBHC AI Studio";
   const description = isFr
-    ? "Tarifs, délais, RGPD, intégrations… toutes les réponses sur nos agents IA sur mesure et nos SaaS Vlogyz, Devizly, Worthifast."
-    : "Pricing, timelines, GDPR, integrations… everything you need to know about our custom AI agents and our SaaS products Vlogyz, Devizly, Worthifast.";
+    ? "Tarifs, délais, RGPD, intégrations… toutes les réponses sur nos workflows IA sur mesure et nos SaaS Devizly et Vlogyz."
+    : "Pricing, timelines, GDPR, integrations… everything you need to know about our custom AI workflows and our SaaS products Devizly and Vlogyz.";
 
   return {
     title,
