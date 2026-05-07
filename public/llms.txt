@@ -4,7 +4,7 @@
 
 ## Produits SaaS
 
-- [Vlogyz](https://vlogyz.vercel.app): Montage vidéo IA automatisé. Alternative française à CapCut. Transcription Whisper, coupes intelligentes, sous-titres karaoké, score viralité. Stack: Next.js, Groq Whisper, Mistral, Remotion, FFmpeg.
+- [Vlogyz](https://vlogyz.com): Montage vidéo IA automatisé. Alternative française à CapCut. Transcription Whisper, coupes intelligentes, sous-titres karaoké, score viralité. Stack: Next.js, Groq Whisper, Mistral, Remotion, FFmpeg.
 - [Devizly](https://devizly.fr): Générateur de devis et factures IA pour artisans et freelances français. Conforme Factur-X, signature électronique, encaissement Stripe, intégration Pennylane. Stack: Next.js, Mistral, Supabase, Stripe.
 - Worthifast (en développement): Automatisation comptable IA pour cabinets. Agents FEC, anomalies, TVA CA3, rapprochement bancaire. Stack: Next.js, Mistral, Supabase, PostgreSQL.
 

@@ -164,7 +164,7 @@ export default function Portfolio() {
       tagline: t("vlogyzDesc"),
       Mockup: VlogyzMockup,
       link: t("vlogyzLink"),
-      href: "https://vlogyz.vercel.app",
+      href: "https://vlogyz.com",
       accent: "#6366f1",
       textSide: "right",
     },

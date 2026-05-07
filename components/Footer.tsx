@@ -40,7 +40,7 @@ export default function Footer() {
 
   const productLinks = [
     { href: "https://devizly.fr", label: t("devizly"), external: true },
-    { href: "https://vlogyz.vercel.app", label: t("vlogyz"), external: true },
+    { href: "https://vlogyz.com", label: t("vlogyz"), external: true },
   ];
 
   const contactLinks = [
