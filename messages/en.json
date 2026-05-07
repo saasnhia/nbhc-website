@@ -18,16 +18,32 @@
     "ctaSecondary": "See how it works",
     "trust1": "🇫🇷 Data hosted in France",
     "trust2": "📊 Measured ROI",
-    "trust3": "🔓 No lock-in"
-  },
-  "agentFlow": {
-    "pillAccounting": "Accounting",
-    "pillDevis": "Quotes & Billing",
-    "pillContent": "Content",
-    "pillCustom": "Custom",
-    "yourData": "Your data",
-    "yourDataDesc": "emails, docs, invoices",
-    "inSeconds": "in seconds"
+    "trust3": "🔓 No lock-in",
+    "flow": {
+      "center": "Automated by NBHC",
+      "tabs": {
+        "accounting": "Accounting",
+        "invoicing": "Quotes & Invoicing",
+        "content": "Content",
+        "custom": "Custom"
+      },
+      "accounting": {
+        "before": { "title": "Manual bookkeeping", "sub": "Reconciliation, month-end, VAT — 4h/day" },
+        "after": { "title": "Reports ready", "sub": "Books closed, VAT filed — in seconds" }
+      },
+      "invoicing": {
+        "before": { "title": "Manual quoting", "sub": "45 min per quote, follow-ups forgotten" },
+        "after": { "title": "Quote sent & signed", "sub": "Compliant, signed, paid — 30 seconds" }
+      },
+      "content": {
+        "before": { "title": "Manual production", "sub": "Posts, newsletters, reporting — 3h/post" },
+        "after": { "title": "Content ready", "sub": "Multi-channel, optimised, scheduled — 2 minutes" }
+      },
+      "custom": {
+        "before": { "title": "Repetitive tasks", "sub": "Hours wasted every week" },
+        "after": { "title": "Automated process", "sub": "24/7, zero errors, zero missed steps" }
+      }
+    }
   },
   "whyNow": {
     "eyebrow": "THE TRUTH",

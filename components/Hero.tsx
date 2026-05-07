@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import { useTranslations } from "next-intl";
 import gsap from "gsap";
-import AgentFlowIllustration from "./AgentFlowIllustration";
+import WorkflowPreview from "./WorkflowPreview";
 
 const CALENDLY_URL = "https://calendly.com/saasnhia/30min";
 
@@ -163,7 +163,7 @@ export default function Hero() {
 
         {/* Interactive flow diagram */}
         <div data-flow className="w-full mb-8 max-[900px]:mb-7" style={{ opacity: 0 }}>
-          <AgentFlowIllustration />
+          <WorkflowPreview />
         </div>
 
         {/* CTAs */}

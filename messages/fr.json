@@ -18,16 +18,32 @@
     "ctaSecondary": "Voir comment ça marche",
     "trust1": "🇫🇷 Données en France",
     "trust2": "📊 ROI mesuré",
-    "trust3": "🔓 Pas de lock-in"
-  },
-  "agentFlow": {
-    "pillAccounting": "Comptabilité",
-    "pillDevis": "Devis & Facturation",
-    "pillContent": "Contenu",
-    "pillCustom": "Sur mesure",
-    "yourData": "Vos données",
-    "yourDataDesc": "emails, docs, factures",
-    "inSeconds": "en quelques secondes"
+    "trust3": "🔓 Pas de lock-in",
+    "flow": {
+      "center": "Automatisé par NBHC",
+      "tabs": {
+        "accounting": "Comptabilité",
+        "invoicing": "Devis & Facturation",
+        "content": "Contenu",
+        "custom": "Sur mesure"
+      },
+      "accounting": {
+        "before": { "title": "Saisie manuelle", "sub": "Rapprochement, lettrage, TVA — 4h/jour" },
+        "after": { "title": "Rapports prêts", "sub": "FEC traité, TVA pré-remplie — en secondes" }
+      },
+      "invoicing": {
+        "before": { "title": "Devis à la main", "sub": "45 min par devis, relances oubliées" },
+        "after": { "title": "Devis envoyé et signé", "sub": "Conforme, signé, encaissé — 30 secondes" }
+      },
+      "content": {
+        "before": { "title": "Production manuelle", "sub": "Posts, newsletters, reporting — 3h/post" },
+        "after": { "title": "Contenu prêt", "sub": "Multi-canal, optimisé, planifié — 2 minutes" }
+      },
+      "custom": {
+        "before": { "title": "Tâches répétitives", "sub": "Heures perdues chaque semaine" },
+        "after": { "title": "Process automatisé", "sub": "24/7, zéro erreur, zéro oubli" }
+      }
+    }
   },
   "whyNow": {
     "eyebrow": "LE CONSTAT",
