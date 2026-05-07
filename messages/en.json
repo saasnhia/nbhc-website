@@ -22,26 +22,26 @@
     "flow": {
       "center": "Automated by NBHC",
       "tabs": {
-        "accounting": "Accounting",
-        "invoicing": "Quotes & Invoicing",
-        "content": "Content",
-        "custom": "Custom"
+        "emails": "Email comes in → it's handled",
+        "leads": "Lead comes in → they're followed up",
+        "reports": "Your data → a report ready",
+        "custom": "A repetitive task → it's gone"
       },
-      "accounting": {
-        "before": { "title": "Manual bookkeeping", "sub": "Reconciliation, month-end, VAT — 4h/day" },
-        "after": { "title": "Reports ready", "sub": "Books closed, VAT filed — in seconds" }
+      "emails": {
+        "before": { "title": "200 emails/day", "sub": "Read, sort, reply — 2h wasted every morning" },
+        "after": { "title": "Inbox under control", "sub": "Sorted, filed, draft reply — in real time" }
       },
-      "invoicing": {
-        "before": { "title": "Manual quoting", "sub": "45 min per quote, follow-ups forgotten" },
-        "after": { "title": "Quote sent & signed", "sub": "Compliant, signed, paid — 30 seconds" }
+      "leads": {
+        "before": { "title": "Lost prospects", "sub": "No time to follow up, unanswered quotes" },
+        "after": { "title": "Automated pipeline", "sub": "Qualified, quote sent, follow-up D+3/D+7/D+14" }
       },
-      "content": {
-        "before": { "title": "Manual production", "sub": "Posts, newsletters, reporting — 3h/post" },
-        "after": { "title": "Content ready", "sub": "Multi-channel, optimised, scheduled — 2 minutes" }
+      "reports": {
+        "before": { "title": "Manual reporting", "sub": "Spreadsheets, copy-paste, 4h every week" },
+        "after": { "title": "Automatic report", "sub": "5 sources compiled, anomalies flagged, PDF every Monday" }
       },
       "custom": {
-        "before": { "title": "Repetitive tasks", "sub": "Hours wasted every week" },
-        "after": { "title": "Automated process", "sub": "24/7, zero errors, zero missed steps" }
+        "before": { "title": "Manual processes", "sub": "The same steps, every day, for years" },
+        "after": { "title": "Automated", "sub": "24/7, zero errors — you steer, AI executes" }
       }
     }
   },

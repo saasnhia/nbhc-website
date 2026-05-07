@@ -22,26 +22,26 @@
     "flow": {
       "center": "Automatisé par NBHC",
       "tabs": {
-        "accounting": "Comptabilité",
-        "invoicing": "Devis & Facturation",
-        "content": "Contenu",
-        "custom": "Sur mesure"
+        "emails": "Un email arrive → il est traité",
+        "leads": "Un client vous contacte → il est relancé",
+        "reports": "Vos données → un rapport prêt",
+        "custom": "Une tâche répétitive → elle disparaît"
       },
-      "accounting": {
-        "before": { "title": "Saisie manuelle", "sub": "Rapprochement, lettrage, TVA — 4h/jour" },
-        "after": { "title": "Rapports prêts", "sub": "FEC traité, TVA pré-remplie — en secondes" }
+      "emails": {
+        "before": { "title": "200 emails/jour", "sub": "Lire, trier, répondre — 2h perdues chaque matin" },
+        "after": { "title": "Inbox maîtrisée", "sub": "Trié, classé, réponse proposée — en temps réel" }
       },
-      "invoicing": {
-        "before": { "title": "Devis à la main", "sub": "45 min par devis, relances oubliées" },
-        "after": { "title": "Devis envoyé et signé", "sub": "Conforme, signé, encaissé — 30 secondes" }
+      "leads": {
+        "before": { "title": "Prospects perdus", "sub": "Pas le temps de relancer, devis sans réponse" },
+        "after": { "title": "Pipeline automatisé", "sub": "Qualifié, devis envoyé, relancé J+3/J+7/J+14" }
       },
-      "content": {
-        "before": { "title": "Production manuelle", "sub": "Posts, newsletters, reporting — 3h/post" },
-        "after": { "title": "Contenu prêt", "sub": "Multi-canal, optimisé, planifié — 2 minutes" }
+      "reports": {
+        "before": { "title": "Reporting manuel", "sub": "Excel, copier-coller, 4h chaque semaine" },
+        "after": { "title": "Rapport automatique", "sub": "5 sources compilées, anomalies détectées, PDF chaque lundi" }
       },
       "custom": {
-        "before": { "title": "Tâches répétitives", "sub": "Heures perdues chaque semaine" },
-        "after": { "title": "Process automatisé", "sub": "24/7, zéro erreur, zéro oubli" }
+        "before": { "title": "Process manuels", "sub": "Les mêmes gestes, chaque jour, depuis des années" },
+        "after": { "title": "Automatisé", "sub": "24/7, zéro erreur — vous pilotez, l'IA exécute" }
       }
     }
   },

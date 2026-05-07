@@ -4,21 +4,21 @@ import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import gsap from "gsap";
 
-type TabKey = "accounting" | "invoicing" | "content" | "custom";
+type TabKey = "emails" | "leads" | "reports" | "custom";
 
-const TAB_KEYS: TabKey[] = ["accounting", "invoicing", "content", "custom"];
+const TAB_KEYS: TabKey[] = ["emails", "leads", "reports", "custom"];
 
 const TAB_ICONS: Record<TabKey, string> = {
-  accounting: "📊",
-  invoicing: "📝",
-  content: "🎬",
-  custom: "✨",
+  emails: "📨",
+  leads: "📋",
+  reports: "📊",
+  custom: "🔄",
 };
 
 const BEFORE_ICONS: Record<TabKey, string> = {
-  accounting: "📑",
-  invoicing: "📝",
-  content: "⏱️",
+  emails: "📨",
+  leads: "📋",
+  reports: "📊",
   custom: "🔄",
 };
 
@@ -89,7 +89,7 @@ function NbhcLogoMark() {
 }
 
 export default function WorkflowPreview() {
-  const [activeTab, setActiveTab] = useState<TabKey>("accounting");
+  const [activeTab, setActiveTab] = useState<TabKey>("emails");
   const cardsWrapRef = useRef<HTMLDivElement>(null);
   const arrowsRef = useRef<HTMLDivElement>(null);
   const t = useTranslations("hero");
@@ -163,11 +163,11 @@ export default function WorkflowPreview() {
       className="w-full"
       style={{ maxWidth: 920, margin: "0 auto", textAlign: "left" }}
     >
-      {/* Tabs */}
+      {/* Tabs — 2×2 grid on desktop, 1 column on mobile (long sentence labels) */}
       <div
         role="tablist"
         aria-label="Workflow examples"
-        className="flex items-center justify-center gap-2 mb-7 flex-wrap"
+        className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-7"
       >
         {TAB_KEYS.map((key) => {
           const isActive = activeTab === key;
@@ -178,22 +178,26 @@ export default function WorkflowPreview() {
               aria-selected={isActive}
               onClick={() => setActiveTab(key)}
               data-cursor="link"
-              className="inline-flex items-center gap-2 text-[12px] font-medium px-3.5 py-2 rounded-full transition-all duration-200 cursor-pointer"
+              className="inline-flex items-center gap-2.5 text-[13px] font-medium px-4 py-2.5 rounded-lg transition-all duration-200 cursor-pointer text-left"
               style={{
                 background: isActive
-                  ? "rgba(196,151,58,0.15)"
+                  ? "rgba(196,151,58,0.12)"
                   : "transparent",
                 border: isActive
                   ? "1px solid var(--gold-border)"
-                  : "1px solid rgba(255,255,255,0.08)",
+                  : "1px solid rgba(255,255,255,0.06)",
                 color: isActive ? "var(--gold-light)" : "#8C8880",
-                letterSpacing: "0.2px",
+                letterSpacing: "0.1px",
+                lineHeight: 1.35,
               }}
             >
-              <span aria-hidden style={{ fontSize: 14, lineHeight: 1 }}>
+              <span
+                aria-hidden
+                style={{ fontSize: 16, lineHeight: 1, flexShrink: 0 }}
+              >
                 {TAB_ICONS[key]}
               </span>
-              <span>{t(`flow.tabs.${key}`)}</span>
+              <span style={{ minWidth: 0 }}>{t(`flow.tabs.${key}`)}</span>
             </button>
           );
         })}
