@@ -18,7 +18,7 @@
     "ctaSecondary": "Voir comment ça marche",
     "trust1": "🇫🇷 Données en France",
     "trust2": "📊 ROI mesuré",
-    "trust3": "🔓 Pas de lock-in",
+    "trust3": "🔓 Tout vous appartient",
     "flow": {
       "center": "Automatisé par NBHC",
       "tabs": {
@@ -147,7 +147,7 @@
     "customFeature4": "Multi-workflows",
     "customFeature5": "Support prioritaire",
     "ctaButton": "Réserver mon diagnostic →",
-    "footnote1": "Vous restez propriétaire de votre stack. Pas de lock-in. Si vous voulez partir après le run, vous gardez tout.",
+    "footnote1": "Vous restez propriétaire de votre stack. Tout vous appartient. Si vous voulez partir après le run, vous gardez tout.",
     "footnote2": "Coûts d'infrastructure (n8n, Mistral, Airtable) : 80-300€/mois, payés directement aux fournisseurs."
   },
   "differentiators": {
