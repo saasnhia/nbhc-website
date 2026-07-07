@@ -80,6 +80,16 @@
     "btpSolution": "We automate your quotes, follow-ups and billing. Live in 2-3 weeks.",
     "btpFootnote": "From €2,000 excl. VAT",
     "btpHref": "/automatisation-artisan-btp",
+    "formationName": "Training organizations",
+    "formationPain": "OPCO files stuck, attendance sheets to archive, a Qualiopi audit coming up.",
+    "formationSolution": "We automate OPCO tracking, attendance and notices. You stay the decision-maker.",
+    "formationFootnote": "From €2,000 excl. VAT",
+    "formationHref": "/automatisation-organisme-formation",
+    "pharmaName": "Pharmacies",
+    "pharmaPain": "BPM-eligible patients undetected, shortages found too late, payer rejections piling up.",
+    "pharmaSolution": "We automate detection, alerts and rejection sorting. You decide and bill.",
+    "pharmaFootnote": "From €2,000 excl. VAT",
+    "pharmaHref": "/automatisation-pharmacie",
     "otherSectorsTitle": "Other sectors we support",
     "agenciesName": "Agencies & communications",
     "agenciesPain": "Posts, newsletters, client reporting — all done by hand.",
@@ -350,6 +360,63 @@
         "Message received (email, SMS or WhatsApp)",
         "Message automatically filed under the right client",
         "Centralized history available in one place"
+      ]
+    },
+    "formation": {
+      "w0107": [
+        "New document generated (attendance sheet, survey, certificate)",
+        "Automatic filing by Qualiopi indicator",
+        "Dashboard of incomplete indicators",
+        "You judge whether evidence is sufficient before the audit"
+      ],
+      "w0102": [
+        "OPCO funding file opened at enrollment",
+        "Required documents checklist verified automatically",
+        "Follow-up sent if a document is missing or delay is abnormal",
+        "Template approved by you, OPCO relationship stays in your hands"
+      ],
+      "w0103": [
+        "Training session scheduled",
+        "Attendance sheet generated with required mentions",
+        "Signed document automatically archived (6-year legal duration)"
+      ],
+      "w0104": [
+        "Enrollment confirmed (direct, OPCO or CPF)",
+        "Notice generated with mandatory mentions and attached documents",
+        "Automatic sending at least 2 weeks before the session",
+        "Template approved by you; alert if session changes urgently"
+      ]
+    },
+    "pharmacie": {
+      "wph01": [
+        "Periodic cross-check of patient data against BPM criteria",
+        "List of potentially eligible patients generated",
+        "Invitation draft prepared for chosen patients",
+        "Written patient consent required, you lead the interview and bill"
+      ],
+      "wph04": [
+        "Detection of patients on eligible chronic treatment",
+        "Annual interview due-date reminder prepared",
+        "Pre-filled preparation sheet",
+        "Patient consent required, you lead the interview and bill"
+      ],
+      "wph03": [
+        "Stock and pending orders tracked",
+        "Cross-checked against available shortage information",
+        "Alert generated with alternative proposal",
+        "Any substitution stays a pharmacist decision you approve"
+      ],
+      "wph06": [
+        "Third-party payer rejection returns imported daily",
+        "Automatic classification by likely reason",
+        "Draft contestation letter prepared",
+        "You approve and send each contestation"
+      ],
+      "wph05": [
+        "Quality document produced (temperature, round, register)",
+        "Automatic filing by relevant register",
+        "Dashboard of missing documents",
+        "You judge whether evidence is sufficient before inspection"
       ]
     }
   }
