@@ -61,13 +61,39 @@ export default function SectorPageContent({
   return (
     <main style={{ background: "var(--bg)" }}>
       <Nav />
+      <style>{`
+        .automation-card {
+          transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+        }
+        .flow-node {
+          transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        @media (hover: hover) and (pointer: fine) {
+          .automation-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--gold-border);
+            box-shadow: 0 20px 44px -16px rgba(0,0,0,0.4), 0 0 0 1px rgba(196,151,58,0.08);
+          }
+          .automation-card:hover .flow-node {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 18px -8px rgba(0,0,0,0.35);
+          }
+          .automation-card:hover .flow-node--validation {
+            box-shadow: 0 0 0 3px rgba(196,151,58,0.14), 0 8px 18px -8px rgba(0,0,0,0.35);
+          }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .automation-card, .flow-node { transition: none !important; }
+          .automation-card:hover { transform: none !important; }
+          .automation-card:hover .flow-node { transform: none !important; }
+        }
+      `}</style>
       <div
         style={{
-          maxWidth: 900,
           margin: "0 auto",
           padding: "160px 40px 100px",
         }}
-        className="max-[700px]:!px-5"
+        className="max-w-[900px] lg:max-w-[1120px] max-[700px]:!px-5"
       >
         <Link
           href={`/${locale}`}
@@ -196,57 +222,76 @@ export default function SectorPageContent({
           >
             {content.automationsIntro}
           </p>
-          <div className="flex flex-col gap-4">
-            {content.automations.map((a) => (
-              <div
-                key={a.code}
-                style={{
-                  padding: 24,
-                  background: "rgba(255,255,255,0.02)",
-                  border: "1px solid var(--border)",
-                  borderRadius: "var(--radius)",
-                }}
-              >
+          <div className="flex flex-col gap-5 lg:gap-6">
+            {content.automations.map((a, i) => {
+              const hasFlow = !!(a.flowSteps && a.flowSteps.length > 0);
+              const alternate = i % 2 === 1;
+              const textCol = !hasFlow
+                ? "lg:col-span-2"
+                : alternate
+                  ? "lg:col-start-2"
+                  : "lg:col-start-1";
+              const flowCol = alternate ? "lg:col-start-1" : "lg:col-start-2";
+              return (
                 <div
-                  className="flex items-center gap-3 flex-wrap"
-                  style={{ marginBottom: 10 }}
+                  key={a.code}
+                  className="automation-card lg:grid lg:grid-cols-2 lg:gap-x-12 lg:gap-y-0 lg:items-center lg:p-9"
+                  style={{
+                    padding: 24,
+                    background: "rgba(255,255,255,0.02)",
+                    border: "1px solid var(--border)",
+                    borderRadius: "var(--radius)",
+                  }}
                 >
-                  <span
-                    style={{
-                      fontSize: 11,
-                      fontWeight: 700,
-                      letterSpacing: 1,
-                      color: "var(--gold)",
-                      background: "var(--gold-dim)",
-                      border: "1px solid var(--gold-border)",
-                      borderRadius: 999,
-                      padding: "3px 10px",
-                    }}
+                  <div
+                    className={`flex items-center gap-3 flex-wrap ${textCol} lg:row-start-1`}
+                    style={{ marginBottom: 10 }}
                   >
-                    {a.code}
-                  </span>
-                  <span
-                    style={{
-                      fontFamily: "var(--font-syne)",
-                      fontSize: 17,
-                      fontWeight: 700,
-                      color: "var(--text)",
-                    }}
+                    <span
+                      style={{
+                        fontSize: 11,
+                        fontWeight: 700,
+                        letterSpacing: 1,
+                        color: "var(--gold)",
+                        background: "var(--gold-dim)",
+                        border: "1px solid var(--gold-border)",
+                        borderRadius: 999,
+                        padding: "3px 10px",
+                      }}
+                    >
+                      {a.code}
+                    </span>
+                    <span
+                      style={{
+                        fontFamily: "var(--font-syne)",
+                        fontSize: 17,
+                        fontWeight: 700,
+                        color: "var(--text)",
+                      }}
+                      className="lg:text-[19px]"
+                    >
+                      {a.title}
+                    </span>
+                  </div>
+                  {a.flowSteps && a.flowSteps.length > 0 && (
+                    <div
+                      className={`${flowCol} lg:row-start-1 lg:row-span-2 mt-1 lg:mt-0`}
+                    >
+                      <AutomationFlow
+                        steps={a.flowSteps}
+                        ariaLabel={a.flowAriaLabel ?? a.title}
+                      />
+                    </div>
+                  )}
+                  <p
+                    style={{ color: "var(--text-muted)", fontSize: 14, lineHeight: 1.7, margin: 0 }}
+                    className={`${textCol} lg:row-start-2 lg:text-[14.5px]`}
                   >
-                    {a.title}
-                  </span>
+                    {a.description}
+                  </p>
                 </div>
-                {a.flowSteps && a.flowSteps.length > 0 && (
-                  <AutomationFlow
-                    steps={a.flowSteps}
-                    ariaLabel={a.flowAriaLabel ?? a.title}
-                  />
-                )}
-                <p style={{ color: "var(--text-muted)", fontSize: 14, lineHeight: 1.7, margin: 0 }}>
-                  {a.description}
-                </p>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </section>
 
