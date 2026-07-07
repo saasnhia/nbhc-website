@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Nav from "./Nav";
 import Footer from "./Footer";
+import AutomationFlow, { type FlowStep } from "./AutomationFlow";
 
 const CALENDLY_URL = "https://calendly.com/saasnhia/30min";
 
@@ -8,6 +9,11 @@ export type Automation = {
   code: string;
   title: string;
   description: string;
+  /** Mechanism diagram steps — how it works, not a result. Optional so
+   *  automations without a clear trigger->action->validation sequence can
+   *  simply omit the diagram rather than force one. */
+  flowSteps?: FlowStep[];
+  flowAriaLabel?: string;
 };
 
 export type PainPoint = {
@@ -230,6 +236,12 @@ export default function SectorPageContent({
                     {a.title}
                   </span>
                 </div>
+                {a.flowSteps && a.flowSteps.length > 0 && (
+                  <AutomationFlow
+                    steps={a.flowSteps}
+                    ariaLabel={a.flowAriaLabel ?? a.title}
+                  />
+                )}
                 <p style={{ color: "var(--text-muted)", fontSize: 14, lineHeight: 1.7, margin: 0 }}>
                   {a.description}
                 </p>

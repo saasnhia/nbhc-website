@@ -1,7 +1,19 @@
-import { setRequestLocale } from "next-intl/server";
+import { setRequestLocale, getTranslations } from "next-intl/server";
 import SectorPageContent, { type SectorContent } from "../../../components/SectorPageContent";
 import JsonLd from "../../../components/JsonLd";
 import { serviceSchema, breadcrumbSchema, faqPageSchema } from "../../../lib/schema";
+import { zipFlowSteps, type FlowStepKind } from "../../../components/AutomationFlow";
+
+const FLOW_KINDS: Record<string, FlowStepKind[]> = {
+  "W-SPORT-06": ["trigger", "process", "action", "action"],
+  "W-SPORT-09": ["trigger", "process", "validation", "action"],
+  "W-SPORT-07": ["trigger", "process", "action"],
+};
+const FLOW_MSG_KEY: Record<string, string> = {
+  "W-SPORT-06": "w0106",
+  "W-SPORT-09": "w0109",
+  "W-SPORT-07": "w0107",
+};
 
 const contentFr: SectorContent = {
   eyebrow: "ASSOCIATIONS SPORTIVES · LOI 1901",
@@ -195,8 +207,19 @@ export default async function Page({
   const { locale } = await params;
   setRequestLocale(locale);
   const isFr = locale === "fr";
-  const content = isFr ? contentFr : contentEn;
+  const baseContent = isFr ? contentFr : contentEn;
   const pageUrl = `https://nbhc.fr/${locale}/automatisation-association-sportive`;
+
+  const t = await getTranslations({ locale, namespace: "automationFlows.asso" });
+  const content: SectorContent = {
+    ...baseContent,
+    automations: baseContent.automations.map((a) => {
+      const kinds = FLOW_KINDS[a.code];
+      const msgKey = FLOW_MSG_KEY[a.code];
+      if (!kinds || !msgKey) return a;
+      return { ...a, flowSteps: zipFlowSteps(kinds, t.raw(msgKey)) };
+    }),
+  };
 
   return (
     <>
