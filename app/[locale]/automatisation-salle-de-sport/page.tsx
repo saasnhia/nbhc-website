@@ -72,7 +72,7 @@ const contentFr: SectorContent = {
       code: "W-SPORT-03",
       title: "Relance des abonnements à échéance + réactivation des inactifs",
       description:
-        "Détection automatique des adhérents à échéance ou inactifs depuis plusieurs semaines, relance personnalisée et progressive. Une relance envoyée dans les 24h suivant un incident de paiement a un taux de récupération jusqu'à 3 fois supérieur à une relance à J+7 (Churnkey, 2025).",
+        "Détection automatique des adhérents à échéance ou inactifs depuis plusieurs semaines, relance personnalisée et progressive. Une séquence de relance automatisée (email + SMS) récupère en moyenne 42% des paiements échoués, contre 70% de l'ensemble des impayés \"involontaires\" une fois toutes les méthodes de recouvrement combinées (Churnkey, State of Retention 2025).",
     },
     {
       code: "W-SPORT-05",
@@ -174,7 +174,7 @@ const contentEn: SectorContent = {
       code: "W-SPORT-03",
       title: "Membership renewal follow-up + inactive member reactivation",
       description:
-        "Automatic detection of members nearing renewal or inactive for several weeks, personalized progressive follow-up. A follow-up sent within 24h of a payment failure has up to 3x the recovery rate of one sent on day 7 (Churnkey, 2025).",
+        "Automatic detection of members nearing renewal or inactive for several weeks, personalized progressive follow-up. An automated follow-up sequence (email + SMS) recovers 42% of failed payments on average, versus 70% of all involuntary churn once every recovery method is combined (Churnkey, State of Retention 2025).",
     },
     {
       code: "W-SPORT-05",
