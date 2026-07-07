@@ -1,7 +1,26 @@
-import { setRequestLocale } from "next-intl/server";
+import { setRequestLocale, getTranslations } from "next-intl/server";
 import SectorPageContent, { type SectorContent } from "../../../components/SectorPageContent";
 import JsonLd from "../../../components/JsonLd";
 import { serviceSchema, breadcrumbSchema, faqPageSchema } from "../../../lib/schema";
+import { zipFlowSteps, type FlowStepKind } from "../../../components/AutomationFlow";
+
+// Structural shape of each automation's mechanism diagram (trigger -> ... ->
+// validation). Not translatable — the labels come from
+// messages/*.json (automationFlows.sport.*) via getTranslations below.
+const FLOW_KINDS: Record<string, FlowStepKind[]> = {
+  "W-SPORT-01": ["trigger", "process", "action", "action"],
+  "W-SPORT-02": ["trigger", "process", "action", "validation"],
+  "W-SPORT-03": ["trigger", "process", "action"],
+  "W-SPORT-05": ["trigger", "process", "action", "validation"],
+  "W-SPORT-08": ["trigger", "process", "action"],
+};
+const FLOW_MSG_KEY: Record<string, string> = {
+  "W-SPORT-01": "w0101",
+  "W-SPORT-02": "w0102",
+  "W-SPORT-03": "w0103",
+  "W-SPORT-05": "w0105",
+  "W-SPORT-08": "w0108",
+};
 
 const contentFr: SectorContent = {
   eyebrow: "SALLES DE SPORT · STUDIOS · INSTITUTS BIEN-ÊTRE",
@@ -215,8 +234,19 @@ export default async function Page({
   const { locale } = await params;
   setRequestLocale(locale);
   const isFr = locale === "fr";
-  const content = isFr ? contentFr : contentEn;
+  const baseContent = isFr ? contentFr : contentEn;
   const pageUrl = `https://nbhc.fr/${locale}/automatisation-salle-de-sport`;
+
+  const t = await getTranslations({ locale, namespace: "automationFlows.sport" });
+  const content: SectorContent = {
+    ...baseContent,
+    automations: baseContent.automations.map((a) => {
+      const kinds = FLOW_KINDS[a.code];
+      const msgKey = FLOW_MSG_KEY[a.code];
+      if (!kinds || !msgKey) return a;
+      return { ...a, flowSteps: zipFlowSteps(kinds, t.raw(msgKey)) };
+    }),
+  };
 
   return (
     <>
