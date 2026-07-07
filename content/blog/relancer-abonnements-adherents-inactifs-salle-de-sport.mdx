@@ -1,0 +1,61 @@
+---
+title: "Relancer les abonnements et réactiver les adhérents inactifs d'une salle de sport"
+date: "2026-07-07"
+description: "Un adhérent qui paie sans venir n'est pas un client fidèle, c'est un client qui va résilier. Ce que disent les chiffres du secteur et comment automatiser la relance sans invention."
+tags: ["salle de sport", "abonnements", "impayés", "rétention", "automatisation"]
+---
+
+## Le problème : l'abonnement continue, la présence non
+
+Un adhérent qui paie son abonnement mais ne vient plus depuis des semaines n'est pas un signe de bonne santé financière — c'est un client en train de partir, sans vous prévenir. Le jour où il finit par résilier (ou où son prélèvement échoue), c'est souvent trop tard pour le retenir : la décision était déjà prise depuis longtemps.
+
+Le vrai enjeu n'est donc pas seulement de relancer les paiements en échec, mais de repérer l'inactivité avant qu'elle ne devienne une résiliation.
+
+## Ce que disent les chiffres du secteur
+
+Ces chiffres sont issus d'une compilation de statistiques du secteur fitness (Smart Health Clubs, 2025) :
+
+- **67% des abonnements en salle de sport sont totalement inutilisés.**
+- **14% des adhérents n'ont pas mis les pieds dans leur salle depuis un mois, mais continuent de payer.**
+- **50% des nouveaux adhérents arrêtent dans les 6 premiers mois**, la majorité abandonnant dès les 90 premiers jours.
+- Le taux de rétention annuel moyen tourne autour de **60%** — soit environ 40% des adhérents qui ne renouvellent pas d'une année sur l'autre.
+
+**Source :** [Smart Health Clubs, 100 Gym Membership + Retention Statistics, 2025](https://smarthealthclubs.com/blog/100-gym-membership-retention-statistics/)
+
+Sur la partie strictement paiement (prélèvements qui échouent, impayés), le rapport State of Retention 2025 de Churnkey donne des chiffres précis sur ce qui fonctionne réellement :
+
+- **70% de l'ensemble des impayés « involontaires »** (carte expirée, solde insuffisant, etc.) ont été récupérés en 2024, tous canaux de récupération combinés.
+- Sur les seules campagnes de relance par **email et SMS**, le taux de récupération moyen était de **42%**.
+
+**Source :** [Churnkey, State of Retention 2025](https://churnkey.co/reports/state-of-retention-2025)
+
+Un point d'honnêteté : Churnkey ne publie pas de comparaison chiffrée précise entre une relance très rapide et une relance tardive — le rapport indique seulement que le bon timing d'une nouvelle tentative de paiement (par exemple, éviter les dates où la carte a le plus de chances d'être à découvert) améliore le taux de passage. Si vous avez déjà lu une statistique affirmant qu'une relance à 24h récupère « 3 fois plus » qu'une relance à J+7, nous n'avons pas retrouvé cette donnée dans la source — nous préférons le dire plutôt que de la reprendre.
+
+## Pourquoi la relance manuelle ne suffit pas
+
+Détecter un adhérent inactif suppose de croiser deux informations en continu : la date du dernier passage (badge, réservation) et la date d'échéance de l'abonnement. À la main, sur un tableur ou même dans la plupart des logiciels de gestion basiques, personne ne fait ce croisement systématiquement — on le fait quand on y pense, c'est-à-dire trop tard.
+
+## Ce qui fonctionne : la séquence, pas le rappel isolé
+
+Le chiffre le plus utile ci-dessus n'est pas le taux de récupération global, c'est l'écart entre 42% (email/SMS seuls) et 70% (toutes méthodes combinées) : une seule relance générique récupère moins qu'une séquence progressive qui combine plusieurs canaux et plusieurs tentatives.
+
+## Comment NBHC automatise ça
+
+Le mécanisme mis en place pour une salle de sport ou un studio :
+
+- **Détection** — un adhérent à échéance ou inactif depuis plusieurs semaines est identifié automatiquement (croisement fréquentation + facturation).
+- **Segmentation** — le message diffère selon qu'il s'agit d'un simple rappel d'échéance ou d'une réactivation après plusieurs semaines d'absence.
+- **Relance progressive** — séquence par SMS et email, sans repartir d'un message générique à chaque fois.
+- **Suivi humain** — vous gardez la main sur les cas particuliers (litige, demande de résiliation explicite) que l'automatisation ne doit pas traiter seule.
+
+Ce mécanisme fait partie du catalogue détaillé sur notre page [automatisation pour salles de sport et instituts bien-être](/automatisation-salle-de-sport), aux côtés des automatisations de rappel de cours et d'accueil téléphonique.
+
+## Ce que ça ne remplace pas
+
+Une séquence de relance bien construite récupère des paiements et retarde des résiliations — elle ne traite pas la cause profonde d'un adhérent qui ne vient plus (cours qui ne correspond plus à ses horaires, absence de suivi, ambiance). Si l'inactivité touche une grande partie de votre base et pas seulement quelques profils isolés, le sujet à creuser est probablement ailleurs que dans l'outil de relance.
+
+## Aller plus loin
+
+Si le sujet qui vous fait perdre le plus de temps est plutôt les cours collectifs à moitié vides, l'article sur [réduire les no-shows en cours collectifs](/blog/reduire-no-show-cours-collectifs-salle-de-sport) traite ce problème spécifiquement.
+
+Pour un diagnostic gratuit de 30 minutes sur votre situation, sans engagement : [réservez votre créneau](https://calendly.com/saasnhia/30min).
