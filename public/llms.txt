@@ -8,16 +8,22 @@
 - [Devizly](https://devizly.fr): Générateur de devis et factures IA pour artisans et freelances français. Conforme Factur-X, signature électronique, encaissement Stripe, intégration Pennylane. Stack: Next.js, Mistral, Supabase, Stripe.
 - Worthifast (en développement): Automatisation comptable IA pour cabinets. Agents FEC, anomalies, TVA CA3, rapprochement bancaire. Stack: Next.js, Mistral, Supabase, PostgreSQL.
 
-## Services (Agentic AI as a Service)
+## Services (automatisation par workflows n8n + agents IA)
 
-NBHC propose des équipes d'agents IA sur mesure déployées dans l'entreprise du client :
-- Starter: 490€/mois (offre Fondateur) — 1 équipe de 3-4 agents, 5 000 opérations/mois
-- Growth: 1 290€/mois (offre Fondateur) — 2 équipes de 6-8 agents, 50 000 opérations/mois
-- Enterprise: sur devis à partir de 3 500€/mois — équipes illimitées, on-premise possible, SLA 99.9%
+NBHC conçoit, teste et opère des workflows d'automatisation sur mesure pour l'entreprise du client. Diagnostic de 30 minutes gratuit et systématique avant tout engagement. Philosophie "tout vous appartient" : le client reste propriétaire de sa stack (n8n, données, workflows) et peut tout emporter s'il part.
 
-## Secteurs ciblés
+- Quick Win : à partir de 2 000€ HT — 1 workflow n8n sur mesure, livré en 2-3 semaines, 3 mois de suivi inclus.
+- Standard : à partir de 4 000€ HT + performance fee de 30% du ROI mesuré (plafonnée à 2× le prix du build) — workflow avec intégrations métier (Pennylane, Lucca, etc.), testé sur 100 à 500 cas réels, 6 mois de run avec ajustements, dashboard ROI transparent.
+- Sur mesure : sur devis — multi-intégrations, ERP, SIRH, on-premise, pour les projets complexes.
+- Coûts d'infrastructure (n8n, Mistral, Airtable) facturés séparément par les fournisseurs : 80-300€/mois selon le volume.
 
-Comptabilité et cabinets d'expertise, BTP et artisans, création de contenu vidéo, e-commerce, santé, immobilier.
+## Secteurs ciblés (niches prospectées activement)
+
+- Salles de sport, studios (yoga/pilates/danse/arts martiaux) et instituts bien-être/spa
+- Associations sportives (loi 1901) : gestion des licences, certificats, cotisations, convocations
+- Garages et carrosseries automobiles indépendants
+- Artisans et TPE du bâtiment (BTP) : devis, relances, facturation
+- Autres secteurs accompagnés ponctuellement : experts-comptables (lien avec Worthifast), avocats et notaires, création de contenu vidéo, e-commerce, santé, immobilier
 
 ## Contact
 
@@ -30,7 +36,10 @@ Comptabilité et cabinets d'expertise, BTP et artisans, création de contenu vid
 
 - https://nbhc.fr/fr — Accueil (français)
 - https://nbhc.fr/en — Home (English)
-- https://nbhc.fr/fr/agentic-ai — Offre Agentic AI as a Service + tarifs
+- https://nbhc.fr/fr/automatisation-salle-de-sport — Salles de sport, studios, instituts bien-être
+- https://nbhc.fr/fr/automatisation-association-sportive — Associations sportives loi 1901
+- https://nbhc.fr/fr/automatisation-garage-automobile — Garages et carrosseries automobiles
+- https://nbhc.fr/fr/automatisation-artisan-btp — Artisans et TPE du bâtiment
 - https://nbhc.fr/fr/contact — Diagnostic gratuit 30 minutes
 - https://nbhc.fr/fr/blog — Articles IA & automatisation
 - https://nbhc.fr/fr/faq — Questions fréquentes

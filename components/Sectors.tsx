@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { useTranslations } from "next-intl";
+import { Link } from "../i18n/navigation";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -13,30 +14,59 @@ export default function Sectors() {
   const sectionRef = useRef<HTMLElement>(null);
   const t = useTranslations("sectors");
 
-  const sectors = [
+  // The 4 niches NBHC actively prospects in the field — each has its own
+  // dedicated, indexable page (see SEO_AUDIT_STRATEGIE.md GATE 2).
+  const primarySectors = [
+    {
+      icon: "🏋️",
+      name: t("sportName"),
+      pain: t("sportPain"),
+      solution: t("sportSolution"),
+      footnote: t("sportFootnote"),
+      href: t("sportHref"),
+    },
+    {
+      icon: "🤝",
+      name: t("sportAssoName"),
+      pain: t("sportAssoPain"),
+      solution: t("sportAssoSolution"),
+      footnote: t("sportAssoFootnote"),
+      href: t("sportAssoHref"),
+    },
+    {
+      icon: "🔧",
+      name: t("garageName"),
+      pain: t("garagePain"),
+      solution: t("garageSolution"),
+      footnote: t("garageFootnote"),
+      href: t("garageHref"),
+    },
     {
       icon: "🏗️",
       name: t("btpName"),
       pain: t("btpPain"),
       solution: t("btpSolution"),
-      roi: t("btpRoi"),
+      footnote: t("btpFootnote"),
+      href: t("btpHref"),
     },
+  ];
+
+  // Other sectors NBHC occasionally supports (e.g. via Worthifast for
+  // accounting) — kept, but deliberately secondary to the 4 niches above.
+  const otherSectors = [
     {
-      icon: "📣",
       name: t("agenciesName"),
       pain: t("agenciesPain"),
       solution: t("agenciesSolution"),
       roi: t("agenciesRoi"),
     },
     {
-      icon: "📊",
       name: t("accountingName"),
       pain: t("accountingPain"),
       solution: t("accountingSolution"),
       roi: t("accountingRoi"),
     },
     {
-      icon: "⚖️",
       name: t("legalName"),
       pain: t("legalPain"),
       solution: t("legalSolution"),
@@ -131,11 +161,10 @@ export default function Sectors() {
       </p>
 
       <div className="grid grid-cols-2 max-[700px]:grid-cols-1 gap-5">
-        {sectors.map((s) => (
-          <a
+        {primarySectors.map((s) => (
+          <Link
             key={s.name}
-            href="#pricing"
-            onClick={scrollToPricing}
+            href={s.href}
             data-sector-card
             data-cursor="card"
             className="p-7 block no-underline transition-colors duration-300 group"
@@ -178,7 +207,7 @@ export default function Sectors() {
                 borderTop: "1px solid var(--border)",
               }}
             >
-              {s.roi}
+              {s.footnote}
             </div>
             <div
               className="mt-4 text-[13px] font-medium transition-transform duration-200 group-hover:translate-x-1"
@@ -186,8 +215,46 @@ export default function Sectors() {
             >
               {t("learnMore")}
             </div>
-          </a>
+          </Link>
         ))}
+      </div>
+
+      <div className="mt-16">
+        <div
+          className="text-[12px] font-semibold tracking-[2px] uppercase mb-5"
+          style={{ color: "var(--text-dim)" }}
+        >
+          {t("otherSectorsTitle")}
+        </div>
+        <div className="grid grid-cols-3 max-[700px]:grid-cols-1 gap-4">
+          {otherSectors.map((s) => (
+            <a
+              key={s.name}
+              href="#pricing"
+              onClick={scrollToPricing}
+              data-cursor="card"
+              className="p-5 block no-underline transition-colors duration-300"
+              style={{
+                background: "rgba(255,255,255,0.015)",
+                border: "1px solid var(--border)",
+                borderRadius: "var(--radius-sm)",
+              }}
+            >
+              <div
+                className="text-[15px] font-bold mb-2"
+                style={{ fontFamily: "var(--font-syne)", color: "var(--text-muted)" }}
+              >
+                {s.name}
+              </div>
+              <p className="text-[13px] mb-2" style={{ color: "var(--text-dim)", lineHeight: 1.6 }}>
+                {s.pain}
+              </p>
+              <div className="text-[11px] font-medium" style={{ color: "var(--text-dim)" }}>
+                {s.roi}
+              </div>
+            </a>
+          ))}
+        </div>
       </div>
 
       <div className="mt-14 text-center">
