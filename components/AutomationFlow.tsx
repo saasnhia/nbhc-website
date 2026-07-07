@@ -8,6 +8,14 @@
  * Deliberately shows MECHANISM only (how it works), never a result or
  * metric — NBHC has no client references to show, so this diagram must
  * never be mistaken for a results dashboard.
+ *
+ * Icon choice: the `kind` (trigger/process/action/validation) picks a
+ * fallback icon, but a concrete pictogram is preferred when the label text
+ * matches a recognizable action (SMS, appel, dossier, alerte...) so the
+ * reader understands the mechanism without reading every word. The
+ * validation icon is never overridden this way — it must stay the same
+ * recognizable checkmark everywhere so "a human decides here" reads
+ * consistently across every diagram.
  */
 
 import { Fragment } from "react";
@@ -29,7 +37,7 @@ export function zipFlowSteps(kinds: FlowStepKind[], labels: unknown): FlowStep[]
 
 function TriggerIcon() {
   return (
-    <svg width="16" height="16" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+    <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true">
       <path
         d="M11.5 2L4 12h5.2l-1.2 6L16 8h-5.2l0.7-6z"
         stroke="currentColor"
@@ -44,7 +52,7 @@ function TriggerIcon() {
 
 function ProcessIcon() {
   return (
-    <svg width="16" height="16" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+    <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true">
       <path
         d="M4 9.5a6 6 0 0 1 10-4.2M16 3v4.3h-4.3"
         stroke="currentColor"
@@ -65,7 +73,7 @@ function ProcessIcon() {
 
 function ActionIcon() {
   return (
-    <svg width="16" height="16" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+    <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true">
       <path
         d="M2.5 10.5L17 3.5l-5.5 14-2-6-6-1z"
         stroke="currentColor"
@@ -80,7 +88,7 @@ function ActionIcon() {
 
 function ValidationIcon() {
   return (
-    <svg width="16" height="16" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+    <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true">
       <circle cx="10" cy="10" r="7.5" stroke="currentColor" strokeWidth="1.4" />
       <path
         d="M6.7 10.2l2.2 2.2 4.4-4.6"
@@ -93,12 +101,145 @@ function ValidationIcon() {
   );
 }
 
-const ICONS: Record<FlowStepKind, () => ReturnType<typeof TriggerIcon>> = {
+function MessageIcon() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+      <path
+        d="M3 4.5h14a1 1 0 0 1 1 1V13a1 1 0 0 1-1 1H8l-3.8 3v-3H3a1 1 0 0 1-1-1V5.5a1 1 0 0 1 1-1z"
+        stroke="currentColor"
+        strokeWidth="1.4"
+        strokeLinejoin="round"
+      />
+      <path d="M6 8h8M6 11h5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function MailIcon() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+      <rect x="2.5" y="4.5" width="15" height="11" rx="1.5" stroke="currentColor" strokeWidth="1.4" />
+      <path d="M3 5.5l7 5.5 7-5.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+function PhoneIcon() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+      <path
+        d="M5 3h2.3l1 3.5-1.7 1.3a9 9 0 0 0 5.6 5.6l1.3-1.7 3.5 1v2.3c0 .9-.8 1.6-1.7 1.4-6-1-10.6-5.6-11.6-11.6C3.4 3.8 4.1 3 5 3z"
+        stroke="currentColor"
+        strokeWidth="1.4"
+        strokeLinejoin="round"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
+
+function SearchIcon() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+      <circle cx="8.5" cy="8.5" r="5" stroke="currentColor" strokeWidth="1.4" />
+      <path d="M15.5 15.5l-3-3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function DocumentIcon() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+      <path
+        d="M5.5 2.5h6l3 3v11a1 1 0 0 1-1 1h-8a1 1 0 0 1-1-1v-13a1 1 0 0 1 1-1z"
+        stroke="currentColor"
+        strokeWidth="1.4"
+        strokeLinejoin="round"
+      />
+      <path d="M11.5 2.5v3h3" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round" />
+      <path d="M7 10.5h6M7 13.5h6" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function CalendarIcon() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+      <rect x="2.5" y="4" width="15" height="13" rx="1.5" stroke="currentColor" strokeWidth="1.4" />
+      <path d="M2.5 7.5h15M6 2.5v3M14 2.5v3" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
+      <circle cx="7" cy="11.3" r="1" fill="currentColor" />
+      <circle cx="10" cy="11.3" r="1" fill="currentColor" />
+    </svg>
+  );
+}
+
+function AlertIcon() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+      <path
+        d="M10 2.8L18 16.5H2L10 2.8z"
+        stroke="currentColor"
+        strokeWidth="1.4"
+        strokeLinejoin="round"
+        strokeLinecap="round"
+      />
+      <path d="M10 8v4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+      <circle cx="10" cy="14" r="0.9" fill="currentColor" />
+    </svg>
+  );
+}
+
+function FolderIcon() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+      <path
+        d="M2.5 5.5a1 1 0 0 1 1-1h4l1.5 2h7.5a1 1 0 0 1 1 1v7.5a1 1 0 0 1-1 1h-13a1 1 0 0 1-1-1v-9.5z"
+        stroke="currentColor"
+        strokeWidth="1.4"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+const KIND_ICONS: Record<FlowStepKind, () => ReturnType<typeof TriggerIcon>> = {
   trigger: TriggerIcon,
   process: ProcessIcon,
   action: ActionIcon,
   validation: ValidationIcon,
 };
+
+// Keyword -> concrete pictogram. Checked in order; first match wins. Applied
+// only to trigger/process/action steps — validation always keeps its own
+// icon (see pickIcon) so the "human decides here" signal never changes shape.
+const KEYWORD_ICONS: [RegExp, () => ReturnType<typeof TriggerIcon>][] = [
+  [/\bsms\b|message/i, MessageIcon],
+  [/email|e-mail|courriel/i, MailIcon],
+  [/\bappels?\b|téléphon|standard/i, PhoneIcon],
+  [/détect|identifi|recherch|croisement|croise/i, SearchIcon],
+  [/rupture|alerte|anomalie|rejet|incomplet/i, AlertIcon],
+  [/planning|échéance|rendez-vous|session|créneau|calendrier|programmé/i, CalendarIcon],
+  [/archiv|class(é|ement)/i, FolderIcon],
+  [/dossier|document|fiche|pièce|certificat|attestation|devis|facture|courrier|convocation/i, DocumentIcon],
+];
+
+// Icons that mean "a specific artifact/document exists" read oddly on a
+// "process" step (internal checking/computation) — e.g. a label that just
+// happens to mention "devis" while describing an AI qualifying a request.
+// Process steps keep the generic sync icon unless another, more process-y
+// keyword (search, alert, calendar...) matches instead.
+const PROCESS_EXCLUDED = new Set([DocumentIcon, FolderIcon]);
+
+function pickIcon(step: FlowStep) {
+  if (step.kind === "validation") return ValidationIcon;
+  for (const [pattern, Icon] of KEYWORD_ICONS) {
+    if (pattern.test(step.label)) {
+      if (step.kind === "process" && PROCESS_EXCLUDED.has(Icon)) continue;
+      return Icon;
+    }
+  }
+  return KIND_ICONS[step.kind];
+}
 
 function ArrowConnector() {
   return (
@@ -131,15 +272,15 @@ export default function AutomationFlow({
     <div
       role="img"
       aria-label={ariaLabel}
-      className="flex flex-row max-[700px]:flex-col items-stretch gap-2 max-[700px]:gap-1.5 mb-5"
+      className="flex flex-row max-[700px]:flex-col items-stretch gap-2 lg:gap-3 max-[700px]:gap-1.5"
     >
       {steps.map((step, i) => {
-        const Icon = ICONS[step.kind];
+        const Icon = pickIcon(step);
         const isValidation = step.kind === "validation";
         return (
           <Fragment key={i}>
             <div
-              className="flex flex-col items-center justify-center gap-1.5 text-center flex-1 min-w-0"
+              className={`flow-node${isValidation ? " flow-node--validation" : ""} flex flex-col items-center justify-center gap-1.5 lg:gap-2 text-center flex-1 min-w-0 lg:py-4`}
               style={{
                 padding: "10px 8px",
                 borderRadius: "var(--radius-sm)",
@@ -147,7 +288,10 @@ export default function AutomationFlow({
                 background: isValidation ? "var(--gold-dim)" : "rgba(255,255,255,0.015)",
               }}
             >
-              <div style={{ color: isValidation ? "var(--gold)" : "var(--text-muted)" }}>
+              <div
+                className="flow-node-icon lg:scale-[1.15]"
+                style={{ color: isValidation ? "var(--gold)" : "var(--text-muted)" }}
+              >
                 <Icon />
               </div>
               <span
@@ -157,6 +301,7 @@ export default function AutomationFlow({
                   color: isValidation ? "var(--gold-light)" : "var(--text-muted)",
                   fontWeight: isValidation ? 600 : 400,
                 }}
+                className="lg:text-[12.5px]"
               >
                 {step.label}
               </span>
