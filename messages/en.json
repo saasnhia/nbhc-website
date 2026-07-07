@@ -249,5 +249,108 @@
     "readMore": "Read more",
     "back": "Back",
     "bookDiagnostic": "Book my diagnostic"
+  },
+  "automationFlows": {
+    "sport": {
+      "w0101": [
+        "Reminder SMS sent 24h before class",
+        "Cancellation detected automatically",
+        "Spot offered to the waitlist, in order",
+        "Spot confirmed as soon as someone replies"
+      ],
+      "w0102": [
+        "Missed call (session in progress)",
+        "Request automatically qualified",
+        "Real slot proposed from your schedule",
+        "Final validation by you before confirmation"
+      ],
+      "w0103": [
+        "Member nearing renewal or inactive detected",
+        "Personalized message based on profile",
+        "Progressive follow-up sent (SMS/email)"
+      ],
+      "w0105": [
+        "SMS sent after the session, asking for a rating",
+        "Rating received and analyzed",
+        "Good rating: direct link to your Google listing",
+        "Low rating: alert for a personal follow-up"
+      ],
+      "w0108": [
+        "Sessions used automatically tracked",
+        "Right timing detected (before the last session)",
+        "Follow-up sent with a renewal offer"
+      ]
+    },
+    "asso": {
+      "w0106": [
+        "Sign-up form filled in by the family",
+        "File checked (certificate, questionnaire, license)",
+        "Automatic follow-up if a document is missing",
+        "Dashboard updated for the board"
+      ],
+      "w0109": [
+        "Unpaid dues detected at day 15",
+        "Follow-up message drafted",
+        "Message pre-approved by the treasurer before sending",
+        "Follow-up sent, repeated at day 30 if needed"
+      ],
+      "w0107": [
+        "Match, practice or event scheduled",
+        "Recipient list generated (players, parents)",
+        "Notice automatically sent to everyone"
+      ]
+    },
+    "garage": {
+      "w0101": [
+        "Missed call (shop busy)",
+        "AI qualifies the request (booking, quote, emergency)",
+        "Slot proposed from your real schedule",
+        "Approved by you before customer confirmation"
+      ],
+      "w0102": [
+        "Quote sent, unsigned at day 3",
+        "Message template approved by you once",
+        "Follow-ups sent automatically (day 3, 7, 14)"
+      ],
+      "w0103": [
+        "Mileage and last service tracked",
+        "Predictable due date calculated (service, inspection)",
+        "Reminder SMS sent at the right time"
+      ],
+      "w0108": [
+        "SMS sent after the vehicle is returned",
+        "Rating received and analyzed",
+        "Good rating: direct link to your Google listing",
+        "Low rating: alert for a personal follow-up"
+      ],
+      "w0105": [
+        "Insurance claim opened (expert, deductible, timeline)",
+        "Timelines automatically monitored",
+        "Automatic follow-up if the expert is slow"
+      ]
+    },
+    "btp": {
+      "w0101": [
+        "Job described in plain language",
+        "Structured quote generated (legal notices included)",
+        "You adjust and approve before sending"
+      ],
+      "w0102": [
+        "Quote sent, unsigned at day 3",
+        "Message template approved by you once",
+        "Follow-ups sent automatically (day 3, 7, 14)"
+      ],
+      "w0103": [
+        "Job completed and approved",
+        "Invoice generated automatically",
+        "Follow-up draft approved by you before sending",
+        "Follow-up sent at day 15 and 30 if needed"
+      ],
+      "w0104": [
+        "Message received (email, SMS or WhatsApp)",
+        "Message automatically filed under the right client",
+        "Centralized history available in one place"
+      ]
+    }
   }
 }

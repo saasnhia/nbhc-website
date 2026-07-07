@@ -249,5 +249,108 @@
     "readMore": "Lire plus",
     "back": "Retour",
     "bookDiagnostic": "Réserver mon diagnostic"
+  },
+  "automationFlows": {
+    "sport": {
+      "w0101": [
+        "SMS de rappel envoyé 24h avant le cours",
+        "Annulation détectée automatiquement",
+        "Place proposée à la liste d'attente, dans l'ordre",
+        "Place confirmée dès qu'un inscrit répond"
+      ],
+      "w0102": [
+        "Appel non décroché (séance en cours)",
+        "Qualification automatique de la demande",
+        "Créneau proposé depuis votre planning réel",
+        "Validation finale par vous avant confirmation"
+      ],
+      "w0103": [
+        "Adhérent à échéance ou inactif détecté",
+        "Message personnalisé selon le profil",
+        "Relance progressive envoyée (SMS/email)"
+      ],
+      "w0105": [
+        "SMS envoyé après la séance, demande de note",
+        "Note reçue et analysée",
+        "Bonne note : lien direct vers l'avis Google",
+        "Note basse : alerte pour un rappel personnel"
+      ],
+      "w0108": [
+        "Séances consommées suivies automatiquement",
+        "Bon moment détecté (avant la dernière séance)",
+        "Relance envoyée avec proposition de renouvellement"
+      ]
+    },
+    "asso": {
+      "w0106": [
+        "Formulaire d'inscription rempli par la famille",
+        "Dossier vérifié (certificat, questionnaire, licence)",
+        "Relance automatique si une pièce manque",
+        "Tableau de bord mis à jour pour le bureau"
+      ],
+      "w0109": [
+        "Cotisation impayée détectée à J+15",
+        "Message de relance préparé",
+        "Message pré-validé par le trésorier avant envoi",
+        "Relance envoyée, renouvelée à J+30 si besoin"
+      ],
+      "w0107": [
+        "Match, entraînement ou événement programmé",
+        "Liste des destinataires générée (joueurs, parents)",
+        "Convocation envoyée automatiquement à tous"
+      ]
+    },
+    "garage": {
+      "w0101": [
+        "Appel non décroché (atelier occupé)",
+        "L'IA qualifie la demande (RDV, devis, urgence)",
+        "Créneau proposé depuis le planning réel",
+        "Validée par vous avant confirmation au client"
+      ],
+      "w0102": [
+        "Devis envoyé, sans signature à J+3",
+        "Modèle de message validé par vous une fois",
+        "Relances envoyées automatiquement (J+3, J+7, J+14)"
+      ],
+      "w0103": [
+        "Kilométrage et dernière intervention suivis",
+        "Échéance prévisible calculée (révision, CT)",
+        "SMS de rappel envoyé au bon moment"
+      ],
+      "w0108": [
+        "SMS envoyé après restitution du véhicule",
+        "Note reçue et analysée",
+        "Bonne note : lien direct vers l'avis Google",
+        "Note basse : alerte pour un rappel personnel"
+      ],
+      "w0105": [
+        "Dossier assurance ouvert (expert, franchise, délais)",
+        "Délais surveillés automatiquement",
+        "Relance automatique si l'expert tarde"
+      ]
+    },
+    "btp": {
+      "w0101": [
+        "Prestation décrite en langage naturel",
+        "Devis structuré généré (mentions légales incluses)",
+        "Vous ajustez et validez avant envoi"
+      ],
+      "w0102": [
+        "Devis envoyé, sans signature à J+3",
+        "Modèle de message validé par vous une fois",
+        "Relances envoyées automatiquement (J+3, J+7, J+14)"
+      ],
+      "w0103": [
+        "Intervention terminée et validée",
+        "Facture générée automatiquement",
+        "Brouillon de relance validé par vous avant envoi",
+        "Relance envoyée à J+15 et J+30 si besoin"
+      ],
+      "w0104": [
+        "Message reçu (mail, SMS ou WhatsApp)",
+        "Message classé automatiquement dans le bon dossier",
+        "Historique centralisé consultable en un seul endroit"
+      ]
+    }
   }
 }
