@@ -1,7 +1,23 @@
-import { setRequestLocale } from "next-intl/server";
+import { setRequestLocale, getTranslations } from "next-intl/server";
 import SectorPageContent, { type SectorContent } from "../../../components/SectorPageContent";
 import JsonLd from "../../../components/JsonLd";
 import { serviceSchema, breadcrumbSchema, faqPageSchema } from "../../../lib/schema";
+import { zipFlowSteps, type FlowStepKind } from "../../../components/AutomationFlow";
+
+const FLOW_KINDS: Record<string, FlowStepKind[]> = {
+  "W-AUTO-01": ["trigger", "process", "action", "validation"],
+  "W-AUTO-02": ["trigger", "validation", "action"],
+  "W-AUTO-03": ["trigger", "process", "action"],
+  "W-AUTO-08": ["trigger", "process", "action", "validation"],
+  "W-AUTO-05": ["trigger", "process", "action"],
+};
+const FLOW_MSG_KEY: Record<string, string> = {
+  "W-AUTO-01": "w0101",
+  "W-AUTO-02": "w0102",
+  "W-AUTO-03": "w0103",
+  "W-AUTO-08": "w0108",
+  "W-AUTO-05": "w0105",
+};
 
 const contentFr: SectorContent = {
   eyebrow: "GARAGES · CARROSSERIES INDÉPENDANTES",
@@ -215,8 +231,19 @@ export default async function Page({
   const { locale } = await params;
   setRequestLocale(locale);
   const isFr = locale === "fr";
-  const content = isFr ? contentFr : contentEn;
+  const baseContent = isFr ? contentFr : contentEn;
   const pageUrl = `https://nbhc.fr/${locale}/automatisation-garage-automobile`;
+
+  const t = await getTranslations({ locale, namespace: "automationFlows.garage" });
+  const content: SectorContent = {
+    ...baseContent,
+    automations: baseContent.automations.map((a) => {
+      const kinds = FLOW_KINDS[a.code];
+      const msgKey = FLOW_MSG_KEY[a.code];
+      if (!kinds || !msgKey) return a;
+      return { ...a, flowSteps: zipFlowSteps(kinds, t.raw(msgKey)) };
+    }),
+  };
 
   return (
     <>
