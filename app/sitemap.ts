@@ -10,7 +10,10 @@ type PageDef = {
 
 const pages: PageDef[] = [
   { path: "", changeFrequency: "weekly", priority: 1 },
-  { path: "/agentic-ai", changeFrequency: "weekly", priority: 0.95 },
+  { path: "/automatisation-salle-de-sport", changeFrequency: "monthly", priority: 0.9 },
+  { path: "/automatisation-association-sportive", changeFrequency: "monthly", priority: 0.9 },
+  { path: "/automatisation-garage-automobile", changeFrequency: "monthly", priority: 0.9 },
+  { path: "/automatisation-artisan-btp", changeFrequency: "monthly", priority: 0.9 },
   { path: "/contact", changeFrequency: "monthly", priority: 0.9 },
   { path: "/faq", changeFrequency: "monthly", priority: 0.75 },
   { path: "/blog", changeFrequency: "weekly", priority: 0.8 },
@@ -22,6 +25,10 @@ const pages: PageDef[] = [
   { path: "/cgv", changeFrequency: "yearly", priority: 0.2 },
   { path: "/cgu", changeFrequency: "yearly", priority: 0.2 },
 ];
+// Note: /agentic-ai intentionally excluded — it's a server-side redirect to
+// /#pricing (kept for old backlinks), not indexable content. Declaring it in
+// the sitemap at high priority previously sent Google a page-worth-crawling
+// signal for a URL that never serves content. See SEO_AUDIT_STRATEGIE.md.
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
