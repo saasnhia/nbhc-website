@@ -14,6 +14,8 @@ const pages: PageDef[] = [
   { path: "/automatisation-association-sportive", changeFrequency: "monthly", priority: 0.9 },
   { path: "/automatisation-garage-automobile", changeFrequency: "monthly", priority: 0.9 },
   { path: "/automatisation-artisan-btp", changeFrequency: "monthly", priority: 0.9 },
+  { path: "/automatisation-organisme-formation", changeFrequency: "monthly", priority: 0.9 },
+  { path: "/automatisation-pharmacie", changeFrequency: "monthly", priority: 0.9 },
   { path: "/contact", changeFrequency: "monthly", priority: 0.9 },
   { path: "/faq", changeFrequency: "monthly", priority: 0.75 },
   { path: "/blog", changeFrequency: "weekly", priority: 0.8 },
