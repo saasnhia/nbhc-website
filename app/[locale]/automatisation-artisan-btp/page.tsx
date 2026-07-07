@@ -1,7 +1,21 @@
-import { setRequestLocale } from "next-intl/server";
+import { setRequestLocale, getTranslations } from "next-intl/server";
 import SectorPageContent, { type SectorContent } from "../../../components/SectorPageContent";
 import JsonLd from "../../../components/JsonLd";
 import { serviceSchema, breadcrumbSchema, faqPageSchema } from "../../../lib/schema";
+import { zipFlowSteps, type FlowStepKind } from "../../../components/AutomationFlow";
+
+const FLOW_KINDS: Record<string, FlowStepKind[]> = {
+  "W-BTP-01": ["trigger", "process", "validation"],
+  "W-BTP-02": ["trigger", "validation", "action"],
+  "W-BTP-03": ["trigger", "process", "validation", "action"],
+  "W-BTP-04": ["trigger", "process", "action"],
+};
+const FLOW_MSG_KEY: Record<string, string> = {
+  "W-BTP-01": "w0101",
+  "W-BTP-02": "w0102",
+  "W-BTP-03": "w0103",
+  "W-BTP-04": "w0104",
+};
 
 const contentFr: SectorContent = {
   eyebrow: "ARTISANS · TPE DU BÂTIMENT",
@@ -211,8 +225,19 @@ export default async function Page({
   const { locale } = await params;
   setRequestLocale(locale);
   const isFr = locale === "fr";
-  const content = isFr ? contentFr : contentEn;
+  const baseContent = isFr ? contentFr : contentEn;
   const pageUrl = `https://nbhc.fr/${locale}/automatisation-artisan-btp`;
+
+  const t = await getTranslations({ locale, namespace: "automationFlows.btp" });
+  const content: SectorContent = {
+    ...baseContent,
+    automations: baseContent.automations.map((a) => {
+      const kinds = FLOW_KINDS[a.code];
+      const msgKey = FLOW_MSG_KEY[a.code];
+      if (!kinds || !msgKey) return a;
+      return { ...a, flowSteps: zipFlowSteps(kinds, t.raw(msgKey)) };
+    }),
+  };
 
   return (
     <>
