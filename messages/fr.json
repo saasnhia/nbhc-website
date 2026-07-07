@@ -80,6 +80,16 @@
     "btpSolution": "On automatise vos devis, relances et facturations. Résultat en 2-3 semaines.",
     "btpFootnote": "À partir de 2 000€ HT",
     "btpHref": "/automatisation-artisan-btp",
+    "formationName": "Organismes de formation",
+    "formationPain": "Dossiers OPCO qui bloquent, émargements à archiver, audit Qualiopi qui approche.",
+    "formationSolution": "On automatise le suivi OPCO, l'émargement et les convocations. Vous restez décideur.",
+    "formationFootnote": "À partir de 2 000€ HT",
+    "formationHref": "/automatisation-organisme-formation",
+    "pharmaName": "Officines de pharmacie",
+    "pharmaPain": "Patients éligibles au BPM non détectés, ruptures découvertes trop tard, rejets tiers-payant.",
+    "pharmaSolution": "On automatise la détection, les alertes et le tri des rejets. Vous décidez et facturez.",
+    "pharmaFootnote": "À partir de 2 000€ HT",
+    "pharmaHref": "/automatisation-pharmacie",
     "otherSectorsTitle": "Autres secteurs accompagnés",
     "agenciesName": "Agences & communication",
     "agenciesPain": "Posts, newsletters, reporting client — tout est fait à la main.",
@@ -350,6 +360,63 @@
         "Message reçu (mail, SMS ou WhatsApp)",
         "Message classé automatiquement dans le bon dossier",
         "Historique centralisé consultable en un seul endroit"
+      ]
+    },
+    "formation": {
+      "w0107": [
+        "Nouveau document généré (émargement, questionnaire, attestation)",
+        "Classement automatique par indicateur Qualiopi",
+        "Tableau de bord des indicateurs incomplets",
+        "Vous jugez la suffisance des preuves avant l'audit"
+      ],
+      "w0102": [
+        "Dossier de financement OPCO ouvert à l'inscription",
+        "Checklist des pièces requises vérifiée automatiquement",
+        "Relance envoyée si pièce manquante ou délai anormal",
+        "Modèle validé par vous, relation OPCO pilotée par vous"
+      ],
+      "w0103": [
+        "Session de formation programmée",
+        "Feuille d'émargement générée avec les mentions requises",
+        "Document signé archivé automatiquement (durée légale 6 ans)"
+      ],
+      "w0104": [
+        "Inscription confirmée (directe, OPCO ou CPF)",
+        "Convocation générée avec mentions obligatoires et documents joints",
+        "Envoi automatique au moins 2 semaines avant la session",
+        "Modèle validé par vous ; alerte si session modifiée en urgence"
+      ]
+    },
+    "pharmacie": {
+      "wph01": [
+        "Croisement périodique des données patients avec les critères BPM",
+        "Liste des patients potentiellement éligibles générée",
+        "Brouillon d'invitation préparé pour les patients choisis",
+        "Consentement écrit du patient requis, vous menez l'entretien et facturez"
+      ],
+      "wph04": [
+        "Détection des patients sous traitement chronique éligible",
+        "Rappel d'échéance d'entretien annuel préparé",
+        "Fiche de préparation pré-remplie",
+        "Consentement du patient requis, vous menez l'entretien et facturez"
+      ],
+      "wph03": [
+        "Suivi du stock et des commandes en cours",
+        "Croisement avec les informations de rupture disponibles",
+        "Alerte générée avec proposition d'alternative",
+        "Toute substitution reste une décision pharmaceutique validée par vous"
+      ],
+      "wph06": [
+        "Retours de rejets tiers-payant importés chaque jour",
+        "Classification automatique par motif probable",
+        "Brouillon de courrier de contestation préparé",
+        "Vous validez et envoyez chaque contestation"
+      ],
+      "wph05": [
+        "Document qualité produit (température, ronde, registre)",
+        "Classement automatique par registre concerné",
+        "Tableau de bord des documents manquants",
+        "Vous jugez la suffisance des preuves avant l'inspection"
       ]
     }
   }

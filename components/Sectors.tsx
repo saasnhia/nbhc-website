@@ -14,7 +14,7 @@ export default function Sectors() {
   const sectionRef = useRef<HTMLElement>(null);
   const t = useTranslations("sectors");
 
-  // The 4 niches NBHC actively prospects in the field — each has its own
+  // The 6 niches NBHC actively prospects in the field — each has its own
   // dedicated, indexable page (see SEO_AUDIT_STRATEGIE.md GATE 2).
   const primarySectors = [
     {
@@ -48,6 +48,22 @@ export default function Sectors() {
       solution: t("btpSolution"),
       footnote: t("btpFootnote"),
       href: t("btpHref"),
+    },
+    {
+      icon: "🎓",
+      name: t("formationName"),
+      pain: t("formationPain"),
+      solution: t("formationSolution"),
+      footnote: t("formationFootnote"),
+      href: t("formationHref"),
+    },
+    {
+      icon: "💊",
+      name: t("pharmaName"),
+      pain: t("pharmaPain"),
+      solution: t("pharmaSolution"),
+      footnote: t("pharmaFootnote"),
+      href: t("pharmaHref"),
     },
   ];
 
