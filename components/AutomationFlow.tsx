@@ -35,7 +35,7 @@ export function zipFlowSteps(kinds: FlowStepKind[], labels: unknown): FlowStep[]
   return kinds.map((kind, i) => ({ kind, label: labelArray[i] ?? "" }));
 }
 
-function TriggerIcon() {
+export function TriggerIcon() {
   return (
     <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true">
       <path
@@ -50,7 +50,7 @@ function TriggerIcon() {
   );
 }
 
-function ProcessIcon() {
+export function ProcessIcon() {
   return (
     <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true">
       <path
@@ -71,7 +71,7 @@ function ProcessIcon() {
   );
 }
 
-function ActionIcon() {
+export function ActionIcon() {
   return (
     <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true">
       <path
@@ -86,7 +86,7 @@ function ActionIcon() {
   );
 }
 
-function ValidationIcon() {
+export function ValidationIcon() {
   return (
     <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true">
       <circle cx="10" cy="10" r="7.5" stroke="currentColor" strokeWidth="1.4" />
@@ -101,7 +101,7 @@ function ValidationIcon() {
   );
 }
 
-function MessageIcon() {
+export function MessageIcon() {
   return (
     <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true">
       <path
@@ -115,7 +115,7 @@ function MessageIcon() {
   );
 }
 
-function MailIcon() {
+export function MailIcon() {
   return (
     <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true">
       <rect x="2.5" y="4.5" width="15" height="11" rx="1.5" stroke="currentColor" strokeWidth="1.4" />
@@ -124,7 +124,7 @@ function MailIcon() {
   );
 }
 
-function PhoneIcon() {
+export function PhoneIcon() {
   return (
     <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true">
       <path
@@ -138,7 +138,7 @@ function PhoneIcon() {
   );
 }
 
-function SearchIcon() {
+export function SearchIcon() {
   return (
     <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true">
       <circle cx="8.5" cy="8.5" r="5" stroke="currentColor" strokeWidth="1.4" />
@@ -147,7 +147,7 @@ function SearchIcon() {
   );
 }
 
-function DocumentIcon() {
+export function DocumentIcon() {
   return (
     <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true">
       <path
@@ -162,7 +162,7 @@ function DocumentIcon() {
   );
 }
 
-function CalendarIcon() {
+export function CalendarIcon() {
   return (
     <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true">
       <rect x="2.5" y="4" width="15" height="13" rx="1.5" stroke="currentColor" strokeWidth="1.4" />
@@ -173,7 +173,7 @@ function CalendarIcon() {
   );
 }
 
-function AlertIcon() {
+export function AlertIcon() {
   return (
     <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true">
       <path
@@ -189,7 +189,7 @@ function AlertIcon() {
   );
 }
 
-function FolderIcon() {
+export function FolderIcon() {
   return (
     <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true">
       <path
@@ -241,7 +241,7 @@ function pickIcon(step: FlowStep) {
   return KIND_ICONS[step.kind];
 }
 
-function ArrowConnector() {
+export function ArrowConnector() {
   return (
     <div
       className="flex items-center justify-center shrink-0 rotate-0 max-[700px]:rotate-90"
@@ -257,6 +257,49 @@ function ArrowConnector() {
           strokeLinejoin="round"
         />
       </svg>
+    </div>
+  );
+}
+
+/** Single flow step visual (icon + label), extracted so richer diagrams
+ *  (branching, converging) can reuse the exact same node styling as the
+ *  linear AutomationFlow instead of duplicating it. */
+export function FlowNode({
+  icon,
+  label,
+  isValidation = false,
+}: {
+  icon: React.ReactNode;
+  label: string;
+  isValidation?: boolean;
+}) {
+  return (
+    <div
+      className={`flow-node${isValidation ? " flow-node--validation" : ""} flex flex-col items-center justify-center gap-1.5 lg:gap-2 text-center flex-1 min-w-0 lg:py-4`}
+      style={{
+        padding: "10px 8px",
+        borderRadius: "var(--radius-sm)",
+        border: isValidation ? "1px solid var(--gold-border)" : "1px solid var(--border)",
+        background: isValidation ? "var(--gold-dim)" : "rgba(255,255,255,0.015)",
+      }}
+    >
+      <div
+        className="flow-node-icon lg:scale-[1.15]"
+        style={{ color: isValidation ? "var(--gold)" : "var(--text-muted)" }}
+      >
+        {icon}
+      </div>
+      <span
+        style={{
+          fontSize: 11.5,
+          lineHeight: 1.35,
+          color: isValidation ? "var(--gold-light)" : "var(--text-muted)",
+          fontWeight: isValidation ? 600 : 400,
+        }}
+        className="lg:text-[12.5px]"
+      >
+        {label}
+      </span>
     </div>
   );
 }
@@ -279,33 +322,7 @@ export default function AutomationFlow({
         const isValidation = step.kind === "validation";
         return (
           <Fragment key={i}>
-            <div
-              className={`flow-node${isValidation ? " flow-node--validation" : ""} flex flex-col items-center justify-center gap-1.5 lg:gap-2 text-center flex-1 min-w-0 lg:py-4`}
-              style={{
-                padding: "10px 8px",
-                borderRadius: "var(--radius-sm)",
-                border: isValidation ? "1px solid var(--gold-border)" : "1px solid var(--border)",
-                background: isValidation ? "var(--gold-dim)" : "rgba(255,255,255,0.015)",
-              }}
-            >
-              <div
-                className="flow-node-icon lg:scale-[1.15]"
-                style={{ color: isValidation ? "var(--gold)" : "var(--text-muted)" }}
-              >
-                <Icon />
-              </div>
-              <span
-                style={{
-                  fontSize: 11.5,
-                  lineHeight: 1.35,
-                  color: isValidation ? "var(--gold-light)" : "var(--text-muted)",
-                  fontWeight: isValidation ? 600 : 400,
-                }}
-                className="lg:text-[12.5px]"
-              >
-                {step.label}
-              </span>
-            </div>
+            <FlowNode icon={<Icon />} label={step.label} isValidation={isValidation} />
             {i < steps.length - 1 && <ArrowConnector />}
           </Fragment>
         );

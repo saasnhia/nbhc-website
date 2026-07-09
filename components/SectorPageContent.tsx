@@ -14,6 +14,11 @@ export type Automation = {
    *  simply omit the diagram rather than force one. */
   flowSteps?: FlowStep[];
   flowAriaLabel?: string;
+  /** Richer visual for flagship automations — typically a realistic UI
+   *  mockup (e.g. ChatMockup, CallBookingMockup, DocMockup, StockTableMockup)
+   *  showing the interface in action rather than an abstract flow diagram.
+   *  Takes precedence over flowSteps when both are set. */
+  customFlow?: React.ReactNode;
 };
 
 export type PainPoint = {
@@ -224,7 +229,7 @@ export default function SectorPageContent({
           </p>
           <div className="flex flex-col gap-5 lg:gap-6">
             {content.automations.map((a, i) => {
-              const hasFlow = !!(a.flowSteps && a.flowSteps.length > 0);
+              const hasFlow = !!(a.customFlow || (a.flowSteps && a.flowSteps.length > 0));
               const alternate = i % 2 === 1;
               const textCol = !hasFlow
                 ? "lg:col-span-2"
@@ -273,14 +278,16 @@ export default function SectorPageContent({
                       {a.title}
                     </span>
                   </div>
-                  {a.flowSteps && a.flowSteps.length > 0 && (
+                  {hasFlow && (
                     <div
                       className={`${flowCol} lg:row-start-1 lg:row-span-2 mt-1 lg:mt-0`}
                     >
-                      <AutomationFlow
-                        steps={a.flowSteps}
-                        ariaLabel={a.flowAriaLabel ?? a.title}
-                      />
+                      {a.customFlow ?? (
+                        <AutomationFlow
+                          steps={a.flowSteps!}
+                          ariaLabel={a.flowAriaLabel ?? a.title}
+                        />
+                      )}
                     </div>
                   )}
                   <p
