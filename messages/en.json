@@ -418,6 +418,201 @@
         "Dashboard of missing documents",
         "You judge whether evidence is sufficient before inspection"
       ]
+    },
+    "restaurant": {
+      "iaTel": {
+        "trigger": "Incoming call during the rush",
+        "process": "The AI answers and checks availability",
+        "branchA": "Slot available → booking taken and confirmed",
+        "branchB": "Fully booked → another slot is proposed",
+        "confirmation": "Confirmation SMS or email sent",
+        "validation": "The schedule stays visible and editable by the restaurant owner"
+      },
+      "whatsapp": [
+        "Customer base connected to WhatsApp Business",
+        "Personalized message sent to the targeted segment",
+        "The customer orders directly in the conversation",
+        "Exclusive discount applied automatically",
+        "The restaurant owner approves and prepares the order"
+      ],
+      "whatsappChat": {
+        "contactName": "Marie",
+        "contactSubtitle": "WhatsApp Business conversation",
+        "bubbles": [
+          { "from": "business", "text": "Hi Marie, feeling like takeout tonight? 🍽️ -15% on your order before 8pm" },
+          { "from": "client", "text": "I'll take 2 pizzas + 1 dessert, thanks!" },
+          { "from": "business", "tag": "Discount applied automatically", "text": "-15% applied, your order will be ready at 7:45pm" }
+        ],
+        "inputPlaceholder": "Type a message...",
+        "validateButtonLabel": "Approve the order",
+        "validateCaption": "You stay in control of every order before it's prepared."
+      },
+      "callBooking": {
+        "callerLabel": "Incoming call",
+        "callerNumber": "06 XX XX XX XX",
+        "processingLabel": "The AI checks availability...",
+        "cardAvailable": {
+          "statusLabel": "Confirmed",
+          "fields": [
+            { "label": "Name", "value": "Mr. Dubois" },
+            { "label": "Guests", "value": "4" },
+            { "label": "Time", "value": "8:30pm" }
+          ]
+        },
+        "cardFull": {
+          "statusLabel": "Alternative slot proposed",
+          "fields": [
+            { "label": "Name", "value": "Mrs. Lopez" },
+            { "label": "Guests", "value": "2" },
+            { "label": "Time", "value": "9:45pm (instead of 8pm)" }
+          ]
+        },
+        "validationLabel": "The schedule stays visible and editable by you at all times"
+      },
+      "noshow": [
+        "Booking logged with a reminder deadline",
+        "SMS/WhatsApp reminder sent before service",
+        "Confirm or cancel in one tap",
+        "The owner recovers the freed-up slot in time"
+      ],
+      "avis": [
+        "New Google review detected",
+        "Tone analyzed (positive/negative) and prioritized",
+        "Draft reply prepared",
+        "The owner approves and publishes the reply"
+      ],
+      "menuDuJour": [
+        "Daily menu or promo entered once",
+        "Distribution scheduled across chosen channels",
+        "Automatic publishing at the set time",
+        "The owner keeps control of the publishing calendar"
+      ]
+    },
+    "salonCoiffure": {
+      "iaTel": {
+        "trigger": "Incoming call during a service",
+        "process": "The AI answers and checks the schedule",
+        "branchA": "Slot available → appointment booked and confirmed",
+        "branchB": "Fully booked → another slot is proposed",
+        "confirmation": "Confirmation SMS sent to the client",
+        "validation": "The schedule stays visible and editable by the salon"
+      },
+      "callBooking": {
+        "callerLabel": "Incoming call",
+        "callerNumber": "06 XX XX XX XX",
+        "processingLabel": "The AI checks the schedule...",
+        "cardAvailable": {
+          "statusLabel": "Confirmed",
+          "fields": [
+            { "label": "Client", "value": "Sophie B." },
+            { "label": "Service", "value": "Cut + blow-dry" },
+            { "label": "Slot", "value": "Wednesday 2pm" }
+          ]
+        },
+        "cardFull": {
+          "statusLabel": "Alternative slot proposed",
+          "fields": [
+            { "label": "Client", "value": "Julie R." },
+            { "label": "Service", "value": "Color" },
+            { "label": "Slot", "value": "Friday 10am (instead of Wednesday)" }
+          ]
+        },
+        "validationLabel": "The schedule stays visible and editable by the salon at all times"
+      },
+      "relance": [
+        "Client base connected to WhatsApp Business",
+        "Client's cycle due date detected (~6 weeks)",
+        "Personalized reminder or follow-up message sent",
+        "Targeted loyalty discount proposed if relevant",
+        "The salon approves and books the appointment"
+      ],
+      "relanceChat": {
+        "contactName": "Camille",
+        "contactSubtitle": "WhatsApp Business conversation",
+        "bubbles": [
+          { "from": "business", "text": "Hi Camille, it's been 6 weeks since your last cut ✂️ Want us to save you a slot?" },
+          { "from": "client", "text": "I'd love that, do you have room Thursday afternoon?" },
+          { "from": "business", "tag": "Loyalty discount proposed", "text": "Thursday 3pm works! -10% loyalty discount on your next color" }
+        ],
+        "inputPlaceholder": "Type a message...",
+        "validateButtonLabel": "Approve the appointment",
+        "validateCaption": "The salon approves every appointment before confirming it."
+      },
+      "ficheCliente": [
+        "Technical formula logged after each service",
+        "Client file updated automatically",
+        "Formula recalled before the next appointment",
+        "The hairdresser confirms and adjusts if needed"
+      ],
+      "carteCadeau": [
+        "Gift card issued and logged",
+        "Usage and expiry date tracked",
+        "Reminder sent as the card nears expiry",
+        "The salon keeps control of every reminder sent"
+      ],
+      "noshow": [
+        "Appointment logged with confirmation required",
+        "Alert if no reply before the deadline",
+        "Slot freed up and available again in time",
+        "The salon approves every freed-up slot"
+      ]
+    },
+    "marqueCosmetique": {
+      "dossierReglementaire": [
+        "New reference added to the catalog",
+        "The AI reads the reference's INCI formula",
+        "Allergens to declare identified automatically",
+        "Claims checked against the file",
+        "PDF file ready, validated and filed by the toxicologist"
+      ],
+      "docMockup": {
+        "title": "Regulatory file",
+        "reference": "REF. SN-2026-014",
+        "inciTitle": "INCI formula",
+        "inciTags": ["Aqua", "Glycerin", "Parfum", "Linalool", "Limonene"],
+        "allergensTitle": "Allergens detected",
+        "allergensValue": "Linalool, Limonene",
+        "claimsTitle": "Claims",
+        "claimsValue": "2 to rephrase",
+        "statusLabel": "Ready for toxicologist validation",
+        "validationCaption": "The toxicologist validates and files it — never NBHC."
+      },
+      "syncStock": {
+        "sourceA": "Sale logged in-store",
+        "sourceB": "Sale logged on the e-shop",
+        "central": "Global stock updated continuously",
+        "action": "Restock triggered below the defined threshold",
+        "validation": "The founder approves every restock order"
+      },
+      "stockTable": {
+        "title": "Multi-location stock",
+        "columns": { "product": "Reference", "boutique": "Store", "eshop": "E-shop", "global": "Global stock" },
+        "rows": [
+          { "product": "Eau de parfum 50ml", "boutique": "12", "eshop": "8", "global": "20" },
+          { "product": "Day cream", "boutique": "3", "eshop": "1", "global": "4", "alert": true },
+          { "product": "Lip balm", "boutique": "25", "eshop": "14", "global": "39" }
+        ],
+        "restockLabel": "Below threshold: restock triggered",
+        "validationLabel": "The founder approves every restock order"
+      },
+      "avisMultiplateformes": [
+        "Reviews collected across platforms",
+        "Recurring points identified (positive/negative)",
+        "Summary prepared for the founder",
+        "The founder decides on next actions"
+      ],
+      "echantillonsInfluenceurs": [
+        "Sample shipment logged",
+        "Expected return tracked (post, story)",
+        "Follow-up prepared if no return received",
+        "The team approves and sends each follow-up"
+      ],
+      "commandesB2B": [
+        "Reseller order received",
+        "Available stock checked automatically",
+        "Purchase order or proforma invoice prepared",
+        "The founder approves before sending to the reseller"
+      ]
     }
   }
 }

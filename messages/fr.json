@@ -418,6 +418,201 @@
         "Tableau de bord des documents manquants",
         "Vous jugez la suffisance des preuves avant l'inspection"
       ]
+    },
+    "restaurant": {
+      "iaTel": {
+        "trigger": "Appel entrant pendant le coup de feu",
+        "process": "L'IA décroche et vérifie les disponibilités",
+        "branchA": "Créneau disponible → réservation prise et confirmée",
+        "branchB": "Complet → un autre créneau est proposé",
+        "confirmation": "SMS ou e-mail de confirmation envoyé",
+        "validation": "Le planning reste visible et modifiable par le restaurateur"
+      },
+      "whatsapp": [
+        "Base clients connectée à WhatsApp Business",
+        "Message personnalisé envoyé selon le segment ciblé",
+        "Le client commande directement dans la conversation",
+        "Remise exclusive appliquée automatiquement",
+        "Le restaurateur valide et prépare la commande"
+      ],
+      "whatsappChat": {
+        "contactName": "Marie",
+        "contactSubtitle": "Conversation WhatsApp Business",
+        "bubbles": [
+          { "from": "business", "text": "Bonsoir Marie, une envie ce soir ? 🍽️ -15% sur votre commande avant 20h" },
+          { "from": "client", "text": "Je prends 2 pizzas + 1 dessert, merci !" },
+          { "from": "business", "tag": "Remise appliquée automatiquement", "text": "-15% appliqué, votre commande sera prête à 19h45" }
+        ],
+        "inputPlaceholder": "Écrire un message...",
+        "validateButtonLabel": "Valider la commande",
+        "validateCaption": "Vous gardez la main sur chaque commande avant préparation."
+      },
+      "callBooking": {
+        "callerLabel": "Appel entrant",
+        "callerNumber": "06 XX XX XX XX",
+        "processingLabel": "L'IA vérifie les disponibilités...",
+        "cardAvailable": {
+          "statusLabel": "Confirmé",
+          "fields": [
+            { "label": "Nom", "value": "M. Dubois" },
+            { "label": "Couverts", "value": "4" },
+            { "label": "Heure", "value": "20h30" }
+          ]
+        },
+        "cardFull": {
+          "statusLabel": "Autre créneau proposé",
+          "fields": [
+            { "label": "Nom", "value": "Mme Lopez" },
+            { "label": "Couverts", "value": "2" },
+            { "label": "Heure", "value": "21h45 (au lieu de 20h)" }
+          ]
+        },
+        "validationLabel": "Le planning reste visible et modifiable par vous à tout moment"
+      },
+      "noshow": [
+        "Réservation enregistrée avec échéance de rappel",
+        "Rappel SMS/WhatsApp envoyé avant le service",
+        "Confirmation ou annulation en un tap",
+        "Le restaurateur récupère le créneau libéré à temps"
+      ],
+      "avis": [
+        "Nouvel avis Google détecté",
+        "Analyse du ton (positif/négatif) et priorisation",
+        "Brouillon de réponse préparé",
+        "Le restaurateur valide et publie sa réponse"
+      ],
+      "menuDuJour": [
+        "Menu ou promo du jour renseigné une fois",
+        "Diffusion programmée sur les canaux choisis",
+        "Publication automatique à l'heure définie",
+        "Le restaurateur garde la main sur le calendrier de diffusion"
+      ]
+    },
+    "salonCoiffure": {
+      "iaTel": {
+        "trigger": "Appel entrant pendant une prestation",
+        "process": "L'IA décroche et vérifie l'agenda",
+        "branchA": "Créneau disponible → RDV pris et confirmé",
+        "branchB": "Complet → un autre créneau est proposé",
+        "confirmation": "SMS de confirmation envoyé à la cliente",
+        "validation": "L'agenda reste visible et modifiable par le salon"
+      },
+      "callBooking": {
+        "callerLabel": "Appel entrant",
+        "callerNumber": "06 XX XX XX XX",
+        "processingLabel": "L'IA vérifie l'agenda...",
+        "cardAvailable": {
+          "statusLabel": "Confirmé",
+          "fields": [
+            { "label": "Cliente", "value": "Sophie B." },
+            { "label": "Prestation", "value": "Coupe + brushing" },
+            { "label": "Créneau", "value": "Mercredi 14h" }
+          ]
+        },
+        "cardFull": {
+          "statusLabel": "Autre créneau proposé",
+          "fields": [
+            { "label": "Cliente", "value": "Julie R." },
+            { "label": "Prestation", "value": "Coloration" },
+            { "label": "Créneau", "value": "Vendredi 10h (au lieu de mercredi)" }
+          ]
+        },
+        "validationLabel": "L'agenda reste visible et modifiable par le salon à tout moment"
+      },
+      "relance": [
+        "Base clientes connectée à WhatsApp Business",
+        "Échéance du cycle de la cliente détectée (~6 semaines)",
+        "Rappel de RDV ou message de relance personnalisé envoyé",
+        "Remise fidélité ciblée proposée si pertinent",
+        "Le salon valide et prend le RDV"
+      ],
+      "relanceChat": {
+        "contactName": "Camille",
+        "contactSubtitle": "Conversation WhatsApp Business",
+        "bubbles": [
+          { "from": "business", "text": "Bonjour Camille, ça fait 6 semaines depuis votre dernière coupe ✂️ On vous garde un créneau ?" },
+          { "from": "client", "text": "Avec plaisir, vous avez de la place jeudi après-midi ?" },
+          { "from": "business", "tag": "Remise fidélité proposée", "text": "Jeudi 15h, c'est disponible ! -10% fidélité sur votre prochaine coloration" }
+        ],
+        "inputPlaceholder": "Écrire un message...",
+        "validateButtonLabel": "Valider le RDV",
+        "validateCaption": "Le salon valide chaque RDV avant de le confirmer."
+      },
+      "ficheCliente": [
+        "Formule technique enregistrée après chaque prestation",
+        "Fiche cliente mise à jour automatiquement",
+        "Formule rappelée avant le RDV suivant",
+        "La coiffeuse valide et ajuste si besoin"
+      ],
+      "carteCadeau": [
+        "Carte cadeau émise et enregistrée",
+        "Suivi de l'utilisation et de la date d'expiration",
+        "Relance envoyée si la carte approche de l'expiration",
+        "Le salon garde la main sur chaque relance envoyée"
+      ],
+      "noshow": [
+        "RDV enregistré avec confirmation requise",
+        "Alerte si aucune réponse avant l'échéance",
+        "Créneau libéré et reproposable à temps",
+        "Le salon valide chaque créneau libéré"
+      ]
+    },
+    "marqueCosmetique": {
+      "dossierReglementaire": [
+        "Nouvelle référence ajoutée au catalogue",
+        "L'IA lit la formule INCI de la référence",
+        "Allergènes à déclarer identifiés automatiquement",
+        "Allégations vérifiées par rapport au dossier",
+        "Dossier PDF prêt, validé et déclaré par le toxicologue"
+      ],
+      "docMockup": {
+        "title": "Dossier réglementaire",
+        "reference": "RÉF. SN-2026-014",
+        "inciTitle": "Formule INCI",
+        "inciTags": ["Aqua", "Glycerin", "Parfum", "Linalool", "Limonene"],
+        "allergensTitle": "Allergènes détectés",
+        "allergensValue": "Linalool, Limonene",
+        "claimsTitle": "Allégations",
+        "claimsValue": "2 à reformuler",
+        "statusLabel": "Prêt pour validation toxicologue",
+        "validationCaption": "Le toxicologue valide et déclare — jamais NBHC."
+      },
+      "syncStock": {
+        "sourceA": "Vente enregistrée en boutique",
+        "sourceB": "Vente enregistrée sur l'e-shop",
+        "central": "Stock global mis à jour en continu",
+        "action": "Réassort déclenché sous le seuil défini",
+        "validation": "Le dirigeant valide chaque commande de réassort"
+      },
+      "stockTable": {
+        "title": "Stock multi-points",
+        "columns": { "product": "Référence", "boutique": "Boutique", "eshop": "E-shop", "global": "Stock global" },
+        "rows": [
+          { "product": "Eau de parfum 50ml", "boutique": "12", "eshop": "8", "global": "20" },
+          { "product": "Crème de jour", "boutique": "3", "eshop": "1", "global": "4", "alert": true },
+          { "product": "Baume à lèvres", "boutique": "25", "eshop": "14", "global": "39" }
+        ],
+        "restockLabel": "Sous le seuil : réassort déclenché",
+        "validationLabel": "Le dirigeant valide chaque commande de réassort"
+      },
+      "avisMultiplateformes": [
+        "Avis collectés sur les différentes plateformes",
+        "Points récurrents identifiés (positifs/négatifs)",
+        "Synthèse préparée pour le dirigeant",
+        "Le dirigeant décide des actions à mener"
+      ],
+      "echantillonsInfluenceurs": [
+        "Envoi d'échantillon enregistré",
+        "Échéance de retour attendu suivie (post, story)",
+        "Relance préparée si aucun retour reçu",
+        "L'équipe valide et envoie chaque relance"
+      ],
+      "commandesB2B": [
+        "Commande revendeur reçue",
+        "Stock disponible vérifié automatiquement",
+        "Bon de commande ou facture proforma préparé",
+        "Le dirigeant valide avant envoi au revendeur"
+      ]
     }
   }
 }
