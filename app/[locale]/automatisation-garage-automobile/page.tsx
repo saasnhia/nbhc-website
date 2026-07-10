@@ -3,18 +3,16 @@ import SectorPageContent, { type SectorContent } from "../../../components/Secto
 import JsonLd from "../../../components/JsonLd";
 import { serviceSchema, breadcrumbSchema, faqPageSchema } from "../../../lib/schema";
 import { zipFlowSteps, type FlowStepKind } from "../../../components/AutomationFlow";
+import ChatMockup, { type ChatBubbleData } from "../../../components/ChatMockup";
+import CallBookingMockup, { type CallBookingMockupContent } from "../../../components/CallBookingMockup";
 
 const FLOW_KINDS: Record<string, FlowStepKind[]> = {
-  "W-AUTO-01": ["trigger", "process", "action", "validation"],
   "W-AUTO-02": ["trigger", "validation", "action"],
-  "W-AUTO-03": ["trigger", "process", "action"],
   "W-AUTO-08": ["trigger", "process", "action", "validation"],
   "W-AUTO-05": ["trigger", "process", "action"],
 };
 const FLOW_MSG_KEY: Record<string, string> = {
-  "W-AUTO-01": "w0101",
   "W-AUTO-02": "w0102",
-  "W-AUTO-03": "w0103",
   "W-AUTO-08": "w0108",
   "W-AUTO-05": "w0105",
 };
@@ -238,6 +236,27 @@ export default async function Page({
   const content: SectorContent = {
     ...baseContent,
     automations: baseContent.automations.map((a) => {
+      if (a.code === "W-AUTO-01") {
+        const callBooking = t.raw("callBooking") as CallBookingMockupContent;
+        return {
+          ...a,
+          customFlow: <CallBookingMockup ariaLabel={a.title} content={callBooking} />,
+        };
+      }
+      if (a.code === "W-AUTO-03") {
+        const chat = t.raw("rappelChat") as {
+          contactName: string;
+          contactSubtitle: string;
+          bubbles: ChatBubbleData[];
+          inputPlaceholder: string;
+          validateButtonLabel: string;
+          validateCaption: string;
+        };
+        return {
+          ...a,
+          customFlow: <ChatMockup ariaLabel={a.title} content={chat} />,
+        };
+      }
       const kinds = FLOW_KINDS[a.code];
       const msgKey = FLOW_MSG_KEY[a.code];
       if (!kinds || !msgKey) return a;

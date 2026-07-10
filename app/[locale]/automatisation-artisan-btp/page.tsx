@@ -3,16 +3,14 @@ import SectorPageContent, { type SectorContent } from "../../../components/Secto
 import JsonLd from "../../../components/JsonLd";
 import { serviceSchema, breadcrumbSchema, faqPageSchema } from "../../../lib/schema";
 import { zipFlowSteps, type FlowStepKind } from "../../../components/AutomationFlow";
+import ChatMockup, { type ChatBubbleData } from "../../../components/ChatMockup";
+import DocMockup, { type DocMockupContent } from "../../../components/DocMockup";
 
 const FLOW_KINDS: Record<string, FlowStepKind[]> = {
-  "W-BTP-01": ["trigger", "process", "validation"],
-  "W-BTP-02": ["trigger", "validation", "action"],
   "W-BTP-03": ["trigger", "process", "validation", "action"],
   "W-BTP-04": ["trigger", "process", "action"],
 };
 const FLOW_MSG_KEY: Record<string, string> = {
-  "W-BTP-01": "w0101",
-  "W-BTP-02": "w0102",
   "W-BTP-03": "w0103",
   "W-BTP-04": "w0104",
 };
@@ -232,6 +230,27 @@ export default async function Page({
   const content: SectorContent = {
     ...baseContent,
     automations: baseContent.automations.map((a) => {
+      if (a.code === "W-BTP-01") {
+        const doc = t.raw("docMockup") as DocMockupContent;
+        return {
+          ...a,
+          customFlow: <DocMockup ariaLabel={a.title} content={doc} />,
+        };
+      }
+      if (a.code === "W-BTP-02") {
+        const chat = t.raw("relanceChat") as {
+          contactName: string;
+          contactSubtitle: string;
+          bubbles: ChatBubbleData[];
+          inputPlaceholder: string;
+          validateButtonLabel: string;
+          validateCaption: string;
+        };
+        return {
+          ...a,
+          customFlow: <ChatMockup ariaLabel={a.title} content={chat} />,
+        };
+      }
       const kinds = FLOW_KINDS[a.code];
       const msgKey = FLOW_MSG_KEY[a.code];
       if (!kinds || !msgKey) return a;
