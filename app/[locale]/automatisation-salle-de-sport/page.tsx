@@ -3,21 +3,19 @@ import SectorPageContent, { type SectorContent } from "../../../components/Secto
 import JsonLd from "../../../components/JsonLd";
 import { serviceSchema, breadcrumbSchema, faqPageSchema } from "../../../lib/schema";
 import { zipFlowSteps, type FlowStepKind } from "../../../components/AutomationFlow";
+import ChatMockup, { type ChatBubbleData } from "../../../components/ChatMockup";
+import CallBookingMockup, { type CallBookingMockupContent } from "../../../components/CallBookingMockup";
 
 // Structural shape of each automation's mechanism diagram (trigger -> ... ->
 // validation). Not translatable — the labels come from
 // messages/*.json (automationFlows.sport.*) via getTranslations below.
 const FLOW_KINDS: Record<string, FlowStepKind[]> = {
   "W-SPORT-01": ["trigger", "process", "action", "action"],
-  "W-SPORT-02": ["trigger", "process", "action", "validation"],
-  "W-SPORT-03": ["trigger", "process", "action"],
   "W-SPORT-05": ["trigger", "process", "action", "validation"],
   "W-SPORT-08": ["trigger", "process", "action"],
 };
 const FLOW_MSG_KEY: Record<string, string> = {
   "W-SPORT-01": "w0101",
-  "W-SPORT-02": "w0102",
-  "W-SPORT-03": "w0103",
   "W-SPORT-05": "w0105",
   "W-SPORT-08": "w0108",
 };
@@ -241,6 +239,27 @@ export default async function Page({
   const content: SectorContent = {
     ...baseContent,
     automations: baseContent.automations.map((a) => {
+      if (a.code === "W-SPORT-02") {
+        const callBooking = t.raw("callBooking") as CallBookingMockupContent;
+        return {
+          ...a,
+          customFlow: <CallBookingMockup ariaLabel={a.title} content={callBooking} />,
+        };
+      }
+      if (a.code === "W-SPORT-03") {
+        const chat = t.raw("renewalChat") as {
+          contactName: string;
+          contactSubtitle: string;
+          bubbles: ChatBubbleData[];
+          inputPlaceholder: string;
+          validateButtonLabel: string;
+          validateCaption: string;
+        };
+        return {
+          ...a,
+          customFlow: <ChatMockup ariaLabel={a.title} content={chat} />,
+        };
+      }
       const kinds = FLOW_KINDS[a.code];
       const msgKey = FLOW_MSG_KEY[a.code];
       if (!kinds || !msgKey) return a;
