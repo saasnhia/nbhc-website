@@ -289,7 +289,41 @@
         "Séances consommées suivies automatiquement",
         "Bon moment détecté (avant la dernière séance)",
         "Relance envoyée avec proposition de renouvellement"
-      ]
+      ],
+      "callBooking": {
+        "callerLabel": "Appel entrant",
+        "callerNumber": "06 XX XX XX XX",
+        "processingLabel": "L'IA vérifie les disponibilités du cours...",
+        "cardAvailable": {
+          "statusLabel": "Confirmé",
+          "fields": [
+            { "label": "Nom", "value": "Claire M." },
+            { "label": "Cours", "value": "Pilates - mardi 18h" },
+            { "label": "Confirmation", "value": "Envoyée par SMS" }
+          ]
+        },
+        "cardFull": {
+          "statusLabel": "Autre créneau proposé",
+          "fields": [
+            { "label": "Nom", "value": "Thomas R." },
+            { "label": "Cours", "value": "Cross-training" },
+            { "label": "Créneau", "value": "Jeudi 19h (au lieu de mardi)" }
+          ]
+        },
+        "validationLabel": "Le planning reste visible et modifiable par vous à tout moment"
+      },
+      "renewalChat": {
+        "contactName": "Camille",
+        "contactSubtitle": "Abonnement arrivant à échéance",
+        "bubbles": [
+          { "from": "business", "tag": "Détection automatique de l'échéance", "text": "Bonjour Camille, votre abonnement se termine dans 5 jours. On vous renouvelle au même tarif ?" },
+          { "from": "client", "text": "Oui avec plaisir, comme d'habitude !" },
+          { "from": "business", "text": "Parfait, renouvellement pris en compte pour le mois prochain." }
+        ],
+        "inputPlaceholder": "Écrire un message...",
+        "validateButtonLabel": "Valider le renouvellement",
+        "validateCaption": "Vous validez chaque offre proposée avant l'envoi."
+      }
     },
     "asso": {
       "w0106": [
@@ -308,7 +342,31 @@
         "Match, entraînement ou événement programmé",
         "Liste des destinataires générée (joueurs, parents)",
         "Convocation envoyée automatiquement à tous"
-      ]
+      ],
+      "relanceChat": {
+        "contactName": "Famille Martin",
+        "contactSubtitle": "Cotisation en attente de règlement",
+        "bubbles": [
+          { "from": "business", "tag": "Message pré-validé par le trésorier", "text": "Bonjour, un rappel amical : la cotisation de la saison n'a pas encore été réglée. Petit oubli ?" },
+          { "from": "client", "text": "Ah pardon, je fais ça ce soir !" },
+          { "from": "business", "text": "Merci, on vous confirme dès réception du règlement." }
+        ],
+        "inputPlaceholder": "Écrire un message...",
+        "validateButtonLabel": "Valider l'envoi",
+        "validateCaption": "Le trésorier valide chaque message avant envoi."
+      },
+      "docMockup": {
+        "title": "Dossier d'inscription",
+        "reference": "INSC-2024-014",
+        "inciTitle": "Pièces reçues",
+        "inciTags": ["Formulaire d'inscription", "Licence fédérale"],
+        "allergensTitle": "Pièce manquante",
+        "allergensValue": "Certificat médical",
+        "claimsTitle": "Statut",
+        "claimsValue": "Dossier incomplet — relance automatique envoyée",
+        "statusLabel": "À valider par le bureau",
+        "validationCaption": "Le bureau valide chaque dossier complet avant la reprise d'activité."
+      }
     },
     "garage": {
       "w0101": [
@@ -337,7 +395,41 @@
         "Dossier assurance ouvert (expert, franchise, délais)",
         "Délais surveillés automatiquement",
         "Relance automatique si l'expert tarde"
-      ]
+      ],
+      "callBooking": {
+        "callerLabel": "Appel entrant",
+        "callerNumber": "06 XX XX XX XX",
+        "processingLabel": "L'IA vérifie le planning de l'atelier...",
+        "cardAvailable": {
+          "statusLabel": "RDV confirmé",
+          "fields": [
+            { "label": "Nom", "value": "M. Rousseau" },
+            { "label": "Véhicule", "value": "Clio IV - vidange" },
+            { "label": "Créneau", "value": "Vendredi 10h" }
+          ]
+        },
+        "cardFull": {
+          "statusLabel": "Créneau alternatif proposé",
+          "fields": [
+            { "label": "Nom", "value": "Mme Aziz" },
+            { "label": "Véhicule", "value": "308 - plaquettes" },
+            { "label": "Créneau", "value": "Lundi 14h (au lieu de vendredi)" }
+          ]
+        },
+        "validationLabel": "Chaque RDV reste validé par vous avant confirmation au client"
+      },
+      "rappelChat": {
+        "contactName": "M. Petit",
+        "contactSubtitle": "Rappel entretien véhicule",
+        "bubbles": [
+          { "from": "business", "tag": "Calculé depuis le kilométrage", "text": "Bonjour, votre véhicule approche des 30 000 km : c'est le moment de programmer la révision." },
+          { "from": "client", "text": "Ah oui, je n'y pensais plus, on peut voir ça pour la semaine prochaine ?" },
+          { "from": "business", "text": "Parfait, un créneau vous sera proposé sous 48h." }
+        ],
+        "inputPlaceholder": "Écrire un message...",
+        "validateButtonLabel": "Valider le rappel",
+        "validateCaption": "Vous gardez la main sur chaque rappel envoyé."
+      }
     },
     "btp": {
       "w0101": [
@@ -360,7 +452,31 @@
         "Message reçu (mail, SMS ou WhatsApp)",
         "Message classé automatiquement dans le bon dossier",
         "Historique centralisé consultable en un seul endroit"
-      ]
+      ],
+      "docMockup": {
+        "title": "Devis généré",
+        "reference": "DEV-2024-0342",
+        "inciTitle": "Mentions légales incluses",
+        "inciTags": ["SIRET", "TVA", "Conditions de paiement", "Pénalités de retard"],
+        "allergensTitle": "Prestation",
+        "allergensValue": "Remplacement chaudière + main d'œuvre",
+        "claimsTitle": "Statut",
+        "claimsValue": "En attente de votre validation avant envoi",
+        "statusLabel": "À ajuster et valider par vous",
+        "validationCaption": "Vous ajustez et validez chaque devis avant envoi au client."
+      },
+      "relanceChat": {
+        "contactName": "Client — devis n°0342",
+        "contactSubtitle": "Devis envoyé, sans réponse",
+        "bubbles": [
+          { "from": "business", "tag": "Relance automatique J+7", "text": "Bonjour, un petit retour sur le devis envoyé la semaine dernière ? N'hésitez pas si vous avez des questions." },
+          { "from": "client", "text": "Désolé, je n'ai pas eu le temps, je regarde ça ce week-end." },
+          { "from": "business", "text": "Pas de souci, on reste disponible." }
+        ],
+        "inputPlaceholder": "Écrire un message...",
+        "validateButtonLabel": "Valider le modèle de relance",
+        "validateCaption": "Vous validez le modèle une fois, les relances partent ensuite seules."
+      }
     },
     "formation": {
       "w0107": [
@@ -385,7 +501,31 @@
         "Convocation générée avec mentions obligatoires et documents joints",
         "Envoi automatique au moins 2 semaines avant la session",
         "Modèle validé par vous ; alerte si session modifiée en urgence"
-      ]
+      ],
+      "docMockup": {
+        "title": "Feuille d'émargement",
+        "reference": "Session #128",
+        "inciTitle": "Signatures collectées",
+        "inciTags": ["Matin", "Après-midi"],
+        "allergensTitle": "Archivage",
+        "allergensValue": "Conservée 6 ans (durée légale)",
+        "claimsTitle": "Statut",
+        "claimsValue": "Classée automatiquement par dossier stagiaire",
+        "statusLabel": "Archivée et classée",
+        "validationCaption": "Consultable par vous et les financeurs à tout moment."
+      },
+      "checklist": {
+        "title": "Indicateurs Qualiopi",
+        "items": [
+          { "label": "Indicateur 1 — Information des publics", "status": "ok" },
+          { "label": "Indicateur 8 — Adaptation pédagogique", "status": "ok" },
+          { "label": "Indicateur 22 — Suivi post-formation", "status": "missing", "note": "Questionnaire à 3 mois manquant" },
+          { "label": "Indicateur 30 — Traitement des réclamations", "status": "ok" }
+        ],
+        "okLabel": "Complet",
+        "missingLabel": "Incomplet",
+        "validationLabel": "Vous jugez la suffisance des preuves avant l'audit — cet outil aide à documenter, il n'audite pas."
+      }
     },
     "pharmacie": {
       "wph01": [
@@ -417,7 +557,19 @@
         "Classement automatique par registre concerné",
         "Tableau de bord des documents manquants",
         "Vous jugez la suffisance des preuves avant l'inspection"
-      ]
+      ],
+      "docMockup": {
+        "title": "Fiche de préparation — entretien pharmaceutique",
+        "reference": "ENT-2024-0158",
+        "inciTitle": "Traitement concerné",
+        "inciTags": ["Anticoagulant oral (AVK)"],
+        "allergensTitle": "Échéance",
+        "allergensValue": "Entretien annuel dû sous 30 jours",
+        "claimsTitle": "Consentement patient",
+        "claimsValue": "Consentement écrit requis avant tout entretien facturé",
+        "statusLabel": "À mener et facturer par vous",
+        "validationCaption": "Vous menez l'entretien ; la facturation passe par votre propre logiciel agréé, jamais par NBHC."
+      }
     },
     "restaurant": {
       "iaTel": {

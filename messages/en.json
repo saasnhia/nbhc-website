@@ -289,7 +289,41 @@
         "Sessions used automatically tracked",
         "Right timing detected (before the last session)",
         "Follow-up sent with a renewal offer"
-      ]
+      ],
+      "callBooking": {
+        "callerLabel": "Incoming call",
+        "callerNumber": "06 XX XX XX XX",
+        "processingLabel": "The AI checks class availability...",
+        "cardAvailable": {
+          "statusLabel": "Confirmed",
+          "fields": [
+            { "label": "Name", "value": "Claire M." },
+            { "label": "Class", "value": "Pilates - Tuesday 6pm" },
+            { "label": "Confirmation", "value": "Sent by SMS" }
+          ]
+        },
+        "cardFull": {
+          "statusLabel": "Alternative slot proposed",
+          "fields": [
+            { "label": "Name", "value": "Thomas R." },
+            { "label": "Class", "value": "Cross-training" },
+            { "label": "Slot", "value": "Thursday 7pm (instead of Tuesday)" }
+          ]
+        },
+        "validationLabel": "The schedule stays visible and editable by you at all times"
+      },
+      "renewalChat": {
+        "contactName": "Camille",
+        "contactSubtitle": "Membership nearing renewal",
+        "bubbles": [
+          { "from": "business", "tag": "Automatic renewal-date detection", "text": "Hi Camille, your membership ends in 5 days. Renew at the same rate?" },
+          { "from": "client", "text": "Yes, happy to, same as usual!" },
+          { "from": "business", "text": "Great, renewal recorded for next month." }
+        ],
+        "inputPlaceholder": "Write a message...",
+        "validateButtonLabel": "Confirm renewal",
+        "validateCaption": "You approve every offer before it's sent."
+      }
     },
     "asso": {
       "w0106": [
@@ -308,7 +342,31 @@
         "Match, practice or event scheduled",
         "Recipient list generated (players, parents)",
         "Notice automatically sent to everyone"
-      ]
+      ],
+      "relanceChat": {
+        "contactName": "The Martin family",
+        "contactSubtitle": "Membership fee awaiting payment",
+        "bubbles": [
+          { "from": "business", "tag": "Message pre-approved by the treasurer", "text": "Hi, a friendly reminder: this season's membership fee hasn't been paid yet. Just an oversight?" },
+          { "from": "client", "text": "Oh sorry, I'll do it tonight!" },
+          { "from": "business", "text": "Thanks, we'll confirm as soon as payment is received." }
+        ],
+        "inputPlaceholder": "Write a message...",
+        "validateButtonLabel": "Confirm sending",
+        "validateCaption": "The treasurer approves every message before it's sent."
+      },
+      "docMockup": {
+        "title": "Sign-up file",
+        "reference": "REG-2024-014",
+        "inciTitle": "Documents received",
+        "inciTags": ["Sign-up form", "Federation license"],
+        "allergensTitle": "Missing document",
+        "allergensValue": "Medical certificate",
+        "claimsTitle": "Status",
+        "claimsValue": "Incomplete file — automatic follow-up sent",
+        "statusLabel": "Awaiting board approval",
+        "validationCaption": "The board approves every complete file before the season starts."
+      }
     },
     "garage": {
       "w0101": [
@@ -337,7 +395,41 @@
         "Insurance claim opened (expert, deductible, timeline)",
         "Timelines automatically monitored",
         "Automatic follow-up if the expert is slow"
-      ]
+      ],
+      "callBooking": {
+        "callerLabel": "Incoming call",
+        "callerNumber": "06 XX XX XX XX",
+        "processingLabel": "The AI checks the shop's schedule...",
+        "cardAvailable": {
+          "statusLabel": "Booking confirmed",
+          "fields": [
+            { "label": "Name", "value": "Mr. Rousseau" },
+            { "label": "Vehicle", "value": "Clio IV - oil change" },
+            { "label": "Slot", "value": "Friday 10am" }
+          ]
+        },
+        "cardFull": {
+          "statusLabel": "Alternative slot proposed",
+          "fields": [
+            { "label": "Name", "value": "Ms. Aziz" },
+            { "label": "Vehicle", "value": "308 - brake pads" },
+            { "label": "Slot", "value": "Monday 2pm (instead of Friday)" }
+          ]
+        },
+        "validationLabel": "Every booking stays validated by you before confirmation to the customer"
+      },
+      "rappelChat": {
+        "contactName": "Mr. Petit",
+        "contactSubtitle": "Vehicle service reminder",
+        "bubbles": [
+          { "from": "business", "tag": "Calculated from mileage", "text": "Hi, your vehicle is nearing 30,000 km: time to schedule the service." },
+          { "from": "client", "text": "Oh right, I forgot — can we look at next week?" },
+          { "from": "business", "text": "Sure, a slot will be proposed within 48h." }
+        ],
+        "inputPlaceholder": "Write a message...",
+        "validateButtonLabel": "Confirm reminder",
+        "validateCaption": "You stay in control of every reminder sent."
+      }
     },
     "btp": {
       "w0101": [
@@ -360,7 +452,31 @@
         "Message received (email, SMS or WhatsApp)",
         "Message automatically filed under the right client",
         "Centralized history available in one place"
-      ]
+      ],
+      "docMockup": {
+        "title": "Quote generated",
+        "reference": "QT-2024-0342",
+        "inciTitle": "Legal notices included",
+        "inciTags": ["Business registration", "VAT", "Payment terms", "Late penalties"],
+        "allergensTitle": "Job",
+        "allergensValue": "Boiler replacement + labor",
+        "claimsTitle": "Status",
+        "claimsValue": "Awaiting your approval before sending",
+        "statusLabel": "For you to adjust and approve",
+        "validationCaption": "You adjust and approve every quote before it's sent to the client."
+      },
+      "relanceChat": {
+        "contactName": "Client — quote #0342",
+        "contactSubtitle": "Quote sent, no reply yet",
+        "bubbles": [
+          { "from": "business", "tag": "Automatic follow-up at day 7", "text": "Hi, just checking in on the quote sent last week — happy to answer any questions." },
+          { "from": "client", "text": "Sorry, haven't had time — I'll look at it this weekend." },
+          { "from": "business", "text": "No worries, we're here whenever you're ready." }
+        ],
+        "inputPlaceholder": "Write a message...",
+        "validateButtonLabel": "Approve follow-up template",
+        "validateCaption": "You approve the template once, then follow-ups go out on their own."
+      }
     },
     "formation": {
       "w0107": [
@@ -385,7 +501,31 @@
         "Notice generated with mandatory mentions and attached documents",
         "Automatic sending at least 2 weeks before the session",
         "Template approved by you; alert if session changes urgently"
-      ]
+      ],
+      "docMockup": {
+        "title": "Attendance sheet",
+        "reference": "Session #128",
+        "inciTitle": "Signatures collected",
+        "inciTags": ["Morning", "Afternoon"],
+        "allergensTitle": "Archiving",
+        "allergensValue": "Kept for 6 years (legal duration)",
+        "claimsTitle": "Status",
+        "claimsValue": "Automatically filed under the trainee record",
+        "statusLabel": "Archived and filed",
+        "validationCaption": "Available to you and funders at any time."
+      },
+      "checklist": {
+        "title": "Qualiopi indicators",
+        "items": [
+          { "label": "Indicator 1 — Public information", "status": "ok" },
+          { "label": "Indicator 8 — Pedagogical adaptation", "status": "ok" },
+          { "label": "Indicator 22 — Post-training follow-up", "status": "missing", "note": "3-month survey missing" },
+          { "label": "Indicator 30 — Complaint handling", "status": "ok" }
+        ],
+        "okLabel": "Complete",
+        "missingLabel": "Incomplete",
+        "validationLabel": "You judge whether the evidence is sufficient before the audit — this tool helps document, it doesn't audit."
+      }
     },
     "pharmacie": {
       "wph01": [
@@ -417,7 +557,19 @@
         "Automatic filing by relevant register",
         "Dashboard of missing documents",
         "You judge whether evidence is sufficient before inspection"
-      ]
+      ],
+      "docMockup": {
+        "title": "Preparation sheet — pharmacist consultation",
+        "reference": "CONS-2024-0158",
+        "inciTitle": "Treatment concerned",
+        "inciTags": ["Oral anticoagulant (VKA)"],
+        "allergensTitle": "Due date",
+        "allergensValue": "Annual consultation due within 30 days",
+        "claimsTitle": "Patient consent",
+        "claimsValue": "Written consent required before any billed consultation",
+        "statusLabel": "For you to lead and bill",
+        "validationCaption": "You lead the consultation; billing goes through your own approved software, never NBHC."
+      }
     },
     "restaurant": {
       "iaTel": {
