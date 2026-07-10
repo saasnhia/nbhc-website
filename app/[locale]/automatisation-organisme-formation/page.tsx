@@ -3,17 +3,15 @@ import SectorPageContent, { type SectorContent } from "../../../components/Secto
 import JsonLd from "../../../components/JsonLd";
 import { serviceSchema, breadcrumbSchema, faqPageSchema } from "../../../lib/schema";
 import { zipFlowSteps, type FlowStepKind } from "../../../components/AutomationFlow";
+import DocMockup, { type DocMockupContent } from "../../../components/DocMockup";
+import ChecklistMockup, { type ChecklistMockupContent } from "../../../components/ChecklistMockup";
 
 const FLOW_KINDS: Record<string, FlowStepKind[]> = {
-  "W-FORMATION-07": ["trigger", "process", "action", "validation"],
   "W-FORMATION-02": ["trigger", "process", "action", "validation"],
-  "W-FORMATION-03": ["trigger", "process", "action"],
   "W-FORMATION-04": ["trigger", "process", "action", "validation"],
 };
 const FLOW_MSG_KEY: Record<string, string> = {
-  "W-FORMATION-07": "w0107",
   "W-FORMATION-02": "w0102",
-  "W-FORMATION-03": "w0103",
   "W-FORMATION-04": "w0104",
 };
 
@@ -228,6 +226,20 @@ export default async function Page({
   const content: SectorContent = {
     ...baseContent,
     automations: baseContent.automations.map((a) => {
+      if (a.code === "W-FORMATION-03") {
+        const doc = t.raw("docMockup") as DocMockupContent;
+        return {
+          ...a,
+          customFlow: <DocMockup ariaLabel={a.title} content={doc} />,
+        };
+      }
+      if (a.code === "W-FORMATION-07") {
+        const checklist = t.raw("checklist") as ChecklistMockupContent;
+        return {
+          ...a,
+          customFlow: <ChecklistMockup ariaLabel={a.title} content={checklist} />,
+        };
+      }
       const kinds = FLOW_KINDS[a.code];
       const msgKey = FLOW_MSG_KEY[a.code];
       if (!kinds || !msgKey) return a;
