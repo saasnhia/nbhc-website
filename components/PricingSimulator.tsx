@@ -273,9 +273,9 @@ export default function PricingSimulator() {
   const showRecurring = build.kind === "tier";
   const showMultiSiteNote = build.kind === "tier" && build.showMultiSiteNote;
 
-  const lostItems = [t("lost1"), t("lost2"), t("lost3")];
+  const lostItems = [t("lost1"), t("lost2"), t("lost3"), t("lost4")];
   if (sector === "pharma" || sector === "formation" || sector === "btp") {
-    lostItems.push(t("lost4Regulated"));
+    lostItems.push(t("lostRegulated"));
   }
 
   return (
