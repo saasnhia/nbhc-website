@@ -124,9 +124,9 @@
     "step3Desc": "On construit le workflow, on calibre l'IA sur votre vocabulaire métier, et on teste sur 100 à 500 cas réels. Pas de prototype — un système qui tourne.",
     "step3Badge": "2-5 semaines",
     "step4Number": "04",
-    "step4Title": "On opère, vous mesurez",
-    "step4Desc": "Bascule progressive. Monitoring en temps réel, ajustements continus, rapport mensuel. Vous ne payez la performance fee que si les résultats sont au rendez-vous.",
-    "step4Badge": "3-6 mois de suivi"
+    "step4Title": "On livre, vous décidez de la suite",
+    "step4Desc": "Le build est testé et livré. Si vous voulez qu'on continue à surveiller, mettre à jour et maintenir l'automatisation, l'accompagnement prend le relais — à vous de choisir, ce n'est jamais imposé.",
+    "step4Badge": "Livraison + accompagnement optionnel"
   },
   "products": {
     "eyebrow": "NOS PRODUITS",
@@ -157,14 +157,14 @@
     "block1Title": "Moteur IA souverain",
     "block1Desc": "On construit sur Mistral, le modèle IA français, hébergé en UE. Les outils tiers connectés à votre activité restent les vôtres.",
     "block2Icon": "📊",
-    "block2Title": "Vous payez sur les résultats",
-    "block2Desc": "Notre performance fee est basée sur le ROI réel, mesuré et visible dans votre dashboard. Cap garanti.",
+    "block2Title": "Votre prix, pas une moyenne",
+    "block2Desc": "Le tarif dépend de ce que vous demandez précisément — pas d'une grille moyenne calquée sur d'autres clients. Deux automatisations sur mesure chez nous, ce n'est pas le même prix qu'ailleurs : ni plus cher, ni moins cher par principe, juste calculé sur votre périmètre réel.",
     "block3Icon": "🔓",
     "block3Title": "Vous êtes propriétaire",
     "block3Desc": "Le workflow, les prompts, l'architecture — tout vous appartient. Si vous partez, vous gardez tout.",
     "block4Icon": "🤝",
     "block4Title": "Pas un outil. Un partenaire.",
-    "block4Desc": "On ne vous vend pas un logiciel et on disparaît. On opère votre solution pendant 3 à 6 mois avec monitoring, ajustements et support."
+    "block4Desc": "On ne vous vend pas un logiciel et on disparaît. En secteur régulé, la veille réglementaire fait partie de l'accompagnement — mises à jour, maintenance et formation continuent tant que vous le souhaitez."
   },
   "faq": {
     "eyebrow": "FAQ",

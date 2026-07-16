@@ -124,9 +124,9 @@
     "step3Desc": "We build the workflow, calibrate the AI on your business vocabulary, and test on 100 to 500 real cases. Not a prototype — a system that runs.",
     "step3Badge": "2-5 weeks",
     "step4Number": "04",
-    "step4Title": "We operate, you measure",
-    "step4Desc": "Progressive rollout. Real-time monitoring, continuous adjustments, monthly report. You only pay the performance fee if results are there.",
-    "step4Badge": "3-6 months follow-up"
+    "step4Title": "We deliver, you decide what's next",
+    "step4Desc": "The build is tested and delivered. If you want us to keep monitoring, updating and maintaining the automation, the support plan takes over — it's your call, never forced.",
+    "step4Badge": "Delivery + optional support"
   },
   "products": {
     "eyebrow": "OUR PRODUCTS",
@@ -157,14 +157,14 @@
     "block1Title": "Sovereign AI engine",
     "block1Desc": "We build on Mistral, the French AI model, hosted in the EU. Third-party tools connected to your business stay yours.",
     "block2Icon": "📊",
-    "block2Title": "You pay on results",
-    "block2Desc": "Our performance fee is based on real ROI, measured and visible in your dashboard. Capped guarantee.",
+    "block2Title": "Your price, not an average",
+    "block2Desc": "The price depends on exactly what you ask for — not a blended grid copied across other clients. Two custom automations here isn't priced like anywhere else: not cheaper, not pricier by default, just calculated on your actual scope.",
     "block3Icon": "🔓",
     "block3Title": "You're the owner",
     "block3Desc": "The workflow, prompts, architecture — it all belongs to you. If you leave, you keep everything.",
     "block4Icon": "🤝",
     "block4Title": "Not a tool. A partner.",
-    "block4Desc": "We don't sell you software and disappear. We operate your solution for 3 to 6 months with monitoring, adjustments and support."
+    "block4Desc": "We don't sell you software and disappear. In regulated sectors, regulatory monitoring is part of the support plan — updates, maintenance and training continue for as long as you want them."
   },
   "faq": {
     "eyebrow": "FAQ",
