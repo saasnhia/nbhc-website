@@ -129,12 +129,6 @@ export function serviceSchema(locale: "fr" | "en", offers: ServiceOffer[]) {
       description: o.description,
       url: o.url,
       availability: "https://schema.org/InStock",
-      priceSpecification: {
-        "@type": "UnitPriceSpecification",
-        price: o.price,
-        priceCurrency: o.priceCurrency ?? "EUR",
-        unitText: "MONTH",
-      },
     })),
   };
 }
