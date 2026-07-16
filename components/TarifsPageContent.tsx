@@ -22,10 +22,8 @@ export default async function TarifsPageContent({ locale }: { locale: string }) 
   ];
 
   const tierLegend = [
-    { name: tB("legendSocleName"), amount: tB("legendSocleAmount"), desc: tB("legendSocleDesc") },
-    { name: tB("legendSuiviName"), amount: tB("legendSuiviAmount"), desc: tB("legendSuiviDesc") },
-    { name: tB("legendEtenduName"), amount: tB("legendEtenduAmount"), desc: tB("legendEtenduDesc") },
-    { name: tB("legendSurDevisName"), amount: tB("legendSurDevisAmount"), desc: tB("legendSurDevisDesc") },
+    { amount: tB("legendRangeAmount"), desc: tB("legendRangeDesc") },
+    { amount: tB("legendSurDevisAmount"), desc: tB("legendSurDevisDesc") },
   ];
 
   return (
@@ -257,10 +255,10 @@ export default async function TarifsPageContent({ locale }: { locale: string }) 
             <div style={{ marginBottom: 10 }}>{tB("honestyInfra")}</div>
             <div>{tB("honestyAccompagnement")}</div>
 
-            <div className="grid grid-cols-4 max-[700px]:grid-cols-2 gap-2.5" style={{ marginTop: 16 }}>
+            <div className="grid grid-cols-2 max-[700px]:grid-cols-1 gap-2.5" style={{ marginTop: 16 }}>
               {tierLegend.map((tier) => (
                 <div
-                  key={tier.name}
+                  key={tier.amount}
                   style={{
                     background: "var(--card)",
                     border: "1px solid var(--border)",
@@ -268,9 +266,6 @@ export default async function TarifsPageContent({ locale }: { locale: string }) 
                     padding: "14px 14px",
                   }}
                 >
-                  <div style={{ fontSize: 12.5, fontWeight: 700, color: "var(--gold-light)", marginBottom: 4 }}>
-                    {tier.name}
-                  </div>
                   <div
                     style={{
                       fontSize: 15,

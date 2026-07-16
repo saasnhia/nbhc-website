@@ -121,28 +121,14 @@ const TYPE_OPTIONS: { value: AutomationType; key: string }[] = [
 ];
 
 const REASON_KEY: Record<AccompagnementReason, string> = {
-  socle: "reasonSocle",
+  standard1: "reasonStandard1",
   pme: "reasonPme",
   automations2to3: "reasonAutomations2to3",
   volume4plus: "reasonVolume4plus",
   mesureSolo: "reasonMesureSolo",
-  perimetreReel: "reasonPerimetreReel",
-  multiSite: "reasonMultiSite",
-  regulatedSector: "reasonRegulatedSector",
-  mesureMultiple: "reasonMesureMultiple",
+  mesure2to3: "reasonMesure2to3",
+  mesure4plus: "reasonMesure4plus",
   "50plus": "reason50plus",
-};
-
-const ACC_TIER_KEY: Record<string, string> = {
-  socle: "accTierSocle",
-  suivi: "accTierSuivi",
-  suiviPlus: "accTierSuiviPlus",
-  suiviRenforce: "accTierSuiviRenforce",
-  suiviRenforcePlus: "accTierSuiviRenforcePlus",
-  etendu: "accTierEtendu",
-  etenduRenforce: "accTierEtenduRenforce",
-  etenduMaximal: "accTierEtenduMaximal",
-  surDevis: "accTierSurDevis",
 };
 
 function PillGroup<T extends string>({
@@ -277,7 +263,6 @@ export default function PricingSimulator() {
   const accompagnementReasonText = accompagnement
     ? accompagnement.reasons.map((r) => t(REASON_KEY[r])).join(" + ") + "."
     : "";
-  const accompagnementTierLabel = accompagnement ? t(ACC_TIER_KEY[accompagnement.tier]) : "";
   const accompagnementPriceText = accompagnement
     ? accompagnement.price === null
       ? t("priceSurDevis")
@@ -541,7 +526,7 @@ export default function PricingSimulator() {
               {accompagnementOn && accompagnement ? (
                 <div style={{ display: "flex", justifyContent: "space-between", gap: 16, fontSize: 13.5 }}>
                   <span style={{ color: "var(--text-muted)" }}>
-                    {t("accompagnementLinePrefix")} {accompagnementTierLabel}
+                    {t("accompagnementLinePrefix")}
                     <span
                       style={{ display: "block", fontSize: 11.5, color: "var(--text-dim)", marginTop: 2 }}
                     >

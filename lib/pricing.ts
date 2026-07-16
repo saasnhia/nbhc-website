@@ -22,8 +22,6 @@ export type SimulatorInputs = {
   multiSite: boolean;
 };
 
-const REGULATED_SECTORS: Sector[] = ["pharma", "formation", "btp"];
-
 export type BuildFallbackReason =
   | "dontknowAutomations"
   | "dontknowType"
@@ -144,99 +142,63 @@ export function computeBuildTier(inputs: SimulatorInputs): BuildResult {
   };
 }
 
-export type AccompagnementTier =
-  | "socle"
-  | "suivi"
-  | "suiviPlus"
-  | "suiviRenforce"
-  | "suiviRenforcePlus"
-  | "etendu"
-  | "etenduRenforce"
-  | "etenduMaximal"
-  | "surDevis";
-
 export type AccompagnementReason =
-  | "socle"
+  | "standard1"
   | "pme"
   | "automations2to3"
   | "volume4plus"
   | "mesureSolo"
-  | "perimetreReel"
-  | "multiSite"
-  | "regulatedSector"
-  | "mesureMultiple"
+  | "mesure2to3"
+  | "mesure4plus"
   | "50plus";
 
 export type AccompagnementResult = {
-  tier: AccompagnementTier;
   /** Monthly price in euros, or null for "sur devis" (50+ salariés). */
   price: number | null;
   reasons: AccompagnementReason[];
 };
 
+type AccompagnementCellReason = Exclude<AccompagnementReason, "pme" | "50plus">;
+
 /**
- * Ported 1:1 from the validated mockup. The price is never a summed formula
- * shown to the visitor — each combination maps to one of a fixed set of
- * round numbers, chosen because a single signal (PME size, sur-mesure
- * fragility, automation volume, regulated-sector monitoring burden) stacks
- * with the others rather than being computed live in front of the visitor.
+ * Direct lookup table, no multiplier, no cap: price = base(taille, type, nombre).
+ * 6 automation profiles × 2 size rows = 12 cells. 50+ is a separate early return.
  */
+const ACCOMPAGNEMENT_TABLE: Record<AccompagnementCellReason, { base: number; pme: number }> = {
+  standard1: { base: 90, pme: 190 },
+  automations2to3: { base: 190, pme: 290 },
+  volume4plus: { base: 250, pme: 350 },
+  mesureSolo: { base: 250, pme: 350 },
+  mesure2to3: { base: 500, pme: 600 },
+  mesure4plus: { base: 700, pme: 800 },
+};
+
 export function computeAccompagnement(
   inputs: SimulatorInputs
 ): AccompagnementResult {
-  const { size, sector, automations, type, multiSite } = inputs;
+  const { size, automations, type } = inputs;
 
   if (size === "50plus") {
-    return { tier: "surDevis", price: null, reasons: ["50plus"] };
+    return { price: null, reasons: ["50plus"] };
   }
 
-  const regulated = REGULATED_SECTORS.includes(sector);
+  const cellReason: AccompagnementCellReason =
+    type === "standard"
+      ? automations === "1"
+        ? "standard1"
+        : automations === "2-3"
+          ? "automations2to3"
+          : "volume4plus"
+      : automations === "1"
+        ? "mesureSolo"
+        : automations === "2-3"
+          ? "mesure2to3"
+          : "mesure4plus";
+
+  const cell = ACCOMPAGNEMENT_TABLE[cellReason];
   const pmeSignal = size === "pme";
-  const strongReasons: AccompagnementReason[] = [];
-  if (multiSite) strongReasons.push("multiSite");
-  if (regulated) strongReasons.push("regulatedSector");
-  if (type === "mesure" && (automations === "2-3" || automations === "4plus")) {
-    strongReasons.push("mesureMultiple");
-  }
+  const price = pmeSignal ? cell.pme : cell.base;
+  const reasons: AccompagnementReason[] = pmeSignal ? ["pme", cellReason] : [cellReason];
 
-  if (strongReasons.length >= 1) {
-    const count = Math.min(strongReasons.length, 3);
-    const basePrices = [700, 1200, 2000];
-    const pmePrices = [1000, 1600, 2000];
-    const tiers: AccompagnementTier[] = ["etendu", "etenduRenforce", "etenduMaximal"];
-    const price = (pmeSignal ? pmePrices : basePrices)[count - 1];
-    const reasons = pmeSignal ? [...strongReasons, "pme" as const] : strongReasons;
-    return { tier: tiers[count - 1], price, reasons };
-  }
-
-  const volumeSignal = automations === "4plus";
-  const mesureSoloSignal = type === "mesure" && automations === "1";
-  const stdBaseSignal =
-    type === "standard" && (automations === "2-3" || automations === "4plus");
-  const qualifies = pmeSignal || stdBaseSignal || mesureSoloSignal;
-
-  if (!qualifies) {
-    return { tier: "socle", price: 90, reasons: ["socle"] };
-  }
-
-  if (pmeSignal) {
-    if (volumeSignal) {
-      return { tier: "suiviRenforcePlus", price: 350, reasons: ["pme", "volume4plus"] };
-    }
-    if (mesureSoloSignal) {
-      return { tier: "suiviRenforce", price: 290, reasons: ["pme", "mesureSolo"] };
-    }
-    if (stdBaseSignal) {
-      return { tier: "suiviRenforce", price: 290, reasons: ["pme", "perimetreReel"] };
-    }
-    return { tier: "suivi", price: 190, reasons: ["pme"] };
-  }
-
-  if (volumeSignal) {
-    return { tier: "suiviPlus", price: 250, reasons: ["volume4plus"] };
-  }
-  if (mesureSoloSignal) {
-    return { tier: "suiviPlus", price: 250, reasons: ["mesureSolo"] };
-  }
-  return { tier: "suivi", price: 190, reasons: ["automations2to3"] };
+  return { price, reasons };
 }
