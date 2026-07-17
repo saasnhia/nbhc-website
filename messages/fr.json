@@ -146,7 +146,6 @@
     "title": "Transparent. Pas d'astérisque caché.",
     "subtitle": "Chaque projet commence par un diagnostic gratuit de 30 minutes, sans engagement.",
     "ctaButton": "Voir la grille complète et simuler votre prix →",
-    "footnote1": "Le workflow, les prompts, l'architecture — tout vous appartient. Si vous partez, vous gardez tout.",
     "footnote2": "Coûts d'infrastructure (n8n, Mistral) : 80-300€/mois, facturés par NBHC — obligatoire, contrairement à l'accompagnement.",
     "footnote3": "L'accompagnement NBHC (mises à jour, sécurité, maintenance, formation) : 90 à 800 €/mois selon votre situation, versé à NBHC. Sans lui, personne ne surveille ni ne met à jour votre automatisation après la livraison."
   },

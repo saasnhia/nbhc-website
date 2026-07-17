@@ -142,12 +142,6 @@ export default function Pricing() {
         }}
       >
         <p
-          className="text-[14px] font-light mb-3"
-          style={{ color: "var(--text)", lineHeight: 1.7 }}
-        >
-          🔓 {t("footnote1")}
-        </p>
-        <p
           className="text-[13px] font-light mb-3"
           style={{ color: "var(--text-muted)", lineHeight: 1.7 }}
         >
