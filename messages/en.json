@@ -146,7 +146,7 @@
     "title": "Transparent. No hidden asterisks.",
     "subtitle": "Every project starts with a free 30-minute diagnostic, no commitment.",
     "ctaButton": "See the full grid and simulate your price →",
-    "footnote1": "You stay owner of your stack. You own everything. If you want to leave, you keep everything.",
+    "footnote1": "The workflow, prompts, architecture — it all belongs to you. If you leave, you keep everything.",
     "footnote2": "Infrastructure costs (n8n, Mistral): €80-300/month, billed by NBHC — mandatory, unlike the support plan.",
     "footnote3": "NBHC support (updates, security, maintenance, training): €90 to €800/month depending on your situation, paid to NBHC. Without it, nobody monitors or updates your automation after delivery."
   },
@@ -158,7 +158,7 @@
     "block1Desc": "We build on Mistral, the French AI model, hosted in the EU. Third-party tools connected to your business stay yours.",
     "block2Icon": "🎯",
     "block2Title": "Your price, not an average",
-    "block2Desc": "The price depends on exactly what you ask for — not a blended average grid copied across other clients. Twelve pricing tiers based on your size and automation type, not an individually negotiated rate.",
+    "block2Desc": "The price depends on exactly what you ask for — not a blended average grid copied across other clients. Size, automation type, volume: those are the criteria that set the price.",
     "block3Icon": "🔓",
     "block3Title": "You're the owner",
     "block3Desc": "The workflow, prompts, architecture — it all belongs to you. If you leave, you keep everything.",

@@ -146,7 +146,7 @@
     "title": "Transparent. Pas d'astérisque caché.",
     "subtitle": "Chaque projet commence par un diagnostic gratuit de 30 minutes, sans engagement.",
     "ctaButton": "Voir la grille complète et simuler votre prix →",
-    "footnote1": "Vous restez propriétaire de votre stack. Tout vous appartient. Si vous voulez partir, vous gardez tout.",
+    "footnote1": "Le workflow, les prompts, l'architecture — tout vous appartient. Si vous partez, vous gardez tout.",
     "footnote2": "Coûts d'infrastructure (n8n, Mistral) : 80-300€/mois, facturés par NBHC — obligatoire, contrairement à l'accompagnement.",
     "footnote3": "L'accompagnement NBHC (mises à jour, sécurité, maintenance, formation) : 90 à 800 €/mois selon votre situation, versé à NBHC. Sans lui, personne ne surveille ni ne met à jour votre automatisation après la livraison."
   },
@@ -158,7 +158,7 @@
     "block1Desc": "On construit sur Mistral, le modèle IA français, hébergé en UE. Les outils tiers connectés à votre activité restent les vôtres.",
     "block2Icon": "🎯",
     "block2Title": "Votre prix, pas une moyenne",
-    "block2Desc": "Le tarif dépend de ce que vous demandez précisément — pas d'une grille moyenne calquée sur d'autres clients. Douze cas de figure selon votre taille et votre type d'automatisation, pas un prix individuel.",
+    "block2Desc": "Le tarif dépend de ce que vous demandez précisément — pas d'une grille moyenne calquée sur d'autres clients. Taille, type d'automatisation, volume : ce sont ces critères qui fixent le prix.",
     "block3Icon": "🔓",
     "block3Title": "Vous êtes propriétaire",
     "block3Desc": "Le workflow, les prompts, l'architecture — tout vous appartient. Si vous partez, vous gardez tout.",
