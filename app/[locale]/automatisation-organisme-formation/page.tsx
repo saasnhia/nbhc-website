@@ -79,7 +79,7 @@ const contentFr: SectorContent = {
     "Ce catalogue s'adresse aux organismes de formation partout en France, quel que soit le profil : formateur indépendant, organisme généraliste ou centre de formation d'apprentis (CFA). On se connecte à l'outil métier que vous utilisez déjà (Digiforma, Dendreo, Ypareo ou autre) plutôt que d'en proposer un nouveau — l'automatisation complète votre organisation actuelle, elle ne la remplace pas. Le diagnostic de 30 minutes permet d'identifier les tâches précises qui vous coûtent le plus de temps.",
   pricingTitle: "Tarification",
   pricingIntro:
-    "Diagnostic gratuit de 30 minutes, systématique et sans engagement. Les convocations et l'émargement, par exemple, démarrent à 2 000 € HT — une automatisation sur mesure, avec intégration à votre outil métier existant quand une API ou un export est disponible.",
+    "Diagnostic gratuit de 30 minutes, systématique et sans engagement. La centralisation des preuves pour l'audit Qualiopi, par exemple, démarre à 2 000 € HT — une automatisation sur mesure, avec intégration à votre outil métier existant quand une API ou un export est disponible.",
   pricingNote:
     "Point d'attention : le bilan pédagogique et financier (BPF) est une échéance annuelle obligatoire pour tout organisme avec un numéro de déclaration d'activité — deux BPF manquants consécutifs entraînent la caducité automatique de ce numéro. Ce n'est pas une automatisation à part sur cette page, mais un rappel d'échéance que nous pouvons intégrer selon votre diagnostic.",
   faqTitle: "Questions fréquentes",
@@ -177,7 +177,7 @@ const contentEn: SectorContent = {
     "This catalog is open to training organizations anywhere in France, whatever the profile: independent trainer, general training organization or apprenticeship center (CFA). We connect to the tool you already use (Digiforma, Dendreo, Ypareo or other) rather than proposing a new one — automation completes your current setup, it doesn't replace it. The 30-minute diagnostic identifies the specific tasks costing you the most time.",
   pricingTitle: "Pricing",
   pricingIntro:
-    "Free 30-minute diagnostic, systematic and with no commitment. Notices and attendance sheets, for instance, start at €2,000 excl. VAT — a custom automation, with integration to your existing tool when an API or export is available.",
+    "Free 30-minute diagnostic, systematic and with no commitment. Centralizing evidence for the Qualiopi audit, for instance, starts at €2,000 excl. VAT — a custom automation, with integration to your existing tool when an API or export is available.",
   pricingNote:
     "Worth noting: the annual pedagogical and financial report (BPF) is a mandatory yearly deadline for any organization with an activity declaration number — two consecutive missing BPFs cause automatic lapse of that number. It's not a standalone automation on this page, but a deadline reminder we can include based on your diagnostic.",
   faqTitle: "Frequently asked questions",
@@ -257,8 +257,8 @@ export default async function Page({
               name: "Sur Mesure Léger",
               price: "2000",
               description: isFr
-                ? "Automatisation sur mesure pour organisme de formation, configurée pour votre activité"
-                : "Custom automation for training organizations, configured for your business",
+                ? "Automatisation sur mesure (centralisation des preuves pour l'audit Qualiopi) pour organisme de formation"
+                : "Custom automation (centralizing evidence for the Qualiopi audit) for training organizations",
               url: pageUrl,
             },
           ]),
