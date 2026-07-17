@@ -786,7 +786,7 @@
       "pillar1Title": "Vos automatisations ne vieillissent pas",
       "pillar1Text": "On surveille l'état de l'art des modèles et des outils. Quand une version plus performante existe pour l'un de vos workflows, on la teste — puis on la met à jour après votre validation. Quand une nouvelle automatisation devient pertinente pour votre métier, on vous la propose.",
       "pillar2Title": "Sécurité et souveraineté",
-      "pillar2Text": "IA Mistral hébergée en Union européenne. Vos données restent chez vous. Validation humaine sur chaque action engageante. Votre instance, vos données — rien ne vous bloque si vous partez.",
+      "pillar2Text": "Vos données transitent par n8n, hébergé en Allemagne, et par l'IA Mistral, hébergée en Union européenne. Validation humaine sur chaque action engageante.",
       "pillar3Title": "Maintenance",
       "pillar3Text": "Quand un outil tiers change — un éditeur modifie son export, une API évolue — on corrige pour que le workflow continue de tourner. Une petite équipe, réactive, pas un centre d'appels 24/7.",
       "pillar4Title": "Formation",

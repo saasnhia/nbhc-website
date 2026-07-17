@@ -786,7 +786,7 @@
       "pillar1Title": "Your automations don't age",
       "pillar1Text": "We monitor the state of the art in models and tools. When a more capable version exists for one of your workflows, we test it — then update it after your approval. When a new automation becomes relevant to your business, we suggest it to you.",
       "pillar2Title": "Security and sovereignty",
-      "pillar2Text": "Mistral AI hosted in the European Union. Your data stays with you. Human validation on every committing action. Your instance, your data — nothing locks you in if you leave.",
+      "pillar2Text": "Your data flows through n8n, hosted in Germany, and through Mistral AI, hosted in the European Union. Human validation on every committing action.",
       "pillar3Title": "Maintenance",
       "pillar3Text": "When a third-party tool changes — a vendor changes its export, an API evolves — we fix it so the workflow keeps running. A small, responsive team, not a 24/7 call center.",
       "pillar4Title": "Training",
