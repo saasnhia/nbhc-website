@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import Nav from "./Nav";
 import Footer from "./Footer";
 import AutomationFlow, { type FlowStep } from "./AutomationFlow";
@@ -63,6 +64,7 @@ export default function SectorPageContent({
   locale: string;
   content: SectorContent;
 }) {
+  const tPricing = useTranslations("pricing");
   return (
     <main style={{ background: "var(--bg)" }}>
       <Nav />
@@ -358,6 +360,20 @@ export default function SectorPageContent({
               {content.pricingNote}
             </p>
           )}
+          <div style={{ marginTop: 20, maxWidth: 680 }}>
+            <p style={{ color: "var(--text-muted)", fontSize: 13, lineHeight: 1.7, margin: "0 0 6px" }}>
+              {tPricing("footnote2")}
+            </p>
+            <p style={{ color: "var(--text-muted)", fontSize: 13, lineHeight: 1.7, margin: "0 0 14px" }}>
+              {tPricing("footnote3")}
+            </p>
+            <Link
+              href={`/${locale}/tarifs`}
+              style={{ color: "var(--gold-light)", textDecoration: "none", fontSize: 14, fontWeight: 600 }}
+            >
+              {tPricing("ctaButton")}
+            </Link>
+          </div>
         </section>
 
         {/* FAQ */}
