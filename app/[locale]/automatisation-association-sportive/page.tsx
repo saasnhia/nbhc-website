@@ -71,7 +71,7 @@ const contentFr: SectorContent = {
     "NBHC a rencontré et échangé avec plusieurs clubs et associations sportives de Vernon et de sa périphérie (Pacy-sur-Eure, Gaillon, Les Andelys, Ézy-sur-Eure) — judo, tennis, natation, escalade, rugby, basket. Les problématiques de gestion bénévole y sont les mêmes que partout en France, et l'offre s'adresse à tout club loi 1901, quelle que soit sa discipline ou sa localisation.",
   pricingTitle: "Tarification",
   pricingIntro:
-    "Diagnostic gratuit de 30 minutes, sans engagement, quelle que soit la taille du club. Le format standard (Quick Win à partir de 2 000 € HT, Standard à partir de 4 000 € HT + performance fee) reste accessible, mais on sait qu'un club amateur n'a pas le budget d'une entreprise.",
+    "Diagnostic gratuit de 30 minutes, sans engagement, quelle que soit la taille du club. La gestion des inscriptions et certificats, par exemple, démarre à 200 € HT — une automatisation standardisée, configurée pour votre club.",
   pricingNote:
     "Offre asso/solidaire à partir de 1 000 € HT, pensée spécifiquement pour les associations loi 1901 à petit budget.",
   faqTitle: "Questions fréquentes",
@@ -163,7 +163,7 @@ const contentEn: SectorContent = {
     "NBHC has met and talked with several sports clubs and associations in Vernon and its surroundings (Pacy-sur-Eure, Gaillon, Les Andelys, Ézy-sur-Eure) — judo, tennis, swimming, climbing, rugby, basketball. Volunteer management challenges are the same everywhere in France, and this offer is open to any non-profit sports club, whatever its discipline or location.",
   pricingTitle: "Pricing",
   pricingIntro:
-    "Free 30-minute diagnostic, no commitment, whatever the size of the club. The standard format (Quick Win from €2,000 excl. VAT, Standard from €4,000 excl. VAT + performance fee) remains available, but we know an amateur club doesn't have a business-sized budget.",
+    "Free 30-minute diagnostic, no commitment, whatever the size of the club. Managing registrations and certificates, for instance, starts at €200 excl. VAT — a standardized automation, configured for your club.",
   pricingNote:
     "Solidarity/non-profit offer from €1,000 excl. VAT, designed specifically for non-profit sports clubs on a tight budget.",
   faqTitle: "Frequently asked questions",
@@ -255,11 +255,11 @@ export default async function Page({
               url: pageUrl,
             },
             {
-              name: "Quick Win",
-              price: "2000",
+              name: "Essentiel",
+              price: "200",
               description: isFr
-                ? "1 automatisation ciblée livrée en 2-3 semaines"
-                : "1 targeted automation delivered in 2-3 weeks",
+                ? "Automatisation standardisée pour club sportif, configurée pour votre activité"
+                : "Standardized automation for sports clubs, configured for your activity",
               url: pageUrl,
             },
           ]),
