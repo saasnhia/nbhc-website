@@ -943,9 +943,9 @@
       "sectorAutoCoiffure3": "Anti no-show",
       "sectorAutoCosmetique1": "Dossier réglementaire CPNP/DIP préparé (sur mesure)",
       "sectorAutoCosmetique2": "Suivi des échantillons envoyés aux influenceurs (standardisée)",
-      "sectorAutoBoutique1": "Synchro stock boutiques/e-shop",
-      "sectorAutoBoutique2": "Synthèse des avis clients multi-plateformes",
-      "sectorAutoBoutique3": "Commandes B2B revendeurs",
+      "sectorAutoBoutique1": "Synchro stock boutiques/e-shop (sur mesure)",
+      "sectorAutoBoutique2": "Synthèse des avis clients multi-plateformes (standardisée)",
+      "sectorAutoBoutique3": "Commandes B2B revendeurs (sur mesure)",
       "sectorAutoImmobilier1": "Qualification et relance des leads entrants (formulaire, portails d'annonces)",
       "sectorAutoImmobilier2": "Rappels et confirmation automatique des rendez-vous de visite",
       "sectorAutoImmobilier3": "Diffusion multi-portails des annonces (SeLoger, LeBonCoin, etc.)"

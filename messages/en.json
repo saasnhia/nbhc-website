@@ -943,9 +943,9 @@
       "sectorAutoCoiffure3": "No-show prevention",
       "sectorAutoCosmetique1": "CPNP/DIP regulatory file prepared (custom)",
       "sectorAutoCosmetique2": "Influencer sample tracking (standardised)",
-      "sectorAutoBoutique1": "Multi-store/e-shop stock sync",
-      "sectorAutoBoutique2": "Multi-platform review summary",
-      "sectorAutoBoutique3": "B2B reseller orders",
+      "sectorAutoBoutique1": "Multi-store/e-shop stock sync (custom)",
+      "sectorAutoBoutique2": "Multi-platform review summary (standardised)",
+      "sectorAutoBoutique3": "B2B reseller orders (custom)",
       "sectorAutoImmobilier1": "Qualifying and following up incoming leads (forms, listing portals)",
       "sectorAutoImmobilier2": "Viewing appointment reminders + automatic confirmation",
       "sectorAutoImmobilier3": "Multi-portal listing distribution (SeLoger, LeBonCoin, etc.)"
