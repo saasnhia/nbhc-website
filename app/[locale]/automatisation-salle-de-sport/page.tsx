@@ -106,7 +106,7 @@ const contentFr: SectorContent = {
     {
       question: "On est une petite structure, est-ce que c'est fait pour nous ?",
       answer:
-        "Oui — le format Quick Win à partir de 2 000 € HT est justement pensé pour tester une première automatisation sans engager un gros budget. Le diagnostic de 30 minutes permet de voir concrètement ce qui vaut le coup pour votre taille de structure.",
+        "Oui — le format Essentiel à partir de 200 € HT est justement pensé pour tester une première automatisation sans engager un gros budget. Le diagnostic de 30 minutes permet de voir concrètement ce qui vaut le coup pour votre taille de structure.",
     },
   ],
   ctaText:
@@ -208,7 +208,7 @@ const contentEn: SectorContent = {
     {
       question: "We're a small structure, is this for us?",
       answer:
-        "Yes — the Quick Win format from €2,000 excl. VAT is designed precisely to test a first automation without committing a large budget. The 30-minute diagnostic shows concretely what's worth it for your size of structure.",
+        "Yes — the Essentiel format from €200 excl. VAT is designed precisely to test a first automation without committing a large budget. The 30-minute diagnostic shows concretely what's worth it for your size of structure.",
     },
   ],
   ctaText:
