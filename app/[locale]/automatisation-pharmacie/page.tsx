@@ -88,7 +88,7 @@ const contentFr: SectorContent = {
     "NBHC a mené un travail de terrain sur les officines de Marseille et de sa région — une métropole avec une forte densité d'officines et une concurrence qui pousse chaque titulaire à chercher des services différenciants. L'offre s'adresse cependant à toute officine en France, quel que soit son profil (titulaire seul, plusieurs pharmaciens, groupement).",
   pricingTitle: "Tarification",
   pricingIntro:
-    "Diagnostic gratuit de 30 minutes, systématique et sans engagement. Quick Win à partir de 2 000 € HT pour une première automatisation (la détection BPM, par exemple) livrée en 2-3 semaines, ou Standard à partir de 4 000 € HT + performance fee de 30 % du ROI mesuré (plafonnée à 2× le prix du build) pour combiner plusieurs automatisations. Vous restez propriétaire de votre stack.",
+    "Diagnostic gratuit de 30 minutes, systématique et sans engagement. La détection des patients éligibles au BPM, par exemple, démarre à 2 000 € HT — une automatisation sur mesure, connectée à votre logiciel métier.",
   pricingNote:
     "Les montants d'actes mentionnés ci-dessus (BPM, entretiens pharmaceutiques) sont des barèmes conventionnels publics de l'Assurance Maladie — pas un gain que NBHC produit ou garantit. Aucun résultat chiffré n'est promis : NBHC n'a aucune référence client officine à ce jour.",
   faqTitle: "Questions fréquentes",
@@ -192,7 +192,7 @@ const contentEn: SectorContent = {
     "NBHC has done field work with pharmacies in Marseille and its region — a metro area with a high density of pharmacies and competition that pushes every owner to look for differentiating services. The offer is open to any pharmacy in France though, whatever its profile (single pharmacist, several pharmacists, group).",
   pricingTitle: "Pricing",
   pricingIntro:
-    "Free 30-minute diagnostic, systematic and with no commitment. Quick Win from €2,000 excl. VAT for a first automation (BPM detection, for instance) delivered in 2-3 weeks, or Standard from €4,000 excl. VAT + a 30% performance fee on measured ROI (capped at 2x the build price) to combine several automations. You keep ownership of your stack.",
+    "Free 30-minute diagnostic, systematic and with no commitment. Detecting patients eligible for BPM, for instance, starts at €2,000 excl. VAT — a custom automation, connected to your pharmacy management software.",
   pricingNote:
     "The act amounts mentioned above (BPM, pharmacist consultations) are public conventional rates from French health insurance — not a gain NBHC produces or guarantees. No numeric result is promised: NBHC has no pharmacy client reference to date.",
   faqTitle: "Frequently asked questions",
@@ -262,19 +262,11 @@ export default async function Page({
         data={[
           serviceSchema(locale as "fr" | "en", [
             {
-              name: "Quick Win",
+              name: "Sur Mesure Léger",
               price: "2000",
               description: isFr
-                ? "1 automatisation ciblée pour officine, livrée en 2-3 semaines"
-                : "1 targeted automation for pharmacies, delivered in 2-3 weeks",
-              url: pageUrl,
-            },
-            {
-              name: "Standard",
-              price: "4000",
-              description: isFr
-                ? "3-5 automatisations combinées + performance fee 30% du ROI mesuré"
-                : "3-5 combined automations + 30% performance fee on measured ROI",
+                ? "Automatisation sur mesure pour officine, connectée à votre logiciel métier"
+                : "Custom automation for pharmacies, connected to your pharmacy management software",
               url: pageUrl,
             },
           ]),
