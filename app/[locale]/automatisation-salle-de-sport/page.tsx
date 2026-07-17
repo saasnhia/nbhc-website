@@ -90,7 +90,7 @@ const contentFr: SectorContent = {
     "NBHC a mené un travail de terrain approfondi auprès des salles, studios et instituts indépendants de Vernon et de sa périphérie proche (Saint-Marcel, Pacy-sur-Eure, Gaillon, Les Andelys). Si vous êtes dans ce secteur, on connaît déjà les problématiques concrètes du bassin — mais l'offre s'adresse à toute salle ou institut indépendant en France.",
   pricingTitle: "Tarification",
   pricingIntro:
-    "Diagnostic gratuit de 30 minutes, systématique et sans engagement. Ensuite, deux formats : Quick Win à partir de 2 000 € HT pour une première automatisation ciblée livrée en 2-3 semaines, ou Standard à partir de 4 000 € HT + performance fee de 30 % du ROI mesuré (plafonnée à 2× le prix du build) pour 2 à 3 automatisations combinées. Vous restez propriétaire de votre stack : si vous partez, vous gardez tout.",
+    "Diagnostic gratuit de 30 minutes, systématique et sans engagement. Les rappels automatiques de cours et la liste d'attente dynamique, par exemple, démarrent à 200 € HT — une automatisation standardisée, configurée pour votre salle.",
   faqTitle: "Questions fréquentes",
   faq: [
     {
@@ -192,7 +192,7 @@ const contentEn: SectorContent = {
     "NBHC has done in-depth field work with independent gyms, studios and wellness centers in Vernon and its immediate surroundings (Saint-Marcel, Pacy-sur-Eure, Gaillon, Les Andelys). If you're in this area, we already know the concrete challenges of the local market — but this offer is open to any independent gym or wellness center in France.",
   pricingTitle: "Pricing",
   pricingIntro:
-    "Free 30-minute diagnostic, systematic and with no commitment. Then two formats: Quick Win from €2,000 excl. VAT for a first targeted automation delivered in 2-3 weeks, or Standard from €4,000 excl. VAT + a 30% performance fee on the measured ROI (capped at 2x the build price) for 2-3 combined automations. You keep ownership of your stack: if you leave, you keep everything.",
+    "Free 30-minute diagnostic, systematic and with no commitment. Automatic class reminders and the dynamic waitlist, for instance, start at €200 excl. VAT — a standardized automation, configured for your gym.",
   faqTitle: "Frequently asked questions",
   faq: [
     {
@@ -274,19 +274,11 @@ export default async function Page({
         data={[
           serviceSchema(locale as "fr" | "en", [
             {
-              name: isFr ? "Quick Win" : "Quick Win",
-              price: "2000",
+              name: "Essentiel",
+              price: "200",
               description: isFr
-                ? "1 automatisation ciblée pour salle de sport ou institut, livrée en 2-3 semaines"
-                : "1 targeted automation for gyms or wellness centers, delivered in 2-3 weeks",
-              url: pageUrl,
-            },
-            {
-              name: "Standard",
-              price: "4000",
-              description: isFr
-                ? "2-3 automatisations combinées + performance fee 30% du ROI mesuré"
-                : "2-3 combined automations + 30% performance fee on measured ROI",
+                ? "Automatisation standardisée pour salle de sport ou institut, configurée pour votre activité"
+                : "Standardized automation for gyms or wellness centers, configured for your business",
               url: pageUrl,
             },
           ]),
