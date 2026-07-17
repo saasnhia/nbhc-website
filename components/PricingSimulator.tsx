@@ -19,7 +19,7 @@ type SectorMeta = {
   hrefSlug: string | null;
   suggested: boolean;
   labelKey: string;
-  autoKeys: readonly [string, string, string];
+  autoKeys: readonly string[];
 };
 
 const SECTOR_META: Record<Sector, SectorMeta> = {
@@ -71,6 +71,12 @@ const SECTOR_META: Record<Sector, SectorMeta> = {
     labelKey: "sectorLabelCoiffure",
     autoKeys: ["sectorAutoCoiffure1", "sectorAutoCoiffure2", "sectorAutoCoiffure3"],
   },
+  cosmetique: {
+    hrefSlug: "automatisation-marque-cosmetique",
+    suggested: false,
+    labelKey: "sectorLabelCosmetique",
+    autoKeys: ["sectorAutoCosmetique1", "sectorAutoCosmetique2"],
+  },
   boutique: {
     hrefSlug: null,
     suggested: true,
@@ -102,6 +108,7 @@ const SECTOR_OPTIONS: { value: Sector; key: string }[] = [
   { value: "pharma", key: "sectorPharma" },
   { value: "resto", key: "sectorResto" },
   { value: "coiffure", key: "sectorCoiffure" },
+  { value: "cosmetique", key: "sectorCosmetique" },
   { value: "boutique", key: "sectorBoutique" },
   { value: "immobilier", key: "sectorImmobilier" },
   { value: "autre", key: "sectorAutre" },
@@ -274,7 +281,7 @@ export default function PricingSimulator() {
   const showMultiSiteNote = build.kind === "tier" && build.showMultiSiteNote;
 
   const lostItems = [t("lost1"), t("lost2"), t("lost3"), t("lost4")];
-  if (sector === "pharma" || sector === "formation" || sector === "btp") {
+  if (sector === "pharma" || sector === "formation" || sector === "btp" || sector === "cosmetique") {
     lostItems.push(t("lostRegulated"));
   }
 
