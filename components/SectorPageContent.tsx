@@ -45,7 +45,7 @@ export type SectorContent = {
   geoText: string;
   pricingTitle: string;
   pricingIntro: string;
-  pricingNote?: string;
+  pricingNote?: React.ReactNode;
   faqTitle?: string;
   faq?: FaqItem[];
   ctaText: string;
