@@ -243,7 +243,6 @@ export default function PricingSimulator() {
         t("featuresSurMesureLeger2"),
         t("featuresSurMesureLeger3"),
         t("featuresSurMesureLeger4"),
-        t("featuresSurMesureLeger5"),
       ];
     }
   } else {
