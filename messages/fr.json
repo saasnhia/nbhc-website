@@ -16,7 +16,7 @@
     "subtitle": "Vous passez des heures sur des tâches que l'IA peut traiter en secondes. On s'en occupe — diagnostic gratuit, résultat mesurable, zéro jargon technique.",
     "ctaPrimary": "Diagnostic gratuit — 30 min",
     "ctaSecondary": "Voir comment ça marche",
-    "trust1": "🇫🇷 Mistral hébergé en UE",
+    "trust1": "🇪🇺 Mistral hébergé en UE",
     "trust2": "📊 ROI mesuré",
     "trust3": "🔓 Tout vous appartient",
     "flow": {
@@ -153,18 +153,18 @@
   "differentiators": {
     "eyebrow": "POURQUOI NBHC",
     "title": "Ce qui nous différencie.",
-    "block1Icon": "🇫🇷",
+    "block1Icon": "🇪🇺",
     "block1Title": "Moteur IA souverain",
     "block1Desc": "On construit sur Mistral, le modèle IA français, hébergé en UE. Les outils tiers connectés à votre activité restent les vôtres.",
-    "block2Icon": "📊",
+    "block2Icon": "🎯",
     "block2Title": "Votre prix, pas une moyenne",
-    "block2Desc": "Le tarif dépend de ce que vous demandez précisément — pas d'une grille moyenne calquée sur d'autres clients. Deux automatisations sur mesure chez nous, ce n'est pas le même prix qu'ailleurs : ni plus cher, ni moins cher par principe, juste calculé sur votre périmètre réel.",
+    "block2Desc": "Le tarif dépend de ce que vous demandez précisément — pas d'une grille moyenne calquée sur d'autres clients. Vous payez votre périmètre, pas la moyenne de quelqu'un d'autre.",
     "block3Icon": "🔓",
     "block3Title": "Vous êtes propriétaire",
     "block3Desc": "Le workflow, les prompts, l'architecture — tout vous appartient. Si vous partez, vous gardez tout.",
     "block4Icon": "🤝",
-    "block4Title": "Pas un outil. Un partenaire.",
-    "block4Desc": "On ne vous vend pas un logiciel et on disparaît. En secteur régulé, la veille réglementaire fait partie de l'accompagnement — mises à jour, maintenance et formation continuent tant que vous le souhaitez."
+    "block4Title": "La réglementation évolue, on la suit",
+    "block4Desc": "En secteur régulé, la veille réglementaire fait partie de l'accompagnement. Mises à jour et corrections suivent tant qu'il reste actif."
   },
   "faq": {
     "eyebrow": "FAQ",

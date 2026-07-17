@@ -16,7 +16,7 @@
     "subtitle": "You spend hours on tasks AI handles in seconds. We take care of it — free diagnostic, measurable results, zero tech jargon.",
     "ctaPrimary": "Free diagnostic — 30 min",
     "ctaSecondary": "See how it works",
-    "trust1": "🇫🇷 Mistral, hosted in the EU",
+    "trust1": "🇪🇺 Mistral, hosted in the EU",
     "trust2": "📊 Measured ROI",
     "trust3": "🔓 You own everything",
     "flow": {
@@ -153,18 +153,18 @@
   "differentiators": {
     "eyebrow": "WHY NBHC",
     "title": "What sets us apart.",
-    "block1Icon": "🇫🇷",
+    "block1Icon": "🇪🇺",
     "block1Title": "Sovereign AI engine",
     "block1Desc": "We build on Mistral, the French AI model, hosted in the EU. Third-party tools connected to your business stay yours.",
-    "block2Icon": "📊",
+    "block2Icon": "🎯",
     "block2Title": "Your price, not an average",
-    "block2Desc": "The price depends on exactly what you ask for — not a blended grid copied across other clients. Two custom automations here isn't priced like anywhere else: not cheaper, not pricier by default, just calculated on your actual scope.",
+    "block2Desc": "The price depends on exactly what you ask for — not a blended grid copied across other clients. You pay for your scope, not someone else's average.",
     "block3Icon": "🔓",
     "block3Title": "You're the owner",
     "block3Desc": "The workflow, prompts, architecture — it all belongs to you. If you leave, you keep everything.",
     "block4Icon": "🤝",
-    "block4Title": "Not a tool. A partner.",
-    "block4Desc": "We don't sell you software and disappear. In regulated sectors, regulatory monitoring is part of the support plan — updates, maintenance and training continue for as long as you want them."
+    "block4Title": "Regulation changes, we track it",
+    "block4Desc": "In regulated sectors, regulatory monitoring is part of the support plan. Updates and fixes continue as long as it stays active."
   },
   "faq": {
     "eyebrow": "FAQ",
