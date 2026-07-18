@@ -22,7 +22,6 @@ const pages: PageDef[] = [
   { path: "/contact", changeFrequency: "monthly", priority: 0.9 },
   { path: "/faq", changeFrequency: "monthly", priority: 0.75 },
   { path: "/blog", changeFrequency: "weekly", priority: 0.8 },
-  { path: "/blog/automatisation-ia-cabinet-comptable", changeFrequency: "monthly", priority: 0.7 },
   { path: "/blog/montage-video-ia-createurs", changeFrequency: "monthly", priority: 0.7 },
   { path: "/blog/devis-automatique-artisans", changeFrequency: "monthly", priority: 0.7 },
   { path: "/blog/reduire-no-show-cours-collectifs-salle-de-sport", changeFrequency: "monthly", priority: 0.7 },
