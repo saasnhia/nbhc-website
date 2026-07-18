@@ -175,6 +175,7 @@ function PillGroup<T extends string>({
 
 export default function PricingSimulator() {
   const t = useTranslations("tarifs.simulator");
+  const tA = useTranslations("tarifs.blocA");
   const locale = useLocale();
   const [size, setSize] = useState<StructureSize>("tpe");
   const [sector, setSector] = useState<Sector>("sport");
@@ -217,10 +218,10 @@ export default function PricingSimulator() {
       message = t("tierEssentielRangeMessage");
     }
     features = [
-      t("featuresEssentiel1"),
-      t("featuresEssentiel2"),
-      t("featuresEssentiel3"),
-      t("featuresEssentiel4"),
+      tA("essentielFeature1"),
+      tA("essentielFeature2"),
+      tA("essentielFeature3"),
+      tA("essentielFeature4"),
     ];
   } else if (build.tier === "surMesureLeger") {
     if (build.priceKey === "surMesureLegerAssoSolidaire") {
@@ -239,10 +240,10 @@ export default function PricingSimulator() {
         message = t("tierSurMesureLegerRangeMessage");
       }
       features = [
-        t("featuresSurMesureLeger1"),
-        t("featuresSurMesureLeger2"),
-        t("featuresSurMesureLeger3"),
-        t("featuresSurMesureLeger4"),
+        tA("surMesureLegerFeature1"),
+        tA("surMesureLegerFeature2"),
+        tA("surMesureLegerFeature3"),
+        tA("surMesureLegerFeature4"),
       ];
     }
   } else {
