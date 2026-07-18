@@ -176,7 +176,7 @@
     "q3": "What exactly is a 'workflow'?",
     "a3": "A chain of automated actions. For example: an email arrives → AI reads it → classifies it → generates a reply → submits it for your validation. All without you lifting a finger.",
     "q4": "What if it doesn't work?",
-    "a4": "The free diagnostic is precisely for that: we assess whether AI can really help in your case. If we think not, we tell you honestly. And with the Standard offer, you only pay the performance fee if results are there.",
+    "a4": "The free diagnostic exists exactly for that: we assess together whether AI can really help in your case. If we think not, we tell you honestly.",
     "q5": "Is my data safe?",
     "a5": "Yes. We use Mistral, a French AI model, hosted in the EU, GDPR-compliant.",
     "q6": "What's the difference with ChatGPT?",

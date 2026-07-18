@@ -176,7 +176,7 @@
     "q3": "C'est quoi exactement un 'workflow' ?",
     "a3": "Un enchaînement d'actions automatisées. Par exemple : un email arrive → l'IA le lit → le classe → génère une réponse → vous la soumet pour validation. Tout ça sans que vous leviez le petit doigt.",
     "q4": "Et si ça ne marche pas ?",
-    "a4": "Le diagnostic gratuit sert justement à ça : on évalue si l'IA peut réellement aider dans votre cas. Si on pense que non, on vous le dit honnêtement. Et avec l'offre Standard, vous ne payez la performance fee que si les résultats sont au rendez-vous.",
+    "a4": "Le diagnostic gratuit sert justement à ça : on évalue ensemble si l'IA peut réellement aider dans votre cas. Si on pense que non, on vous le dit honnêtement.",
     "q5": "Mes données sont en sécurité ?",
     "a5": "Oui. On utilise Mistral, un modèle IA français, hébergé en UE, conformément au RGPD.",
     "q6": "C'est quoi la différence avec ChatGPT ?",
