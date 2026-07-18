@@ -32,7 +32,7 @@ export default function Footer() {
   const navLinks = [
     { href: `/${locale}#comment-ca-marche`, label: t("howItWorks") },
     { href: `/${locale}#secteurs`, label: t("sectors") },
-    { href: `/${locale}#pricing`, label: t("pricing") },
+    { href: `/${locale}/tarifs`, label: t("pricing") },
     { href: `/${locale}#produits`, label: t("products") },
     { href: `/${locale}#faq`, label: t("faq") },
     { href: `/${locale}/blog`, label: t("blog") },

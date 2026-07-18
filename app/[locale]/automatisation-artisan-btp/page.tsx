@@ -79,7 +79,7 @@ const contentFr: SectorContent = {
     "Le catalogue BTP s'adresse aux artisans et TPE du bâtiment partout en France — plomberie, électricité, peinture, menuiserie, maçonnerie et métiers connexes. Le diagnostic de 30 minutes permet d'identifier les tâches précises qui vous coûtent le plus de temps, quel que soit votre secteur géographique.",
   pricingTitle: "Tarification",
   pricingIntro:
-    "Diagnostic gratuit de 30 minutes, systématique et sans engagement. Quick Win à partir de 2 000 € HT pour une première automatisation (les devis, par exemple) livrée en 2-3 semaines, ou Standard à partir de 4 000 € HT + performance fee de 30 % du ROI mesuré (plafonnée à 2× le prix du build) pour combiner devis, relances et facturation. Vous restez propriétaire de votre stack.",
+    "Diagnostic gratuit de 30 minutes, systématique et sans engagement. Les devis, par exemple, démarrent à 2 000 € HT — une automatisation sur mesure, configurée pour votre activité.",
   faqTitle: "Questions fréquentes",
   faq: [
     {
@@ -179,7 +179,7 @@ const contentEn: SectorContent = {
     "The construction catalog is open to tradespeople and construction SMEs anywhere in France — plumbing, electrical, painting, carpentry, masonry and related trades. The 30-minute diagnostic identifies the specific tasks costing you the most time, whatever your region.",
   pricingTitle: "Pricing",
   pricingIntro:
-    "Free 30-minute diagnostic, systematic and with no commitment. Quick Win from €2,000 excl. VAT for a first automation (quotes, for instance) delivered in 2-3 weeks, or Standard from €4,000 excl. VAT + a 30% performance fee on measured ROI (capped at 2x the build price) to combine quotes, follow-ups and invoicing. You keep ownership of your stack.",
+    "Free 30-minute diagnostic, systematic and with no commitment. Quotes, for instance, start at €2,000 excl. VAT — a custom automation, configured for your business.",
   faqTitle: "Frequently asked questions",
   faq: [
     {
@@ -265,19 +265,11 @@ export default async function Page({
         data={[
           serviceSchema(locale as "fr" | "en", [
             {
-              name: "Quick Win",
+              name: "Sur Mesure Léger",
               price: "2000",
               description: isFr
-                ? "1 automatisation ciblée pour artisan ou TPE du bâtiment, livrée en 2-3 semaines"
-                : "1 targeted automation for tradespeople or construction SMEs, delivered in 2-3 weeks",
-              url: pageUrl,
-            },
-            {
-              name: "Standard",
-              price: "4000",
-              description: isFr
-                ? "2-3 automatisations combinées + performance fee 30% du ROI mesuré"
-                : "2-3 combined automations + 30% performance fee on measured ROI",
+                ? "Automatisation sur mesure pour artisan ou TPE du bâtiment, configurée pour votre activité"
+                : "Custom automation for tradespeople or construction SMEs, configured for your business",
               url: pageUrl,
             },
           ]),

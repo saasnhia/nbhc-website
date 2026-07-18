@@ -87,7 +87,7 @@ const contentFr: SectorContent = {
     "NBHC a mené un travail de terrain approfondi auprès des garages et carrosseries indépendants de Toulouse et de sa métropole. Si vous êtes dans ce secteur, on connaît déjà les réseaux d'indépendants locaux (Motrio, AD Expert, Bosch Car Service, Axial...) — mais l'offre s'adresse à tout garage ou carrosserie indépendant en France, quel que soit le réseau d'affiliation.",
   pricingTitle: "Tarification",
   pricingIntro:
-    "Diagnostic gratuit de 30 minutes, systématique et sans engagement. Quick Win à partir de 2 000 € HT pour une première automatisation (l'IA téléphonique, par exemple) livrée en 2-3 semaines, ou Standard à partir de 4 000 € HT + performance fee de 30 % du ROI mesuré (plafonnée à 2× le prix du build) pour combiner plusieurs automatisations. Vous restez propriétaire de votre stack.",
+    "Diagnostic gratuit de 30 minutes, systématique et sans engagement. L'IA téléphonique, par exemple, démarre à 200 € HT — une automatisation standardisée, configurée pour votre garage.",
   faqTitle: "Questions fréquentes",
   faq: [
     {
@@ -189,7 +189,7 @@ const contentEn: SectorContent = {
     "NBHC has done in-depth field work with independent garages and body shops in Toulouse and its metro area. If you're in this area, we already know the local independent networks (Motrio, AD Expert, Bosch Car Service, Axial...) — but this offer is open to any independent garage or body shop in France, whatever its affiliation network.",
   pricingTitle: "Pricing",
   pricingIntro:
-    "Free 30-minute diagnostic, systematic and with no commitment. Quick Win from €2,000 excl. VAT for a first automation (the AI phone agent, for instance) delivered in 2-3 weeks, or Standard from €4,000 excl. VAT + a 30% performance fee on measured ROI (capped at 2x the build price) to combine several automations. You keep ownership of your stack.",
+    "Free 30-minute diagnostic, systematic and with no commitment. The AI phone agent, for instance, starts at €200 excl. VAT — a standardized automation, configured for your garage.",
   faqTitle: "Frequently asked questions",
   faq: [
     {
@@ -271,19 +271,11 @@ export default async function Page({
         data={[
           serviceSchema(locale as "fr" | "en", [
             {
-              name: "Quick Win",
-              price: "2000",
+              name: "Essentiel",
+              price: "200",
               description: isFr
-                ? "1 automatisation ciblée pour garage ou carrosserie, livrée en 2-3 semaines"
-                : "1 targeted automation for garages or body shops, delivered in 2-3 weeks",
-              url: pageUrl,
-            },
-            {
-              name: "Standard",
-              price: "4000",
-              description: isFr
-                ? "2-3 automatisations combinées + performance fee 30% du ROI mesuré"
-                : "2-3 combined automations + 30% performance fee on measured ROI",
+                ? "Automatisation standardisée pour garage ou carrosserie, configurée pour votre activité"
+                : "Standardized automation for garages or body shops, configured for your business",
               url: pageUrl,
             },
           ]),

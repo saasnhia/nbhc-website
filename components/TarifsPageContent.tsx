@@ -122,8 +122,6 @@ export default async function TarifsPageContent({ locale }: { locale: string }) 
               ]}
             />
             <PricingPlanCard
-              featured
-              badge={tA("surMesureLegerBadge")}
               tag={tA("surMesureLegerTag")}
               name={tA("surMesureLegerName")}
               price={tA("surMesureLegerPrice")}
@@ -133,7 +131,6 @@ export default async function TarifsPageContent({ locale }: { locale: string }) 
                 tA("surMesureLegerFeature2"),
                 tA("surMesureLegerFeature3"),
                 tA("surMesureLegerFeature4"),
-                tA("surMesureLegerFeature5"),
               ]}
             />
             <PricingPlanCard

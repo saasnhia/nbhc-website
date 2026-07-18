@@ -13,8 +13,8 @@ export async function generateMetadata({
     ? "Automatisation IA pour artisans et TPE du bâtiment (BTP) | NBHC"
     : "AI automation for tradespeople and construction SMEs | NBHC";
   const description = isFr
-    ? "Automatisez vos devis, relances et facturation d'artisan ou de TPE du bâtiment. Diagnostic gratuit 30 min, stack 100% française."
-    : "Automate quotes, follow-ups and invoicing for your trade business or construction SME. Free 30-min diagnostic, 100% French stack.";
+    ? "Automatisez vos devis, relances et facturation d'artisan ou de TPE du bâtiment. Diagnostic gratuit 30 min, IA Mistral française."
+    : "Automate quotes, follow-ups and invoicing for your trade business or construction SME. Free 30-min diagnostic, French Mistral AI.";
 
   return {
     title,

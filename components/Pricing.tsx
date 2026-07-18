@@ -1,93 +1,19 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { useTranslations } from "next-intl";
+import Link from "next/link";
+import { useLocale, useTranslations } from "next-intl";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import PricingPlanCard from "./PricingPlanCard";
 
 gsap.registerPlugin(ScrollTrigger);
-
-const CALENDLY_URL = "https://calendly.com/saasnhia/30min";
-
-type Plan = {
-  badge: string;
-  name: string;
-  price: string;
-  priceSecondary?: string;
-  desc: string;
-  features: string[];
-  highlighted: boolean;
-};
-
-function CheckIcon({ color }: { color: string }) {
-  return (
-    <svg
-      width="14"
-      height="14"
-      viewBox="0 0 14 14"
-      fill="none"
-      style={{ flexShrink: 0, marginTop: 5 }}
-    >
-      <path
-        d="M2 7.5l3 3 7-7"
-        stroke={color}
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
 
 export default function Pricing() {
   const sectionRef = useRef<HTMLElement>(null);
   const t = useTranslations("pricing");
-
-  const plans: Plan[] = [
-    {
-      badge: t("quickWinBadge"),
-      name: t("quickWinName"),
-      price: t("quickWinPrice"),
-      desc: t("quickWinDesc"),
-      features: [
-        t("quickWinFeature1"),
-        t("quickWinFeature2"),
-        t("quickWinFeature3"),
-        t("quickWinFeature4"),
-      ],
-      highlighted: false,
-    },
-    {
-      badge: t("standardBadge"),
-      name: t("standardName"),
-      price: t("standardPrice"),
-      priceSecondary: t("standardPriceSecondary"),
-      desc: t("standardDesc"),
-      features: [
-        t("standardFeature1"),
-        t("standardFeature2"),
-        t("standardFeature3"),
-        t("standardFeature4"),
-        t("standardFeature5"),
-        t("standardFeature6"),
-      ],
-      highlighted: true,
-    },
-    {
-      badge: t("customBadge"),
-      name: t("customName"),
-      price: t("customPrice"),
-      desc: t("customDesc"),
-      features: [
-        t("customFeature1"),
-        t("customFeature2"),
-        t("customFeature3"),
-        t("customFeature4"),
-        t("customFeature5"),
-      ],
-      highlighted: false,
-    },
-  ];
+  const tA = useTranslations("tarifs.blocA");
+  const locale = useLocale();
 
   useEffect(() => {
     const el = sectionRef.current;
@@ -144,104 +70,67 @@ export default function Pricing() {
       </p>
 
       <div className="grid grid-cols-3 max-[900px]:grid-cols-1 gap-5 items-stretch">
-        {plans.map((p) => (
-          <div
-            key={p.name}
-            data-pricing-card
-            className="p-7 max-[900px]:p-6 flex flex-col relative"
-            style={{
-              background: p.highlighted
-                ? "rgba(196,151,58,0.06)"
-                : "rgba(255,255,255,0.02)",
-              border: p.highlighted
-                ? "1px solid var(--gold-border)"
-                : "1px solid var(--border)",
-              borderRadius: "var(--radius)",
-              backdropFilter: "blur(8px)",
-              boxShadow: p.highlighted
-                ? "0 8px 40px rgba(196,151,58,0.12)"
-                : "none",
-              transform: p.highlighted ? "translateY(-4px)" : "none",
-            }}
-          >
-            <div
-              className="text-[10px] font-bold tracking-[2px] uppercase mb-3 inline-block self-start px-2.5 py-1 rounded-full"
-              style={{
-                color: p.highlighted ? "#0a0a0b" : "var(--gold-light)",
-                background: p.highlighted ? "var(--gold)" : "var(--gold-dim)",
-                border: p.highlighted ? "none" : "1px solid var(--gold-border)",
-              }}
-            >
-              {p.badge}
-            </div>
-            <div
-              className="text-2xl font-bold mb-3"
-              style={{
-                fontFamily: "var(--font-syne)",
-                color: "var(--text)",
-                letterSpacing: "-0.5px",
-              }}
-            >
-              {p.name}
-            </div>
-            <div
-              className="text-xl font-bold mb-1"
-              style={{
-                fontFamily: "var(--font-syne)",
-                color: p.highlighted ? "var(--gold)" : "var(--text)",
-                letterSpacing: "-0.5px",
-              }}
-            >
-              {p.price}
-            </div>
-            {p.priceSecondary && (
-              <div
-                className="text-[12px] font-medium mb-4"
-                style={{ color: "var(--gold-light)" }}
-              >
-                {p.priceSecondary}
-              </div>
-            )}
-            {!p.priceSecondary && <div className="mb-4" />}
-            <p
-              className="text-sm font-light mb-6"
-              style={{ color: "var(--text-muted)", lineHeight: 1.65 }}
-            >
-              {p.desc}
-            </p>
+        <div data-pricing-card className="flex flex-col h-full [&>div]:flex-1 [&>div]:flex [&>div]:flex-col">
+          <PricingPlanCard
+            badge={tA("essentielBadge")}
+            tag={tA("essentielTag")}
+            name={tA("essentielName")}
+            price={tA("essentielPrice")}
+            priceSub={tA("essentielPriceSub")}
+            desc={tA("essentielDesc")}
+            features={[
+              tA("essentielFeature1"),
+              tA("essentielFeature2"),
+              tA("essentielFeature3"),
+              tA("essentielFeature4"),
+            ]}
+          />
+        </div>
+        <div data-pricing-card className="flex flex-col h-full [&>div]:flex-1 [&>div]:flex [&>div]:flex-col">
+          <PricingPlanCard
+            tag={tA("surMesureLegerTag")}
+            name={tA("surMesureLegerName")}
+            price={tA("surMesureLegerPrice")}
+            desc={tA("surMesureLegerDesc")}
+            features={[
+              tA("surMesureLegerFeature1"),
+              tA("surMesureLegerFeature2"),
+              tA("surMesureLegerFeature3"),
+              tA("surMesureLegerFeature4"),
+            ]}
+          />
+        </div>
+        <div data-pricing-card className="flex flex-col h-full [&>div]:flex-1 [&>div]:flex [&>div]:flex-col">
+          <PricingPlanCard
+            badge={tA("surDevisBadge")}
+            tag={tA("surDevisTag")}
+            name={tA("surDevisName")}
+            price={tA("surDevisPrice")}
+            desc={tA("surDevisDesc")}
+            features={[
+              tA("surDevisFeature1"),
+              tA("surDevisFeature2"),
+              tA("surDevisFeature3"),
+              tA("surDevisFeature4"),
+              tA("surDevisFeature5"),
+            ]}
+            feeNote={tA("surDevisFeeNote")}
+          />
+        </div>
+      </div>
 
-            <ul
-              className="flex flex-col gap-2.5 mb-7 pt-5"
-              style={{ borderTop: "1px solid var(--border)" }}
-            >
-              {p.features.map((f) => (
-                <li
-                  key={f}
-                  className="flex items-start gap-2.5 text-[13px] font-light"
-                  style={{ color: "var(--text)", lineHeight: 1.55 }}
-                >
-                  <CheckIcon color={p.highlighted ? "var(--gold)" : "#4ade80"} />
-                  <span>{f}</span>
-                </li>
-              ))}
-            </ul>
-
-            <a
-              href={CALENDLY_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              data-cursor="link"
-              className="inline-flex items-center justify-center gap-2 text-[14px] font-medium px-5 py-3 rounded-md no-underline transition-all duration-200 hover:opacity-90 mt-auto"
-              style={{
-                background: p.highlighted ? "var(--gold)" : "transparent",
-                color: p.highlighted ? "#0a0a0b" : "var(--gold-light)",
-                border: p.highlighted ? "none" : "1px solid var(--gold-border)",
-              }}
-            >
-              {t("ctaButton")}
-            </a>
-          </div>
-        ))}
+      <div className="flex justify-center mt-10">
+        <Link
+          href={`/${locale}/tarifs`}
+          data-cursor="link"
+          className="inline-flex items-center justify-center gap-2 text-[14px] font-medium px-6 py-3 rounded-md no-underline transition-all duration-200 hover:opacity-90"
+          style={{
+            background: "var(--gold)",
+            color: "#0a0a0b",
+          }}
+        >
+          {t("ctaButton")}
+        </Link>
       </div>
 
       <div
@@ -253,16 +142,16 @@ export default function Pricing() {
         }}
       >
         <p
-          className="text-[14px] font-light mb-3"
-          style={{ color: "var(--text)", lineHeight: 1.7 }}
+          className="text-[13px] font-light mb-3"
+          style={{ color: "var(--text-muted)", lineHeight: 1.7 }}
         >
-          🔓 {t("footnote1")}
+          {t("footnote2")}
         </p>
         <p
           className="text-[13px] font-light"
           style={{ color: "var(--text-muted)", lineHeight: 1.7 }}
         >
-          {t("footnote2")}
+          {t("footnote3")}
         </p>
       </div>
     </section>

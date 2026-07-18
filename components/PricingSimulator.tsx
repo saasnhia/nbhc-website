@@ -19,7 +19,7 @@ type SectorMeta = {
   hrefSlug: string | null;
   suggested: boolean;
   labelKey: string;
-  autoKeys: readonly [string, string, string];
+  autoKeys: readonly string[];
 };
 
 const SECTOR_META: Record<Sector, SectorMeta> = {
@@ -71,6 +71,12 @@ const SECTOR_META: Record<Sector, SectorMeta> = {
     labelKey: "sectorLabelCoiffure",
     autoKeys: ["sectorAutoCoiffure1", "sectorAutoCoiffure2", "sectorAutoCoiffure3"],
   },
+  cosmetique: {
+    hrefSlug: "automatisation-marque-cosmetique",
+    suggested: false,
+    labelKey: "sectorLabelCosmetique",
+    autoKeys: ["sectorAutoCosmetique1", "sectorAutoCosmetique2"],
+  },
   boutique: {
     hrefSlug: null,
     suggested: true,
@@ -102,6 +108,7 @@ const SECTOR_OPTIONS: { value: Sector; key: string }[] = [
   { value: "pharma", key: "sectorPharma" },
   { value: "resto", key: "sectorResto" },
   { value: "coiffure", key: "sectorCoiffure" },
+  { value: "cosmetique", key: "sectorCosmetique" },
   { value: "boutique", key: "sectorBoutique" },
   { value: "immobilier", key: "sectorImmobilier" },
   { value: "autre", key: "sectorAutre" },
@@ -168,6 +175,7 @@ function PillGroup<T extends string>({
 
 export default function PricingSimulator() {
   const t = useTranslations("tarifs.simulator");
+  const tA = useTranslations("tarifs.blocA");
   const locale = useLocale();
   const [size, setSize] = useState<StructureSize>("tpe");
   const [sector, setSector] = useState<Sector>("sport");
@@ -210,10 +218,10 @@ export default function PricingSimulator() {
       message = t("tierEssentielRangeMessage");
     }
     features = [
-      t("featuresEssentiel1"),
-      t("featuresEssentiel2"),
-      t("featuresEssentiel3"),
-      t("featuresEssentiel4"),
+      tA("essentielFeature1"),
+      tA("essentielFeature2"),
+      tA("essentielFeature3"),
+      tA("essentielFeature4"),
     ];
   } else if (build.tier === "surMesureLeger") {
     if (build.priceKey === "surMesureLegerAssoSolidaire") {
@@ -232,11 +240,10 @@ export default function PricingSimulator() {
         message = t("tierSurMesureLegerRangeMessage");
       }
       features = [
-        t("featuresSurMesureLeger1"),
-        t("featuresSurMesureLeger2"),
-        t("featuresSurMesureLeger3"),
-        t("featuresSurMesureLeger4"),
-        t("featuresSurMesureLeger5"),
+        tA("surMesureLegerFeature1"),
+        tA("surMesureLegerFeature2"),
+        tA("surMesureLegerFeature3"),
+        tA("surMesureLegerFeature4"),
       ];
     }
   } else {
@@ -249,11 +256,11 @@ export default function PricingSimulator() {
           ? t("tierSurDevisMessageAutomations4plus")
           : t("tierSurDevisMessageMultiSitePme");
     features = [
-      t("featuresSurDevis1"),
-      t("featuresSurDevis2"),
-      t("featuresSurDevis3"),
-      t("featuresSurDevis4"),
-      t("featuresSurDevis5"),
+      tA("surDevisFeature1"),
+      tA("surDevisFeature2"),
+      tA("surDevisFeature3"),
+      tA("surDevisFeature4"),
+      tA("surDevisFeature5"),
     ];
     if (build.feeReason) {
       feeText = t("feeNote");
@@ -273,9 +280,9 @@ export default function PricingSimulator() {
   const showRecurring = build.kind === "tier";
   const showMultiSiteNote = build.kind === "tier" && build.showMultiSiteNote;
 
-  const lostItems = [t("lost1"), t("lost2"), t("lost3")];
-  if (sector === "pharma" || sector === "formation" || sector === "btp") {
-    lostItems.push(t("lost4Regulated"));
+  const lostItems = [t("lost1"), t("lost2"), t("lost3"), t("lost4")];
+  if (sector === "pharma" || sector === "formation" || sector === "btp" || sector === "cosmetique") {
+    lostItems.push(t("lostRegulated"));
   }
 
   return (

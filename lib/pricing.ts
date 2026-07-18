@@ -8,6 +8,7 @@ export type Sector =
   | "pharma"
   | "resto"
   | "coiffure"
+  | "cosmetique"
   | "boutique"
   | "immobilier"
   | "autre";

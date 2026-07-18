@@ -1,10 +1,10 @@
 import { redirect } from "next/navigation";
 
-export default async function AgenticAIPage({
+export default async function AutomatisationIaCabinetComptablePage({
   params,
 }: {
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
-  redirect(`/${locale}/tarifs`);
+  redirect(`/${locale}`);
 }

@@ -1,5 +1,5 @@
 export type PricingPlanCardProps = {
-  badge: string;
+  badge?: string;
   tag: string;
   name: string;
   price: string;
@@ -34,23 +34,25 @@ export default function PricingPlanCard({
           : undefined,
       }}
     >
-      <span
-        style={{
-          fontSize: 11,
-          fontWeight: 700,
-          letterSpacing: 0.5,
-          color: "var(--gold-light)",
-          background: "var(--gold-dim)",
-          border: "1px solid var(--gold-border)",
-          borderRadius: 999,
-          padding: "4px 10px",
-          display: "inline-block",
-          marginBottom: 14,
-          width: "fit-content",
-        }}
-      >
-        {badge}
-      </span>
+      {badge && (
+        <span
+          style={{
+            fontSize: 11,
+            fontWeight: 700,
+            letterSpacing: 0.5,
+            color: "var(--gold-light)",
+            background: "var(--gold-dim)",
+            border: "1px solid var(--gold-border)",
+            borderRadius: 999,
+            padding: "4px 10px",
+            display: "inline-block",
+            marginBottom: 14,
+            width: "fit-content",
+          }}
+        >
+          {badge}
+        </span>
+      )}
       <div
         style={{
           fontSize: 11.5,

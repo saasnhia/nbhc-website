@@ -1,45 +1,83 @@
 # NBHC — Studio IA & Automatisation
 
-> NBHC est un studio IA français (SAS, SIREN 102 637 899) basé à Saint-Rémy, France. Nous concevons, déployons et opérons des équipes d'agents IA sur mesure pour les TPE, PME et indépendants. Données hébergées en France, conformité RGPD.
+> NBHC est un studio IA français (SAS, SIREN 102 637 899) basé à
+Saint-Rémy, France. NBHC conçoit, déploie et opère des automatisations
+IA sur mesure pour les TPE, PME et indépendants, et édite ses propres
+produits SaaS. Le moteur d'automatisation repose sur n8n (hébergé en
+Allemagne) et l'IA Mistral (hébergée dans l'Union européenne). NBHC
+est une société française ; l'hébergement des données dépend des outils
+retenus avec chaque client.
 
 ## Produits SaaS
 
-- [Vlogyz](https://vlogyz.com): Montage vidéo IA automatisé. Alternative française à CapCut. Transcription Whisper, coupes intelligentes, sous-titres karaoké, score viralité. Stack: Next.js, Groq Whisper, Mistral, Remotion, FFmpeg.
-- [Devizly](https://devizly.fr): Générateur de devis et factures IA pour artisans et freelances français. Conforme Factur-X, signature électronique, encaissement Stripe, intégration Pennylane. Stack: Next.js, Mistral, Supabase, Stripe.
-- Worthifast (en développement): Automatisation comptable IA pour cabinets. Agents FEC, anomalies, TVA CA3, rapprochement bancaire. Stack: Next.js, Mistral, Supabase, PostgreSQL.
+NBHC édite des produits SaaS autonomes, distincts de son offre
+d'automatisation. La création d'un SaaS sur mesure pour un client est
+également possible, sur devis.
 
-## Services (automatisation par workflows n8n + agents IA)
+- [Vlogyz](https://vlogyz.com) : montage vidéo IA. Transcription
+Whisper, coupes intelligentes, sous-titres, score de viralité. Stack :
+Next.js, Groq Whisper, Mistral, Remotion, FFmpeg.
+- [Devizly](https://devizly.fr) : devis et factures IA pour artisans et
+freelances français. Conforme Factur-X, signature électronique,
+encaissement Stripe, intégration Pennylane. Stack : Next.js, Mistral,
+Supabase, Stripe.
 
-NBHC conçoit, teste et opère des workflows d'automatisation sur mesure pour l'entreprise du client. Diagnostic de 30 minutes gratuit et systématique avant tout engagement. Philosophie "tout vous appartient" : le client reste propriétaire de sa stack (n8n, données, workflows) et peut tout emporter s'il part.
+## Services — automatisation sur mesure (n8n + agents IA)
 
-- Quick Win : à partir de 2 000€ HT — 1 workflow n8n sur mesure, livré en 2-3 semaines, 3 mois de suivi inclus.
-- Standard : à partir de 4 000€ HT + performance fee de 30% du ROI mesuré (plafonnée à 2× le prix du build) — workflow avec intégrations métier (Pennylane, Lucca, etc.), testé sur 100 à 500 cas réels, 6 mois de run avec ajustements, dashboard ROI transparent.
-- Sur mesure : sur devis — multi-intégrations, ERP, SIRH, on-premise, pour les projets complexes.
-- Coûts d'infrastructure (n8n, Mistral, Airtable) facturés séparément par les fournisseurs : 80-300€/mois selon le volume.
+NBHC conçoit, teste et opère des automatisations pour l'activité du
+client. Diagnostic de 30 minutes gratuit et sans engagement avant tout
+projet. Le client reste propriétaire de ce qui lui revient : le
+workflow, les prompts, l'architecture.
 
-## Secteurs ciblés (niches prospectées activement)
+Grille de prix (build, paiement unique) :
+- Essentiel : de 200 € à 2 000 € HT — automatisation standardisée,
+déjà construite par NBHC et configurée pour l'activité du client.
+- Sur Mesure Léger : de 2 000 € à 4 000 € HT — automatisation sur
+mesure, intégrée aux logiciels métier du client, testée sur ses données.
+- Sur Devis : périmètres qui ne se chiffrent pas depuis un formulaire
+(multi-sites, ERP, projets complexes) ; une performance fee peut
+s'appliquer sur ces périmètres sur-mesure uniquement (30 % du gain
+mesuré, plafonnée à 2× le build).
 
-- Salles de sport, studios (yoga/pilates/danse/arts martiaux) et instituts bien-être/spa
-- Associations sportives (loi 1901) : gestion des licences, certificats, cotisations, convocations
-- Garages et carrosseries automobiles indépendants
+Deux lignes récurrentes, jamais confondues :
+- Infrastructure (n8n, Mistral) : 80 à 300 €/mois, facturée par NBHC,
+obligatoire.
+- Accompagnement NBHC (mises à jour, sécurité, maintenance, formation,
+veille réglementaire en secteur régulé) : 90 à 800 €/mois, optionnel.
+
+## Secteurs
+
+Automatisations documentées, avec une page dédiée par secteur :
+- Salles de sport, studios et instituts bien-être
+- Associations sportives (loi 1901) : inscriptions, certificats,
+cotisations, convocations — tarif solidaire disponible
+- Garages et carrosseries automobiles
 - Artisans et TPE du bâtiment (BTP) : devis, relances, facturation
-- Autres secteurs accompagnés ponctuellement : experts-comptables (lien avec Worthifast), avocats et notaires, création de contenu vidéo, e-commerce, santé, immobilier
+- Organismes de formation : preuves Qualiopi, suivi OPCO
+- Pharmacies : bilans partagés de médication
+- Salons de coiffure
+- Marques de cosmétique et parfumerie : dossier réglementaire CPNP/DIP
+- Restaurants
 
 ## Contact
 
-- Site: https://nbhc.fr
-- Email: contact@nbhc.fr
-- Fondateur: Nhia (Haroun CHIKH)
-- LinkedIn: https://www.linkedin.com/company/nbhc-fr
+- Site : https://nbhc.fr
+- Email : contact@nbhc.fr
+- Fondateur : Nhia (Haroun CHIKH)
+- LinkedIn : https://www.linkedin.com/company/nbhc-fr
 
 ## Pages principales
 
-- https://nbhc.fr/fr — Accueil (français)
-- https://nbhc.fr/en — Home (English)
-- https://nbhc.fr/fr/automatisation-salle-de-sport — Salles de sport, studios, instituts bien-être
-- https://nbhc.fr/fr/automatisation-association-sportive — Associations sportives loi 1901
-- https://nbhc.fr/fr/automatisation-garage-automobile — Garages et carrosseries automobiles
-- https://nbhc.fr/fr/automatisation-artisan-btp — Artisans et TPE du bâtiment
-- https://nbhc.fr/fr/contact — Diagnostic gratuit 30 minutes
-- https://nbhc.fr/fr/blog — Articles IA & automatisation
-- https://nbhc.fr/fr/faq — Questions fréquentes
+- https://nbhc.fr/fr — Accueil
+- https://nbhc.fr/fr/tarifs — Grille de prix et simulateur
+- https://nbhc.fr/fr/automatisation-salle-de-sport
+- https://nbhc.fr/fr/automatisation-association-sportive
+- https://nbhc.fr/fr/automatisation-garage-automobile
+- https://nbhc.fr/fr/automatisation-artisan-btp
+- https://nbhc.fr/fr/automatisation-organisme-formation
+- https://nbhc.fr/fr/automatisation-pharmacie
+- https://nbhc.fr/fr/automatisation-salon-de-coiffure
+- https://nbhc.fr/fr/automatisation-marque-cosmetique
+- https://nbhc.fr/fr/automatisation-restaurant
+- https://nbhc.fr/fr/contact — Diagnostic gratuit
+- https://nbhc.fr/fr/faq
