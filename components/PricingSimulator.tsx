@@ -256,11 +256,11 @@ export default function PricingSimulator() {
           ? t("tierSurDevisMessageAutomations4plus")
           : t("tierSurDevisMessageMultiSitePme");
     features = [
-      t("featuresSurDevis1"),
-      t("featuresSurDevis2"),
-      t("featuresSurDevis3"),
-      t("featuresSurDevis4"),
-      t("featuresSurDevis5"),
+      tA("surDevisFeature1"),
+      tA("surDevisFeature2"),
+      tA("surDevisFeature3"),
+      tA("surDevisFeature4"),
+      tA("surDevisFeature5"),
     ];
     if (build.feeReason) {
       feeText = t("feeNote");
