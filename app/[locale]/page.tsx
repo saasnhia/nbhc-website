@@ -69,8 +69,8 @@ export default async function Home({
         acceptedAnswer: {
           "@type": "Answer",
           text: isFr
-            ? "Entre 2 et 12 semaines selon la complexité. Un Quick Win (devis automatiques, relances) est livré en 2-3 semaines. Un projet plus complexe (rapprochement comptable) prend 8-12 semaines."
-            : "Between 2 and 12 weeks depending on complexity. A Quick Win (automated quotes, follow-ups) is delivered in 2-3 weeks. A more complex project (accounting reconciliation) takes 8-12 weeks.",
+            ? "Entre 1 et 5 semaines selon la complexité. Une automatisation standardisée (Essentiel) est livrée en 1-2 semaines. Une automatisation sur mesure, intégrée à vos outils (Sur Mesure Léger), prend 2-5 semaines."
+            : "Between 1 and 5 weeks depending on complexity. A standardized automation (Essentiel) is delivered in 1-2 weeks. A custom automation integrated with your tools (Sur Mesure Léger) takes 2-5 weeks.",
         },
       },
       {

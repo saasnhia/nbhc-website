@@ -159,7 +159,7 @@
     "q1": "Je n'y connais rien en IA, c'est grave ?",
     "a1": "Pas du tout. C'est justement pour ça qu'on existe. On s'occupe de toute la partie technique. Vous, vous nous expliquez votre métier et ce qui vous prend du temps.",
     "q2": "Combien de temps avant de voir les résultats ?",
-    "a2": "Entre 2 et 12 semaines selon la complexité. Un Quick Win (devis automatiques, relances) est livré en 2-3 semaines. Un projet plus complexe (rapprochement comptable) prend 8-12 semaines.",
+    "a2": "Entre 1 et 5 semaines selon la complexité. Une automatisation standardisée (Essentiel) est livrée en 1-2 semaines. Une automatisation sur mesure, intégrée à vos outils (Sur Mesure Léger), prend 2-5 semaines.",
     "q3": "C'est quoi exactement un 'workflow' ?",
     "a3": "Un enchaînement d'actions automatisées. Par exemple : un email arrive → l'IA le lit → le classe → génère une réponse → vous la soumet pour validation. Tout ça sans que vous leviez le petit doigt.",
     "q4": "Et si ça ne marche pas ?",
