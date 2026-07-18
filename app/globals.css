@@ -132,3 +132,7 @@ main {
 @media (pointer: fine) {
   * { cursor: none !important; }
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-video { display: none; }
+}

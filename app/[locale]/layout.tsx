@@ -130,6 +130,9 @@ export default async function LocaleLayout({
 
   return (
     <html lang={locale} className={`${syne.variable} ${dmSans.variable}`}>
+      <head>
+        <link rel="preload" as="image" href="/hero-poster.jpg" fetchPriority="high" />
+      </head>
       <body>
         <JsonLd
           data={[

@@ -11,7 +11,33 @@ export default function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
   const circle1Ref = useRef<SVGSVGElement>(null);
   const circle2Ref = useRef<SVGSVGElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
   const t = useTranslations("hero");
+
+  useEffect(() => {
+    const v = videoRef.current;
+    if (!v) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const load = () => {
+      const webm = document.createElement("source");
+      webm.src = "/hero.webm";
+      webm.type = "video/webm";
+      const mp4 = document.createElement("source");
+      mp4.src = "/hero.mp4";
+      mp4.type = "video/mp4";
+      v.appendChild(webm);
+      v.appendChild(mp4);
+      v.load();
+      v.play().catch(() => {});
+    };
+
+    if ("requestIdleCallback" in window) {
+      requestIdleCallback(load, { timeout: 2000 });
+    } else {
+      setTimeout(load, 1200);
+    }
+  }, []);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -87,6 +113,33 @@ export default function Hero() {
 
   return (
     <section ref={sectionRef} className="relative overflow-hidden">
+      <div className="absolute inset-0 -z-10 overflow-hidden">
+        <img
+          src="/hero-poster.jpg"
+          alt=""
+          aria-hidden="true"
+          fetchPriority="high"
+          className="absolute inset-0 h-full w-full object-cover"
+        />
+        <video
+          ref={videoRef}
+          className="hero-video absolute inset-0 h-full w-full object-cover"
+          poster="/hero-poster.jpg"
+          muted
+          loop
+          playsInline
+          preload="none"
+          aria-hidden="true"
+        />
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(to bottom, rgba(9,9,11,0.72), rgba(9,9,11,0.55) 40%, rgba(9,9,11,0.85))",
+          }}
+        />
+      </div>
+
       {/* Decorative circles */}
       <svg
         ref={circle1Ref}
