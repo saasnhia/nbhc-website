@@ -32,7 +32,7 @@ export default function Nav() {
   const links: NavLink[] = [
     { kind: "scroll", id: "comment-ca-marche", label: t("howItWorks") },
     { kind: "scroll", id: "secteurs", label: t("sectors") },
-    { kind: "scroll", id: "pricing", label: t("pricing") },
+    { kind: "page", href: `/${locale}/tarifs`, label: t("pricing") },
     { kind: "scroll", id: "faq", label: t("faq") },
     { kind: "page", href: `/${locale}/blog`, label: t("blog") },
   ];

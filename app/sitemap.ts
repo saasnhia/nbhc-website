@@ -19,6 +19,7 @@ const pages: PageDef[] = [
   { path: "/automatisation-restaurant", changeFrequency: "monthly", priority: 0.9 },
   { path: "/automatisation-salon-de-coiffure", changeFrequency: "monthly", priority: 0.9 },
   { path: "/automatisation-marque-cosmetique", changeFrequency: "monthly", priority: 0.9 },
+  { path: "/tarifs", changeFrequency: "monthly", priority: 0.9 },
   { path: "/contact", changeFrequency: "monthly", priority: 0.9 },
   { path: "/faq", changeFrequency: "monthly", priority: 0.75 },
   { path: "/blog", changeFrequency: "weekly", priority: 0.8 },
@@ -33,7 +34,7 @@ const pages: PageDef[] = [
   { path: "/cgu", changeFrequency: "yearly", priority: 0.2 },
 ];
 // Note: /agentic-ai intentionally excluded — it's a server-side redirect to
-// /#pricing (kept for old backlinks), not indexable content. Declaring it in
+// /tarifs (kept for old backlinks), not indexable content. Declaring it in
 // the sitemap at high priority previously sent Google a page-worth-crawling
 // signal for a URL that never serves content. See SEO_AUDIT_STRATEGIE.md.
 
