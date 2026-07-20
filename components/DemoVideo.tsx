@@ -19,13 +19,9 @@ export default function DemoVideo({
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     const load = () => {
-      const webm = document.createElement("source");
-      webm.src = `/demo-${name}.webm`;
-      webm.type = "video/webm";
       const mp4 = document.createElement("source");
       mp4.src = `/demo-${name}.mp4`;
       mp4.type = "video/mp4";
-      v.appendChild(webm);
       v.appendChild(mp4);
       v.load();
       v.play().catch(() => {});
