@@ -134,5 +134,5 @@ main {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hero-video { display: none; }
+  .hero-video, .demo-video { display: none; }
 }
