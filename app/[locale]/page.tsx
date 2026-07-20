@@ -3,6 +3,7 @@ import Nav from "@/components/Nav";
 import Hero from "@/components/Hero";
 import WhyNow from "@/components/WhyNow";
 import Sectors from "@/components/Sectors";
+import VideoShowcase from "@/components/VideoShowcase";
 import HowItWorks from "@/components/HowItWorks";
 import Portfolio from "@/components/Portfolio";
 import Pricing from "@/components/Pricing";
@@ -94,6 +95,7 @@ export default async function Home({
       <Hero />
       <WhyNow />
       <Sectors />
+      <VideoShowcase />
       <HowItWorks />
       <Portfolio />
       <Pricing />

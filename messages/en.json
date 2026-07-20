@@ -94,6 +94,29 @@
     "outroText": "Your sector not listed? The free diagnostic lets us see if we can help.",
     "outroCta": "Book my diagnostic →"
   },
+  "showcase": {
+    "eyebrow": "IN ACTION",
+    "title": "See the automations in action",
+    "subtitle": "Three flagship automations, demonstrated. Pick a sector to see exactly what we set up.",
+    "tablistLabel": "Automations by sector",
+    "tabs": {
+      "garage": {
+        "label": "Garage",
+        "name": "AI phone booking assistant",
+        "benefit": "Picks up after 3 rings, qualifies the request, offers a real slot from the schedule. Every booking stays validated by you before confirmation."
+      },
+      "restaurant": {
+        "label": "Restaurant",
+        "name": "AI phone reservation assistant",
+        "benefit": "Picks up during the rush or outside opening hours, takes the reservation, confirms by SMS. The schedule stays yours."
+      },
+      "pharmacie": {
+        "label": "Pharmacy",
+        "name": "BPM-eligible patient detection",
+        "benefit": "Flags patient records eligible for the Shared Medication Review. Written patient consent required before any interview."
+      }
+    }
+  },
   "howItWorks": {
     "eyebrow": "HOW IT WORKS",
     "title": "From diagnostic to result. No jargon.",

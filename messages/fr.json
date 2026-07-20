@@ -94,6 +94,29 @@
     "outroText": "Votre secteur n'est pas listé ? Le diagnostic gratuit permet de voir si on peut vous aider.",
     "outroCta": "Réserver mon diagnostic →"
   },
+  "showcase": {
+    "eyebrow": "EN ACTION",
+    "title": "Voir les automatisations en action",
+    "subtitle": "Trois automatisations phares, en démonstration. Choisissez un secteur pour voir concrètement ce qu'on installe.",
+    "tablistLabel": "Automatisations par secteur",
+    "tabs": {
+      "garage": {
+        "label": "Garage",
+        "name": "IA téléphonique de prise de RDV",
+        "benefit": "Décroche après 3 sonneries, qualifie la demande, propose un créneau réel depuis le planning. Chaque RDV reste validé par vous avant confirmation."
+      },
+      "restaurant": {
+        "label": "Restaurant",
+        "name": "IA téléphonique de réservation",
+        "benefit": "Décroche pendant le coup de feu ou en dehors des horaires, prend la réservation, confirme par SMS. Le planning reste le vôtre."
+      },
+      "pharmacie": {
+        "label": "Pharmacie",
+        "name": "Détection des patients éligibles au BPM",
+        "benefit": "Repère dans la base patients les profils éligibles au Bilan Partagé de Médication. Consentement écrit du patient requis avant tout entretien."
+      }
+    }
+  },
   "howItWorks": {
     "eyebrow": "COMMENT ÇA MARCHE",
     "title": "Du diagnostic au résultat. Sans jargon.",
