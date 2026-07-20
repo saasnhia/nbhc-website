@@ -20,6 +20,12 @@ export type Automation = {
    *  showing the interface in action rather than an abstract flow diagram.
    *  Takes precedence over flowSteps when both are set. */
   customFlow?: React.ReactNode;
+  /** When true, this automation's card stacks text (full width) above
+   *  customFlow (full width, capped) instead of the default lg:
+   *  2-column side-by-side layout. Opt-in, off by default — for
+   *  flagships whose customFlow needs more room to stay legible
+   *  (e.g. on-screen disclaimer text in a demo video). */
+  wideFlow?: boolean;
 };
 
 export type PainPoint = {
@@ -232,6 +238,7 @@ export default function SectorPageContent({
           <div className="flex flex-col gap-5 lg:gap-6">
             {content.automations.map((a, i) => {
               const hasFlow = !!(a.customFlow || (a.flowSteps && a.flowSteps.length > 0));
+              const wide = !!a.wideFlow;
               const alternate = i % 2 === 1;
               const textCol = !hasFlow
                 ? "lg:col-span-2"
@@ -242,7 +249,11 @@ export default function SectorPageContent({
               return (
                 <div
                   key={a.code}
-                  className="automation-card lg:grid lg:grid-cols-2 lg:gap-x-12 lg:gap-y-0 lg:items-center lg:p-9"
+                  className={
+                    wide
+                      ? "automation-card lg:p-9"
+                      : "automation-card lg:grid lg:grid-cols-2 lg:gap-x-12 lg:gap-y-0 lg:items-center lg:p-9"
+                  }
                   style={{
                     padding: 24,
                     background: "rgba(255,255,255,0.02)",
@@ -251,7 +262,7 @@ export default function SectorPageContent({
                   }}
                 >
                   <div
-                    className={`flex items-center gap-3 flex-wrap ${textCol} lg:row-start-1`}
+                    className={`flex items-center gap-3 flex-wrap ${wide ? "" : `${textCol} lg:row-start-1`}`}
                     style={{ marginBottom: 10 }}
                   >
                     <span
@@ -282,7 +293,11 @@ export default function SectorPageContent({
                   </div>
                   {hasFlow && (
                     <div
-                      className={`${flowCol} lg:row-start-1 lg:row-span-2 mt-1 lg:mt-0`}
+                      className={
+                        wide
+                          ? "mt-4 lg:mt-6 lg:max-w-[880px] lg:mx-auto"
+                          : `${flowCol} lg:row-start-1 lg:row-span-2 mt-1 lg:mt-0`
+                      }
                     >
                       {a.customFlow ?? (
                         <AutomationFlow
@@ -294,7 +309,7 @@ export default function SectorPageContent({
                   )}
                   <p
                     style={{ color: "var(--text-muted)", fontSize: 14, lineHeight: 1.7, margin: 0 }}
-                    className={`${textCol} lg:row-start-2 lg:text-[14.5px]`}
+                    className={`${wide ? "mt-4" : `${textCol} lg:row-start-2`} lg:text-[14.5px]`}
                   >
                     {a.description}
                   </p>

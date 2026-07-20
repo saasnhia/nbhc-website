@@ -246,6 +246,7 @@ export default async function Page({
         return {
           ...a,
           customFlow: <DemoVideo name="pharmacie" ariaLabel={a.title} />,
+          wideFlow: true,
         };
       }
       if (a.code === "W-PH-04") {
