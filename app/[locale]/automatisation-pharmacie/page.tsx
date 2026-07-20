@@ -4,6 +4,7 @@ import JsonLd from "../../../components/JsonLd";
 import { serviceSchema, breadcrumbSchema, faqPageSchema } from "../../../lib/schema";
 import { zipFlowSteps, type FlowStepKind } from "../../../components/AutomationFlow";
 import DocMockup, { type DocMockupContent } from "../../../components/DocMockup";
+import DemoVideo from "../../../components/DemoVideo";
 
 const FLOW_KINDS: Record<string, FlowStepKind[]> = {
   "W-PH-01": ["trigger", "process", "action", "validation"],
@@ -241,6 +242,12 @@ export default async function Page({
   const content: SectorContent = {
     ...baseContent,
     automations: baseContent.automations.map((a) => {
+      if (a.code === "W-PH-01") {
+        return {
+          ...a,
+          customFlow: <DemoVideo name="pharmacie" ariaLabel={a.title} />,
+        };
+      }
       if (a.code === "W-PH-04") {
         const doc = t.raw("docMockup") as DocMockupContent;
         return {
