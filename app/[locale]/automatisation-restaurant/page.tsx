@@ -4,7 +4,7 @@ import JsonLd from "../../../components/JsonLd";
 import { serviceSchema, breadcrumbSchema, faqPageSchema } from "../../../lib/schema";
 import { zipFlowSteps, type FlowStepKind } from "../../../components/AutomationFlow";
 import ChatMockup, { type ChatBubbleData } from "../../../components/ChatMockup";
-import CallBookingMockup, { type CallBookingMockupContent } from "../../../components/CallBookingMockup";
+import DemoVideo from "../../../components/DemoVideo";
 
 const FLOW_KINDS: Record<string, FlowStepKind[]> = {
   "W-REST-03": ["trigger", "process", "action", "validation"],
@@ -237,10 +237,9 @@ export default async function Page({
     ...baseContent,
     automations: baseContent.automations.map((a) => {
       if (a.code === "W-REST-01") {
-        const callBooking = t.raw("callBooking") as CallBookingMockupContent;
         return {
           ...a,
-          customFlow: <CallBookingMockup ariaLabel={a.title} content={callBooking} />,
+          customFlow: <DemoVideo name="restaurant" ariaLabel={a.title} />,
         };
       }
       if (a.code === "W-REST-02") {
