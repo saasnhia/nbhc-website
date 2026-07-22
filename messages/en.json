@@ -97,7 +97,7 @@
   "showcase": {
     "eyebrow": "IN ACTION",
     "title": "See the automations in action",
-    "subtitle": "Three flagship automations, demonstrated. Pick a sector to see exactly what we set up.",
+    "subtitle": "Four flagship automations, demonstrated. Pick a sector to see exactly what we set up.",
     "tablistLabel": "Automations by sector",
     "tabs": {
       "garage": {
@@ -114,6 +114,11 @@
         "label": "Pharmacy",
         "name": "BPM-eligible patient detection",
         "benefit": "Flags patient records eligible for the Shared Medication Review. Written patient consent required before any interview."
+      },
+      "coiffure": {
+        "label": "Hair salon",
+        "name": "AI phone booking assistant",
+        "benefit": "Picks up mid-cut or outside opening hours, books the appointment, offers a real slot from the schedule. Every booking stays validated by you before confirmation."
       }
     }
   },

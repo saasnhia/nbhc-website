@@ -97,7 +97,7 @@
   "showcase": {
     "eyebrow": "EN ACTION",
     "title": "Voir les automatisations en action",
-    "subtitle": "Trois automatisations phares, en démonstration. Choisissez un secteur pour voir concrètement ce qu'on installe.",
+    "subtitle": "Quatre automatisations phares, en démonstration. Choisissez un secteur pour voir concrètement ce qu'on installe.",
     "tablistLabel": "Automatisations par secteur",
     "tabs": {
       "garage": {
@@ -114,6 +114,11 @@
         "label": "Pharmacie",
         "name": "Détection des patients éligibles au BPM",
         "benefit": "Repère dans la base patients les profils éligibles au Bilan Partagé de Médication. Consentement écrit du patient requis avant tout entretien."
+      },
+      "coiffure": {
+        "label": "Coiffure",
+        "name": "IA téléphonique de prise de RDV",
+        "benefit": "Décroche pendant une coupe ou en dehors des horaires, prend le rendez-vous, propose un créneau réel depuis le planning. Chaque RDV reste validé par vous avant confirmation."
       }
     }
   },

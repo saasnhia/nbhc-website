@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 
-type DemoVideoName = "garage" | "restaurant" | "pharmacie";
+type DemoVideoName = "garage" | "restaurant" | "pharmacie" | "coiffure";
 
 export default function DemoVideo({
   name,

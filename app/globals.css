@@ -136,3 +136,12 @@ main {
 @media (prefers-reduced-motion: reduce) {
   .hero-video, .demo-video { display: none; }
 }
+
+/* Horizontal-scroll tab rows (VideoShowcase) — hide scrollbar, keep native scroll */
+.scrollbar-hide {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
