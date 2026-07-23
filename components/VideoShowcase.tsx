@@ -156,6 +156,7 @@ export default function VideoShowcase() {
         >
           <div
             className="relative overflow-hidden"
+            data-capture-frame={activeTab}
             style={{
               borderRadius: 14,
               border: "1px solid var(--border)",
