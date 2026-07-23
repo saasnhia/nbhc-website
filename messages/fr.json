@@ -111,7 +111,7 @@
         "label": "Garage",
         "name": "IA téléphonique de prise de RDV",
         "benefit": "Décroche après 3 sonneries, qualifie la demande, propose un créneau réel depuis le planning. Chaque RDV reste validé par vous avant confirmation.",
-        "roi": "Votre équipe atelier n'est plus interrompue au téléphone — elle reste sur les véhicules.",
+        "roi": "68 % des automobilistes choisissent leur garage sur sa rapidité à décrocher, avant même le prix (FNAA) — votre équipe atelier n'a plus à choisir entre le pont et le téléphone.",
         "flow": [
           "Appel non décroché",
           "IA qualifie la demande",
@@ -123,7 +123,7 @@
         "label": "Restaurant",
         "name": "IA téléphonique de réservation",
         "benefit": "Décroche pendant le coup de feu ou en dehors des horaires, prend la réservation, confirme par SMS. Le planning reste le vôtre.",
-        "roi": "Personne ne décroche en salle pendant le service — la réservation se prend seule.",
+        "roi": "Près de 70 % des restaurateurs sont confrontés aux no-show, jusqu'à 10-15 % du CA perdu en une soirée (Le Progrès, 2026) — la réservation se prend et se confirme seule.",
         "flow": [
           "Ligne saturée ou fermée",
           "IA prend la réservation",
@@ -135,7 +135,7 @@
         "label": "Pharmacie",
         "name": "Détection des patients éligibles au BPM",
         "benefit": "Repère dans la base patients les profils éligibles au Bilan Partagé de Médication. Consentement écrit du patient requis avant tout entretien.",
-        "roi": "L'équipe au comptoir n'a plus à fouiller la patientèle à la main — elle mène l'entretien.",
+        "roi": "73 % des officines réalisent moins de 10 entretiens pharmaceutiques par mois faute d'organisation, pour un manque à gagner estimé à 15 000-25 000 €/an (Ameli) — l'équipe n'a plus à repérer les patients à la main.",
         "flow": [
           "Base patients analysée",
           "Profils éligibles BPM repérés",
@@ -159,7 +159,7 @@
         "label": "Optique",
         "name": "Détection et relance des clients à renouveler",
         "benefit": "Croise la base clients avec la date du dernier achat ou contrôle, repère qui arrive à échéance et prépare une relance personnalisée. L'examen de vue reste mené par vous, toujours.",
-        "roi": "Le client à renouveler est relancé sans qu'on y pense — vous, vous êtes en boutique pour la vente.",
+        "roi": "10 % des porteurs n'ont pas renouvelé leurs lunettes depuis plus de 5 ans (ROF, 2025) — la relance automatique les retrouve avant qu'un concurrent ne le fasse.",
         "flow": [
           "Dernier achat ou contrôle croisé",
           "Client à échéance identifié",
@@ -171,7 +171,7 @@
         "label": "BTP",
         "name": "Génération de devis assistée par IA",
         "benefit": "Vous décrivez la prestation en langage naturel, l'automatisation prépare un devis structuré avec les mentions légales obligatoires. Vous ajustez et validez avant envoi.",
-        "roi": "Le soir redevient le vôtre — le devis part sans reprendre le clavier après une journée de chantier.",
+        "roi": "Un dirigeant BTP sur deux passe plus d'une journée entière par semaine sur l'administratif (Qonto/OpinionWay, 2026) — le devis part sans reprendre le clavier après une journée de chantier.",
         "flow": [
           "Prestation décrite à l'oral",
           "Devis structuré généré",
@@ -195,7 +195,7 @@
         "label": "Cosmétique",
         "name": "Dossier réglementaire CPNP/DIP préparé",
         "benefit": "L'IA lit la formule INCI, identifie les allergènes à déclarer et vérifie les allégations, puis prépare un dossier prêt. Votre toxicologue valide et déclare, jamais NBHC.",
-        "roi": "Le dossier réglementaire ne retarde plus un lancement — l'équipe reste sur la création.",
+        "roi": "La notification CPNP prend 2 à 3 semaines une fois le dossier complet (The Regulatory Company) — l'IA le prépare pendant que l'équipe reste sur la création.",
         "flow": [
           "Formule INCI lue",
           "Allergènes et allégations vérifiés",

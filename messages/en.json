@@ -111,7 +111,7 @@
         "label": "Garage",
         "name": "AI phone booking assistant",
         "benefit": "Picks up after 3 rings, qualifies the request, offers a real slot from the schedule. Every booking stays validated by you before confirmation.",
-        "roi": "Your shop team is no longer pulled off the cars to answer the phone.",
+        "roi": "68% of drivers choose their garage based on how fast it picks up, ahead of price (FNAA, France) — your shop team no longer has to choose between the lift and the phone.",
         "flow": [
           "Call goes unanswered",
           "AI qualifies the request",
@@ -123,7 +123,7 @@
         "label": "Restaurant",
         "name": "AI phone reservation assistant",
         "benefit": "Picks up during the rush or outside opening hours, takes the reservation, confirms by SMS. The schedule stays yours.",
-        "roi": "Nobody picks up the floor phone mid-service — the reservation books itself.",
+        "roi": "Nearly 70% of restaurants deal with no-shows, up to 10-15% of an evening's revenue lost (Le Progrès, 2026) — the reservation books and confirms itself.",
         "flow": [
           "Line busy or closed",
           "AI takes the reservation",
@@ -135,7 +135,7 @@
         "label": "Pharmacy",
         "name": "BPM-eligible patient detection",
         "benefit": "Flags patient records eligible for the Shared Medication Review. Written patient consent required before any interview.",
-        "roi": "The counter team no longer sorts the patient base by hand — they lead the consultation.",
+        "roi": "73% of French pharmacies run fewer than 10 medication reviews a month for lack of a system, an estimated €15,000-25,000/year left on the table (Ameli) — the team no longer sorts patients by hand.",
         "flow": [
           "Patient base analyzed",
           "BPM-eligible profiles flagged",
@@ -159,7 +159,7 @@
         "label": "Optical",
         "name": "Detecting and following up clients due for renewal",
         "benefit": "Cross-checks the client base against the last purchase or exam date, flags who's due for renewal and prepares a personalized follow-up. The eye exam always stays led by you.",
-        "roi": "The client due for renewal gets followed up automatically — you're in-store for the sale.",
+        "roi": "10% of glasses wearers haven't renewed in over 5 years (ROF, France, 2025) — automated follow-up finds them before a competitor does.",
         "flow": [
           "Last purchase or exam cross-checked",
           "Client due for renewal identified",
@@ -171,7 +171,7 @@
         "label": "BTP",
         "name": "AI-assisted quote generation",
         "benefit": "You describe the job in plain language, the automation prepares a structured quote with all mandatory legal mentions. You adjust and approve before sending.",
-        "roi": "Your evenings are yours again — the quote goes out without touching a keyboard after a day on-site.",
+        "roi": "One in two construction business owners spends a full day a week or more on admin (Qonto/OpinionWay, France, 2026) — the quote goes out without touching a keyboard after a day on-site.",
         "flow": [
           "Job described out loud",
           "Structured quote generated",
@@ -195,7 +195,7 @@
         "label": "Cosmetics",
         "name": "CPNP/DIP regulatory file prepared",
         "benefit": "The AI reads the INCI formula, flags allergens to declare and checks claims, then prepares a ready file. Your safety officer validates and files it — never NBHC.",
-        "roi": "The regulatory file no longer delays a launch — the team stays on creative work.",
+        "roi": "CPNP notification takes 2-3 weeks once the file is complete (The Regulatory Company) — the AI prepares it while the team stays on creative work.",
         "flow": [
           "INCI formula read",
           "Allergens & claims checked",

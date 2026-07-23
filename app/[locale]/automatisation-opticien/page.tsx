@@ -29,7 +29,7 @@ const contentFr: SectorContent = {
     {
       title: "Le renouvellement se fait au hasard, pas à échéance",
       description:
-        "Sans détection automatique, un client équipé il y a 18 à 24 mois n'est relancé que s'il pense lui-même à revenir — sinon, c'est la boutique d'à côté qui récupère la vente.",
+        "93 % des achats de lunettes sont des renouvellements, mais 10 % des porteurs n'ont pas renouvelé depuis 2020 ou avant, et 13 % réutilisent la même ordonnance qu'à leur achat précédent (étude ROF/Galliléo Business Consulting, déc. 2025, 3 001 porteurs). Sans détection automatique, cette base dort — jusqu'à ce qu'un concurrent la relance le premier.",
     },
     {
       title: "Le \"c'est prêt ?\" sature l'accueil",
@@ -127,7 +127,7 @@ const contentEn: SectorContent = {
     {
       title: "Renewal happens by chance, not on schedule",
       description:
-        "Without automatic detection, a client fitted 18-24 months ago is only followed up if they think to come back themselves — otherwise, the store next door gets the sale.",
+        "93% of glasses purchases are renewals, but 10% of wearers haven't renewed since 2020 or earlier, and 13% reuse the same prescription as their last purchase (ROF/Galliléo Business Consulting study, Dec. 2025, 3,001 wearers, France). Without automatic detection, that base stays dormant — until a competitor follows up first.",
     },
     {
       title: "\"Is it ready?\" floods the front desk",
