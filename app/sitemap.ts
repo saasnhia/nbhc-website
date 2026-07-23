@@ -19,6 +19,7 @@ const pages: PageDef[] = [
   { path: "/automatisation-restaurant", changeFrequency: "monthly", priority: 0.9 },
   { path: "/automatisation-salon-de-coiffure", changeFrequency: "monthly", priority: 0.9 },
   { path: "/automatisation-marque-cosmetique", changeFrequency: "monthly", priority: 0.9 },
+  { path: "/automatisation-opticien", changeFrequency: "monthly", priority: 0.9 },
   { path: "/tarifs", changeFrequency: "monthly", priority: 0.9 },
   { path: "/contact", changeFrequency: "monthly", priority: 0.9 },
   { path: "/faq", changeFrequency: "monthly", priority: 0.75 },

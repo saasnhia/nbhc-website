@@ -19,6 +19,7 @@
  */
 
 import { Fragment } from "react";
+import { motion, type Variants } from "framer-motion";
 
 export type FlowStepKind = "trigger" | "process" | "action" | "validation";
 
@@ -241,25 +242,66 @@ function pickIcon(step: FlowStep) {
   return KIND_ICONS[step.kind];
 }
 
-export function ArrowConnector() {
+const connectorVariants: Variants = {
+  hidden: { opacity: 0, scale: 0.6 },
+  visible: { opacity: 1, scale: 1, transition: { duration: 0.3, ease: "easeOut" } },
+};
+
+export function ArrowConnector({ animated = false }: { animated?: boolean }) {
+  const className = "flex items-center justify-center shrink-0 rotate-0 max-[700px]:rotate-90";
+  const style = { color: "var(--text-dim)" };
+  const icon = (
+    <svg width="14" height="14" viewBox="0 0 20 20" fill="none">
+      <path
+        d="M4 10h11M11 5.5L15.5 10 11 14.5"
+        stroke="currentColor"
+        strokeWidth="1.4"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+  if (!animated) {
+    return (
+      <div className={className} style={style} aria-hidden="true">
+        {icon}
+      </div>
+    );
+  }
   return (
-    <div
-      className="flex items-center justify-center shrink-0 rotate-0 max-[700px]:rotate-90"
-      style={{ color: "var(--text-dim)" }}
-      aria-hidden="true"
-    >
-      <svg width="14" height="14" viewBox="0 0 20 20" fill="none">
-        <path
-          d="M4 10h11M11 5.5L15.5 10 11 14.5"
-          stroke="currentColor"
-          strokeWidth="1.4"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </svg>
-    </div>
+    <motion.div className={className} style={style} aria-hidden="true" variants={connectorVariants}>
+      {icon}
+    </motion.div>
   );
 }
+
+const nodeVariants: Variants = {
+  hidden: { opacity: 0, y: 14, scale: 0.92 },
+  visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] } },
+};
+
+// Validation node: same entrance as every other node, plus a gold ring that
+// pulses once it lands — a quiet "this is where a human confirms" beat, not
+// a decorative loop. `transition.default` drives the entrance (matches
+// nodeVariants' timing); `transition.boxShadow` is scoped separately so the
+// pulse starts only once the node has actually settled into place.
+const validationNodeVariants: Variants = {
+  hidden: { opacity: 0, y: 14, scale: 0.92, boxShadow: "0 0 0 0 rgba(196,151,58,0)" },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    boxShadow: [
+      "0 0 0 0 rgba(196,151,58,0)",
+      "0 0 0 6px rgba(196,151,58,0.18)",
+      "0 0 0 0 rgba(196,151,58,0)",
+    ],
+    transition: {
+      default: { duration: 0.4, ease: [0.22, 1, 0.36, 1] },
+      boxShadow: { duration: 1.1, delay: 0.4, times: [0, 0.5, 1] },
+    },
+  },
+};
 
 /** Single flow step visual (icon + label), extracted so richer diagrams
  *  (branching, converging) can reuse the exact same node styling as the
@@ -268,21 +310,22 @@ export function FlowNode({
   icon,
   label,
   isValidation = false,
+  animated = false,
 }: {
   icon: React.ReactNode;
   label: string;
   isValidation?: boolean;
+  animated?: boolean;
 }) {
-  return (
-    <div
-      className={`flow-node${isValidation ? " flow-node--validation" : ""} flex flex-col items-center justify-center gap-1.5 lg:gap-2 text-center flex-1 min-w-0 lg:py-4`}
-      style={{
-        padding: "10px 8px",
-        borderRadius: "var(--radius-sm)",
-        border: isValidation ? "1px solid var(--gold-border)" : "1px solid var(--border)",
-        background: isValidation ? "var(--gold-dim)" : "rgba(255,255,255,0.015)",
-      }}
-    >
+  const className = `flow-node${isValidation ? " flow-node--validation" : ""} flex flex-col items-center justify-center gap-1.5 lg:gap-2 text-center flex-1 min-w-0 lg:py-4`;
+  const style = {
+    padding: "10px 8px",
+    borderRadius: "var(--radius-sm)",
+    border: isValidation ? "1px solid var(--gold-border)" : "1px solid var(--border)",
+    background: isValidation ? "var(--gold-dim)" : "rgba(255,255,255,0.015)",
+  };
+  const inner = (
+    <>
       <div
         className="flow-node-icon lg:scale-[1.15]"
         style={{ color: isValidation ? "var(--gold)" : "var(--text-muted)" }}
@@ -300,33 +343,68 @@ export function FlowNode({
       >
         {label}
       </span>
-    </div>
+    </>
+  );
+  if (!animated) {
+    return (
+      <div className={className} style={style}>
+        {inner}
+      </div>
+    );
+  }
+  return (
+    <motion.div className={className} style={style} variants={isValidation ? validationNodeVariants : nodeVariants}>
+      {inner}
+    </motion.div>
   );
 }
 
+const containerVariants: Variants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.16 } },
+};
+
+/** `animated`: opt-in sequential reveal (stagger in, gold pulse on the
+ *  validation node) for contexts where the diagram IS the hero visual and
+ *  has room to perform — e.g. VideoShowcase's non-filmed sectors. Off by
+ *  default so every sector-page usage keeps its current static rendering. */
 export default function AutomationFlow({
   steps,
   ariaLabel,
+  animated = false,
 }: {
   steps: FlowStep[];
   ariaLabel: string;
+  animated?: boolean;
 }) {
+  const className = "flex flex-row max-[700px]:flex-col items-stretch gap-2 lg:gap-3 max-[700px]:gap-1.5";
+  const children = steps.map((step, i) => {
+    const Icon = pickIcon(step);
+    const isValidation = step.kind === "validation";
+    return (
+      <Fragment key={i}>
+        <FlowNode icon={<Icon />} label={step.label} isValidation={isValidation} animated={animated} />
+        {i < steps.length - 1 && <ArrowConnector animated={animated} />}
+      </Fragment>
+    );
+  });
+  if (!animated) {
+    return (
+      <div role="img" aria-label={ariaLabel} className={className}>
+        {children}
+      </div>
+    );
+  }
   return (
-    <div
+    <motion.div
       role="img"
       aria-label={ariaLabel}
-      className="flex flex-row max-[700px]:flex-col items-stretch gap-2 lg:gap-3 max-[700px]:gap-1.5"
+      className={className}
+      initial="hidden"
+      animate="visible"
+      variants={containerVariants}
     >
-      {steps.map((step, i) => {
-        const Icon = pickIcon(step);
-        const isValidation = step.kind === "validation";
-        return (
-          <Fragment key={i}>
-            <FlowNode icon={<Icon />} label={step.label} isValidation={isValidation} />
-            {i < steps.length - 1 && <ArrowConnector />}
-          </Fragment>
-        );
-      })}
-    </div>
+      {children}
+    </motion.div>
   );
 }

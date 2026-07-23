@@ -14,8 +14,9 @@ export default function Sectors() {
   const sectionRef = useRef<HTMLElement>(null);
   const t = useTranslations("sectors");
 
-  // The 6 niches NBHC actively prospects in the field — each has its own
-  // dedicated, indexable page (see SEO_AUDIT_STRATEGIE.md GATE 2).
+  // Niches NBHC actively targets, each with its own dedicated, indexable
+  // page (see SEO_AUDIT_STRATEGIE.md GATE 2). Opticien added for the
+  // multi-store prospect pipeline — not yet field-canvassed like the others.
   const sectors = [
     {
       icon: "🏋️",
@@ -64,6 +65,14 @@ export default function Sectors() {
       solution: t("pharmaSolution"),
       footnote: t("pharmaFootnote"),
       href: t("pharmaHref"),
+    },
+    {
+      icon: "👓",
+      name: t("opticienName"),
+      pain: t("opticienPain"),
+      solution: t("opticienSolution"),
+      footnote: t("opticienFootnote"),
+      href: t("opticienHref"),
     },
   ];
 

@@ -9,6 +9,7 @@ export type Sector =
   | "resto"
   | "coiffure"
   | "cosmetique"
+  | "opticien"
   | "boutique"
   | "immobilier"
   | "autre";

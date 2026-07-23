@@ -90,35 +90,130 @@
     "pharmaSolution": "We automate detection, alerts and rejection sorting. You decide and bill.",
     "pharmaFootnote": "From €2,000 excl. VAT",
     "pharmaHref": "/automatisation-pharmacie",
+    "opticienName": "Optical stores",
+    "opticienPain": "Clients due for renewal never followed up, ready orders with no notification, stock out of sync between stores.",
+    "opticienSolution": "We automate renewal follow-up, order tracking and multi-store stock. You examine and sell.",
+    "opticienFootnote": "From €2,000 excl. VAT",
+    "opticienHref": "/automatisation-opticien",
     "learnMore": "Learn more →",
     "outroText": "Your sector not listed? The free diagnostic lets us see if we can help.",
     "outroCta": "Book my diagnostic →"
   },
   "showcase": {
     "eyebrow": "IN ACTION",
-    "title": "See the automations in action",
-    "subtitle": "Four flagship automations, demonstrated. Pick a sector to see exactly what we set up.",
+    "title": "Your sector's flagship automation",
+    "subtitle": "Every sector has its own flagship automation — not a generic bundle. Pick yours to see exactly how it works, step by step, and what it changes for your team.",
     "tablistLabel": "Automations by sector",
+    "howLabel": "How it works",
+    "roiLabel": "What it changes",
     "tabs": {
       "garage": {
         "label": "Garage",
         "name": "AI phone booking assistant",
-        "benefit": "Picks up after 3 rings, qualifies the request, offers a real slot from the schedule. Every booking stays validated by you before confirmation."
+        "benefit": "Picks up after 3 rings, qualifies the request, offers a real slot from the schedule. Every booking stays validated by you before confirmation.",
+        "roi": "Your shop team is no longer pulled off the cars to answer the phone.",
+        "flow": [
+          "Call goes unanswered",
+          "AI qualifies the request",
+          "Real slot offered",
+          "You approve the booking"
+        ]
       },
       "restaurant": {
         "label": "Restaurant",
         "name": "AI phone reservation assistant",
-        "benefit": "Picks up during the rush or outside opening hours, takes the reservation, confirms by SMS. The schedule stays yours."
+        "benefit": "Picks up during the rush or outside opening hours, takes the reservation, confirms by SMS. The schedule stays yours.",
+        "roi": "Nobody picks up the floor phone mid-service — the reservation books itself.",
+        "flow": [
+          "Line busy or closed",
+          "AI takes the reservation",
+          "SMS confirmation sent",
+          "Your schedule stays in control"
+        ]
       },
       "pharmacie": {
         "label": "Pharmacy",
         "name": "BPM-eligible patient detection",
-        "benefit": "Flags patient records eligible for the Shared Medication Review. Written patient consent required before any interview."
+        "benefit": "Flags patient records eligible for the Shared Medication Review. Written patient consent required before any interview.",
+        "roi": "The counter team no longer sorts the patient base by hand — they lead the consultation.",
+        "flow": [
+          "Patient base analyzed",
+          "BPM-eligible profiles flagged",
+          "Invitation prepared",
+          "Consent + consultation led by you"
+        ]
       },
       "coiffure": {
         "label": "Hair salon",
         "name": "AI phone booking assistant",
-        "benefit": "Picks up mid-cut or outside opening hours, books the appointment, offers a real slot from the schedule. Every booking stays validated by you before confirmation."
+        "benefit": "Picks up mid-cut or outside opening hours, books the appointment, offers a real slot from the schedule. Every booking stays validated by you before confirmation.",
+        "roi": "The stylist stays at the chair — booking calls no longer interrupt between clients.",
+        "flow": [
+          "Call comes in mid-cut",
+          "AI qualifies the request",
+          "Real slot offered",
+          "You approve the booking"
+        ]
+      },
+      "opticien": {
+        "label": "Optical",
+        "name": "Detecting and following up clients due for renewal",
+        "benefit": "Cross-checks the client base against the last purchase or exam date, flags who's due for renewal and prepares a personalized follow-up. The eye exam always stays led by you.",
+        "roi": "The client due for renewal gets followed up automatically — you're in-store for the sale.",
+        "flow": [
+          "Last purchase or exam cross-checked",
+          "Client due for renewal identified",
+          "Personalized follow-up sent",
+          "You welcome the client in-store"
+        ]
+      },
+      "btp": {
+        "label": "BTP",
+        "name": "AI-assisted quote generation",
+        "benefit": "You describe the job in plain language, the automation prepares a structured quote with all mandatory legal mentions. You adjust and approve before sending.",
+        "roi": "Your evenings are yours again — the quote goes out without touching a keyboard after a day on-site.",
+        "flow": [
+          "Job described out loud",
+          "Structured quote generated",
+          "Legal mentions included",
+          "You adjust and send"
+        ]
+      },
+      "formation": {
+        "label": "Training",
+        "name": "Centralizing evidence for the Qualiopi audit",
+        "benefit": "Every document already produced is automatically filed under the matching Qualiopi indicator, with a dashboard of gaps. You judge whether evidence is sufficient, the auditor decides.",
+        "roi": "Less time on Qualiopi paperwork, more time on teaching.",
+        "flow": [
+          "Sign-in sheets & evidence produced",
+          "Filed by Qualiopi indicator",
+          "Gaps identified",
+          "You review before the audit"
+        ]
+      },
+      "cosmetique": {
+        "label": "Cosmetics",
+        "name": "CPNP/DIP regulatory file prepared",
+        "benefit": "The AI reads the INCI formula, flags allergens to declare and checks claims, then prepares a ready file. Your safety officer validates and files it — never NBHC.",
+        "roi": "The regulatory file no longer delays a launch — the team stays on creative work.",
+        "flow": [
+          "INCI formula read",
+          "Allergens & claims checked",
+          "PDF file prepared",
+          "Your safety officer validates and files"
+        ]
+      },
+      "sport": {
+        "label": "Fitness",
+        "name": "Class reminders + dynamic waitlist",
+        "benefit": "SMS reminder 24h before each class. If someone cancels, the freed spot is automatically offered to the waitlist, in order.",
+        "roi": "A cancelled class no longer stays half-empty — the spot fills itself back in.",
+        "flow": [
+          "Cancellation detected",
+          "Spot offered to the waitlist",
+          "First to respond confirmed",
+          "The class stays full"
+        ]
       }
     }
   },
@@ -514,6 +609,32 @@
         "validationLabel": "You judge whether the evidence is sufficient before the audit — this tool helps document, it doesn't audit."
       }
     },
+    "opticien": {
+      "wopt01": [
+        "Client base cross-checked against last purchase or exam date",
+        "Clients due for renewal identified",
+        "Personalized SMS or email reminder sent",
+        "You welcome the client in-store for the exam and the sale"
+      ],
+      "wopt02": [
+        "Manufacturing status tracked with the lab",
+        "Order detected as ready",
+        "Automatic SMS sent to the client",
+        "The client picks up the order, you confirm at checkout"
+      ],
+      "wopt03": [
+        "Every in-store sale updates the shared stock",
+        "Restock threshold you define, monitored continuously",
+        "Restock alert generated for the reference in question",
+        "You approve each restock order"
+      ],
+      "wopt04": [
+        "Supplementary coverage file tracked",
+        "Missing document or unusual delay detected",
+        "Follow-up prepared for the insurer or the client",
+        "You approve and send each follow-up"
+      ]
+    },
     "pharmacie": {
       "wph01": [
         "Periodic cross-check of patient data against BPM criteria",
@@ -831,6 +952,7 @@
       "sectorResto": "Restaurant",
       "sectorCoiffure": "Hair salon",
       "sectorCosmetique": "Cosmetics brand",
+      "sectorOpticien": "Optical store",
       "sectorBoutique": "Online/physical shop",
       "sectorImmobilier": "Real estate",
       "sectorAutre": "Other",
@@ -915,6 +1037,7 @@
       "sectorLabelResto": "restaurants",
       "sectorLabelCoiffure": "hair salons",
       "sectorLabelCosmetique": "cosmetics & fragrance brands",
+      "sectorLabelOpticien": "optical stores",
       "sectorLabelBoutique": "shops (online and physical)",
       "sectorLabelImmobilier": "real estate",
       "sectorAutoSport1": "Automatic class reminders + dynamic waitlist",
@@ -943,6 +1066,9 @@
       "sectorAutoCoiffure3": "No-show prevention",
       "sectorAutoCosmetique1": "CPNP/DIP regulatory file prepared (custom)",
       "sectorAutoCosmetique2": "Influencer sample tracking (standardised)",
+      "sectorAutoOpticien1": "Detecting and following up clients due for renewal (custom)",
+      "sectorAutoOpticien2": "Automatic \"order ready\" notification (standardised)",
+      "sectorAutoOpticien3": "Multi-store stock synchronization (custom)",
       "sectorAutoBoutique1": "Multi-store/e-shop stock sync (custom)",
       "sectorAutoBoutique2": "Multi-platform review summary (standardised)",
       "sectorAutoBoutique3": "B2B reseller orders (custom)",

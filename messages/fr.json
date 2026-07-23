@@ -90,35 +90,130 @@
     "pharmaSolution": "On automatise la détection, les alertes et le tri des rejets. Vous décidez et facturez.",
     "pharmaFootnote": "À partir de 2 000€ HT",
     "pharmaHref": "/automatisation-pharmacie",
+    "opticienName": "Magasins d'optique",
+    "opticienPain": "Clients à renouveler jamais relancés, commandes prêtes sans notification, stock désynchronisé entre boutiques.",
+    "opticienSolution": "On automatise la relance renouvellement, le suivi fabrication et le stock multi-boutiques. Vous examinez et vendez.",
+    "opticienFootnote": "À partir de 2 000€ HT",
+    "opticienHref": "/automatisation-opticien",
     "learnMore": "En savoir plus →",
     "outroText": "Votre secteur n'est pas listé ? Le diagnostic gratuit permet de voir si on peut vous aider.",
     "outroCta": "Réserver mon diagnostic →"
   },
   "showcase": {
     "eyebrow": "EN ACTION",
-    "title": "Voir les automatisations en action",
-    "subtitle": "Quatre automatisations phares, en démonstration. Choisissez un secteur pour voir concrètement ce qu'on installe.",
+    "title": "L'automatisation phare de votre secteur",
+    "subtitle": "Chaque secteur a sa propre automatisation phare — pas un pack générique. Choisissez le vôtre pour voir comment ça marche, étape par étape, et ce que ça change pour votre équipe.",
     "tablistLabel": "Automatisations par secteur",
+    "howLabel": "Comment ça marche",
+    "roiLabel": "Ce que ça change",
     "tabs": {
       "garage": {
         "label": "Garage",
         "name": "IA téléphonique de prise de RDV",
-        "benefit": "Décroche après 3 sonneries, qualifie la demande, propose un créneau réel depuis le planning. Chaque RDV reste validé par vous avant confirmation."
+        "benefit": "Décroche après 3 sonneries, qualifie la demande, propose un créneau réel depuis le planning. Chaque RDV reste validé par vous avant confirmation.",
+        "roi": "Votre équipe atelier n'est plus interrompue au téléphone — elle reste sur les véhicules.",
+        "flow": [
+          "Appel non décroché",
+          "IA qualifie la demande",
+          "Créneau réel proposé",
+          "Vous validez le RDV"
+        ]
       },
       "restaurant": {
         "label": "Restaurant",
         "name": "IA téléphonique de réservation",
-        "benefit": "Décroche pendant le coup de feu ou en dehors des horaires, prend la réservation, confirme par SMS. Le planning reste le vôtre."
+        "benefit": "Décroche pendant le coup de feu ou en dehors des horaires, prend la réservation, confirme par SMS. Le planning reste le vôtre.",
+        "roi": "Personne ne décroche en salle pendant le service — la réservation se prend seule.",
+        "flow": [
+          "Ligne saturée ou fermée",
+          "IA prend la réservation",
+          "Confirmation SMS envoyée",
+          "Votre planning reste maître"
+        ]
       },
       "pharmacie": {
         "label": "Pharmacie",
         "name": "Détection des patients éligibles au BPM",
-        "benefit": "Repère dans la base patients les profils éligibles au Bilan Partagé de Médication. Consentement écrit du patient requis avant tout entretien."
+        "benefit": "Repère dans la base patients les profils éligibles au Bilan Partagé de Médication. Consentement écrit du patient requis avant tout entretien.",
+        "roi": "L'équipe au comptoir n'a plus à fouiller la patientèle à la main — elle mène l'entretien.",
+        "flow": [
+          "Base patients analysée",
+          "Profils éligibles BPM repérés",
+          "Invitation préparée",
+          "Consentement + entretien par vous"
+        ]
       },
       "coiffure": {
         "label": "Coiffure",
         "name": "IA téléphonique de prise de RDV",
-        "benefit": "Décroche pendant une coupe ou en dehors des horaires, prend le rendez-vous, propose un créneau réel depuis le planning. Chaque RDV reste validé par vous avant confirmation."
+        "benefit": "Décroche pendant une coupe ou en dehors des horaires, prend le rendez-vous, propose un créneau réel depuis le planning. Chaque RDV reste validé par vous avant confirmation.",
+        "roi": "Le coiffeur reste aux ciseaux — la prise de RDV ne l'interrompt plus entre deux clients.",
+        "flow": [
+          "Appel pendant une coupe",
+          "IA qualifie la demande",
+          "Créneau réel proposé",
+          "Vous validez le RDV"
+        ]
+      },
+      "opticien": {
+        "label": "Optique",
+        "name": "Détection et relance des clients à renouveler",
+        "benefit": "Croise la base clients avec la date du dernier achat ou contrôle, repère qui arrive à échéance et prépare une relance personnalisée. L'examen de vue reste mené par vous, toujours.",
+        "roi": "Le client à renouveler est relancé sans qu'on y pense — vous, vous êtes en boutique pour la vente.",
+        "flow": [
+          "Dernier achat ou contrôle croisé",
+          "Client à échéance identifié",
+          "Relance personnalisée envoyée",
+          "Vous recevez le client en boutique"
+        ]
+      },
+      "btp": {
+        "label": "BTP",
+        "name": "Génération de devis assistée par IA",
+        "benefit": "Vous décrivez la prestation en langage naturel, l'automatisation prépare un devis structuré avec les mentions légales obligatoires. Vous ajustez et validez avant envoi.",
+        "roi": "Le soir redevient le vôtre — le devis part sans reprendre le clavier après une journée de chantier.",
+        "flow": [
+          "Prestation décrite à l'oral",
+          "Devis structuré généré",
+          "Mentions légales intégrées",
+          "Vous ajustez et envoyez"
+        ]
+      },
+      "formation": {
+        "label": "Formation",
+        "name": "Centralisation des preuves pour l'audit Qualiopi",
+        "benefit": "Chaque document déjà produit est classé automatiquement par indicateur Qualiopi, avec un tableau de bord des manques. Vous jugez la suffisance des preuves, l'auditeur tranche.",
+        "roi": "Moins de temps sur les preuves Qualiopi, plus de temps sur la pédagogie.",
+        "flow": [
+          "Émargements et preuves produits",
+          "Classement par indicateur Qualiopi",
+          "Manques identifiés",
+          "Vous jugez avant l'audit"
+        ]
+      },
+      "cosmetique": {
+        "label": "Cosmétique",
+        "name": "Dossier réglementaire CPNP/DIP préparé",
+        "benefit": "L'IA lit la formule INCI, identifie les allergènes à déclarer et vérifie les allégations, puis prépare un dossier prêt. Votre toxicologue valide et déclare, jamais NBHC.",
+        "roi": "Le dossier réglementaire ne retarde plus un lancement — l'équipe reste sur la création.",
+        "flow": [
+          "Formule INCI lue",
+          "Allergènes et allégations vérifiés",
+          "Dossier PDF préparé",
+          "Votre toxicologue valide et déclare"
+        ]
+      },
+      "sport": {
+        "label": "Sport",
+        "name": "Rappels de cours + liste d'attente dynamique",
+        "benefit": "SMS de rappel 24h avant chaque cours. En cas d'annulation, la place libérée est proposée automatiquement aux inscrits en liste d'attente, dans l'ordre.",
+        "roi": "Un cours annulé ne reste plus à moitié vide — la place se réattribue seule.",
+        "flow": [
+          "Cours annulé détecté",
+          "Place proposée à la liste d'attente",
+          "Confirmation au 1er qui répond",
+          "Le cours reste plein"
+        ]
       }
     }
   },
@@ -514,6 +609,32 @@
         "validationLabel": "Vous jugez la suffisance des preuves avant l'audit — cet outil aide à documenter, il n'audite pas."
       }
     },
+    "opticien": {
+      "wopt01": [
+        "Base clients croisée avec la date du dernier achat ou contrôle",
+        "Clients à échéance de renouvellement identifiés",
+        "SMS ou email personnalisé de rappel envoyé",
+        "Vous recevez le client en boutique pour l'examen et la vente"
+      ],
+      "wopt02": [
+        "Statut de fabrication suivi chez le façonnier",
+        "Commande détectée comme prête",
+        "SMS automatique envoyé au client",
+        "Le client récupère sa commande, vous confirmez en caisse"
+      ],
+      "wopt03": [
+        "Chaque vente en boutique met à jour le stock partagé",
+        "Seuil de réassort défini par vous surveillé en continu",
+        "Alerte de réassort générée pour la référence concernée",
+        "Vous validez chaque commande de réassort"
+      ],
+      "wopt04": [
+        "Dossier de prise en charge complémentaire suivi",
+        "Pièce manquante ou délai anormal détecté",
+        "Relance préparée pour la mutuelle ou le client",
+        "Vous validez et envoyez chaque relance"
+      ]
+    },
     "pharmacie": {
       "wph01": [
         "Croisement périodique des données patients avec les critères BPM",
@@ -831,6 +952,7 @@
       "sectorResto": "Restaurant",
       "sectorCoiffure": "Salon de coiffure",
       "sectorCosmetique": "Marque cosmétique",
+      "sectorOpticien": "Magasin d'optique",
       "sectorBoutique": "Boutique en ligne/physique",
       "sectorImmobilier": "Immobilier",
       "sectorAutre": "Autre",
@@ -915,6 +1037,7 @@
       "sectorLabelResto": "restaurants",
       "sectorLabelCoiffure": "salons de coiffure",
       "sectorLabelCosmetique": "marques de cosmétique & parfumerie",
+      "sectorLabelOpticien": "magasins d'optique",
       "sectorLabelBoutique": "boutiques (en ligne et physiques)",
       "sectorLabelImmobilier": "immobilier",
       "sectorAutoSport1": "Rappels automatiques de cours + liste d'attente dynamique",
@@ -943,6 +1066,9 @@
       "sectorAutoCoiffure3": "Anti no-show",
       "sectorAutoCosmetique1": "Dossier réglementaire CPNP/DIP préparé (sur mesure)",
       "sectorAutoCosmetique2": "Suivi des échantillons envoyés aux influenceurs (standardisée)",
+      "sectorAutoOpticien1": "Détection et relance des clients à renouveler (sur mesure)",
+      "sectorAutoOpticien2": "Notification automatique \"commande prête\" (standardisée)",
+      "sectorAutoOpticien3": "Synchronisation du stock multi-boutiques (sur mesure)",
       "sectorAutoBoutique1": "Synchro stock boutiques/e-shop (sur mesure)",
       "sectorAutoBoutique2": "Synthèse des avis clients multi-plateformes (standardisée)",
       "sectorAutoBoutique3": "Commandes B2B revendeurs (sur mesure)",

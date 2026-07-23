@@ -77,6 +77,12 @@ const SECTOR_META: Record<Sector, SectorMeta> = {
     labelKey: "sectorLabelCosmetique",
     autoKeys: ["sectorAutoCosmetique1", "sectorAutoCosmetique2"],
   },
+  opticien: {
+    hrefSlug: "automatisation-opticien",
+    suggested: false,
+    labelKey: "sectorLabelOpticien",
+    autoKeys: ["sectorAutoOpticien1", "sectorAutoOpticien2", "sectorAutoOpticien3"],
+  },
   boutique: {
     hrefSlug: null,
     suggested: true,
@@ -109,6 +115,7 @@ const SECTOR_OPTIONS: { value: Sector; key: string }[] = [
   { value: "resto", key: "sectorResto" },
   { value: "coiffure", key: "sectorCoiffure" },
   { value: "cosmetique", key: "sectorCosmetique" },
+  { value: "opticien", key: "sectorOpticien" },
   { value: "boutique", key: "sectorBoutique" },
   { value: "immobilier", key: "sectorImmobilier" },
   { value: "autre", key: "sectorAutre" },

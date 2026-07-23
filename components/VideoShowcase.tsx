@@ -3,23 +3,65 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import DemoVideo from "./DemoVideo";
+import DemoVideo, { type DemoVideoName } from "./DemoVideo";
+import AutomationFlow, { zipFlowSteps, type FlowStepKind } from "./AutomationFlow";
 
-type ShowcaseKey = "garage" | "restaurant" | "pharmacie" | "coiffure";
+type ShowcaseKey =
+  | "garage"
+  | "restaurant"
+  | "pharmacie"
+  | "coiffure"
+  | "opticien"
+  | "btp"
+  | "formation"
+  | "cosmetique"
+  | "sport";
 
-const SHOWCASE_KEYS: ShowcaseKey[] = ["garage", "restaurant", "pharmacie", "coiffure"];
+// Order drives the tab strip. Sectors with a filmed demo lead — they're the
+// most immediately convincing — new/text-only sectors follow.
+const SHOWCASE_KEYS: ShowcaseKey[] = [
+  "garage",
+  "restaurant",
+  "pharmacie",
+  "coiffure",
+  "opticien",
+  "btp",
+  "formation",
+  "cosmetique",
+  "sport",
+];
 
 const TAB_ICONS: Record<ShowcaseKey, string> = {
   garage: "🔧",
   restaurant: "🍽️",
   pharmacie: "💊",
   coiffure: "✂️",
+  opticien: "👓",
+  btp: "🏗️",
+  formation: "🎓",
+  cosmetique: "💄",
+  sport: "🏋️",
 };
+
+// Sectors with a filmed DemoVideo asset — the rest lean entirely on the
+// simplified flow diagram (same AutomationFlow component used on every
+// sector landing page) until a video exists for them too.
+const VIDEO_SECTORS: DemoVideoName[] = ["garage", "restaurant", "pharmacie", "coiffure"];
+
+function isVideoSector(key: ShowcaseKey): key is DemoVideoName {
+  return (VIDEO_SECTORS as ShowcaseKey[]).includes(key);
+}
+
+// Structural shape of each sector's flagship-automation diagram. Not
+// translatable — labels come from messages/*.json (showcase.tabs.*.flow).
+const FLOW_KINDS: FlowStepKind[] = ["trigger", "process", "action", "validation"];
 
 export default function VideoShowcase() {
   const [activeTab, setActiveTab] = useState<ShowcaseKey>("garage");
   const t = useTranslations("showcase");
   const reduceMotion = useReducedMotion();
+  const hasVideo = isVideoSector(activeTab);
+  const flowSteps = zipFlowSteps(FLOW_KINDS, t.raw(`tabs.${activeTab}.flow`));
 
   return (
     <section
@@ -87,7 +129,7 @@ export default function VideoShowcase() {
       </div>
 
       <div style={{ maxWidth: 920, margin: "0 auto" }}>
-        {/* Elegant frame: gradient bezel wrapping the video, not a bare rectangle */}
+        {/* Elegant frame: gradient bezel wrapping the visual, not a bare rectangle */}
         <div
           className="relative p-2 max-[600px]:p-1.5"
           style={{
@@ -106,7 +148,7 @@ export default function VideoShowcase() {
               background: "#000",
             }}
           >
-            {/* mode="wait" + initial={false}: the outgoing tab's <video> is fully
+            {/* mode="wait" + initial={false}: the outgoing tab's visual is fully
                 unmounted before the next one mounts — never more than one video
                 in the DOM at once, and no fade-in flash on first paint. */}
             <AnimatePresence mode="wait" initial={false}>
@@ -117,7 +159,24 @@ export default function VideoShowcase() {
                 exit={{ opacity: 0, scale: reduceMotion ? 1 : 0.985 }}
                 transition={{ duration: reduceMotion ? 0 : 0.32, ease: [0.22, 1, 0.36, 1] }}
               >
-                <DemoVideo name={activeTab} ariaLabel={t(`tabs.${activeTab}.name`)} />
+                {hasVideo ? (
+                  <DemoVideo name={activeTab} ariaLabel={t(`tabs.${activeTab}.name`)} />
+                ) : (
+                  <div
+                    className="relative w-full flex items-center justify-center px-6 py-10 max-[600px]:px-4 max-[600px]:py-8"
+                    style={{
+                      aspectRatio: "16 / 9",
+                      background:
+                        "radial-gradient(circle at 50% 20%, rgba(196,151,58,0.08), transparent 60%)",
+                    }}
+                  >
+                    <AutomationFlow
+                      steps={flowSteps}
+                      ariaLabel={t(`tabs.${activeTab}.name`)}
+                      animated={!reduceMotion}
+                    />
+                  </div>
+                )}
               </motion.div>
             </AnimatePresence>
           </div>
@@ -153,11 +212,44 @@ export default function VideoShowcase() {
               {t(`tabs.${activeTab}.name`)}
             </div>
             <p
-              className="text-sm"
+              className="text-sm mb-5"
               style={{ color: "var(--text-muted)", lineHeight: 1.65, maxWidth: 640, margin: "0 auto" }}
             >
               {t(`tabs.${activeTab}.benefit`)}
             </p>
+
+            {/* ROI callout: what frees up for the team, not a fabricated metric —
+                NBHC has no client references to cite, so this stays qualitative. */}
+            <p
+              className="text-[13px] font-medium mb-8 inline-flex items-center gap-2 px-4 py-2 rounded-full"
+              style={{
+                color: "var(--gold-light)",
+                background: "rgba(196,151,58,0.06)",
+                border: "1px solid var(--gold-border)",
+                maxWidth: 640,
+              }}
+            >
+              <span aria-hidden="true">✦</span>
+              {t(`tabs.${activeTab}.roi`)}
+            </p>
+
+            {/* Filmed sectors already show the mechanism on video — the flow
+                diagram repeats it as a compact, always-legible strip so the
+                "how it works" story never depends on the video autoplaying. */}
+            {hasVideo && (
+              <div
+                className="mx-auto"
+                style={{ maxWidth: 780 }}
+              >
+                <div
+                  className="text-[11px] font-semibold tracking-[2px] uppercase mb-4"
+                  style={{ color: "var(--text-dim)" }}
+                >
+                  {t("howLabel")}
+                </div>
+                <AutomationFlow steps={flowSteps} ariaLabel={t(`tabs.${activeTab}.name`)} />
+              </div>
+            )}
           </motion.div>
         </AnimatePresence>
       </div>
