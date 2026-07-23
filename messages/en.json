@@ -125,7 +125,7 @@
         "benefit": "Picks up during the rush or outside opening hours, takes the reservation, confirms by SMS. The schedule stays yours.",
         "roi": "Nearly 70% of restaurants deal with no-shows, up to 10-15% of an evening's revenue lost (Le Progrès, 2026) — the reservation books and confirms itself.",
         "flow": [
-          "Line busy or closed",
+          "Call comes in mid-rush",
           "AI takes the reservation",
           "SMS confirmation sent",
           "Your schedule stays in control"

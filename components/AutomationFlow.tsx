@@ -213,15 +213,21 @@ const KIND_ICONS: Record<FlowStepKind, () => ReturnType<typeof TriggerIcon>> = {
 // Keyword -> concrete pictogram. Checked in order; first match wins. Applied
 // only to trigger/process/action steps — validation always keeps its own
 // icon (see pickIcon) so the "human decides here" signal never changes shape.
+// Bilingual by necessity (the site ships fr + en): stems, not full words —
+// French conjugations/accents (croisé, repérés...) must match their
+// infinitive, and English forms (detected, flagged, cross-checked...) need
+// their own terms since French stems never match English text. Checked
+// against every showcase.tabs.*.flow string in both messages/*.json files,
+// not guessed.
 const KEYWORD_ICONS: [RegExp, () => ReturnType<typeof TriggerIcon>][] = [
-  [/\bsms\b|message/i, MessageIcon],
+  [/\bsms\b|message|relance|follow-up|follow up/i, MessageIcon],
   [/email|e-mail|courriel/i, MailIcon],
-  [/\bappels?\b|téléphon|standard/i, PhoneIcon],
-  [/détect|identifi|recherch|croisement|croise/i, SearchIcon],
-  [/rupture|alerte|anomalie|rejet|incomplet/i, AlertIcon],
-  [/planning|échéance|rendez-vous|session|créneau|calendrier|programmé/i, CalendarIcon],
+  [/\bappels?\b|téléphon|standard|\bligne\b|\bcalls?\b/i, PhoneIcon],
+  [/détect|identifi|recherch|crois|repér|cross-check|flagged/i, SearchIcon],
+  [/rupture|alerte|anomalie|rejet|incomplet|shortage|rejection|missing/i, AlertIcon],
+  [/planning|échéance|rendez-vous|réservation|session|créneau|calendrier|programmé|booking|reservation|\bslot\b|schedule/i, CalendarIcon],
   [/archiv|class(é|ement)/i, FolderIcon],
-  [/dossier|document|fiche|pièce|certificat|attestation|devis|facture|courrier|convocation/i, DocumentIcon],
+  [/dossier|document|fiche|pièce|certificat|attestation|devis|facture|courrier|convocation|quote|invoice|\bfile\b|PDF/i, DocumentIcon],
 ];
 
 // Icons that mean "a specific artifact/document exists" read oddly on a

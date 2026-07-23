@@ -125,7 +125,7 @@
         "benefit": "Décroche pendant le coup de feu ou en dehors des horaires, prend la réservation, confirme par SMS. Le planning reste le vôtre.",
         "roi": "Près de 70 % des restaurateurs sont confrontés aux no-show, jusqu'à 10-15 % du CA perdu en une soirée (Le Progrès, 2026) — la réservation se prend et se confirme seule.",
         "flow": [
-          "Ligne saturée ou fermée",
+          "Appel reçu en plein coup de feu",
           "IA prend la réservation",
           "Confirmation SMS envoyée",
           "Votre planning reste maître"
