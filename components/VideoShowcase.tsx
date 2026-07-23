@@ -129,6 +129,20 @@ export default function VideoShowcase() {
       </div>
 
       <div style={{ maxWidth: 920, margin: "0 auto" }}>
+        <style>{`
+          @keyframes nbhc-grid-pulse {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 0.75; }
+          }
+          .nbhc-showcase-grid {
+            background-image: radial-gradient(circle, rgba(196,151,58,0.4) 1px, transparent 1px);
+            background-size: 24px 24px;
+            animation: nbhc-grid-pulse 4.5s ease-in-out infinite;
+          }
+          @media (prefers-reduced-motion: reduce) {
+            .nbhc-showcase-grid { animation: none; opacity: 0.4; }
+          }
+        `}</style>
         {/* Elegant frame: gradient bezel wrapping the visual, not a bare rectangle */}
         <div
           className="relative p-2 max-[600px]:p-1.5"
@@ -148,12 +162,22 @@ export default function VideoShowcase() {
               background: "#000",
             }}
           >
+            {/* Ambient dot-grid + corner glow — the same fine grid and warm gold
+                bloom seen in the Higgsfield motion reference, reproduced natively
+                so it renders behind every sector, filmed or diagrammed. */}
+            <div className="nbhc-showcase-grid absolute inset-0 pointer-events-none" aria-hidden="true" />
+            <div
+              className="absolute inset-0 pointer-events-none"
+              aria-hidden="true"
+              style={{ background: "radial-gradient(circle at 15% 15%, rgba(196,151,58,0.16), transparent 55%)" }}
+            />
             {/* mode="wait" + initial={false}: the outgoing tab's visual is fully
                 unmounted before the next one mounts — never more than one video
                 in the DOM at once, and no fade-in flash on first paint. */}
             <AnimatePresence mode="wait" initial={false}>
               <motion.div
                 key={activeTab}
+                className="relative"
                 initial={{ opacity: 0, scale: reduceMotion ? 1 : 0.985 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: reduceMotion ? 1 : 0.985 }}
@@ -164,11 +188,7 @@ export default function VideoShowcase() {
                 ) : (
                   <div
                     className="relative w-full flex items-center justify-center px-6 py-10 max-[600px]:px-4 max-[600px]:py-8"
-                    style={{
-                      aspectRatio: "16 / 9",
-                      background:
-                        "radial-gradient(circle at 50% 20%, rgba(196,151,58,0.08), transparent 60%)",
-                    }}
+                    style={{ aspectRatio: "16 / 9" }}
                   >
                     <AutomationFlow
                       steps={flowSteps}
@@ -247,7 +267,11 @@ export default function VideoShowcase() {
                 >
                   {t("howLabel")}
                 </div>
-                <AutomationFlow steps={flowSteps} ariaLabel={t(`tabs.${activeTab}.name`)} />
+                <AutomationFlow
+                  steps={flowSteps}
+                  ariaLabel={t(`tabs.${activeTab}.name`)}
+                  animated={!reduceMotion}
+                />
               </div>
             )}
           </motion.div>

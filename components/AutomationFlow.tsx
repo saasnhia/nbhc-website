@@ -353,7 +353,24 @@ export function FlowNode({
     );
   }
   return (
-    <motion.div className={className} style={style} variants={isValidation ? validationNodeVariants : nodeVariants}>
+    <motion.div
+      className={`${className} cursor-pointer`}
+      style={style}
+      variants={isValidation ? validationNodeVariants : nodeVariants}
+      whileHover={{
+        y: -3,
+        borderColor: "var(--gold-border)",
+        boxShadow: "0 10px 24px -10px rgba(196,151,58,0.4)",
+      }}
+      whileTap={{ scale: 0.97 }}
+      whileFocus={{
+        y: -3,
+        borderColor: "var(--gold-border)",
+        boxShadow: "0 10px 24px -10px rgba(196,151,58,0.4)",
+      }}
+      tabIndex={0}
+      transition={{ type: "spring", stiffness: 400, damping: 28 }}
+    >
       {inner}
     </motion.div>
   );
@@ -364,10 +381,52 @@ const containerVariants: Variants = {
   visible: { transition: { staggerChildren: 0.16 } },
 };
 
+const PULSE_GLOW = "0 0 10px 3px rgba(196,151,58,0.7), 0 0 24px 8px rgba(196,151,58,0.25)";
+
+/** A single gold "signal" that travels the length of the diagram once every
+ *  node has finished revealing — the code equivalent of the particle trail
+ *  in the Higgsfield motion reference: data visibly moving from step to
+ *  step, arriving at the validation node right as its pulse ring fires.
+ *  Two copies (horizontal / vertical) cover the row and stacked-column
+ *  layouts; only one is ever visible at a given breakpoint. */
+function TravelingPulse({ stepCount }: { stepCount: number }) {
+  const revealDuration = (stepCount - 1) * 0.16 + 0.4;
+  const startDelay = revealDuration + 0.1;
+  const travel = { duration: 1.15, ease: "easeInOut" as const, times: [0, 0.1, 0.85, 1] };
+  const dotBase = {
+    width: 7,
+    height: 7,
+    borderRadius: "50%",
+    background: "var(--gold)",
+    boxShadow: PULSE_GLOW,
+  };
+  return (
+    <>
+      <motion.div
+        aria-hidden="true"
+        className="pointer-events-none absolute z-10 max-[700px]:hidden"
+        style={{ ...dotBase, top: "50%", marginTop: -3.5 }}
+        initial={{ left: "1%", opacity: 0 }}
+        animate={{ left: "99%", opacity: [0, 1, 1, 0] }}
+        transition={{ delay: startDelay, ...travel }}
+      />
+      <motion.div
+        aria-hidden="true"
+        className="pointer-events-none absolute z-10 hidden max-[700px]:block"
+        style={{ ...dotBase, left: "50%", marginLeft: -3.5 }}
+        initial={{ top: "1%", opacity: 0 }}
+        animate={{ top: "99%", opacity: [0, 1, 1, 0] }}
+        transition={{ delay: startDelay, ...travel }}
+      />
+    </>
+  );
+}
+
 /** `animated`: opt-in sequential reveal (stagger in, gold pulse on the
- *  validation node) for contexts where the diagram IS the hero visual and
- *  has room to perform — e.g. VideoShowcase's non-filmed sectors. Off by
- *  default so every sector-page usage keeps its current static rendering. */
+ *  validation node, a traveling signal that runs the length of the diagram
+ *  once revealed) for contexts where the diagram IS the hero visual and has
+ *  room to perform — e.g. VideoShowcase. Off by default so every
+ *  sector-page usage keeps its current static rendering. */
 export default function AutomationFlow({
   steps,
   ariaLabel,
@@ -399,12 +458,13 @@ export default function AutomationFlow({
     <motion.div
       role="img"
       aria-label={ariaLabel}
-      className={className}
+      className={`${className} relative`}
       initial="hidden"
       animate="visible"
       variants={containerVariants}
     >
       {children}
+      <TravelingPulse stepCount={steps.length} />
     </motion.div>
   );
 }
