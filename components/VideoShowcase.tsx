@@ -43,12 +43,31 @@ const TAB_ICONS: Record<ShowcaseKey, string> = {
   sport: "🏋️",
 };
 
-// Sectors with a filmed DemoVideo asset — the rest lean entirely on the
-// simplified flow diagram (same AutomationFlow component used on every
-// sector landing page) until a video exists for them too.
-const VIDEO_SECTORS: DemoVideoName[] = ["garage", "restaurant", "pharmacie", "coiffure"];
+// Sectors with a filmed/rendered DemoVideo asset. Garage/restaurant/
+// pharmacie/coiffure are real screen captures of the live automation;
+// opticien/btp/formation/cosmetique/sport are the AutomationFlow diagram
+// itself, captured frame-by-frame and rendered to video (see
+// scripts/README or commit history for the capture approach) — same
+// component, same brand, no AI-video generation involved. Sectors without
+// either fall back to the live flow diagram below until a video exists.
+const VIDEO_SECTORS: DemoVideoName[] = [
+  "garage",
+  "restaurant",
+  "pharmacie",
+  "coiffure",
+  "opticien",
+  "btp",
+  "formation",
+  "cosmetique",
+  "sport",
+];
 
-function isVideoSector(key: ShowcaseKey): key is DemoVideoName {
+// Deliberately returns a plain boolean, not a `key is DemoVideoName` type
+// predicate: ShowcaseKey and DemoVideoName happen to be the same union
+// today (every sector has video), which would make TS narrow the "no
+// video" branch below to `never` and flag it as dead code — breaking the
+// moment a new sector is added to ShowcaseKey without a matching video.
+function isVideoSector(key: ShowcaseKey): boolean {
   return (VIDEO_SECTORS as ShowcaseKey[]).includes(key);
 }
 
@@ -185,7 +204,7 @@ export default function VideoShowcase() {
                 transition={{ duration: reduceMotion ? 0 : 0.32, ease: [0.22, 1, 0.36, 1] }}
               >
                 {hasVideo ? (
-                  <DemoVideo name={activeTab} ariaLabel={t(`tabs.${activeTab}.name`)} />
+                  <DemoVideo name={activeTab as DemoVideoName} ariaLabel={t(`tabs.${activeTab}.name`)} />
                 ) : (
                   <div
                     className="relative w-full flex items-center justify-center px-6 py-10 max-[600px]:px-4 max-[600px]:py-8"
