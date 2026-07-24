@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import DemoVideo, { type DemoVideoName } from "./DemoVideo";
 import AutomationFlow, { zipFlowSteps, type FlowStepKind } from "./AutomationFlow";
+import GarageDemo from "./sector-demos/GarageDemo";
 
 type ShowcaseKey =
   | "garage"
@@ -43,15 +44,23 @@ const TAB_ICONS: Record<ShowcaseKey, string> = {
   sport: "🏋️",
 };
 
-// Sectors with a filmed/rendered DemoVideo asset. Garage/restaurant/
-// pharmacie/coiffure are real screen captures of the live automation;
-// opticien/btp/formation/cosmetique/sport are the AutomationFlow diagram
-// itself, captured frame-by-frame and rendered to video (see
-// scripts/README or commit history for the capture approach) — same
-// component, same brand, no AI-video generation involved. Sectors without
-// either fall back to the live flow diagram below until a video exists.
+// Sectors with a native, interactive demonstration (component, not a
+// <video>) — the real replacement for this section. Built one sector at a
+// time, each with its own staging designed for its own automation; see
+// components/sector-demos/. Sectors not listed here yet still show their
+// previous treatment (video or generic diagram) until rebuilt.
+const NATIVE_DEMO_SECTORS: Partial<Record<ShowcaseKey, React.ComponentType>> = {
+  garage: GarageDemo,
+};
+
+// Sectors with a filmed/rendered DemoVideo asset, for sectors that don't
+// have a native demo yet. Restaurant/pharmacie/coiffure are Remotion
+// renders of the real automation; opticien/btp/formation/cosmetique/sport
+// are the AutomationFlow diagram captured frame-by-frame and rendered to
+// video. Garage is intentionally absent — it now has a native demo instead
+// (see NATIVE_DEMO_SECTORS) — the mp4 file itself stays in public/, it's
+// just not used by this component anymore.
 const VIDEO_SECTORS: DemoVideoName[] = [
-  "garage",
   "restaurant",
   "pharmacie",
   "coiffure",
@@ -63,10 +72,9 @@ const VIDEO_SECTORS: DemoVideoName[] = [
 ];
 
 // Deliberately returns a plain boolean, not a `key is DemoVideoName` type
-// predicate: ShowcaseKey and DemoVideoName happen to be the same union
-// today (every sector has video), which would make TS narrow the "no
-// video" branch below to `never` and flag it as dead code — breaking the
-// moment a new sector is added to ShowcaseKey without a matching video.
+// predicate: narrowing exhaustively would flag the "no video" branch below
+// as dead code the moment every remaining sector has video too — breaking
+// the fallback the instant a new sector is added without one.
 function isVideoSector(key: ShowcaseKey): boolean {
   return (VIDEO_SECTORS as ShowcaseKey[]).includes(key);
 }
@@ -79,7 +87,8 @@ export default function VideoShowcase() {
   const [activeTab, setActiveTab] = useState<ShowcaseKey>("garage");
   const t = useTranslations("showcase");
   const reduceMotion = useReducedMotion();
-  const hasVideo = isVideoSector(activeTab);
+  const NativeDemo = NATIVE_DEMO_SECTORS[activeTab];
+  const hasVideo = !NativeDemo && isVideoSector(activeTab);
   const flowSteps = zipFlowSteps(FLOW_KINDS, t.raw(`tabs.${activeTab}.flow`));
 
   return (
@@ -203,7 +212,9 @@ export default function VideoShowcase() {
                 exit={{ opacity: 0, scale: reduceMotion ? 1 : 0.985 }}
                 transition={{ duration: reduceMotion ? 0 : 0.32, ease: [0.22, 1, 0.36, 1] }}
               >
-                {hasVideo ? (
+                {NativeDemo ? (
+                  <NativeDemo />
+                ) : hasVideo ? (
                   <DemoVideo name={activeTab as DemoVideoName} ariaLabel={t(`tabs.${activeTab}.name`)} />
                 ) : (
                   <div

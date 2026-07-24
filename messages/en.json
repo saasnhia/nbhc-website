@@ -215,6 +215,41 @@
           "The class stays full"
         ]
       }
+    },
+    "demoStage": {
+      "prev": "Previous",
+      "next": "Next",
+      "stepsAriaLabel": "Demo steps"
+    },
+    "demos": {
+      "garage": {
+        "ariaLabel": "Demo: AI phone booking assistant for garages",
+        "step1Title": "A call comes in, nobody can pick up",
+        "step1Caption": "Your mechanics are under the lift — the caller reaches an active call forward, not a voicemail.",
+        "step2Title": "The AI understands the request and checks your schedule",
+        "workflowLabels": [
+          "Incoming call",
+          "Voice transcription",
+          "The AI understands the request",
+          "Checks the schedule and offers a slot"
+        ],
+        "conversation": [
+          { "speaker": "ia", "text": "Garage du Centre, hello." },
+          { "speaker": "client", "text": "I'd like an appointment for a service." },
+          { "speaker": "ia", "text": "Thursday 2pm work for you?" },
+          { "speaker": "client", "text": "Perfect." }
+        ],
+        "step3Title": "You confirm with one click",
+        "step3Caption": "Nothing is written to your schedule until you confirm — you adjust or approve, never the other way around.",
+        "validationCardTitle": "New appointment",
+        "validationLines": [
+          { "label": "Client", "value": "Mr. Dupont" },
+          { "label": "Reason", "value": "Service" },
+          { "label": "Slot", "value": "Thursday 2pm" }
+        ],
+        "validateLabel": "Confirm appointment",
+        "confirmedLabel": "Appointment confirmed ✓"
+      }
     }
   },
   "howItWorks": {

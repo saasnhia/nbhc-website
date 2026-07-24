@@ -215,6 +215,41 @@
           "Le cours reste plein"
         ]
       }
+    },
+    "demoStage": {
+      "prev": "Précédent",
+      "next": "Suivant",
+      "stepsAriaLabel": "Étapes de la démonstration"
+    },
+    "demos": {
+      "garage": {
+        "ariaLabel": "Démonstration : IA téléphonique de prise de RDV pour garage",
+        "step1Title": "Un appel arrive, personne ne peut décrocher",
+        "step1Caption": "Vos mécanos sont sous le pont — le client tombe sur un renvoi d'appel activé, pas sur une messagerie.",
+        "step2Title": "L'IA comprend la demande et regarde votre planning",
+        "workflowLabels": [
+          "Appel entrant",
+          "Transcription vocale",
+          "L'IA comprend la demande",
+          "Vérifie le planning et propose un créneau"
+        ],
+        "conversation": [
+          { "speaker": "ia", "text": "Garage du Centre, bonjour." },
+          { "speaker": "client", "text": "Un RDV pour une révision." },
+          { "speaker": "ia", "text": "Jeudi 14h, ça vous va ?" },
+          { "speaker": "client", "text": "Parfait." }
+        ],
+        "step3Title": "Vous validez d'un clic",
+        "step3Caption": "Rien n'est écrit dans votre planning tant que vous n'avez pas validé — vous ajustez ou confirmez, jamais l'inverse.",
+        "validationCardTitle": "Nouveau RDV",
+        "validationLines": [
+          { "label": "Client", "value": "M. Dupont" },
+          { "label": "Motif", "value": "Révision" },
+          { "label": "Créneau", "value": "Jeudi 14h" }
+        ],
+        "validateLabel": "Valider le RDV",
+        "confirmedLabel": "RDV confirmé ✓"
+      }
     }
   },
   "howItWorks": {
