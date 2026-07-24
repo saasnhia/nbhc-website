@@ -111,7 +111,7 @@
         "label": "Garage",
         "name": "AI phone booking assistant",
         "benefit": "Picks up after 3 rings, qualifies the request, offers a real slot from the schedule. Every booking stays validated by you before confirmation.",
-        "roi": "68% of drivers choose their garage based on how fast it picks up, ahead of price (FNAA, France) — your shop team no longer has to choose between the lift and the phone.",
+        "roi": "A call that goes unanswered is often a customer who hangs up and calls the next garage — your shop team no longer has to choose between the lift and the phone.",
         "flow": [
           "Call goes unanswered",
           "AI qualifies the request",
@@ -135,7 +135,7 @@
         "label": "Pharmacy",
         "name": "BPM-eligible patient detection",
         "benefit": "Flags patient records eligible for the Shared Medication Review. Written patient consent required before any interview.",
-        "roi": "73% of French pharmacies run fewer than 10 medication reviews a month for lack of a system, an estimated €15,000-25,000/year left on the table (Ameli) — the team no longer sorts patients by hand.",
+        "roi": "Without automatic detection, spotting eligible patients depends on the team's memory or availability — the automation does it continuously, you decide who to contact.",
         "flow": [
           "Patient base analyzed",
           "BPM-eligible profiles flagged",
@@ -171,7 +171,7 @@
         "label": "BTP",
         "name": "AI-assisted quote generation",
         "benefit": "You describe the job in plain language, the automation prepares a structured quote with all mandatory legal mentions. You adjust and approve before sending.",
-        "roi": "One in two construction business owners spends a full day a week or more on admin (Qonto/OpinionWay, France, 2026) — the quote goes out without touching a keyboard after a day on-site.",
+        "roi": "Between quotes, follow-ups and invoicing, admin eats into time that should go to the job site — the quote goes out without touching a keyboard after a day on-site.",
         "flow": [
           "Job described out loud",
           "Structured quote generated",

@@ -27,7 +27,7 @@ const contentFr: SectorContent = {
     {
       title: "Les dossiers OPCO bloquent sur des pièces manquantes",
       description:
-        "Chaque pièce manquante remet le compteur de traitement à zéro (10 à 30 jours ouvrés selon l'OPCO), et le règlement intervient 2 à 4 semaines après validation du dossier. La charge de relance retombe sur vous.",
+        "Chaque pièce manquante remet le compteur de traitement à zéro, et le délai avant règlement peut vite s'allonger. La charge de relance retombe sur vous.",
     },
     {
       title: "L'émargement papier ou mal archivé est fragile",
@@ -125,7 +125,7 @@ const contentEn: SectorContent = {
     {
       title: "OPCO funding files get stuck on missing documents",
       description:
-        "Every missing document resets the processing clock to zero (10 to 30 business days depending on the OPCO), and payment comes 2 to 4 weeks after the file is approved. The follow-up burden falls back on you.",
+        "Every missing document resets the processing clock to zero, and payment can take a while to follow. The follow-up burden falls back on you.",
     },
     {
       title: "Paper or poorly archived attendance sheets are fragile",

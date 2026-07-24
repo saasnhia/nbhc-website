@@ -37,7 +37,7 @@ const contentFr: SectorContent = {
     {
       title: "Les adhérents qui décrochent en silence",
       description:
-        "Le secteur fitness affiche un taux de résiliation moyen de 28,6 % par an, et les adhérents inactifs représentent 50 à 60 % du chiffre d'affaires d'une salle classique (Smart Health Clubs, 2025) — sans relance, cette base dort.",
+        "Les adhérents qui décrochent en silence pèsent lourd dans le chiffre d'affaires d'une salle — sans relance, cette base dort.",
     },
     {
       title: "L'accueil téléphonique saturé pendant les soins",
@@ -70,7 +70,7 @@ const contentFr: SectorContent = {
       code: "W-SPORT-03",
       title: "Relance des abonnements à échéance + réactivation des inactifs",
       description:
-        "Détection automatique des adhérents à échéance ou inactifs depuis plusieurs semaines, relance personnalisée et progressive. Une séquence de relance automatisée (email + SMS) récupère en moyenne 42% des paiements échoués, contre 70% de l'ensemble des impayés \"involontaires\" une fois toutes les méthodes de recouvrement combinées (Churnkey, State of Retention 2025).",
+        "Détection automatique des adhérents à échéance ou inactifs depuis plusieurs semaines, relance personnalisée et progressive. Une séquence de relance automatisée (email + SMS) récupère une partie des paiements échoués sans intervention manuelle de l'équipe.",
     },
     {
       code: "W-SPORT-05",
@@ -139,7 +139,7 @@ const contentEn: SectorContent = {
     {
       title: "Members who quietly churn",
       description:
-        "The fitness sector shows an average annual churn rate of 28.6%, and inactive members represent 50-60% of a typical gym's revenue (Smart Health Clubs, 2025) — without follow-up, that base just sits there.",
+        "Members who quietly drift away weigh heavily on a gym's revenue — without follow-up, that base just sits there.",
     },
     {
       title: "Front desk overwhelmed during treatments",
@@ -172,7 +172,7 @@ const contentEn: SectorContent = {
       code: "W-SPORT-03",
       title: "Membership renewal follow-up + inactive member reactivation",
       description:
-        "Automatic detection of members nearing renewal or inactive for several weeks, personalized progressive follow-up. An automated follow-up sequence (email + SMS) recovers 42% of failed payments on average, versus 70% of all involuntary churn once every recovery method is combined (Churnkey, State of Retention 2025).",
+        "Automatic detection of members nearing renewal or inactive for several weeks, personalized progressive follow-up. An automated follow-up sequence (email + SMS) recovers a portion of failed payments without manual work from the team.",
     },
     {
       code: "W-SPORT-05",

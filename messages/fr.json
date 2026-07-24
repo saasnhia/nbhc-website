@@ -111,7 +111,7 @@
         "label": "Garage",
         "name": "IA téléphonique de prise de RDV",
         "benefit": "Décroche après 3 sonneries, qualifie la demande, propose un créneau réel depuis le planning. Chaque RDV reste validé par vous avant confirmation.",
-        "roi": "68 % des automobilistes choisissent leur garage sur sa rapidité à décrocher, avant même le prix (FNAA) — votre équipe atelier n'a plus à choisir entre le pont et le téléphone.",
+        "roi": "Un appel qui tombe dans le vide, c'est souvent un client qui raccroche et appelle le garage suivant — votre équipe atelier n'a plus à choisir entre le pont et le téléphone.",
         "flow": [
           "Appel non décroché",
           "IA qualifie la demande",
@@ -135,7 +135,7 @@
         "label": "Pharmacie",
         "name": "Détection des patients éligibles au BPM",
         "benefit": "Repère dans la base patients les profils éligibles au Bilan Partagé de Médication. Consentement écrit du patient requis avant tout entretien.",
-        "roi": "73 % des officines réalisent moins de 10 entretiens pharmaceutiques par mois faute d'organisation, pour un manque à gagner estimé à 15 000-25 000 €/an (Ameli) — l'équipe n'a plus à repérer les patients à la main.",
+        "roi": "Sans détection automatique, repérer les patients éligibles reste une question de mémoire ou de disponibilité de l'équipe — l'automatisation le fait en continu, vous décidez qui contacter.",
         "flow": [
           "Base patients analysée",
           "Profils éligibles BPM repérés",
@@ -171,7 +171,7 @@
         "label": "BTP",
         "name": "Génération de devis assistée par IA",
         "benefit": "Vous décrivez la prestation en langage naturel, l'automatisation prépare un devis structuré avec les mentions légales obligatoires. Vous ajustez et validez avant envoi.",
-        "roi": "Un dirigeant BTP sur deux passe plus d'une journée entière par semaine sur l'administratif (Qonto/OpinionWay, 2026) — le devis part sans reprendre le clavier après une journée de chantier.",
+        "roi": "Entre les devis, les relances et la facturation, l'administratif grignote le temps qui devrait aller au chantier — le devis part sans reprendre le clavier après une journée de chantier.",
         "flow": [
           "Prestation décrite à l'oral",
           "Devis structuré généré",
