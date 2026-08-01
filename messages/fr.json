@@ -28,20 +28,44 @@
         "custom": "Une tâche répétitive → elle disparaît"
       },
       "emails": {
-        "before": { "title": "200 emails/jour", "sub": "Lire, trier, répondre — 2h perdues chaque matin" },
-        "after": { "title": "Inbox maîtrisée", "sub": "Trié, classé, réponse proposée — en temps réel" }
+        "before": {
+          "title": "200 emails/jour",
+          "sub": "Lire, trier, répondre — 2h perdues chaque matin"
+        },
+        "after": {
+          "title": "Inbox maîtrisée",
+          "sub": "Trié, classé, réponse proposée — en temps réel"
+        }
       },
       "leads": {
-        "before": { "title": "Prospects perdus", "sub": "Pas le temps de relancer, devis sans réponse" },
-        "after": { "title": "Pipeline automatisé", "sub": "Qualifié, devis envoyé, relancé J+3/J+7/J+14" }
+        "before": {
+          "title": "Prospects perdus",
+          "sub": "Pas le temps de relancer, devis sans réponse"
+        },
+        "after": {
+          "title": "Pipeline automatisé",
+          "sub": "Qualifié, devis envoyé, relancé J+3/J+7/J+14"
+        }
       },
       "reports": {
-        "before": { "title": "Reporting manuel", "sub": "Excel, copier-coller, 4h chaque semaine" },
-        "after": { "title": "Rapport automatique", "sub": "5 sources compilées, anomalies détectées, PDF chaque lundi" }
+        "before": {
+          "title": "Reporting manuel",
+          "sub": "Excel, copier-coller, 4h chaque semaine"
+        },
+        "after": {
+          "title": "Rapport automatique",
+          "sub": "5 sources compilées, anomalies détectées, PDF chaque lundi"
+        }
       },
       "custom": {
-        "before": { "title": "Process manuels", "sub": "Les mêmes gestes, chaque jour, depuis des années" },
-        "after": { "title": "Automatisé", "sub": "24/7, zéro erreur — vous pilotez, l'IA exécute" }
+        "before": {
+          "title": "Process manuels",
+          "sub": "Les mêmes gestes, chaque jour, depuis des années"
+        },
+        "after": {
+          "title": "Automatisé",
+          "sub": "24/7, zéro erreur — vous pilotez, l'IA exécute"
+        }
       }
     }
   },
@@ -234,21 +258,139 @@
           "Vérifie le planning et propose un créneau"
         ],
         "conversation": [
-          { "speaker": "ia", "text": "Garage du Centre, bonjour." },
-          { "speaker": "client", "text": "Un RDV pour une révision." },
-          { "speaker": "ia", "text": "Jeudi 14h, ça vous va ?" },
-          { "speaker": "client", "text": "Parfait." }
+          {
+            "speaker": "ia",
+            "text": "Garage du Centre, bonjour."
+          },
+          {
+            "speaker": "client",
+            "text": "Un RDV pour une révision."
+          },
+          {
+            "speaker": "ia",
+            "text": "Jeudi 14h, ça vous va ?"
+          },
+          {
+            "speaker": "client",
+            "text": "Parfait."
+          }
         ],
         "step3Title": "Vous validez d'un clic",
         "step3Caption": "Rien n'est écrit dans votre planning tant que vous n'avez pas validé — vous ajustez ou confirmez, jamais l'inverse.",
         "validationCardTitle": "Nouveau RDV",
         "validationLines": [
-          { "label": "Client", "value": "M. Dupont" },
-          { "label": "Motif", "value": "Révision" },
-          { "label": "Créneau", "value": "Jeudi 14h" }
+          {
+            "label": "Client",
+            "value": "M. Dupont"
+          },
+          {
+            "label": "Motif",
+            "value": "Révision"
+          },
+          {
+            "label": "Créneau",
+            "value": "Jeudi 14h"
+          }
         ],
         "validateLabel": "Valider le RDV",
         "confirmedLabel": "RDV confirmé ✓"
+      }
+    },
+    "premium": {
+      "validate": "Valider",
+      "hint": "La fiche attend votre validation — rien n'est envoyé sans elle.",
+      "ariaLabel": "Démonstration interactive, pilotable au clavier",
+      "steps": {
+        "garage": [
+          "L'appel arrive",
+          "L'assistant répond",
+          "Il comprend la demande",
+          "Il vérifie le planning",
+          "Il propose un créneau",
+          "Il rédige la fiche",
+          "Vous validez",
+          "Le résultat"
+        ],
+        "restaurant": [
+          "L'appel arrive",
+          "L'assistant répond",
+          "Il comprend la demande",
+          "Il vérifie le plan de salle",
+          "Il propose un horaire",
+          "Il enregistre la réservation",
+          "Vous validez",
+          "Le résultat"
+        ],
+        "coiffure": [
+          "L'appel arrive",
+          "L'assistant répond",
+          "Il comprend la demande",
+          "Il vérifie le planning",
+          "Il propose un créneau",
+          "Il rédige la fiche",
+          "Vous validez",
+          "Le résultat"
+        ],
+        "pharmacie": [
+          "Votre patientèle",
+          "Le critère d'éligibilité",
+          "L'IA parcourt la liste",
+          "Les patients éligibles",
+          "Une proposition",
+          "Vous choisissez",
+          "Vous validez",
+          "Le résultat"
+        ],
+        "opticien": [
+          "Votre fichier clients",
+          "Le critère de renouvellement",
+          "L'IA parcourt le fichier",
+          "Les équipements à renouveler",
+          "Rappels proposés",
+          "Vous choisissez qui contacter",
+          "Vous validez",
+          "Le résultat"
+        ],
+        "formation": [
+          "Vos preuves éparpillées",
+          "Les indicateurs",
+          "Chaque preuve trouve sa place",
+          "Le dossier se constitue",
+          "Ce qui manque encore",
+          "Vous complétez",
+          "Vous validez",
+          "Le résultat"
+        ],
+        "cosmetique": [
+          "La formule du produit",
+          "Les pièces du dossier",
+          "Le dossier s'assemble",
+          "Contrôle de conformité",
+          "Ce qui demande un arbitrage",
+          "Vous arbitrez",
+          "Vous validez",
+          "Le résultat"
+        ],
+        "btp": [
+          "La demande client",
+          "Le devis se remplit",
+          "Le total se calcule",
+          "Remise appliquée",
+          "Un brouillon, pas un envoi",
+          "Vous relisez",
+          "Vous validez",
+          "Le résultat"
+        ],
+        "sport": [
+          "Le planning des cours",
+          "Un cours complet",
+          "Les rappels partent",
+          "Une place se libère",
+          "Le suivant sur la liste",
+          "La proposition",
+          "Vous validez",
+          "Le résultat"
+        ]
       }
     }
   },
@@ -414,17 +556,35 @@
         "cardAvailable": {
           "statusLabel": "Confirmé",
           "fields": [
-            { "label": "Nom", "value": "Claire M." },
-            { "label": "Cours", "value": "Pilates - mardi 18h" },
-            { "label": "Confirmation", "value": "Envoyée par SMS" }
+            {
+              "label": "Nom",
+              "value": "Claire M."
+            },
+            {
+              "label": "Cours",
+              "value": "Pilates - mardi 18h"
+            },
+            {
+              "label": "Confirmation",
+              "value": "Envoyée par SMS"
+            }
           ]
         },
         "cardFull": {
           "statusLabel": "Autre créneau proposé",
           "fields": [
-            { "label": "Nom", "value": "Thomas R." },
-            { "label": "Cours", "value": "Cross-training" },
-            { "label": "Créneau", "value": "Jeudi 19h (au lieu de mardi)" }
+            {
+              "label": "Nom",
+              "value": "Thomas R."
+            },
+            {
+              "label": "Cours",
+              "value": "Cross-training"
+            },
+            {
+              "label": "Créneau",
+              "value": "Jeudi 19h (au lieu de mardi)"
+            }
           ]
         },
         "validationLabel": "Le planning reste visible et modifiable par vous à tout moment"
@@ -433,9 +593,19 @@
         "contactName": "Camille",
         "contactSubtitle": "Abonnement arrivant à échéance",
         "bubbles": [
-          { "from": "business", "tag": "Détection automatique de l'échéance", "text": "Bonjour Camille, votre abonnement se termine dans 5 jours. On vous renouvelle au même tarif ?" },
-          { "from": "client", "text": "Oui avec plaisir, comme d'habitude !" },
-          { "from": "business", "text": "Parfait, renouvellement pris en compte pour le mois prochain." }
+          {
+            "from": "business",
+            "tag": "Détection automatique de l'échéance",
+            "text": "Bonjour Camille, votre abonnement se termine dans 5 jours. On vous renouvelle au même tarif ?"
+          },
+          {
+            "from": "client",
+            "text": "Oui avec plaisir, comme d'habitude !"
+          },
+          {
+            "from": "business",
+            "text": "Parfait, renouvellement pris en compte pour le mois prochain."
+          }
         ],
         "inputPlaceholder": "Écrire un message...",
         "validateButtonLabel": "Valider le renouvellement",
@@ -464,9 +634,19 @@
         "contactName": "Famille Martin",
         "contactSubtitle": "Cotisation en attente de règlement",
         "bubbles": [
-          { "from": "business", "tag": "Message pré-validé par le trésorier", "text": "Bonjour, un rappel amical : la cotisation de la saison n'a pas encore été réglée. Petit oubli ?" },
-          { "from": "client", "text": "Ah pardon, je fais ça ce soir !" },
-          { "from": "business", "text": "Merci, on vous confirme dès réception du règlement." }
+          {
+            "from": "business",
+            "tag": "Message pré-validé par le trésorier",
+            "text": "Bonjour, un rappel amical : la cotisation de la saison n'a pas encore été réglée. Petit oubli ?"
+          },
+          {
+            "from": "client",
+            "text": "Ah pardon, je fais ça ce soir !"
+          },
+          {
+            "from": "business",
+            "text": "Merci, on vous confirme dès réception du règlement."
+          }
         ],
         "inputPlaceholder": "Écrire un message...",
         "validateButtonLabel": "Valider l'envoi",
@@ -476,7 +656,10 @@
         "title": "Dossier d'inscription",
         "reference": "INSC-2024-014",
         "inciTitle": "Pièces reçues",
-        "inciTags": ["Formulaire d'inscription", "Licence fédérale"],
+        "inciTags": [
+          "Formulaire d'inscription",
+          "Licence fédérale"
+        ],
         "allergensTitle": "Pièce manquante",
         "allergensValue": "Certificat médical",
         "claimsTitle": "Statut",
@@ -520,17 +703,35 @@
         "cardAvailable": {
           "statusLabel": "RDV confirmé",
           "fields": [
-            { "label": "Nom", "value": "M. Rousseau" },
-            { "label": "Véhicule", "value": "Clio IV - vidange" },
-            { "label": "Créneau", "value": "Vendredi 10h" }
+            {
+              "label": "Nom",
+              "value": "M. Rousseau"
+            },
+            {
+              "label": "Véhicule",
+              "value": "Clio IV - vidange"
+            },
+            {
+              "label": "Créneau",
+              "value": "Vendredi 10h"
+            }
           ]
         },
         "cardFull": {
           "statusLabel": "Créneau alternatif proposé",
           "fields": [
-            { "label": "Nom", "value": "Mme Aziz" },
-            { "label": "Véhicule", "value": "308 - plaquettes" },
-            { "label": "Créneau", "value": "Lundi 14h (au lieu de vendredi)" }
+            {
+              "label": "Nom",
+              "value": "Mme Aziz"
+            },
+            {
+              "label": "Véhicule",
+              "value": "308 - plaquettes"
+            },
+            {
+              "label": "Créneau",
+              "value": "Lundi 14h (au lieu de vendredi)"
+            }
           ]
         },
         "validationLabel": "Chaque RDV reste validé par vous avant confirmation au client"
@@ -539,9 +740,19 @@
         "contactName": "M. Petit",
         "contactSubtitle": "Rappel entretien véhicule",
         "bubbles": [
-          { "from": "business", "tag": "Calculé depuis le kilométrage", "text": "Bonjour, votre véhicule approche des 30 000 km : c'est le moment de programmer la révision." },
-          { "from": "client", "text": "Ah oui, je n'y pensais plus, on peut voir ça pour la semaine prochaine ?" },
-          { "from": "business", "text": "Parfait, un créneau vous sera proposé sous 48h." }
+          {
+            "from": "business",
+            "tag": "Calculé depuis le kilométrage",
+            "text": "Bonjour, votre véhicule approche des 30 000 km : c'est le moment de programmer la révision."
+          },
+          {
+            "from": "client",
+            "text": "Ah oui, je n'y pensais plus, on peut voir ça pour la semaine prochaine ?"
+          },
+          {
+            "from": "business",
+            "text": "Parfait, un créneau vous sera proposé sous 48h."
+          }
         ],
         "inputPlaceholder": "Écrire un message...",
         "validateButtonLabel": "Valider le rappel",
@@ -574,7 +785,12 @@
         "title": "Devis généré",
         "reference": "DEV-2024-0342",
         "inciTitle": "Mentions légales incluses",
-        "inciTags": ["SIRET", "TVA", "Conditions de paiement", "Pénalités de retard"],
+        "inciTags": [
+          "SIRET",
+          "TVA",
+          "Conditions de paiement",
+          "Pénalités de retard"
+        ],
         "allergensTitle": "Prestation",
         "allergensValue": "Remplacement chaudière + main d'œuvre",
         "claimsTitle": "Statut",
@@ -586,9 +802,19 @@
         "contactName": "Client — devis n°0342",
         "contactSubtitle": "Devis envoyé, sans réponse",
         "bubbles": [
-          { "from": "business", "tag": "Relance automatique J+7", "text": "Bonjour, un petit retour sur le devis envoyé la semaine dernière ? N'hésitez pas si vous avez des questions." },
-          { "from": "client", "text": "Désolé, je n'ai pas eu le temps, je regarde ça ce week-end." },
-          { "from": "business", "text": "Pas de souci, on reste disponible." }
+          {
+            "from": "business",
+            "tag": "Relance automatique J+7",
+            "text": "Bonjour, un petit retour sur le devis envoyé la semaine dernière ? N'hésitez pas si vous avez des questions."
+          },
+          {
+            "from": "client",
+            "text": "Désolé, je n'ai pas eu le temps, je regarde ça ce week-end."
+          },
+          {
+            "from": "business",
+            "text": "Pas de souci, on reste disponible."
+          }
         ],
         "inputPlaceholder": "Écrire un message...",
         "validateButtonLabel": "Valider le modèle de relance",
@@ -623,7 +849,10 @@
         "title": "Feuille d'émargement",
         "reference": "Session #128",
         "inciTitle": "Signatures collectées",
-        "inciTags": ["Matin", "Après-midi"],
+        "inciTags": [
+          "Matin",
+          "Après-midi"
+        ],
         "allergensTitle": "Archivage",
         "allergensValue": "Conservée 6 ans (durée légale)",
         "claimsTitle": "Statut",
@@ -634,10 +863,23 @@
       "checklist": {
         "title": "Indicateurs Qualiopi",
         "items": [
-          { "label": "Indicateur 1 — Information des publics", "status": "ok" },
-          { "label": "Indicateur 8 — Adaptation pédagogique", "status": "ok" },
-          { "label": "Indicateur 22 — Suivi post-formation", "status": "missing", "note": "Questionnaire à 3 mois manquant" },
-          { "label": "Indicateur 30 — Traitement des réclamations", "status": "ok" }
+          {
+            "label": "Indicateur 1 — Information des publics",
+            "status": "ok"
+          },
+          {
+            "label": "Indicateur 8 — Adaptation pédagogique",
+            "status": "ok"
+          },
+          {
+            "label": "Indicateur 22 — Suivi post-formation",
+            "status": "missing",
+            "note": "Questionnaire à 3 mois manquant"
+          },
+          {
+            "label": "Indicateur 30 — Traitement des réclamations",
+            "status": "ok"
+          }
         ],
         "okLabel": "Complet",
         "missingLabel": "Incomplet",
@@ -705,7 +947,9 @@
         "title": "Fiche de préparation — entretien pharmaceutique",
         "reference": "ENT-2024-0158",
         "inciTitle": "Traitement concerné",
-        "inciTags": ["Anticoagulant oral (AVK)"],
+        "inciTags": [
+          "Anticoagulant oral (AVK)"
+        ],
         "allergensTitle": "Échéance",
         "allergensValue": "Entretien annuel dû sous 30 jours",
         "claimsTitle": "Consentement patient",
@@ -734,9 +978,19 @@
         "contactName": "Marie",
         "contactSubtitle": "Conversation WhatsApp Business",
         "bubbles": [
-          { "from": "business", "text": "Bonsoir Marie, une envie ce soir ? 🍽️ -15% sur votre commande avant 20h" },
-          { "from": "client", "text": "Je prends 2 pizzas + 1 dessert, merci !" },
-          { "from": "business", "tag": "Remise appliquée automatiquement", "text": "-15% appliqué, votre commande sera prête à 19h45" }
+          {
+            "from": "business",
+            "text": "Bonsoir Marie, une envie ce soir ? 🍽️ -15% sur votre commande avant 20h"
+          },
+          {
+            "from": "client",
+            "text": "Je prends 2 pizzas + 1 dessert, merci !"
+          },
+          {
+            "from": "business",
+            "tag": "Remise appliquée automatiquement",
+            "text": "-15% appliqué, votre commande sera prête à 19h45"
+          }
         ],
         "inputPlaceholder": "Écrire un message...",
         "validateButtonLabel": "Valider la commande",
@@ -749,17 +1003,35 @@
         "cardAvailable": {
           "statusLabel": "Confirmé",
           "fields": [
-            { "label": "Nom", "value": "M. Dubois" },
-            { "label": "Couverts", "value": "4" },
-            { "label": "Heure", "value": "20h30" }
+            {
+              "label": "Nom",
+              "value": "M. Dubois"
+            },
+            {
+              "label": "Couverts",
+              "value": "4"
+            },
+            {
+              "label": "Heure",
+              "value": "20h30"
+            }
           ]
         },
         "cardFull": {
           "statusLabel": "Autre créneau proposé",
           "fields": [
-            { "label": "Nom", "value": "Mme Lopez" },
-            { "label": "Couverts", "value": "2" },
-            { "label": "Heure", "value": "21h45 (au lieu de 20h)" }
+            {
+              "label": "Nom",
+              "value": "Mme Lopez"
+            },
+            {
+              "label": "Couverts",
+              "value": "2"
+            },
+            {
+              "label": "Heure",
+              "value": "21h45 (au lieu de 20h)"
+            }
           ]
         },
         "validationLabel": "Le planning reste visible et modifiable par vous à tout moment"
@@ -799,17 +1071,35 @@
         "cardAvailable": {
           "statusLabel": "Confirmé",
           "fields": [
-            { "label": "Cliente", "value": "Sophie B." },
-            { "label": "Prestation", "value": "Coupe + brushing" },
-            { "label": "Créneau", "value": "Mercredi 14h" }
+            {
+              "label": "Cliente",
+              "value": "Sophie B."
+            },
+            {
+              "label": "Prestation",
+              "value": "Coupe + brushing"
+            },
+            {
+              "label": "Créneau",
+              "value": "Mercredi 14h"
+            }
           ]
         },
         "cardFull": {
           "statusLabel": "Autre créneau proposé",
           "fields": [
-            { "label": "Cliente", "value": "Julie R." },
-            { "label": "Prestation", "value": "Coloration" },
-            { "label": "Créneau", "value": "Vendredi 10h (au lieu de mercredi)" }
+            {
+              "label": "Cliente",
+              "value": "Julie R."
+            },
+            {
+              "label": "Prestation",
+              "value": "Coloration"
+            },
+            {
+              "label": "Créneau",
+              "value": "Vendredi 10h (au lieu de mercredi)"
+            }
           ]
         },
         "validationLabel": "L'agenda reste visible et modifiable par le salon à tout moment"
@@ -825,9 +1115,19 @@
         "contactName": "Camille",
         "contactSubtitle": "Conversation WhatsApp Business",
         "bubbles": [
-          { "from": "business", "text": "Bonjour Camille, ça fait 6 semaines depuis votre dernière coupe ✂️ On vous garde un créneau ?" },
-          { "from": "client", "text": "Avec plaisir, vous avez de la place jeudi après-midi ?" },
-          { "from": "business", "tag": "Remise fidélité proposée", "text": "Jeudi 15h, c'est disponible ! -10% fidélité sur votre prochaine coloration" }
+          {
+            "from": "business",
+            "text": "Bonjour Camille, ça fait 6 semaines depuis votre dernière coupe ✂️ On vous garde un créneau ?"
+          },
+          {
+            "from": "client",
+            "text": "Avec plaisir, vous avez de la place jeudi après-midi ?"
+          },
+          {
+            "from": "business",
+            "tag": "Remise fidélité proposée",
+            "text": "Jeudi 15h, c'est disponible ! -10% fidélité sur votre prochaine coloration"
+          }
         ],
         "inputPlaceholder": "Écrire un message...",
         "validateButtonLabel": "Valider le RDV",
@@ -864,7 +1164,13 @@
         "title": "Dossier réglementaire",
         "reference": "RÉF. SN-2026-014",
         "inciTitle": "Formule INCI",
-        "inciTags": ["Aqua", "Glycerin", "Parfum", "Linalool", "Limonene"],
+        "inciTags": [
+          "Aqua",
+          "Glycerin",
+          "Parfum",
+          "Linalool",
+          "Limonene"
+        ],
         "allergensTitle": "Allergènes détectés",
         "allergensValue": "Linalool, Limonene",
         "claimsTitle": "Allégations",
@@ -881,11 +1187,32 @@
       },
       "stockTable": {
         "title": "Stock multi-points",
-        "columns": { "product": "Référence", "boutique": "Boutique", "eshop": "E-shop", "global": "Stock global" },
+        "columns": {
+          "product": "Référence",
+          "boutique": "Boutique",
+          "eshop": "E-shop",
+          "global": "Stock global"
+        },
         "rows": [
-          { "product": "Eau de parfum 50ml", "boutique": "12", "eshop": "8", "global": "20" },
-          { "product": "Crème de jour", "boutique": "3", "eshop": "1", "global": "4", "alert": true },
-          { "product": "Baume à lèvres", "boutique": "25", "eshop": "14", "global": "39" }
+          {
+            "product": "Eau de parfum 50ml",
+            "boutique": "12",
+            "eshop": "8",
+            "global": "20"
+          },
+          {
+            "product": "Crème de jour",
+            "boutique": "3",
+            "eshop": "1",
+            "global": "4",
+            "alert": true
+          },
+          {
+            "product": "Baume à lèvres",
+            "boutique": "25",
+            "eshop": "14",
+            "global": "39"
+          }
         ],
         "restockLabel": "Sous le seuil : réassort déclenché",
         "validationLabel": "Le dirigeant valide chaque commande de réassort"

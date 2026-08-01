@@ -28,20 +28,44 @@
         "custom": "A repetitive task → it's gone"
       },
       "emails": {
-        "before": { "title": "200 emails/day", "sub": "Read, sort, reply — 2h wasted every morning" },
-        "after": { "title": "Inbox under control", "sub": "Sorted, filed, draft reply — in real time" }
+        "before": {
+          "title": "200 emails/day",
+          "sub": "Read, sort, reply — 2h wasted every morning"
+        },
+        "after": {
+          "title": "Inbox under control",
+          "sub": "Sorted, filed, draft reply — in real time"
+        }
       },
       "leads": {
-        "before": { "title": "Lost prospects", "sub": "No time to follow up, unanswered quotes" },
-        "after": { "title": "Automated pipeline", "sub": "Qualified, quote sent, follow-up D+3/D+7/D+14" }
+        "before": {
+          "title": "Lost prospects",
+          "sub": "No time to follow up, unanswered quotes"
+        },
+        "after": {
+          "title": "Automated pipeline",
+          "sub": "Qualified, quote sent, follow-up D+3/D+7/D+14"
+        }
       },
       "reports": {
-        "before": { "title": "Manual reporting", "sub": "Spreadsheets, copy-paste, 4h every week" },
-        "after": { "title": "Automatic report", "sub": "5 sources compiled, anomalies flagged, PDF every Monday" }
+        "before": {
+          "title": "Manual reporting",
+          "sub": "Spreadsheets, copy-paste, 4h every week"
+        },
+        "after": {
+          "title": "Automatic report",
+          "sub": "5 sources compiled, anomalies flagged, PDF every Monday"
+        }
       },
       "custom": {
-        "before": { "title": "Manual processes", "sub": "The same steps, every day, for years" },
-        "after": { "title": "Automated", "sub": "24/7, zero errors — you steer, AI executes" }
+        "before": {
+          "title": "Manual processes",
+          "sub": "The same steps, every day, for years"
+        },
+        "after": {
+          "title": "Automated",
+          "sub": "24/7, zero errors — you steer, AI executes"
+        }
       }
     }
   },
@@ -234,21 +258,139 @@
           "Checks the schedule and offers a slot"
         ],
         "conversation": [
-          { "speaker": "ia", "text": "Garage du Centre, hello." },
-          { "speaker": "client", "text": "I'd like an appointment for a service." },
-          { "speaker": "ia", "text": "Thursday 2pm work for you?" },
-          { "speaker": "client", "text": "Perfect." }
+          {
+            "speaker": "ia",
+            "text": "Garage du Centre, hello."
+          },
+          {
+            "speaker": "client",
+            "text": "I'd like an appointment for a service."
+          },
+          {
+            "speaker": "ia",
+            "text": "Thursday 2pm work for you?"
+          },
+          {
+            "speaker": "client",
+            "text": "Perfect."
+          }
         ],
         "step3Title": "You confirm with one click",
         "step3Caption": "Nothing is written to your schedule until you confirm — you adjust or approve, never the other way around.",
         "validationCardTitle": "New appointment",
         "validationLines": [
-          { "label": "Client", "value": "Mr. Dupont" },
-          { "label": "Reason", "value": "Service" },
-          { "label": "Slot", "value": "Thursday 2pm" }
+          {
+            "label": "Client",
+            "value": "Mr. Dupont"
+          },
+          {
+            "label": "Reason",
+            "value": "Service"
+          },
+          {
+            "label": "Slot",
+            "value": "Thursday 2pm"
+          }
         ],
         "validateLabel": "Confirm appointment",
         "confirmedLabel": "Appointment confirmed ✓"
+      }
+    },
+    "premium": {
+      "validate": "Approve",
+      "hint": "It is waiting for your approval — nothing is sent without it.",
+      "ariaLabel": "Interactive demo, keyboard operable",
+      "steps": {
+        "garage": [
+          "The call comes in",
+          "The assistant answers",
+          "It understands the request",
+          "It checks the schedule",
+          "It offers a slot",
+          "It drafts the booking",
+          "You approve",
+          "The outcome"
+        ],
+        "restaurant": [
+          "The call comes in",
+          "The assistant answers",
+          "It understands the request",
+          "It checks the floor plan",
+          "It offers a time",
+          "It records the booking",
+          "You approve",
+          "The outcome"
+        ],
+        "coiffure": [
+          "The call comes in",
+          "The assistant answers",
+          "It understands the request",
+          "It checks the schedule",
+          "It offers a slot",
+          "It drafts the booking",
+          "You approve",
+          "The outcome"
+        ],
+        "pharmacie": [
+          "Your patient list",
+          "The eligibility criterion",
+          "The AI scans the list",
+          "Eligible patients",
+          "A suggestion",
+          "You choose",
+          "You approve",
+          "The outcome"
+        ],
+        "opticien": [
+          "Your customer file",
+          "The renewal criterion",
+          "The AI scans the file",
+          "Equipment due for renewal",
+          "Suggested reminders",
+          "You choose who to contact",
+          "You approve",
+          "The outcome"
+        ],
+        "formation": [
+          "Your evidence, scattered",
+          "The indicators",
+          "Each item finds its place",
+          "The file takes shape",
+          "What is still missing",
+          "You fill the gaps",
+          "You approve",
+          "The outcome"
+        ],
+        "cosmetique": [
+          "The product formula",
+          "The dossier sections",
+          "The dossier assembles",
+          "Compliance check",
+          "What needs a decision",
+          "You decide",
+          "You approve",
+          "The outcome"
+        ],
+        "btp": [
+          "The customer request",
+          "The quote fills in",
+          "The total adds up",
+          "Discount applied",
+          "A draft, not a send",
+          "You review",
+          "You approve",
+          "The outcome"
+        ],
+        "sport": [
+          "The class schedule",
+          "A full class",
+          "Reminders go out",
+          "A spot opens up",
+          "Next on the list",
+          "The suggestion",
+          "You approve",
+          "The outcome"
+        ]
       }
     }
   },
@@ -414,17 +556,35 @@
         "cardAvailable": {
           "statusLabel": "Confirmed",
           "fields": [
-            { "label": "Name", "value": "Claire M." },
-            { "label": "Class", "value": "Pilates - Tuesday 6pm" },
-            { "label": "Confirmation", "value": "Sent by SMS" }
+            {
+              "label": "Name",
+              "value": "Claire M."
+            },
+            {
+              "label": "Class",
+              "value": "Pilates - Tuesday 6pm"
+            },
+            {
+              "label": "Confirmation",
+              "value": "Sent by SMS"
+            }
           ]
         },
         "cardFull": {
           "statusLabel": "Alternative slot proposed",
           "fields": [
-            { "label": "Name", "value": "Thomas R." },
-            { "label": "Class", "value": "Cross-training" },
-            { "label": "Slot", "value": "Thursday 7pm (instead of Tuesday)" }
+            {
+              "label": "Name",
+              "value": "Thomas R."
+            },
+            {
+              "label": "Class",
+              "value": "Cross-training"
+            },
+            {
+              "label": "Slot",
+              "value": "Thursday 7pm (instead of Tuesday)"
+            }
           ]
         },
         "validationLabel": "The schedule stays visible and editable by you at all times"
@@ -433,9 +593,19 @@
         "contactName": "Camille",
         "contactSubtitle": "Membership nearing renewal",
         "bubbles": [
-          { "from": "business", "tag": "Automatic renewal-date detection", "text": "Hi Camille, your membership ends in 5 days. Renew at the same rate?" },
-          { "from": "client", "text": "Yes, happy to, same as usual!" },
-          { "from": "business", "text": "Great, renewal recorded for next month." }
+          {
+            "from": "business",
+            "tag": "Automatic renewal-date detection",
+            "text": "Hi Camille, your membership ends in 5 days. Renew at the same rate?"
+          },
+          {
+            "from": "client",
+            "text": "Yes, happy to, same as usual!"
+          },
+          {
+            "from": "business",
+            "text": "Great, renewal recorded for next month."
+          }
         ],
         "inputPlaceholder": "Write a message...",
         "validateButtonLabel": "Confirm renewal",
@@ -464,9 +634,19 @@
         "contactName": "The Martin family",
         "contactSubtitle": "Membership fee awaiting payment",
         "bubbles": [
-          { "from": "business", "tag": "Message pre-approved by the treasurer", "text": "Hi, a friendly reminder: this season's membership fee hasn't been paid yet. Just an oversight?" },
-          { "from": "client", "text": "Oh sorry, I'll do it tonight!" },
-          { "from": "business", "text": "Thanks, we'll confirm as soon as payment is received." }
+          {
+            "from": "business",
+            "tag": "Message pre-approved by the treasurer",
+            "text": "Hi, a friendly reminder: this season's membership fee hasn't been paid yet. Just an oversight?"
+          },
+          {
+            "from": "client",
+            "text": "Oh sorry, I'll do it tonight!"
+          },
+          {
+            "from": "business",
+            "text": "Thanks, we'll confirm as soon as payment is received."
+          }
         ],
         "inputPlaceholder": "Write a message...",
         "validateButtonLabel": "Confirm sending",
@@ -476,7 +656,10 @@
         "title": "Sign-up file",
         "reference": "REG-2024-014",
         "inciTitle": "Documents received",
-        "inciTags": ["Sign-up form", "Federation license"],
+        "inciTags": [
+          "Sign-up form",
+          "Federation license"
+        ],
         "allergensTitle": "Missing document",
         "allergensValue": "Medical certificate",
         "claimsTitle": "Status",
@@ -520,17 +703,35 @@
         "cardAvailable": {
           "statusLabel": "Booking confirmed",
           "fields": [
-            { "label": "Name", "value": "Mr. Rousseau" },
-            { "label": "Vehicle", "value": "Clio IV - oil change" },
-            { "label": "Slot", "value": "Friday 10am" }
+            {
+              "label": "Name",
+              "value": "Mr. Rousseau"
+            },
+            {
+              "label": "Vehicle",
+              "value": "Clio IV - oil change"
+            },
+            {
+              "label": "Slot",
+              "value": "Friday 10am"
+            }
           ]
         },
         "cardFull": {
           "statusLabel": "Alternative slot proposed",
           "fields": [
-            { "label": "Name", "value": "Ms. Aziz" },
-            { "label": "Vehicle", "value": "308 - brake pads" },
-            { "label": "Slot", "value": "Monday 2pm (instead of Friday)" }
+            {
+              "label": "Name",
+              "value": "Ms. Aziz"
+            },
+            {
+              "label": "Vehicle",
+              "value": "308 - brake pads"
+            },
+            {
+              "label": "Slot",
+              "value": "Monday 2pm (instead of Friday)"
+            }
           ]
         },
         "validationLabel": "Every booking stays validated by you before confirmation to the customer"
@@ -539,9 +740,19 @@
         "contactName": "Mr. Petit",
         "contactSubtitle": "Vehicle service reminder",
         "bubbles": [
-          { "from": "business", "tag": "Calculated from mileage", "text": "Hi, your vehicle is nearing 30,000 km: time to schedule the service." },
-          { "from": "client", "text": "Oh right, I forgot — can we look at next week?" },
-          { "from": "business", "text": "Sure, a slot will be proposed within 48h." }
+          {
+            "from": "business",
+            "tag": "Calculated from mileage",
+            "text": "Hi, your vehicle is nearing 30,000 km: time to schedule the service."
+          },
+          {
+            "from": "client",
+            "text": "Oh right, I forgot — can we look at next week?"
+          },
+          {
+            "from": "business",
+            "text": "Sure, a slot will be proposed within 48h."
+          }
         ],
         "inputPlaceholder": "Write a message...",
         "validateButtonLabel": "Confirm reminder",
@@ -574,7 +785,12 @@
         "title": "Quote generated",
         "reference": "QT-2024-0342",
         "inciTitle": "Legal notices included",
-        "inciTags": ["Business registration", "VAT", "Payment terms", "Late penalties"],
+        "inciTags": [
+          "Business registration",
+          "VAT",
+          "Payment terms",
+          "Late penalties"
+        ],
         "allergensTitle": "Job",
         "allergensValue": "Boiler replacement + labor",
         "claimsTitle": "Status",
@@ -586,9 +802,19 @@
         "contactName": "Client — quote #0342",
         "contactSubtitle": "Quote sent, no reply yet",
         "bubbles": [
-          { "from": "business", "tag": "Automatic follow-up at day 7", "text": "Hi, just checking in on the quote sent last week — happy to answer any questions." },
-          { "from": "client", "text": "Sorry, haven't had time — I'll look at it this weekend." },
-          { "from": "business", "text": "No worries, we're here whenever you're ready." }
+          {
+            "from": "business",
+            "tag": "Automatic follow-up at day 7",
+            "text": "Hi, just checking in on the quote sent last week — happy to answer any questions."
+          },
+          {
+            "from": "client",
+            "text": "Sorry, haven't had time — I'll look at it this weekend."
+          },
+          {
+            "from": "business",
+            "text": "No worries, we're here whenever you're ready."
+          }
         ],
         "inputPlaceholder": "Write a message...",
         "validateButtonLabel": "Approve follow-up template",
@@ -623,7 +849,10 @@
         "title": "Attendance sheet",
         "reference": "Session #128",
         "inciTitle": "Signatures collected",
-        "inciTags": ["Morning", "Afternoon"],
+        "inciTags": [
+          "Morning",
+          "Afternoon"
+        ],
         "allergensTitle": "Archiving",
         "allergensValue": "Kept for 6 years (legal duration)",
         "claimsTitle": "Status",
@@ -634,10 +863,23 @@
       "checklist": {
         "title": "Qualiopi indicators",
         "items": [
-          { "label": "Indicator 1 — Public information", "status": "ok" },
-          { "label": "Indicator 8 — Pedagogical adaptation", "status": "ok" },
-          { "label": "Indicator 22 — Post-training follow-up", "status": "missing", "note": "3-month survey missing" },
-          { "label": "Indicator 30 — Complaint handling", "status": "ok" }
+          {
+            "label": "Indicator 1 — Public information",
+            "status": "ok"
+          },
+          {
+            "label": "Indicator 8 — Pedagogical adaptation",
+            "status": "ok"
+          },
+          {
+            "label": "Indicator 22 — Post-training follow-up",
+            "status": "missing",
+            "note": "3-month survey missing"
+          },
+          {
+            "label": "Indicator 30 — Complaint handling",
+            "status": "ok"
+          }
         ],
         "okLabel": "Complete",
         "missingLabel": "Incomplete",
@@ -705,7 +947,9 @@
         "title": "Preparation sheet — pharmacist consultation",
         "reference": "CONS-2024-0158",
         "inciTitle": "Treatment concerned",
-        "inciTags": ["Oral anticoagulant (VKA)"],
+        "inciTags": [
+          "Oral anticoagulant (VKA)"
+        ],
         "allergensTitle": "Due date",
         "allergensValue": "Annual consultation due within 30 days",
         "claimsTitle": "Patient consent",
@@ -734,9 +978,19 @@
         "contactName": "Marie",
         "contactSubtitle": "WhatsApp Business conversation",
         "bubbles": [
-          { "from": "business", "text": "Hi Marie, feeling like takeout tonight? 🍽️ -15% on your order before 8pm" },
-          { "from": "client", "text": "I'll take 2 pizzas + 1 dessert, thanks!" },
-          { "from": "business", "tag": "Discount applied automatically", "text": "-15% applied, your order will be ready at 7:45pm" }
+          {
+            "from": "business",
+            "text": "Hi Marie, feeling like takeout tonight? 🍽️ -15% on your order before 8pm"
+          },
+          {
+            "from": "client",
+            "text": "I'll take 2 pizzas + 1 dessert, thanks!"
+          },
+          {
+            "from": "business",
+            "tag": "Discount applied automatically",
+            "text": "-15% applied, your order will be ready at 7:45pm"
+          }
         ],
         "inputPlaceholder": "Type a message...",
         "validateButtonLabel": "Approve the order",
@@ -749,17 +1003,35 @@
         "cardAvailable": {
           "statusLabel": "Confirmed",
           "fields": [
-            { "label": "Name", "value": "Mr. Dubois" },
-            { "label": "Guests", "value": "4" },
-            { "label": "Time", "value": "8:30pm" }
+            {
+              "label": "Name",
+              "value": "Mr. Dubois"
+            },
+            {
+              "label": "Guests",
+              "value": "4"
+            },
+            {
+              "label": "Time",
+              "value": "8:30pm"
+            }
           ]
         },
         "cardFull": {
           "statusLabel": "Alternative slot proposed",
           "fields": [
-            { "label": "Name", "value": "Mrs. Lopez" },
-            { "label": "Guests", "value": "2" },
-            { "label": "Time", "value": "9:45pm (instead of 8pm)" }
+            {
+              "label": "Name",
+              "value": "Mrs. Lopez"
+            },
+            {
+              "label": "Guests",
+              "value": "2"
+            },
+            {
+              "label": "Time",
+              "value": "9:45pm (instead of 8pm)"
+            }
           ]
         },
         "validationLabel": "The schedule stays visible and editable by you at all times"
@@ -799,17 +1071,35 @@
         "cardAvailable": {
           "statusLabel": "Confirmed",
           "fields": [
-            { "label": "Client", "value": "Sophie B." },
-            { "label": "Service", "value": "Cut + blow-dry" },
-            { "label": "Slot", "value": "Wednesday 2pm" }
+            {
+              "label": "Client",
+              "value": "Sophie B."
+            },
+            {
+              "label": "Service",
+              "value": "Cut + blow-dry"
+            },
+            {
+              "label": "Slot",
+              "value": "Wednesday 2pm"
+            }
           ]
         },
         "cardFull": {
           "statusLabel": "Alternative slot proposed",
           "fields": [
-            { "label": "Client", "value": "Julie R." },
-            { "label": "Service", "value": "Color" },
-            { "label": "Slot", "value": "Friday 10am (instead of Wednesday)" }
+            {
+              "label": "Client",
+              "value": "Julie R."
+            },
+            {
+              "label": "Service",
+              "value": "Color"
+            },
+            {
+              "label": "Slot",
+              "value": "Friday 10am (instead of Wednesday)"
+            }
           ]
         },
         "validationLabel": "The schedule stays visible and editable by the salon at all times"
@@ -825,9 +1115,19 @@
         "contactName": "Camille",
         "contactSubtitle": "WhatsApp Business conversation",
         "bubbles": [
-          { "from": "business", "text": "Hi Camille, it's been 6 weeks since your last cut ✂️ Want us to save you a slot?" },
-          { "from": "client", "text": "I'd love that, do you have room Thursday afternoon?" },
-          { "from": "business", "tag": "Loyalty discount proposed", "text": "Thursday 3pm works! -10% loyalty discount on your next color" }
+          {
+            "from": "business",
+            "text": "Hi Camille, it's been 6 weeks since your last cut ✂️ Want us to save you a slot?"
+          },
+          {
+            "from": "client",
+            "text": "I'd love that, do you have room Thursday afternoon?"
+          },
+          {
+            "from": "business",
+            "tag": "Loyalty discount proposed",
+            "text": "Thursday 3pm works! -10% loyalty discount on your next color"
+          }
         ],
         "inputPlaceholder": "Type a message...",
         "validateButtonLabel": "Approve the appointment",
@@ -864,7 +1164,13 @@
         "title": "Regulatory file",
         "reference": "REF. SN-2026-014",
         "inciTitle": "INCI formula",
-        "inciTags": ["Aqua", "Glycerin", "Parfum", "Linalool", "Limonene"],
+        "inciTags": [
+          "Aqua",
+          "Glycerin",
+          "Parfum",
+          "Linalool",
+          "Limonene"
+        ],
         "allergensTitle": "Allergens detected",
         "allergensValue": "Linalool, Limonene",
         "claimsTitle": "Claims",
@@ -881,11 +1187,32 @@
       },
       "stockTable": {
         "title": "Multi-location stock",
-        "columns": { "product": "Reference", "boutique": "Store", "eshop": "E-shop", "global": "Global stock" },
+        "columns": {
+          "product": "Reference",
+          "boutique": "Store",
+          "eshop": "E-shop",
+          "global": "Global stock"
+        },
         "rows": [
-          { "product": "Eau de parfum 50ml", "boutique": "12", "eshop": "8", "global": "20" },
-          { "product": "Day cream", "boutique": "3", "eshop": "1", "global": "4", "alert": true },
-          { "product": "Lip balm", "boutique": "25", "eshop": "14", "global": "39" }
+          {
+            "product": "Eau de parfum 50ml",
+            "boutique": "12",
+            "eshop": "8",
+            "global": "20"
+          },
+          {
+            "product": "Day cream",
+            "boutique": "3",
+            "eshop": "1",
+            "global": "4",
+            "alert": true
+          },
+          {
+            "product": "Lip balm",
+            "boutique": "25",
+            "eshop": "14",
+            "global": "39"
+          }
         ],
         "restockLabel": "Below threshold: restock triggered",
         "validationLabel": "The founder approves every restock order"
