@@ -5,6 +5,10 @@
 // Ce n'est pas une vidéo : c'est la composition Remotion montée dans la page.
 // Le prospect avance étape par étape, revient, et surtout DÉCLENCHE LUI-MÊME
 // la validation humaine — la lecture s'arrête et attend son clic.
+//
+// L'habillage suit la charte de la home (rayons --radius, bordures --border,
+// glassmorphism léger) pour que la section appartienne visuellement à la page ;
+// seule la démo elle-même garde son accent bleu, qui est son identité.
 import { Player, type PlayerRef } from "@remotion/player";
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { DEMO_REGISTRY, type DemoKey } from "./registry";
@@ -20,6 +24,9 @@ type Props = {
   validateLabel: string;
   hintLabel: string;
   ariaLabel: string;
+  stepsLabel?: string;
+  prevLabel?: string;
+  nextLabel?: string;
 };
 
 export default function PremiumPlayer({
@@ -28,6 +35,9 @@ export default function PremiumPlayer({
   validateLabel,
   hintLabel,
   ariaLabel,
+  stepsLabel = "Étapes de la démonstration",
+  prevLabel = "Étapes précédentes",
+  nextLabel = "Étapes suivantes",
 }: Props) {
   const entry = DEMO_REGISTRY[demoKey];
   const steps = PHONE_STEPS; // découpage commun aux deux moules
@@ -64,11 +74,10 @@ export default function PremiumPlayer({
   /**
    * Position réelle du bouton de la composition, lue dans le DOM.
    *
-   * Le Player rend du DOM, pas un canvas : on lit donc la boîte englobante
-   * du bouton au lieu de la dériver de la mise en page. Une première version
-   * calculait la position à la main et tombait 21 px trop haut ; et les
-   * quatre familles de mise en scène placent leur bouton à des endroits
-   * différents. Cette lecture les couvre toutes, sans relevé.
+   * Le Player rend du DOM, pas un canvas : on lit donc la boîte englobante du
+   * bouton au lieu de la dériver. Une première version calculait la position à
+   * la main et tombait 21 px trop haut ; et les quatre familles de mise en
+   * scène placent leur bouton ailleurs. Cette lecture les couvre toutes.
    */
   const syncButtonRect = useCallback(() => {
     const holder = holderRef.current;
@@ -179,6 +188,63 @@ export default function PremiumPlayer({
     [awaitingClick, current, goToStep, onValidate, steps.length]
   );
 
+  // --- Habillage de la rangée d'étapes ---------------------------------------
+  // Le défilement reste natif, mais la scrollbar système est masquée : elle est
+  // remplacée par des fondus de bord et deux chevrons. Aucun contenu ne doit
+  // être tranché net au bord d'un conteneur.
+  const scrollerRef = useRef<HTMLOListElement>(null);
+  const [edges, setEdges] = useState({ left: false, right: false });
+
+  const [fade, setFade] = useState(72);
+
+  const syncEdges = useCallback(() => {
+    const el = scrollerRef.current;
+    if (!el) return;
+    const max = el.scrollWidth - el.clientWidth;
+    setEdges({ left: el.scrollLeft > 4, right: el.scrollLeft < max - 4 });
+    setFade(Math.round(Math.max(24, Math.min(72, el.clientWidth * 0.16))));
+  }, []);
+
+  useEffect(() => {
+    syncEdges();
+    const el = scrollerRef.current;
+    if (!el) return;
+    const ro = new ResizeObserver(syncEdges);
+    ro.observe(el);
+    window.addEventListener("resize", syncEdges);
+    return () => {
+      ro.disconnect();
+      window.removeEventListener("resize", syncEdges);
+    };
+  }, [syncEdges]);
+
+  // L'étape active se recentre d'elle-même : sans ça, passé la 4e étape elle
+  // sortait du champ sans que rien ne l'indique.
+  useEffect(() => {
+    const el = scrollerRef.current?.children[current] as HTMLElement | undefined;
+    el?.scrollIntoView({
+      inline: "center",
+      block: "nearest",
+      behavior: reduced ? "auto" : "smooth",
+    });
+  }, [current, reduced]);
+
+  const nudge = useCallback(
+    (dir: -1 | 1) => {
+      const el = scrollerRef.current;
+      if (!el) return;
+      el.scrollBy({
+        left: dir * Math.max(160, el.clientWidth * 0.6),
+        behavior: reduced ? "auto" : "smooth",
+      });
+    },
+    [reduced]
+  );
+
+  const mask = `linear-gradient(to right, ${
+    edges.left ? "transparent" : "black"
+  } 0, black ${fade}px, black calc(100% - ${fade}px), ${edges.right ? "transparent" : "black"} 100%)`;
+
   return (
     <div className={premiumFontClass}>
       <div
@@ -187,7 +253,15 @@ export default function PremiumPlayer({
         aria-label={ariaLabel}
         tabIndex={0}
         onKeyDown={onKeyDown}
-        style={{ position: "relative", borderRadius: 18, overflow: "hidden", outline: "none" }}
+        style={{
+          position: "relative",
+          borderRadius: "var(--radius, 12px)",
+          overflow: "hidden",
+          outline: "none",
+          border: "1px solid var(--border, rgba(255,255,255,0.07))",
+          boxShadow: "0 24px 60px rgba(0,0,0,0.45)",
+          background: "#000",
+        }}
       >
         <Player
           ref={playerRef}
@@ -199,7 +273,7 @@ export default function PremiumPlayer({
           fps={PREMIUM_FORMAT.fps}
           compositionWidth={PREMIUM_FORMAT.width}
           compositionHeight={PREMIUM_FORMAT.height}
-          style={{ width: "100%", aspectRatio: "16 / 9" }}
+          style={{ width: "100%", aspectRatio: "16 / 9", display: "block" }}
           controls={false}
           clickToPlay={false}
           doubleClickToFullscreen={false}
@@ -212,6 +286,7 @@ export default function PremiumPlayer({
             type="button"
             onClick={onValidate}
             aria-label={validateLabel}
+            data-cursor="link"
             data-nbhc-overlay=""
             style={{
               position: "absolute",
@@ -223,9 +298,7 @@ export default function PremiumPlayer({
               border: "2px solid #0A84FF",
               background: "rgba(10,132,255,0.14)",
               // Aucun texte visible : le libellé affiché reste celui de la
-              // composition, qui est déjà juste pour chaque famille
-              // (« Valider la sélection », « Valider et envoyer »…). Une
-              // étiquette propre à l'overlay se superposerait à la sienne.
+              // composition, déjà juste pour chaque famille.
               color: "transparent",
               fontSize: 0,
               cursor: "pointer",
@@ -236,44 +309,99 @@ export default function PremiumPlayer({
       </div>
 
       {awaitingClick && (
-        <p style={{ marginTop: 12, fontSize: 14, color: "var(--muted, #94A3B8)" }}>{hintLabel}</p>
+        <p className="text-[14px] font-light mt-5" style={{ color: "var(--text-muted)" }}>
+          {hintLabel}
+        </p>
       )}
 
-      <ol
-        style={{
-          display: "flex",
-          gap: 8,
-          listStyle: "none",
-          padding: 0,
-          margin: "16px 0 0",
-          overflowX: "auto",
-          scrollbarWidth: "thin",
-        }}
-      >
-        {steps.map((s, i) => (
-          <li key={s.key}>
-            <button
-              type="button"
-              onClick={() => goToStep(i)}
-              aria-current={i === current ? "step" : undefined}
-              style={{
-                whiteSpace: "nowrap",
-                padding: "8px 14px",
-                borderRadius: 999,
-                cursor: "pointer",
-                fontSize: 13,
-                border: i === current ? "1px solid #0A84FF" : "1px solid rgba(255,255,255,0.16)",
-                background: i === current ? "rgba(10,132,255,0.16)" : "transparent",
-                color: i === current ? "#F5F5F7" : "var(--muted, #94A3B8)",
-              }}
-            >
-              {i + 1}. {labels[i] ?? s.key}
-            </button>
-          </li>
-        ))}
-      </ol>
+      {/* Gouttiere laterale : les chevrons vivent a cote de la rangee, pas
+          par-dessus les puces. Sans elle, la premiere puce passait sous le
+          chevron et se lisait comme une coupe. */}
+      <div className="relative mt-7 px-10 max-[600px]:px-7">
+        <ol
+          ref={scrollerRef}
+          onScroll={syncEdges}
+          data-nbhc-steps=""
+          aria-label={stepsLabel}
+          className="flex gap-2.5 list-none p-0 m-0 overflow-x-auto"
+          style={{
+            maskImage: mask,
+            WebkitMaskImage: mask,
+            scrollbarWidth: "none",
+            msOverflowStyle: "none",
+          }}
+        >
+          {steps.map((s, i) => (
+            <li key={s.key} className="shrink-0">
+              <button
+                type="button"
+                onClick={() => goToStep(i)}
+                aria-current={i === current ? "step" : undefined}
+                data-cursor="link"
+                className="text-[13px] font-medium px-5 py-3 max-[600px]:px-3.5 max-[600px]:py-2.5 rounded-xl whitespace-nowrap transition-all duration-300 cursor-pointer"
+                style={{
+                  border:
+                    i === current
+                      ? "1px solid rgba(10,132,255,0.55)"
+                      : "1px solid var(--border, rgba(255,255,255,0.07))",
+                  background:
+                    i === current ? "rgba(10,132,255,0.14)" : "rgba(255,255,255,0.02)",
+                  backdropFilter: "blur(8px)",
+                  color: i === current ? "var(--text)" : "var(--text-muted)",
+                }}
+              >
+                <span style={{ opacity: 0.55 }}>{i + 1}.</span> {labels[i] ?? s.key}
+              </button>
+            </li>
+          ))}
+        </ol>
+
+        {edges.left && (
+          <button
+            type="button"
+            onClick={() => nudge(-1)}
+            aria-label={prevLabel}
+            data-cursor="link"
+            className="absolute top-1/2 -translate-y-1/2 grid place-items-center rounded-full cursor-pointer"
+            style={{
+              left: 0,
+              width: 32,
+              height: 32,
+              border: "1px solid var(--border, rgba(255,255,255,0.07))",
+              background: "var(--card, #161619)",
+              color: "var(--text-muted)",
+              fontSize: 16,
+              lineHeight: 1,
+            }}
+          >
+            &lsaquo;
+          </button>
+        )}
+        {edges.right && (
+          <button
+            type="button"
+            onClick={() => nudge(1)}
+            aria-label={nextLabel}
+            data-cursor="link"
+            className="absolute top-1/2 -translate-y-1/2 grid place-items-center rounded-full cursor-pointer"
+            style={{
+              right: 0,
+              width: 32,
+              height: 32,
+              border: "1px solid var(--border, rgba(255,255,255,0.07))",
+              background: "var(--card, #161619)",
+              color: "var(--text-muted)",
+              fontSize: 16,
+              lineHeight: 1,
+            }}
+          >
+            &rsaquo;
+          </button>
+        )}
+      </div>
 
       <style>{`
+        [data-nbhc-steps]::-webkit-scrollbar { display: none; }
         @keyframes nbhcPulse {
           0%, 100% { box-shadow: 0 0 0 0 rgba(10,132,255,0.45); }
           50% { box-shadow: 0 0 0 10px rgba(10,132,255,0); }

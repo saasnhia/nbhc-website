@@ -156,10 +156,10 @@ export default function VideoShowcase() {
           }}
         >
           <div
-            className="relative overflow-hidden"
+            className="relative overflow-hidden p-5 max-[600px]:p-3"
             data-capture-frame={activeTab}
             style={{
-              borderRadius: 14,
+              borderRadius: 16,
               border: "1px solid var(--border)",
               background: "#000",
             }}
@@ -191,6 +191,9 @@ export default function VideoShowcase() {
                   validateLabel={t("premium.validate")}
                   hintLabel={t("premium.hint")}
                   ariaLabel={`${t("premium.ariaLabel")} — ${t(`tabs.${activeTab}.name`)}`}
+                  stepsLabel={t("demoStage.stepsAriaLabel")}
+                  prevLabel={t("demoStage.prev")}
+                  nextLabel={t("demoStage.next")}
                 />
               </motion.div>
             </AnimatePresence>

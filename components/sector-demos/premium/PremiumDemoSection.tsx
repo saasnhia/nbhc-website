@@ -35,12 +35,18 @@ export default function PremiumDemoSection({
   validateLabel,
   hintLabel,
   ariaLabel,
+  stepsLabel,
+  prevLabel,
+  nextLabel,
 }: {
   demoKey: DemoKey;
   labels: string[];
   validateLabel: string;
   hintLabel: string;
   ariaLabel: string;
+  stepsLabel?: string;
+  prevLabel?: string;
+  nextLabel?: string;
 }) {
   const holder = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
@@ -75,6 +81,9 @@ export default function PremiumDemoSection({
           validateLabel={validateLabel}
           hintLabel={hintLabel}
           ariaLabel={ariaLabel}
+          stepsLabel={stepsLabel}
+          prevLabel={prevLabel}
+          nextLabel={nextLabel}
         />
       ) : (
         <Placeholder />
