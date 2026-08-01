@@ -25,8 +25,11 @@ type Props = {
   hintLabel: string;
   ariaLabel: string;
   stepsLabel?: string;
-  prevLabel?: string;
-  nextLabel?: string;
+  /** Contenu de la colonne gauche (architecture deux colonnes desktop). */
+  eyebrow?: string;
+  title?: string;
+  contextLine?: string;
+  benefit?: string;
 };
 
 export default function PremiumPlayer({
@@ -36,8 +39,10 @@ export default function PremiumPlayer({
   hintLabel,
   ariaLabel,
   stepsLabel = "Étapes de la démonstration",
-  prevLabel = "Étapes précédentes",
-  nextLabel = "Étapes suivantes",
+  eyebrow,
+  title,
+  contextLine,
+  benefit,
 }: Props) {
   const entry = DEMO_REGISTRY[demoKey];
   const steps = PHONE_STEPS; // découpage commun aux deux moules
@@ -188,220 +193,191 @@ export default function PremiumPlayer({
     [awaitingClick, current, goToStep, onValidate, steps.length]
   );
 
-  // --- Habillage de la rangée d'étapes ---------------------------------------
-  // Le défilement reste natif, mais la scrollbar système est masquée : elle est
-  // remplacée par des fondus de bord et deux chevrons. Aucun contenu ne doit
-  // être tranché net au bord d'un conteneur.
-  const scrollerRef = useRef<HTMLOListElement>(null);
-  const [edges, setEdges] = useState({ left: false, right: false });
-
-  const [fade, setFade] = useState(72);
-
-  const syncEdges = useCallback(() => {
-    const el = scrollerRef.current;
-    if (!el) return;
-    const max = el.scrollWidth - el.clientWidth;
-    setEdges({ left: el.scrollLeft > 4, right: el.scrollLeft < max - 4 });
-    setFade(Math.round(Math.max(24, Math.min(72, el.clientWidth * 0.16))));
-  }, []);
+  // La liste est verticale a toutes les largeurs : plus aucun defilement
+  // horizontal nulle part. Seul reste le recentrage de l'etape active, utile
+  // quand la colonne est plus courte que la liste.
+  const listRef = useRef<HTMLOListElement>(null);
 
   useEffect(() => {
-    syncEdges();
-    const el = scrollerRef.current;
-    if (!el) return;
-    const ro = new ResizeObserver(syncEdges);
-    ro.observe(el);
-    window.addEventListener("resize", syncEdges);
-    return () => {
-      ro.disconnect();
-      window.removeEventListener("resize", syncEdges);
-    };
-  }, [syncEdges]);
-
-  // L'étape active se recentre d'elle-même : sans ça, passé la 4e étape elle
-  // sortait du champ sans que rien ne l'indique.
-  useEffect(() => {
-    const el = scrollerRef.current?.children[current] as HTMLElement | undefined;
-    el?.scrollIntoView({
-      inline: "center",
-      block: "nearest",
-      behavior: reduced ? "auto" : "smooth",
-    });
+    const el = listRef.current?.children[current] as HTMLElement | undefined;
+    el?.scrollIntoView({ block: "nearest", behavior: reduced ? "auto" : "smooth" });
   }, [current, reduced]);
 
-  const nudge = useCallback(
-    (dir: -1 | 1) => {
-      const el = scrollerRef.current;
-      if (!el) return;
-      el.scrollBy({
-        left: dir * Math.max(160, el.clientWidth * 0.6),
-        behavior: reduced ? "auto" : "smooth",
-      });
-    },
-    [reduced]
+  // Une seule forme de puce, verticale, a toutes les largeurs.
+  const stepButton = (i: number, s: { key: string }) => (
+    <button
+      type="button"
+      onClick={() => goToStep(i)}
+      aria-current={i === current ? "step" : undefined}
+      data-cursor="link"
+      className="w-full text-left flex items-baseline gap-3 px-4 py-3 rounded-lg transition-all duration-300 cursor-pointer"
+      style={{
+        border:
+          i === current ? "1px solid rgba(10,132,255,0.55)" : "1px solid transparent",
+        background: i === current ? "rgba(10,132,255,0.14)" : "transparent",
+        color: i === current ? "var(--text)" : "var(--text-muted)",
+        fontSize: 15,
+      }}
+    >
+      <span
+        style={{
+          fontFamily: "var(--font-syne)",
+          fontWeight: 700,
+          fontSize: 13,
+          opacity: i === current ? 0.9 : 0.45,
+          color: i === current ? "#4DA6FF" : "inherit",
+          minWidth: 18,
+        }}
+      >
+        {String(i + 1).padStart(2, "0")}
+      </span>
+      <span className="leading-snug">{labels[i] ?? s.key}</span>
+    </button>
   );
-
-  const mask = `linear-gradient(to right, ${
-    edges.left ? "transparent" : "black"
-  } 0, black ${fade}px, black calc(100% - ${fade}px), ${edges.right ? "transparent" : "black"} 100%)`;
 
   return (
     <div className={premiumFontClass}>
-      <div
-        ref={holderRef}
-        role="group"
-        aria-label={ariaLabel}
-        tabIndex={0}
-        onKeyDown={onKeyDown}
-        style={{
-          position: "relative",
-          borderRadius: "var(--radius, 12px)",
-          overflow: "hidden",
-          outline: "none",
-          border: "1px solid var(--border, rgba(255,255,255,0.07))",
-          boxShadow: "0 24px 60px rgba(0,0,0,0.45)",
-          background: "#000",
-        }}
-      >
-        <Player
-          ref={playerRef}
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          component={entry.component as any}
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          inputProps={entry.props as any}
-          durationInFrames={PREMIUM_FORMAT.durationFrames}
-          fps={PREMIUM_FORMAT.fps}
-          compositionWidth={PREMIUM_FORMAT.width}
-          compositionHeight={PREMIUM_FORMAT.height}
-          style={{ width: "100%", aspectRatio: "16 / 9", display: "block" }}
-          controls={false}
-          clickToPlay={false}
-          doubleClickToFullscreen={false}
-          spaceKeyToPlayOrPause={false}
-          acknowledgeRemotionLicense
-        />
+      <div className="grid grid-cols-1 gap-10 max-[1023px]:gap-8 min-[1024px]:grid-cols-[minmax(0,37%)_minmax(0,63%)] items-start">
+        {/* Colonne gauche — sous le lecteur en dessous de 1024 px : le
+            vertical est naturel au pouce, et le lecteur doit rester en tete. */}
+        <div className="min-w-0 max-[1023px]:order-2">
+          {eyebrow && (
+            <div
+              className="text-[11px] font-medium tracking-[3px] uppercase mb-5 flex items-center gap-2"
+              style={{ color: "var(--gold)" }}
+            >
+              <span className="block w-4 h-px" style={{ background: "var(--gold)" }} />
+              {eyebrow}
+            </div>
+          )}
+          {title && (
+            <h2
+              className="font-bold mb-4"
+              style={{
+                fontFamily: "var(--font-syne)",
+                fontSize: "clamp(34px, 3.4vw, 60px)",
+                lineHeight: 1.02,
+                letterSpacing: "-2px",
+                color: "var(--text)",
+              }}
+            >
+              {title}
+            </h2>
+          )}
+          {contextLine && (
+            <p
+              className="text-[15px] font-light mb-8"
+              style={{ color: "var(--text-muted)", lineHeight: 1.6 }}
+            >
+              {contextLine}
+            </p>
+          )}
 
-        {awaitingClick && buttonRect && (
-          <button
-            type="button"
-            onClick={onValidate}
-            aria-label={validateLabel}
-            data-cursor="link"
-            data-nbhc-overlay=""
+          {/* Liste verticale, desktop */}
+          <ol ref={listRef} className="flex flex-col gap-1 list-none p-0 m-0" aria-label={stepsLabel}>
+            {steps.map((s, i) => (
+              <li key={s.key}>{stepButton(i, s)}</li>
+            ))}
+          </ol>
+
+          {benefit && (
+            <p
+              className="text-[14px] font-light mt-8 pt-6"
+              style={{
+                color: "var(--text-muted)",
+                lineHeight: 1.7,
+                borderTop: "1px solid var(--border, rgba(255,255,255,0.07))",
+              }}
+            >
+              {benefit}
+            </p>
+          )}
+        </div>
+
+        {/* Colonne droite — le lecteur, qui occupe vraiment sa colonne. */}
+        <div className="min-w-0 max-[1023px]:order-1 relative">
+          {/* Halo doux derriere le cadre : ce qui detache le lecteur du fond
+              au lieu de le laisser flotter en sombre-sur-sombre. */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute -inset-8 max-[600px]:-inset-4"
             style={{
-              position: "absolute",
-              left: buttonRect.left,
-              top: buttonRect.top,
-              width: buttonRect.width,
-              height: buttonRect.height,
-              borderRadius: Math.min(18, buttonRect.height / 3),
-              border: "2px solid #0A84FF",
-              background: "rgba(10,132,255,0.14)",
-              // Aucun texte visible : le libellé affiché reste celui de la
-              // composition, déjà juste pour chaque famille.
-              color: "transparent",
-              fontSize: 0,
-              cursor: "pointer",
-              animation: "nbhcPulse 1.6s ease-in-out infinite",
+              background:
+                "radial-gradient(60% 60% at 50% 40%, rgba(196,151,58,0.10), rgba(10,132,255,0.05) 45%, transparent 72%)",
+              filter: "blur(28px)",
             }}
           />
-        )}
-      </div>
+          <div
+            ref={holderRef}
+            role="group"
+            aria-label={ariaLabel}
+            tabIndex={0}
+            onKeyDown={onKeyDown}
+            style={{
+              position: "relative",
+              borderRadius: 16,
+              overflow: "hidden",
+              outline: "none",
+              border: "1px solid var(--border-accent, rgba(255,255,255,0.12))",
+              boxShadow: "0 40px 90px rgba(0,0,0,0.55), 0 2px 0 rgba(255,255,255,0.04) inset",
+              background: "#08080B",
+            }}
+          >
+            <Player
+              ref={playerRef}
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              component={entry.component as any}
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              inputProps={entry.props as any}
+              durationInFrames={PREMIUM_FORMAT.durationFrames}
+              fps={PREMIUM_FORMAT.fps}
+              compositionWidth={PREMIUM_FORMAT.width}
+              compositionHeight={PREMIUM_FORMAT.height}
+              style={{ width: "100%", aspectRatio: "16 / 9", display: "block" }}
+              controls={false}
+              clickToPlay={false}
+              doubleClickToFullscreen={false}
+              spaceKeyToPlayOrPause={false}
+              acknowledgeRemotionLicense
+            />
 
-      {awaitingClick && (
-        <p className="text-[14px] font-light mt-5" style={{ color: "var(--text-muted)" }}>
-          {hintLabel}
-        </p>
-      )}
-
-      {/* Gouttiere laterale : les chevrons vivent a cote de la rangee, pas
-          par-dessus les puces. Sans elle, la premiere puce passait sous le
-          chevron et se lisait comme une coupe. */}
-      <div className="relative mt-7 px-10 max-[600px]:px-7">
-        <ol
-          ref={scrollerRef}
-          onScroll={syncEdges}
-          data-nbhc-steps=""
-          aria-label={stepsLabel}
-          className="flex gap-2.5 list-none p-0 m-0 overflow-x-auto"
-          style={{
-            maskImage: mask,
-            WebkitMaskImage: mask,
-            scrollbarWidth: "none",
-            msOverflowStyle: "none",
-          }}
-        >
-          {steps.map((s, i) => (
-            <li key={s.key} className="shrink-0">
+            {awaitingClick && buttonRect && (
               <button
                 type="button"
-                onClick={() => goToStep(i)}
-                aria-current={i === current ? "step" : undefined}
+                onClick={onValidate}
+                aria-label={validateLabel}
                 data-cursor="link"
-                className="text-[13px] font-medium px-5 py-3 max-[600px]:px-3.5 max-[600px]:py-2.5 rounded-xl whitespace-nowrap transition-all duration-300 cursor-pointer"
+                data-nbhc-overlay=""
                 style={{
-                  border:
-                    i === current
-                      ? "1px solid rgba(10,132,255,0.55)"
-                      : "1px solid var(--border, rgba(255,255,255,0.07))",
-                  background:
-                    i === current ? "rgba(10,132,255,0.14)" : "rgba(255,255,255,0.02)",
-                  backdropFilter: "blur(8px)",
-                  color: i === current ? "var(--text)" : "var(--text-muted)",
+                  position: "absolute",
+                  left: buttonRect.left,
+                  top: buttonRect.top,
+                  width: buttonRect.width,
+                  height: buttonRect.height,
+                  borderRadius: Math.min(18, buttonRect.height / 3),
+                  border: "2px solid #0A84FF",
+                  background: "rgba(10,132,255,0.14)",
+                  // Aucun texte visible : le libelle affiche reste celui de la
+                  // composition, deja juste pour chaque famille.
+                  color: "transparent",
+                  fontSize: 0,
+                  cursor: "pointer",
+                  animation: "nbhcPulse 1.6s ease-in-out infinite",
                 }}
-              >
-                <span style={{ opacity: 0.55 }}>{i + 1}.</span> {labels[i] ?? s.key}
-              </button>
-            </li>
-          ))}
-        </ol>
+              />
+            )}
+          </div>
 
-        {edges.left && (
-          <button
-            type="button"
-            onClick={() => nudge(-1)}
-            aria-label={prevLabel}
-            data-cursor="link"
-            className="absolute top-1/2 -translate-y-1/2 grid place-items-center rounded-full cursor-pointer"
-            style={{
-              left: 0,
-              width: 32,
-              height: 32,
-              border: "1px solid var(--border, rgba(255,255,255,0.07))",
-              background: "var(--card, #161619)",
-              color: "var(--text-muted)",
-              fontSize: 16,
-              lineHeight: 1,
-            }}
-          >
-            &lsaquo;
-          </button>
-        )}
-        {edges.right && (
-          <button
-            type="button"
-            onClick={() => nudge(1)}
-            aria-label={nextLabel}
-            data-cursor="link"
-            className="absolute top-1/2 -translate-y-1/2 grid place-items-center rounded-full cursor-pointer"
-            style={{
-              right: 0,
-              width: 32,
-              height: 32,
-              border: "1px solid var(--border, rgba(255,255,255,0.07))",
-              background: "var(--card, #161619)",
-              color: "var(--text-muted)",
-              fontSize: 16,
-              lineHeight: 1,
-            }}
-          >
-            &rsaquo;
-          </button>
-        )}
+          {awaitingClick && (
+            <p className="text-[14px] font-light mt-5 relative" style={{ color: "var(--text-muted)" }}>
+              {hintLabel}
+            </p>
+          )}
+
+        </div>
       </div>
 
       <style>{`
-        [data-nbhc-steps]::-webkit-scrollbar { display: none; }
         @keyframes nbhcPulse {
           0%, 100% { box-shadow: 0 0 0 0 rgba(10,132,255,0.45); }
           50% { box-shadow: 0 0 0 10px rgba(10,132,255,0); }

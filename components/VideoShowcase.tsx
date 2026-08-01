@@ -67,38 +67,20 @@ export default function VideoShowcase() {
   return (
     <section
       id="en-action"
-      className="py-24 px-10 max-[900px]:px-5 max-[900px]:py-16"
-      style={{ maxWidth: 1200, margin: "0 auto" }}
+      className="relative overflow-hidden py-24 px-10 max-[900px]:px-5 max-[900px]:py-16 my-8 max-[900px]:my-4"
+      style={{
+        maxWidth: 1320,
+        margin: "0 auto",
+        borderRadius: 28,
+        background:
+          "linear-gradient(180deg, rgba(255,255,255,0.045) 0%, rgba(255,255,255,0.012) 38%, rgba(255,255,255,0.005) 100%)",
+        border: "1px solid var(--border)",
+      }}
     >
-      <div
-        className="text-[11px] font-medium tracking-[3px] uppercase mb-4 flex items-center gap-2"
-        style={{ color: "var(--gold)" }}
-      >
-        <span className="block w-4 h-px" style={{ background: "var(--gold)" }} />
-        {t("eyebrow")}
-      </div>
-      <h2
-        className="font-bold leading-tight mb-4"
-        style={{
-          fontFamily: "var(--font-syne)",
-          fontSize: "clamp(28px, 4vw, 52px)",
-          letterSpacing: "-1.5px",
-          color: "var(--text)",
-        }}
-      >
-        {t("title")}
-      </h2>
-      <p
-        className="text-[16px] font-light mb-10"
-        style={{ color: "var(--text-muted)", maxWidth: 700, lineHeight: 1.7 }}
-      >
-        {t("subtitle")}
-      </p>
-
       <div
         role="tablist"
         aria-label={t("tablistLabel")}
-        className="scrollbar-hide flex gap-2.5 mb-10 overflow-x-auto -mx-1 px-1 pb-1"
+        className="flex flex-wrap gap-2.5 mb-12"
       >
         {SHOWCASE_KEYS.map((key) => {
           const isActive = activeTab === key;
@@ -129,76 +111,29 @@ export default function VideoShowcase() {
         })}
       </div>
 
-      <div style={{ maxWidth: 920, margin: "0 auto" }}>
-        <style>{`
-          @keyframes nbhc-grid-pulse {
-            0%, 100% { opacity: 0.4; }
-            50% { opacity: 0.75; }
-          }
-          .nbhc-showcase-grid {
-            background-image: radial-gradient(circle, rgba(196,151,58,0.4) 1px, transparent 1px);
-            background-size: 24px 24px;
-            animation: nbhc-grid-pulse 4.5s ease-in-out infinite;
-          }
-          @media (prefers-reduced-motion: reduce) {
-            .nbhc-showcase-grid { animation: none; opacity: 0.4; }
-          }
-        `}</style>
-        {/* Elegant frame: gradient bezel wrapping the visual, not a bare rectangle */}
-        <div
-          className="relative p-2 max-[600px]:p-1.5"
-          style={{
-            borderRadius: 20,
-            background:
-              "linear-gradient(155deg, rgba(196,151,58,0.22), rgba(255,255,255,0.03) 45%, rgba(255,255,255,0.02))",
-            border: "1px solid var(--border-accent)",
-            boxShadow: "0 30px 90px -35px rgba(0,0,0,0.65)",
-          }}
+      <AnimatePresence mode="wait" initial={false}>
+        <motion.div
+          key={activeTab}
+          data-capture-frame={activeTab}
+          initial={{ opacity: 0, y: reduceMotion ? 0 : 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: reduceMotion ? 0 : -8 }}
+          transition={{ duration: reduceMotion ? 0 : 0.34, ease: [0.22, 1, 0.36, 1] }}
         >
-          <div
-            className="relative overflow-hidden p-5 max-[600px]:p-3"
-            data-capture-frame={activeTab}
-            style={{
-              borderRadius: 16,
-              border: "1px solid var(--border)",
-              background: "#000",
-            }}
-          >
-            {/* Ambient dot-grid + corner glow — the same fine grid and warm gold
-                bloom seen in the Higgsfield motion reference, reproduced natively
-                so it renders behind every sector, filmed or diagrammed. */}
-            <div className="nbhc-showcase-grid absolute inset-0 pointer-events-none" aria-hidden="true" />
-            <div
-              className="absolute inset-0 pointer-events-none"
-              aria-hidden="true"
-              style={{ background: "radial-gradient(circle at 15% 15%, rgba(196,151,58,0.16), transparent 55%)" }}
-            />
-            {/* mode="wait" + initial={false}: the outgoing tab's visual is fully
-                unmounted before the next one mounts — never more than one video
-                in the DOM at once, and no fade-in flash on first paint. */}
-            <AnimatePresence mode="wait" initial={false}>
-              <motion.div
-                key={activeTab}
-                className="relative"
-                initial={{ opacity: 0, scale: reduceMotion ? 1 : 0.985 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: reduceMotion ? 1 : 0.985 }}
-                transition={{ duration: reduceMotion ? 0 : 0.32, ease: [0.22, 1, 0.36, 1] }}
-              >
-                <PremiumDemoSection
-                  demoKey={activeTab as DemoKey}
-                  labels={t.raw(`premium.steps.${activeTab}`) as string[]}
-                  validateLabel={t("premium.validate")}
-                  hintLabel={t("premium.hint")}
-                  ariaLabel={`${t("premium.ariaLabel")} — ${t(`tabs.${activeTab}.name`)}`}
-                  stepsLabel={t("demoStage.stepsAriaLabel")}
-                  prevLabel={t("demoStage.prev")}
-                  nextLabel={t("demoStage.next")}
-                />
-              </motion.div>
-            </AnimatePresence>
-          </div>
-        </div>
+          <PremiumDemoSection
+            demoKey={activeTab as DemoKey}
+            labels={t.raw(`premium.steps.${activeTab}`) as string[]}
+            validateLabel={t("premium.validate")}
+            hintLabel={t("premium.hint")}
+            ariaLabel={`${t("premium.ariaLabel")} — ${t(`tabs.${activeTab}.name`)}`}
+            stepsLabel={t("demoStage.stepsAriaLabel")}
+            eyebrow={t("eyebrow")}
+            title={t("title")}
+            contextLine={t(`tabs.${activeTab}.name`)}
+            benefit={t(`tabs.${activeTab}.benefit`)}
+          />
+        </motion.div>
+      </AnimatePresence>
 
         <AnimatePresence mode="wait" initial={false}>
           <motion.div
@@ -274,7 +209,6 @@ export default function VideoShowcase() {
             )}
           </motion.div>
         </AnimatePresence>
-      </div>
     </section>
   );
 }

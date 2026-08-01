@@ -19,10 +19,10 @@ const PremiumPlayer = dynamic(() => import("./PremiumPlayer"), {
 function Placeholder() {
   return (
     <div
+      className="w-full min-[1024px]:ml-auto min-[1024px]:w-[63%]"
       style={{
-        width: "100%",
         aspectRatio: "16 / 9",
-        borderRadius: 18,
+        borderRadius: 16,
         background: "linear-gradient(150deg, #1A1A24, #0B0B10)",
       }}
     />
@@ -36,8 +36,10 @@ export default function PremiumDemoSection({
   hintLabel,
   ariaLabel,
   stepsLabel,
-  prevLabel,
-  nextLabel,
+  eyebrow,
+  title,
+  contextLine,
+  benefit,
 }: {
   demoKey: DemoKey;
   labels: string[];
@@ -45,8 +47,10 @@ export default function PremiumDemoSection({
   hintLabel: string;
   ariaLabel: string;
   stepsLabel?: string;
-  prevLabel?: string;
-  nextLabel?: string;
+  eyebrow?: string;
+  title?: string;
+  contextLine?: string;
+  benefit?: string;
 }) {
   const holder = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
@@ -82,8 +86,10 @@ export default function PremiumDemoSection({
           hintLabel={hintLabel}
           ariaLabel={ariaLabel}
           stepsLabel={stepsLabel}
-          prevLabel={prevLabel}
-          nextLabel={nextLabel}
+          eyebrow={eyebrow}
+          title={title}
+          contextLine={contextLine}
+          benefit={benefit}
         />
       ) : (
         <Placeholder />
