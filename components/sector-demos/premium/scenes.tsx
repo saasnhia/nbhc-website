@@ -583,6 +583,7 @@ const ValidateButton: React.FC<{
   children?: React.ReactNode;
 }> = ({ validated, press, children }) => (
   <div
+    data-nbhc-validate=""
     style={{
       position: "relative",
       display: "flex",

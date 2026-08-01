@@ -78,7 +78,7 @@ export const GARAGE: SectorSpec = {
   awaitingLabel: "En attente de validation",
   validatedLabel: "Validé par le garagiste",
   benefit: "Vous ne ratez plus un appel.",
-  closeVideo: "garage_close_treated.mp4",
+  closeVideo: "demos/garage_close_treated.mp4",
 };
 
 export const RESTAURANT: SectorSpec = {
@@ -120,7 +120,7 @@ export const RESTAURANT: SectorSpec = {
   awaitingLabel: "En attente de validation",
   validatedLabel: "Validé par le restaurateur",
   benefit: "Plus aucune réservation manquée.",
-  closeVideo: "restaurant_close_treated.mp4",
+  closeVideo: "demos/restaurant_close_treated.mp4",
 };
 
 export const COIFFURE: SectorSpec = {
@@ -160,7 +160,7 @@ export const COIFFURE: SectorSpec = {
   awaitingLabel: "En attente de validation",
   validatedLabel: "Validé par le salon",
   benefit: "Vous ne ratez plus un client.",
-  closeVideo: "coiffure_close_treated.mp4",
+  closeVideo: "demos/coiffure_close_treated.mp4",
 };
 
 export const PHONE_SECTORS = { garage: GARAGE, restaurant: RESTAURANT, coiffure: COIFFURE };

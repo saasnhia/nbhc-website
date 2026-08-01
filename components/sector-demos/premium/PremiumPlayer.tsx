@@ -1,38 +1,44 @@
 "use client";
 
-// Lecteur interactif d'une démo premium.
+// Lecteur interactif d'une démo premium, tous secteurs.
 //
-// Ce n'est pas une vidéo : c'est la composition Remotion elle-même, montée
-// dans la page. Le prospect avance étape par étape, revient, et surtout
-// DÉCLENCHE LUI-MÊME la validation humaine — la lecture s'arrête sur la
-// fiche et attend son clic.
+// Ce n'est pas une vidéo : c'est la composition Remotion montée dans la page.
+// Le prospect avance étape par étape, revient, et surtout DÉCLENCHE LUI-MÊME
+// la validation humaine — la lecture s'arrête et attend son clic.
 import { Player, type PlayerRef } from "@remotion/player";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { PremiumDemo } from "./PremiumDemo";
-import { GARAGE } from "./sectors";
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { DEMO_REGISTRY, type DemoKey } from "./registry";
 import { PREMIUM_FORMAT } from "./theme";
-import { PHONE_STEPS, VALIDATE_BUTTON_POSITION, type DemoStep } from "./steps";
+import { PHONE_STEPS } from "./steps";
 import { premiumFontClass } from "./premiumFonts";
 
+type Rect = { left: number; top: number; width: number; height: number };
+
 type Props = {
-  steps?: DemoStep[];
+  demoKey: DemoKey;
   labels: string[];
   validateLabel: string;
   hintLabel: string;
+  ariaLabel: string;
 };
 
 export default function PremiumPlayer({
-  steps = PHONE_STEPS,
+  demoKey,
   labels,
   validateLabel,
   hintLabel,
+  ariaLabel,
 }: Props) {
+  const entry = DEMO_REGISTRY[demoKey];
+  const steps = PHONE_STEPS; // découpage commun aux deux moules
   const playerRef = useRef<PlayerRef>(null);
+  const holderRef = useRef<HTMLDivElement>(null);
+
   const [current, setCurrent] = useState(0);
   const [awaitingClick, setAwaitingClick] = useState(false);
   const [autoplay, setAutoplay] = useState(true);
+  const [buttonRect, setButtonRect] = useState<Rect | null>(null);
 
-  // Cible de lecture courante : la frame à laquelle il faut s'arrêter.
   const stopAt = useRef<number | null>(null);
   const gatePassed = useRef(false);
 
@@ -43,8 +49,6 @@ export default function PremiumPlayer({
     []
   );
 
-  // prefers-reduced-motion : aucune lecture automatique, navigation manuelle
-  // seule. L'utilisateur garde l'accès complet au contenu.
   useEffect(() => {
     if (reduced) setAutoplay(false);
   }, [reduced]);
@@ -57,6 +61,41 @@ export default function PremiumPlayer({
     p.play();
   }, []);
 
+  /**
+   * Position réelle du bouton de la composition, lue dans le DOM.
+   *
+   * Le Player rend du DOM, pas un canvas : on lit donc la boîte englobante
+   * du bouton au lieu de la dériver de la mise en page. Une première version
+   * calculait la position à la main et tombait 21 px trop haut ; et les
+   * quatre familles de mise en scène placent leur bouton à des endroits
+   * différents. Cette lecture les couvre toutes, sans relevé.
+   */
+  const syncButtonRect = useCallback(() => {
+    const holder = holderRef.current;
+    if (!holder) return;
+    const btn = holder.querySelector<HTMLElement>("[data-nbhc-validate]");
+    if (!btn) {
+      setButtonRect(null);
+      return;
+    }
+    const b = btn.getBoundingClientRect();
+    const h = holder.getBoundingClientRect();
+    setButtonRect({
+      left: b.left - h.left,
+      top: b.top - h.top,
+      width: b.width,
+      height: b.height,
+    });
+  }, []);
+
+  useLayoutEffect(() => {
+    if (!awaitingClick) return;
+    syncButtonRect();
+    const onResize = () => syncButtonRect();
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, [awaitingClick, syncButtonRect]);
+
   const goToStep = useCallback(
     (index: number, { userInitiated = true } = {}) => {
       const step = steps[index];
@@ -67,7 +106,6 @@ export default function PremiumPlayer({
       gatePassed.current = false;
 
       if (reduced) {
-        // Sans animation : on se pose sur la dernière image utile du plan.
         const p = playerRef.current;
         stopAt.current = null;
         p?.pause();
@@ -80,8 +118,6 @@ export default function PremiumPlayer({
     [playRange, reduced, steps]
   );
 
-  // Arrêt à la frame cible, ouverture de la porte de validation, et
-  // enchaînement automatique tant que le prospect n'a pas pris la main.
   useEffect(() => {
     const p = playerRef.current;
     if (!p) return;
@@ -109,14 +145,13 @@ export default function PremiumPlayer({
     return () => p.removeEventListener("frameupdate", onFrame);
   }, [autoplay, current, playRange, steps]);
 
-  // Démarrage : première étape, sauf mouvement réduit.
   useEffect(() => {
     if (reduced) {
       playerRef.current?.seekTo(steps[0].from);
       return;
     }
     playRange(steps[0].from, steps[0].to);
-    // Volontairement une seule fois au montage.
+    // Volontairement au montage seul : chaque onglet monte un lecteur neuf.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -147,16 +182,19 @@ export default function PremiumPlayer({
   return (
     <div className={premiumFontClass}>
       <div
+        ref={holderRef}
         role="group"
-        aria-label="Démonstration interactive"
+        aria-label={ariaLabel}
         tabIndex={0}
         onKeyDown={onKeyDown}
         style={{ position: "relative", borderRadius: 18, overflow: "hidden", outline: "none" }}
       >
         <Player
           ref={playerRef}
-          component={PremiumDemo}
-          inputProps={{ sector: GARAGE }}
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          component={entry.component as any}
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          inputProps={entry.props as any}
           durationInFrames={PREMIUM_FORMAT.durationFrames}
           fps={PREMIUM_FORMAT.fps}
           compositionWidth={PREMIUM_FORMAT.width}
@@ -169,30 +207,31 @@ export default function PremiumPlayer({
           acknowledgeRemotionLicense
         />
 
-        {/* Le vrai bouton du prospect, calé sur celui de la composition. */}
-        {awaitingClick && (
+        {awaitingClick && buttonRect && (
           <button
             type="button"
             onClick={onValidate}
             aria-label={validateLabel}
+            data-nbhc-overlay=""
             style={{
               position: "absolute",
-              left: `${VALIDATE_BUTTON_POSITION.xPct}%`,
-              top: `${VALIDATE_BUTTON_POSITION.yPct}%`,
-              width: `${VALIDATE_BUTTON_POSITION.wPct}%`,
-              height: `${VALIDATE_BUTTON_POSITION.hPct}%`,
-              transform: "translate(-50%, -50%)",
-              borderRadius: 12,
+              left: buttonRect.left,
+              top: buttonRect.top,
+              width: buttonRect.width,
+              height: buttonRect.height,
+              borderRadius: Math.min(18, buttonRect.height / 3),
               border: "2px solid #0A84FF",
-              background: "rgba(10,132,255,0.18)",
-              color: "#F5F5F7",
-              font: "600 clamp(11px, 1.6vw, 20px) var(--font-jakarta), sans-serif",
+              background: "rgba(10,132,255,0.14)",
+              // Aucun texte visible : le libellé affiché reste celui de la
+              // composition, qui est déjà juste pour chaque famille
+              // (« Valider la sélection », « Valider et envoyer »…). Une
+              // étiquette propre à l'overlay se superposerait à la sienne.
+              color: "transparent",
+              fontSize: 0,
               cursor: "pointer",
               animation: "nbhcPulse 1.6s ease-in-out infinite",
             }}
-          >
-            {validateLabel}
-          </button>
+          />
         )}
       </div>
 
@@ -208,6 +247,7 @@ export default function PremiumPlayer({
           padding: 0,
           margin: "16px 0 0",
           overflowX: "auto",
+          scrollbarWidth: "thin",
         }}
       >
         {steps.map((s, i) => (
@@ -239,7 +279,7 @@ export default function PremiumPlayer({
           50% { box-shadow: 0 0 0 10px rgba(10,132,255,0); }
         }
         @media (prefers-reduced-motion: reduce) {
-          [style*="nbhcPulse"] { animation: none !important; }
+          [data-nbhc-overlay] { animation: none !important; }
         }
       `}</style>
     </div>

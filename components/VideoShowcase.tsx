@@ -3,9 +3,9 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import DemoVideo, { type DemoVideoName } from "./DemoVideo";
 import AutomationFlow, { zipFlowSteps, type FlowStepKind } from "./AutomationFlow";
-import GarageDemo from "./sector-demos/GarageDemo";
+import PremiumDemoSection from "./sector-demos/premium/PremiumDemoSection";
+import type { DemoKey } from "./sector-demos/premium/registry";
 
 type ShowcaseKey =
   | "garage"
@@ -44,40 +44,15 @@ const TAB_ICONS: Record<ShowcaseKey, string> = {
   sport: "🏋️",
 };
 
-// Sectors with a native, interactive demonstration (component, not a
-// <video>) — the real replacement for this section. Built one sector at a
-// time, each with its own staging designed for its own automation; see
-// components/sector-demos/. Sectors not listed here yet still show their
-// previous treatment (video or generic diagram) until rebuilt.
-const NATIVE_DEMO_SECTORS: Partial<Record<ShowcaseKey, React.ComponentType>> = {
-  garage: GarageDemo,
-};
-
-// Sectors with a filmed/rendered DemoVideo asset, for sectors that don't
-// have a native demo yet. Restaurant/pharmacie/coiffure are Remotion
-// renders of the real automation; opticien/btp/formation/cosmetique/sport
-// are the AutomationFlow diagram captured frame-by-frame and rendered to
-// video. Garage is intentionally absent — it now has a native demo instead
-// (see NATIVE_DEMO_SECTORS) — the mp4 file itself stays in public/, it's
-// just not used by this component anymore.
-const VIDEO_SECTORS: DemoVideoName[] = [
-  "restaurant",
-  "pharmacie",
-  "coiffure",
-  "opticien",
-  "btp",
-  "formation",
-  "cosmetique",
-  "sport",
-];
-
-// Deliberately returns a plain boolean, not a `key is DemoVideoName` type
-// predicate: narrowing exhaustively would flag the "no video" branch below
-// as dead code the moment every remaining sector has video too — breaking
-// the fallback the instant a new sector is added without one.
-function isVideoSector(key: ShowcaseKey): boolean {
-  return (VIDEO_SECTORS as ShowcaseKey[]).includes(key);
-}
+// Les 9 secteurs sont desormais des demonstrations PILOTABLES : la
+// composition Remotion est montee dans la page via @remotion/player, et le
+// prospect avance lui-meme etape par etape. Les <video> demo-*.mp4 et leurs
+// 9,9 Mo d'assets ont ete retires — le lecteur pese 49 Ko gzippes, charges
+// paresseusement a l'entree dans le viewport.
+//
+// Un seul lecteur vit a la fois : PremiumDemoSection porte une `key` sur le
+// secteur, ce qui force le demontage complet du precedent au changement
+// d'onglet.
 
 // Structural shape of each sector's flagship-automation diagram. Not
 // translatable — labels come from messages/*.json (showcase.tabs.*.flow).
@@ -87,8 +62,6 @@ export default function VideoShowcase() {
   const [activeTab, setActiveTab] = useState<ShowcaseKey>("garage");
   const t = useTranslations("showcase");
   const reduceMotion = useReducedMotion();
-  const NativeDemo = NATIVE_DEMO_SECTORS[activeTab];
-  const hasVideo = !NativeDemo && isVideoSector(activeTab);
   const flowSteps = zipFlowSteps(FLOW_KINDS, t.raw(`tabs.${activeTab}.flow`));
 
   return (
@@ -212,22 +185,13 @@ export default function VideoShowcase() {
                 exit={{ opacity: 0, scale: reduceMotion ? 1 : 0.985 }}
                 transition={{ duration: reduceMotion ? 0 : 0.32, ease: [0.22, 1, 0.36, 1] }}
               >
-                {NativeDemo ? (
-                  <NativeDemo />
-                ) : hasVideo ? (
-                  <DemoVideo name={activeTab as DemoVideoName} ariaLabel={t(`tabs.${activeTab}.name`)} />
-                ) : (
-                  <div
-                    className="relative w-full flex items-center justify-center px-6 py-10 max-[600px]:px-4 max-[600px]:py-8"
-                    style={{ aspectRatio: "16 / 9" }}
-                  >
-                    <AutomationFlow
-                      steps={flowSteps}
-                      ariaLabel={t(`tabs.${activeTab}.name`)}
-                      animated={!reduceMotion}
-                    />
-                  </div>
-                )}
+                <PremiumDemoSection
+                  demoKey={activeTab as DemoKey}
+                  labels={t.raw(`premium.steps.${activeTab}`) as string[]}
+                  validateLabel={t("premium.validate")}
+                  hintLabel={t("premium.hint")}
+                  ariaLabel={`${t("premium.ariaLabel")} — ${t(`tabs.${activeTab}.name`)}`}
+                />
               </motion.div>
             </AnimatePresence>
           </div>
@@ -287,7 +251,7 @@ export default function VideoShowcase() {
             {/* Filmed sectors already show the mechanism on video — the flow
                 diagram repeats it as a compact, always-legible strip so the
                 "how it works" story never depends on the video autoplaying. */}
-            {hasVideo && (
+            {(
               <div
                 className="mx-auto"
                 style={{ maxWidth: 780 }}

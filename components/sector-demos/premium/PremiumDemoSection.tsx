@@ -1,17 +1,23 @@
 "use client";
 
-// Enveloppe de montage : c'est ici que se joue le coût réseau.
+// Enveloppe de montage — c'est ici que se joue le coût réseau.
 //
 // Le lecteur et les compositions ne sont téléchargés QUE lorsque la section
-// entre dans le viewport — un import dynamique sans SSR, déclenché par un
-// IntersectionObserver. Tant que le prospect n'a pas fait défiler jusqu'ici,
-// la page ne paie rien : ni le player, ni Remotion, ni les scènes.
+// entre dans le viewport (import dynamique sans SSR + IntersectionObserver).
+// Et un seul lecteur vit à la fois : la `key` sur le secteur force React à
+// démonter complètement le précédent au changement d'onglet, plutôt que d'en
+// garder neuf en mémoire.
 import dynamic from "next/dynamic";
 import { useEffect, useRef, useState } from "react";
+import type { DemoKey } from "./registry";
 
 const PremiumPlayer = dynamic(() => import("./PremiumPlayer"), {
   ssr: false,
-  loading: () => (
+  loading: () => <Placeholder />,
+});
+
+function Placeholder() {
+  return (
     <div
       style={{
         width: "100%",
@@ -20,21 +26,22 @@ const PremiumPlayer = dynamic(() => import("./PremiumPlayer"), {
         background: "linear-gradient(150deg, #1A1A24, #0B0B10)",
       }}
     />
-  ),
-});
+  );
+}
 
-const STEP_LABELS = [
-  "L’appel arrive",
-  "L’assistant répond",
-  "Il comprend la demande",
-  "Il vérifie le planning",
-  "Il propose un créneau",
-  "Il rédige la fiche",
-  "Vous validez",
-  "Le résultat",
-];
-
-export default function PremiumDemoSection() {
+export default function PremiumDemoSection({
+  demoKey,
+  labels,
+  validateLabel,
+  hintLabel,
+  ariaLabel,
+}: {
+  demoKey: DemoKey;
+  labels: string[];
+  validateLabel: string;
+  hintLabel: string;
+  ariaLabel: string;
+}) {
   const holder = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
 
@@ -62,19 +69,15 @@ export default function PremiumDemoSection() {
     <div ref={holder}>
       {visible ? (
         <PremiumPlayer
-          labels={STEP_LABELS}
-          validateLabel="Valider"
-          hintLabel="La fiche attend votre validation — rien n’est envoyé sans elle."
+          key={demoKey}
+          demoKey={demoKey}
+          labels={labels}
+          validateLabel={validateLabel}
+          hintLabel={hintLabel}
+          ariaLabel={ariaLabel}
         />
       ) : (
-        <div
-          style={{
-            width: "100%",
-            aspectRatio: "16 / 9",
-            borderRadius: 18,
-            background: "linear-gradient(150deg, #1A1A24, #0B0B10)",
-          }}
-        />
+        <Placeholder />
       )}
     </div>
   );
