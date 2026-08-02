@@ -57,6 +57,7 @@ export default function MobileDemoVideo({
   const [current, setCurrent] = useState(0);
   const [awaitingClick, setAwaitingClick] = useState(false);
   const [autoplay, setAutoplay] = useState(true);
+  const [charge, setCharge] = useState(false);
 
   const stopAt = useRef<number | null>(null);
   const gatePassed = useRef(false);
@@ -179,11 +180,38 @@ export default function MobileDemoVideo({
           src={`/demos/${demoKey}_mobile.mp4`}
           muted
           playsInline
-          preload="metadata"
+          preload="auto"
           onLoadedMetadata={onLoadedMetadata}
           onTimeUpdate={onTimeUpdate}
+          onWaiting={() => setCharge(true)}
+          onPlaying={() => setCharge(false)}
+          onCanPlay={() => setCharge(false)}
           style={{ width: "100%", aspectRatio: "16 / 9", display: "block" }}
         />
+
+        {charge && !awaitingClick && (
+          <div
+            aria-live="polite"
+            style={{
+              position: "absolute",
+              inset: 0,
+              display: "grid",
+              placeItems: "center",
+              background: "rgba(4,4,8,0.35)",
+            }}
+          >
+            <span
+              style={{
+                width: 26,
+                height: 26,
+                borderRadius: "50%",
+                border: "2px solid rgba(255,255,255,0.22)",
+                borderTopColor: "#0A84FF",
+                animation: "nbhcSpin 0.8s linear infinite",
+              }}
+            />
+          </div>
+        )}
 
         {awaitingClick && (
           <div
@@ -290,6 +318,11 @@ export default function MobileDemoVideo({
           </li>
         ))}
       </ol>
+
+      <style>{`
+        @keyframes nbhcSpin { to { transform: rotate(360deg); } }
+        @media (prefers-reduced-motion: reduce) { [aria-live="polite"] span { animation: none; } }
+      `}</style>
 
       {benefit && (
         <p
