@@ -43,31 +43,39 @@ export const useCameraMove = (duration: number, move: CameraMove): React.CSSProp
 };
 
 /**
- * Fond de scène : dégradé sombre + halo large très diffus qui dérive.
- * Le halo n'est pas un effet décoratif — il porte la profondeur (le flou
- * d'arrière-plan marqué de la référence) et remonte la luminance moyenne
- * hors du noir pur.
+ * Fond de scène — de la matière, pas un noir uni.
+ *
+ * Le verre des cartes ne se lisait pas : une couche translucide posée sur un
+ * fond uniforme ne montre rien au travers, elle produit juste un gris plus
+ * clair. Le fond porte donc maintenant deux nappes lumineuses décentrées et
+ * un halo qui dérive derrière la carte — assez de variation pour qu'on la
+ * perçoive à travers la surface.
+ *
+ * Les nappes sont des dégradés radiaux, PAS un flou : `filter: blur` coûte
+ * cher en lecture temps réel et un radial suffit à la douceur.
  */
 const Backdrop: React.FC<{ duration: number }> = ({ duration }) => {
   const frame = useCurrentFrame();
   const p = duration <= 1 ? 0 : frame / (duration - 1);
+  const hx = 42 + p * 10;
+  const hy = 38 + p * 7;
   return (
     <AbsoluteFill
       style={{
-        background: `linear-gradient(158deg, ${SURFACE.bgTop} 0%, ${SURFACE.bgBottom} 100%)`,
+        background: [
+          // Nappe froide en haut à gauche — la lumière principale.
+          "radial-gradient(120% 95% at 16% 6%, rgba(150,175,225,0.11) 0%, rgba(150,175,225,0.035) 40%, rgba(0,0,0,0) 70%)",
+          // Contre-jour discret, teinté de l'accent, en bas à droite.
+          "radial-gradient(85% 70% at 88% 92%, rgba(10,132,255,0.075) 0%, rgba(10,132,255,0) 62%)",
+          `linear-gradient(158deg, ${SURFACE.bgTop} 0%, ${SURFACE.bgBottom} 100%)`,
+        ].join(", "),
       }}
     >
-      <div
+      {/* Halo derrière la carte : il dérive, donc la matière vue au travers
+          du verre bouge légèrement — c'est ce qui fait lire la transparence. */}
+      <AbsoluteFill
         style={{
-          position: "absolute",
-          left: `${18 + p * 6}%`,
-          top: `${10 + p * 5}%`,
-          width: 1500,
-          height: 1000,
-          borderRadius: "50%",
-          background:
-            "radial-gradient(ellipse at center, rgba(255,255,255,0.075) 0%, rgba(255,255,255,0.028) 45%, rgba(255,255,255,0) 72%)",
-          filter: "blur(48px)",
+          background: `radial-gradient(58% 52% at ${hx}% ${hy}%, rgba(255,255,255,0.085) 0%, rgba(255,255,255,0.03) 44%, rgba(0,0,0,0) 74%)`,
         }}
       />
     </AbsoluteFill>

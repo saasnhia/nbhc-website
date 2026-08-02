@@ -75,7 +75,11 @@ const Stage: React.FC<{
       // sont calees pour conserver la bande de luminance 28-55.
       background: `linear-gradient(158deg, rgba(255,255,255,0.20) 0%, rgba(255,255,255,0.105) 46%, rgba(255,255,255,0.05) 100%)`,
       border: `1px solid rgba(255,255,255,0.18)`,
-      boxShadow: "0 46px 110px rgba(0,0,0,0.62), 0 6px 24px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.26)",
+      boxShadow:
+        // Liseré de lumière franc sur l'arête haute, et un second, très faible,
+        // en bas : c'est le bord qui fait lire l'épaisseur du verre.
+        "0 46px 110px rgba(0,0,0,0.62), 0 6px 24px rgba(0,0,0,0.45), " +
+        "inset 0 1px 0 rgba(255,255,255,0.38), inset 0 -1px 0 rgba(255,255,255,0.07)",
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
@@ -90,7 +94,9 @@ const Stage: React.FC<{
         inset: 0,
         borderRadius: radius,
         background:
-          "linear-gradient(180deg, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0.028) 26%, rgba(255,255,255,0) 52%)",
+          // Voile du haut + reflet spéculaire en diagonale.
+          "linear-gradient(180deg, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0.028) 26%, rgba(255,255,255,0) 52%), " +
+          "linear-gradient(114deg, rgba(255,255,255,0) 28%, rgba(255,255,255,0.055) 44%, rgba(255,255,255,0.012) 52%, rgba(255,255,255,0) 66%)",
         pointerEvents: "none",
       }}
     />
