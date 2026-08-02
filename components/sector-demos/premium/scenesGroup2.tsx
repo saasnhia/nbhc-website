@@ -107,7 +107,7 @@ export const ListShot3: React.FC<{ s: ListSpec }> = ({ s }) => {
   const dims = s.rows.map((r, i) => {
     const passed = scanY > i * (ROW_H + ROW_GAP) + ROW_H / 2;
     const fade = interpolate(f, [0, 6], [1, 1], clamp);
-    return passed && !r.eligible ? 0.32 : fade;
+    return passed && !r.eligible ? 0.2 : fade;
   });
   return (
     <AbsoluteFill style={{ alignItems: "center", justifyContent: "center" }}>
@@ -140,7 +140,7 @@ export const ListShot4: React.FC<{ s: ListSpec }> = ({ s }) => {
   const rest = s.rows.map((r, i) => (r.eligible ? -1 : i)).filter((i) => i >= 0);
   const order = [...elig, ...rest];
   const dims = order.map((i, pos) =>
-    pos < elig.length ? 1 : interpolate(f, [4, 16], [1, 0.3], clamp)
+    pos < elig.length ? 1 : interpolate(f, [4, 16], [1, 0.18], clamp)
   );
   const highlight = order.map((_, pos) => pos < elig.length);
   return (

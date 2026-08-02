@@ -16,6 +16,15 @@ const PremiumPlayer = dynamic(() => import("./PremiumPlayer"), {
   loading: () => <Placeholder />,
 });
 
+// Repli mobile : sous 1024 px on sert le MP4 du secteur au lieu du lecteur
+// Remotion. Mesure a l'appui — WebKit tombe a 3,7 fps avec le lecteur, et
+// plafonne a 9,5 meme en sacrifiant tous les filtres et toutes les ombres.
+// La video est fluide par nature, et le geste de validation est conserve.
+const MobileDemoVideo = dynamic(() => import("./MobileDemoVideo"), {
+  ssr: false,
+  loading: () => <Placeholder />,
+});
+
 function Placeholder() {
   return (
     <div
@@ -54,6 +63,17 @@ export default function PremiumDemoSection({
 }) {
   const holder = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
+  // `null` tant qu'on n'a pas mesure : on ne monte rien avant de savoir quel
+  // des deux servir, pour ne jamais charger le lecteur puis la video.
+  const [desktop, setDesktop] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 1024px)");
+    const sync = () => setDesktop(mq.matches);
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
+  }, []);
 
   useEffect(() => {
     const el = holder.current;
@@ -77,7 +97,21 @@ export default function PremiumDemoSection({
 
   return (
     <div ref={holder}>
-      {visible ? (
+      {visible && desktop === false ? (
+        <MobileDemoVideo
+          key={demoKey}
+          demoKey={demoKey}
+          labels={labels}
+          validateLabel={validateLabel}
+          hintLabel={hintLabel}
+          ariaLabel={ariaLabel}
+          stepsLabel={stepsLabel}
+          eyebrow={eyebrow}
+          title={title}
+          contextLine={contextLine}
+          benefit={benefit}
+        />
+      ) : visible && desktop === true ? (
         <PremiumPlayer
           key={demoKey}
           demoKey={demoKey}
