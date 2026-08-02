@@ -8,7 +8,7 @@
 // promesse. Elle referme la boucle sur le geste de la démo : la coche de
 // validation, reprise en grand.
 import React from "react";
-import { AbsoluteFill, interpolate, OffthreadVideo, staticFile, useCurrentFrame } from "remotion";
+import { AbsoluteFill, interpolate, staticFile, useCurrentFrame } from "remotion";
 import { COLORS, FONTS, SURFACE } from "./theme";
 import { CHECK_LEN } from "./shared";
 import type { Close } from "./sectors2";
@@ -53,10 +53,19 @@ export const CloseShot: React.FC<{ close: Close; benefit: string }> = ({ close, 
               boxShadow: "0 46px 110px rgba(0,0,0,0.62)",
             }}
           >
-            <OffthreadVideo
+            {/* Balise video native, et non le composant Remotion : celui-ci
+                ajoute un fragment temporel a l'URL (#t=0,2) que WebKit refuse
+                (MEDIA_ERR_SRC_NOT_SUPPORTED, plan de cloture noir sur iPhone).
+                Un plan d'ambiance de 2 s n'a pas besoin d'etre synchronise a la
+                frame : autoPlay + loop + muted + playsInline suffisent, et
+                c'est le seul montage qu'iOS accepte sans geste utilisateur. */}
+            <video
               src={staticFile(close.file)}
               style={{ width: "100%", height: "100%", objectFit: "cover" }}
               muted
+              autoPlay
+              loop
+              playsInline
             />
           </div>
           <BenefitLine text={benefit} />

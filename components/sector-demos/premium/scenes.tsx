@@ -18,7 +18,7 @@
 // Véracité : la fiche RDV est validée par le garagiste (plan 7), jamais
 // envoyée automatiquement. Aucun chiffre, aucun logiciel tiers nommé.
 import React from "react";
-import { AbsoluteFill, interpolate, OffthreadVideo, staticFile, useCurrentFrame } from "remotion";
+import { AbsoluteFill, interpolate, staticFile, useCurrentFrame } from "remotion";
 import { COLORS, FONTS, SURFACE } from "./theme";
 import type { SectorSpec } from "./sectors";
 
@@ -686,10 +686,19 @@ export const ShotBenefice: React.FC<ShotProps> = ({ s }) => {
             boxShadow: "0 46px 110px rgba(0,0,0,0.62)",
           }}
         >
-          <OffthreadVideo
+          {/* Balise video native, et non le composant Remotion : celui-ci
+              ajoute un fragment temporel a l'URL (#t=0,2) que WebKit refuse
+              (MEDIA_ERR_SRC_NOT_SUPPORTED, plan de cloture noir sur iPhone).
+              Un plan d'ambiance de 2 s n'a pas besoin d'etre synchronise a la
+              frame : autoPlay + loop + muted + playsInline suffisent, et
+              c'est le seul montage qu'iOS accepte sans geste utilisateur. */}
+          <video
             src={staticFile(s.closeVideo)}
             style={{ width: "100%", height: "100%", objectFit: "cover" }}
             muted
+            autoPlay
+            loop
+            playsInline
           />
         </div>
         <div

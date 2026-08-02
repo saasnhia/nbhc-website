@@ -154,23 +154,6 @@ export default function VideoShowcase() {
             >
               {t(`tabs.${activeTab}.label`)}
             </div>
-            <div
-              className="text-lg font-bold mb-2"
-              style={{
-                fontFamily: "var(--font-syne)",
-                color: "var(--text)",
-                letterSpacing: "-0.3px",
-              }}
-            >
-              {t(`tabs.${activeTab}.name`)}
-            </div>
-            <p
-              className="text-sm mb-5"
-              style={{ color: "var(--text-muted)", lineHeight: 1.65, maxWidth: 640, margin: "0 auto" }}
-            >
-              {t(`tabs.${activeTab}.benefit`)}
-            </p>
-
             {/* ROI callout: what frees up for the team, not a fabricated metric —
                 NBHC has no client references to cite, so this stays qualitative. */}
             <p

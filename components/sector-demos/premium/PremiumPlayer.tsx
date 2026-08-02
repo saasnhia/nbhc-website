@@ -199,6 +199,12 @@ export default function PremiumPlayer({
   const listRef = useRef<HTMLOListElement>(null);
 
   useEffect(() => {
+    // Recentrage UNIQUEMENT quand la liste est en colonne laterale (desktop).
+    // Sous ce seuil la liste est SOUS le lecteur : recentrer l'etape poussait
+    // le lecteur hors de l'ecran — on tapait une etape et la demo disparaissait.
+    // Mesure reelle du seuil, pas une supposition de largeur.
+    if (typeof window === "undefined") return;
+    if (!window.matchMedia("(min-width: 1024px)").matches) return;
     const el = listRef.current?.children[current] as HTMLElement | undefined;
     el?.scrollIntoView({ block: "nearest", behavior: reduced ? "auto" : "smooth" });
   }, [current, reduced]);
