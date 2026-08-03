@@ -1453,6 +1453,10 @@
     "step3": "Vous la publiez sur votre annonce.",
     "ctaTitle": "On le fait avec vos photos ?",
     "ctaSubtitle": "Trente minutes pour regarder vos photos ensemble et voir ce que ça peut donner.",
-    "ctaButton": "Réserver un créneau"
+    "ctaButton": "Réserver un créneau",
+    "typeAppartement": "Appartement",
+    "typeVilla": "Villa",
+    "typeListeAria": "Choisir le type de bien",
+    "videoAriaVilla": "Vidéo de présentation d'une villa, réalisée à partir de photos"
   }
 }
