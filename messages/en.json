@@ -1438,5 +1438,21 @@
       "sectorAutoImmobilier2": "Viewing appointment reminders + automatic confirmation",
       "sectorAutoImmobilier3": "Multi-portal listing distribution (SeLoger, LeBonCoin, etc.)"
     }
+  },
+  "logement": {
+    "eyebrow": "Property video",
+    "title": "Your photos become a presentation video.",
+    "subtitle": "Send us your property photos and we turn them into a short, polished video to publish on your listing.",
+    "videoAria": "Property presentation video, made from photographs",
+    "soundOn": "Turn sound on",
+    "soundOff": "Turn sound off",
+    "disclaimer": "Demonstration made from stock photographs.",
+    "howLabel": "How it works",
+    "step1": "You send your property photos.",
+    "step2": "We produce the presentation video.",
+    "step3": "You publish it on your listing.",
+    "ctaTitle": "Shall we do it with your photos?",
+    "ctaSubtitle": "Thirty minutes to look at your photos together and see what it could look like.",
+    "ctaButton": "Book a slot"
   }
 }
