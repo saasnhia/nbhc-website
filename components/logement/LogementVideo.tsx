@@ -20,10 +20,17 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useCallback, useRef, useState, useSyncExternalStore } from "react";
 
-export const VARIANTES = ["appartement", "villa"] as const;
+// Du plus petit au plus grand : c'est la progression naturelle, et elle suit
+// les segments S / M / L de la grille tarifaire interne.
+export const VARIANTES = ["studio", "appartement", "villa"] as const;
 export type Variante = (typeof VARIANTES)[number];
 
 const SOURCES: Record<Variante, { desktop: string; mobile: string; poster: string }> = {
+  studio: {
+    desktop: "/logement/logement-studio-desktop.mp4",
+    mobile: "/logement/logement-studio-mobile.mp4",
+    poster: "/logement/logement-studio-poster.jpg",
+  },
   appartement: {
     desktop: "/logement/logement-demo-desktop.mp4",
     mobile: "/logement/logement-demo-mobile.mp4",
