@@ -7,7 +7,9 @@
 // strict nécessaire, et il n'y a qu'un seul appel à l'action.
 import { motion, useReducedMotion } from "framer-motion";
 import { useTranslations } from "next-intl";
-import LogementVideo from "./LogementVideo";
+import { useState } from "react";
+import LogementSelecteur from "./LogementSelecteur";
+import LogementVideo, { type Variante } from "./LogementVideo";
 
 const CALENDLY_URL = "https://calendly.com/saasnhia/30min";
 const EASE = [0.22, 1, 0.36, 1] as const;
@@ -15,6 +17,11 @@ const EASE = [0.22, 1, 0.36, 1] as const;
 export default function LogementPage() {
   const t = useTranslations("logement");
   const reduceMotion = useReducedMotion();
+  // Appartement par défaut : sur les 40 prospects du fichier Cannes, 26 sont
+  // des appartements ou meublés et 5 seulement des villas. La villa est le
+  // segment le plus cher, pas le plus fréquent — elle mérite son onglet, pas
+  // le premier écran.
+  const [variante, setVariante] = useState<Variante>("appartement");
 
   // Entrée douce, jamais linéaire : la courbe est celle déjà utilisée par la
   // section EN ACTION, pour que le rythme des deux pages soit le même.
@@ -78,8 +85,15 @@ export default function LogementPage() {
           </motion.div>
 
           <motion.div {...monte(0.08)} className="min-w-0">
+            <LogementSelecteur
+              valeur={variante}
+              onChange={setVariante}
+              libelles={{ appartement: t("typeAppartement"), villa: t("typeVilla") }}
+              listeLabel={t("typeListeAria")}
+            />
             <LogementVideo
-              ariaLabel={t("videoAria")}
+              variante={variante}
+              ariaLabel={t(variante === "villa" ? "videoAriaVilla" : "videoAria")}
               soundOn={t("soundOn")}
               soundOff={t("soundOff")}
             />

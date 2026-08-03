@@ -5,17 +5,38 @@
 // AUTOPLAY MUET EN BOUCLE, et non lecture au clic. La page s'ouvre devant un
 // gérant qui vient de raccrocher : chaque geste supplémentaire est une chance
 // de le perdre. En dix secondes de boucle il a vu le produit sans rien faire.
-// La lecture au clic aurait du sens sur une page de trafic entrant, où l'on
-// veut économiser la bande passante d'un visiteur non qualifié — ce n'est pas
-// le cas ici.
 //
-// La source est choisie AVANT le montage selon la largeur : une seule variante
-// est téléchargée, jamais les deux.
+// DEUX DÉMONSTRATIONS, une seule montée à la fois. Le prospect choisit le type
+// de bien qui lui ressemble ; on ne charge jamais les deux vidéos en parallèle
+// (AnimatePresence mode="wait" démonte la sortante avant de monter l'entrante),
+// et une seule variante de largeur est téléchargée.
 //
-// Pièges connus du projet, évités : yuv420p (le 4:4:4 casse silencieusement
-// sur iOS), playsInline (sans quoi WebKit refuse la lecture inline), et aucun
-// fragment #t= dans l'URL (WebKit le rejette).
+// Le cadre porte lui-même le rapport 4:3 : pendant le fondu il n'a aucun
+// enfant, et sans cette contrainte la page sauterait à chaque changement.
+//
+// Pièges connus du projet, évités : yuv420p (le 10 bits et le 4:4:4 cassent
+// silencieusement sur iOS), playsInline (sans quoi WebKit refuse la lecture
+// inline), et aucun fragment #t= dans l'URL (WebKit le rejette).
+import { AnimatePresence, motion } from "framer-motion";
 import { useCallback, useRef, useState, useSyncExternalStore } from "react";
+
+export const VARIANTES = ["appartement", "villa"] as const;
+export type Variante = (typeof VARIANTES)[number];
+
+const SOURCES: Record<Variante, { desktop: string; mobile: string; poster: string }> = {
+  appartement: {
+    desktop: "/logement/logement-demo-desktop.mp4",
+    mobile: "/logement/logement-demo-mobile.mp4",
+    poster: "/logement/logement-demo-poster.jpg",
+  },
+  villa: {
+    desktop: "/logement/logement-villa-desktop.mp4",
+    mobile: "/logement/logement-villa-mobile.mp4",
+    poster: "/logement/logement-villa-poster.jpg",
+  },
+};
+
+const EASE = [0.22, 1, 0.36, 1] as const;
 
 /**
  * Lit une media query sans passer par un effet qui pose un état : c'est la
@@ -40,21 +61,22 @@ function useMediaQuery(query: string) {
 }
 
 type Props = {
+  variante: Variante;
   ariaLabel: string;
   soundOn: string;
   soundOff: string;
 };
 
-export default function LogementVideo({ ariaLabel, soundOn, soundOff }: Props) {
+export default function LogementVideo({ variante, ariaLabel, soundOn, soundOff }: Props) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [muted, setMuted] = useState(true);
 
   const large = useMediaQuery("(min-width: 768px)");
   const reduced = useMediaQuery("(prefers-reduced-motion: reduce)");
+
+  const jeu = SOURCES[variante];
   // Une seule variante est demandée, jamais les deux.
-  const source = large
-    ? "/logement/logement-demo-desktop.mp4"
-    : "/logement/logement-demo-mobile.mp4";
+  const source = large ? jeu.desktop : jeu.mobile;
 
   const toggleSound = () => {
     const v = videoRef.current;
@@ -80,31 +102,53 @@ export default function LogementVideo({ ariaLabel, soundOn, soundOff }: Props) {
       <div
         className="relative overflow-hidden"
         style={{
+          // Le rapport est porté par le cadre, pas par la vidéo : il tient
+          // même pendant le fondu, quand le cadre est momentanément vide.
+          aspectRatio: "4 / 3",
           borderRadius: 16,
           border: "1px solid var(--border-accent)",
           boxShadow: "0 46px 110px rgba(0,0,0,0.6), 0 2px 0 rgba(255,255,255,0.04) inset",
           background: "#08080B",
         }}
       >
-        <video
-          ref={videoRef}
-          // La vidéo source est en 4:3 (3326x2494) — le cadre suit ce rapport
-          // au lieu de l'imposer en 16:9, qui l'aurait rognée.
-          poster="/logement/logement-demo-poster.jpg"
-          src={source}
-          muted
-          playsInline
-          loop
-          autoPlay={!reduced}
-          controls={reduced}
-          preload="metadata"
-          aria-label={ariaLabel}
-          style={{ width: "100%", aspectRatio: "4 / 3", display: "block", objectFit: "cover" }}
-        />
+        <AnimatePresence mode="wait" initial={false}>
+          <motion.video
+            // La clé porte la variante ET la largeur : changer de source sur
+            // un même élément <video> laisse WebKit afficher la dernière image
+            // de la précédente le temps du chargement.
+            key={`${variante}-${large ? "d" : "m"}`}
+            ref={videoRef}
+            poster={jeu.poster}
+            src={source}
+            muted
+            playsInline
+            loop
+            autoPlay={!reduced}
+            controls={reduced}
+            preload="metadata"
+            aria-label={ariaLabel}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: reduced ? 0 : 0.28, ease: EASE }}
+            onLoadedMetadata={(e) => {
+              // Le son suit le choix de l'utilisateur d'une démo à l'autre.
+              e.currentTarget.muted = muted;
+            }}
+            style={{
+              position: "absolute",
+              inset: 0,
+              width: "100%",
+              height: "100%",
+              display: "block",
+              objectFit: "cover",
+            }}
+          />
+        </AnimatePresence>
 
         {/* La source a une piste audio : on laisse le choix plutôt que de la
             taire définitivement. Discret, en surimpression. */}
-        {!reduced && source && (
+        {!reduced && (
           <button
             type="button"
             onClick={toggleSound}
@@ -121,10 +165,7 @@ export default function LogementVideo({ ariaLabel, soundOn, soundOff }: Props) {
             }}
           >
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path
-                d="M4 9.5h3.2L12 5.4v13.2L7.2 14.5H4z"
-                fill="currentColor"
-              />
+              <path d="M4 9.5h3.2L12 5.4v13.2L7.2 14.5H4z" fill="currentColor" />
               {muted ? (
                 <path d="M16 9l5 6M21 9l-5 6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
               ) : (
