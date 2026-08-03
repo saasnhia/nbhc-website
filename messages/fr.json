@@ -1438,5 +1438,21 @@
       "sectorAutoImmobilier2": "Rappels et confirmation automatique des rendez-vous de visite",
       "sectorAutoImmobilier3": "Diffusion multi-portails des annonces (SeLoger, LeBonCoin, etc.)"
     }
+  },
+  "logement": {
+    "eyebrow": "Vidéo de logement",
+    "title": "Vos photos deviennent une vidéo de présentation.",
+    "subtitle": "Vous envoyez les photos de votre logement, on en fait une vidéo courte et soignée à publier sur votre annonce.",
+    "videoAria": "Vidéo de présentation d'un logement, réalisée à partir de photos",
+    "soundOn": "Activer le son",
+    "soundOff": "Couper le son",
+    "disclaimer": "Démonstration réalisée à partir de photos d'illustration.",
+    "howLabel": "Comment ça se passe",
+    "step1": "Vous envoyez les photos de votre logement.",
+    "step2": "On produit la vidéo de présentation.",
+    "step3": "Vous la publiez sur votre annonce.",
+    "ctaTitle": "On le fait avec vos photos ?",
+    "ctaSubtitle": "Trente minutes pour regarder vos photos ensemble et voir ce que ça peut donner.",
+    "ctaButton": "Réserver un créneau"
   }
 }
