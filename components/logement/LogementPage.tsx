@@ -12,6 +12,13 @@ import LogementSelecteur from "./LogementSelecteur";
 import LogementVideo, { type Variante } from "./LogementVideo";
 
 const CALENDLY_URL = "https://calendly.com/saasnhia/30min";
+
+// Chaque démo décrit son propre bien : l'aria-label suit la variante affichée.
+const ARIA_VIDEO: Record<Variante, string> = {
+  studio: "videoAriaStudio",
+  appartement: "videoAria",
+  villa: "videoAriaVilla",
+};
 const EASE = [0.22, 1, 0.36, 1] as const;
 
 export default function LogementPage() {
@@ -88,12 +95,16 @@ export default function LogementPage() {
             <LogementSelecteur
               valeur={variante}
               onChange={setVariante}
-              libelles={{ appartement: t("typeAppartement"), villa: t("typeVilla") }}
+              libelles={{
+                studio: t("typeStudio"),
+                appartement: t("typeAppartement"),
+                villa: t("typeVilla"),
+              }}
               listeLabel={t("typeListeAria")}
             />
             <LogementVideo
               variante={variante}
-              ariaLabel={t(variante === "villa" ? "videoAriaVilla" : "videoAria")}
+              ariaLabel={t(ARIA_VIDEO[variante])}
               soundOn={t("soundOn")}
               soundOff={t("soundOff")}
             />

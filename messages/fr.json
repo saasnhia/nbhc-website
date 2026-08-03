@@ -1457,6 +1457,8 @@
     "typeAppartement": "Appartement",
     "typeVilla": "Villa",
     "typeListeAria": "Choisir le type de bien",
-    "videoAriaVilla": "Vidéo de présentation d'une villa, réalisée à partir de photos"
+    "videoAriaVilla": "Vidéo de présentation d'une villa, réalisée à partir de photos",
+    "typeStudio": "Studio",
+    "videoAriaStudio": "Vidéo de présentation d'un studio, réalisée à partir de photos"
   }
 }

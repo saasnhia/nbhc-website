@@ -1457,6 +1457,8 @@
     "typeAppartement": "Apartment",
     "typeVilla": "Villa",
     "typeListeAria": "Choose the property type",
-    "videoAriaVilla": "Presentation video of a villa, made from photographs"
+    "videoAriaVilla": "Presentation video of a villa, made from photographs",
+    "typeStudio": "Studio",
+    "videoAriaStudio": "Presentation video of a studio flat, made from photographs"
   }
 }
