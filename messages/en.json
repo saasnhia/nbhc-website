@@ -1453,6 +1453,10 @@
     "step3": "You publish it on your listing.",
     "ctaTitle": "Shall we do it with your photos?",
     "ctaSubtitle": "Thirty minutes to look at your photos together and see what it could look like.",
-    "ctaButton": "Book a slot"
+    "ctaButton": "Book a slot",
+    "typeAppartement": "Apartment",
+    "typeVilla": "Villa",
+    "typeListeAria": "Choose the property type",
+    "videoAriaVilla": "Presentation video of a villa, made from photographs"
   }
 }
