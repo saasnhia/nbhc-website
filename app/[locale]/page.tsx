@@ -1,9 +1,10 @@
-import { setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import Nav from "@/components/Nav";
 import Hero from "@/components/Hero";
 import WhyNow from "@/components/WhyNow";
 import Sectors from "@/components/Sectors";
 import VideoShowcase from "@/components/VideoShowcase";
+import ReseauScrub from "@/components/ReseauScrub";
 import HowItWorks from "@/components/HowItWorks";
 import Portfolio from "@/components/Portfolio";
 import Pricing from "@/components/Pricing";
@@ -22,6 +23,7 @@ export default async function Home({
 }) {
   const { locale } = await params;
   setRequestLocale(locale);
+  const t = await getTranslations("home");
 
   const homeUrl = `https://nbhc.fr/${locale}`;
   const isFr = locale === "fr";
@@ -95,6 +97,9 @@ export default async function Home({
       <Hero />
       <WhyNow />
       <Sectors />
+      {/* Raccord entre les secteurs et la demonstration : le reseau se
+          construit au scroll, puis EN ACTION le rend pilotable. */}
+      <ReseauScrub legende={t("scrubLegende")} alt={t("scrubAlt")} />
       <VideoShowcase />
       <HowItWorks />
       <Portfolio />

@@ -1460,5 +1460,9 @@
     "videoAriaVilla": "Presentation video of a villa, made from photographs",
     "typeStudio": "Studio",
     "videoAriaStudio": "Presentation video of a studio flat, made from photographs"
+  },
+  "home": {
+    "scrubLegende": "Every automation is built piece by piece.",
+    "scrubAlt": "Illustration: an automation network being built"
   }
 }

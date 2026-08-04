@@ -1460,5 +1460,9 @@
     "videoAriaVilla": "Vidéo de présentation d'une villa, réalisée à partir de photos",
     "typeStudio": "Studio",
     "videoAriaStudio": "Vidéo de présentation d'un studio, réalisée à partir de photos"
+  },
+  "home": {
+    "scrubLegende": "Chaque automatisation se construit pièce par pièce.",
+    "scrubAlt": "Illustration : un réseau d'automatisation qui se construit"
   }
 }
