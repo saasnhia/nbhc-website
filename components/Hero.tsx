@@ -39,6 +39,35 @@ export default function Hero() {
     }
   }, []);
 
+  // La video de fond decode en permanence, meme quand le hero est sorti de
+  // l'ecran : c'est du travail pur perdu, et il pese sur toute la page en
+  // dessous. On la met en pause des qu'elle n'est plus visible.
+  //
+  // Le navigateur ne le fait pas de lui-meme pour une video en lecture : il
+  // continue de decoder tant qu'elle n'est pas explicitement mise en pause.
+  useEffect(() => {
+    const v = videoRef.current;
+    if (!v) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const observateur = new IntersectionObserver(
+      ([entree]) => {
+        if (entree.isIntersecting) {
+          // On ne relance que si des sources ont ete posees : sans cela,
+          // play() rejette et la promesse non geree remonte en console.
+          if (v.childElementCount > 0) void v.play().catch(() => {});
+        } else if (!v.paused) {
+          v.pause();
+        }
+      },
+      // Une marge d'un quart d'ecran : la lecture est deja repartie quand le
+      // hero revient, on ne voit jamais l'image figee.
+      { rootMargin: "25% 0px", threshold: 0 }
+    );
+    observateur.observe(v);
+    return () => observateur.disconnect();
+  }, []);
+
   useEffect(() => {
     const ctx = gsap.context(() => {
       const el = sectionRef.current;
