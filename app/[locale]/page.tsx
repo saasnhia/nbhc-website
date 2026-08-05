@@ -105,12 +105,16 @@ export default async function Home({
         alt={t("seqAlt")}
       />
       <VideoShowcase />
-      {/* Calque anime derriere ces deux sections, pas entre elles. */}
+      {/* Calque anime derriere ces trois sections, pas entre elles.
+          Tarifs est inclus : la sortie du calque a la frontiere
+          Portfolio/Tarifs se lisait comme une coupure nette, et prolonger
+          supprime la couture au lieu de la maquiller. Le fondu ne tombe donc
+          qu'au vrai debut et a la vraie fin du parcours couvert. */}
       <FondSections>
         <HowItWorks />
         <Portfolio />
+        <Pricing />
       </FondSections>
-      <Pricing />
       <Differentiators />
       <FAQ />
       <FinalCta />
