@@ -4,7 +4,8 @@ import Hero from "@/components/Hero";
 import WhyNow from "@/components/WhyNow";
 import Sectors from "@/components/Sectors";
 import VideoShowcase from "@/components/VideoShowcase";
-import ReseauScrub from "@/components/ReseauScrub";
+import SequenceEnAction from "@/components/SequenceEnAction";
+import FondAnime from "@/components/FondAnime";
 import HowItWorks from "@/components/HowItWorks";
 import Portfolio from "@/components/Portfolio";
 import Pricing from "@/components/Pricing";
@@ -97,10 +98,15 @@ export default async function Home({
       <Hero />
       <WhyNow />
       <Sectors />
-      {/* Raccord entre les secteurs et la demonstration : le reseau se
-          construit au scroll, puis EN ACTION le rend pilotable. */}
-      <ReseauScrub legende={t("scrubLegende")} alt={t("scrubAlt")} />
+      {/* On voit l'automatisation se construire, puis on la pilote. */}
+      <SequenceEnAction
+        eyebrow={t("seqEyebrow")}
+        legende={t("seqLegende")}
+        alt={t("seqAlt")}
+      />
       <VideoShowcase />
+      {/* Respiration animee avant l'explication du fonctionnement. */}
+      <FondAnime alt={t("fondAlt")} />
       <HowItWorks />
       <Portfolio />
       <Pricing />

@@ -1462,7 +1462,9 @@
     "videoAriaStudio": "Presentation video of a studio flat, made from photographs"
   },
   "home": {
-    "scrubLegende": "Every automation is built piece by piece.",
-    "scrubAlt": "Illustration: an automation network being built"
+    "seqEyebrow": "The automation takes shape",
+    "seqLegende": "Scroll",
+    "seqAlt": "Illustration: an automation branching out step by step",
+    "fondAlt": "Animated network pattern, decorative"
   }
 }
