@@ -111,6 +111,40 @@ main {
   z-index: auto;
 }
 
+/* Voile local — lisibilite d'un bloc de texte pose sur le calque anime.
+
+   Le contraste se traite AU TEXTE, pas a l'image : la video est le fond, elle
+   n'est pas assombrie pour laisser passer les libelles. Le voile ne couvre
+   donc que l'emprise d'un bloc, avec une chute a zero sur les bords, et le
+   reseau reste lisible partout ailleurs.
+
+   Ni backdrop-filter ni blur : un flou permanent au-dessus d'une video plein
+   cadre est un cout par image, et cette page tourne a 13 images par seconde
+   sur WebKit. Un degrade est peint une fois et composite gratuitement.
+
+   z-index -1 avec isolation:isolate — sans l'isolation, un empilement negatif
+   peut glisser derriere le fond d'un ancetre au lieu de rester sous le seul
+   texte du bloc. */
+.voile-texte {
+  position: relative;
+  isolation: isolate;
+}
+
+.voile-texte::before {
+  content: '';
+  position: absolute;
+  inset: -1.75rem -2.5rem;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(
+    115% 105% at 22% 50%,
+    rgba(9, 9, 11, 0.94) 0%,
+    rgba(9, 9, 11, 0.88) 38%,
+    rgba(9, 9, 11, 0.6) 72%,
+    rgba(9, 9, 11, 0) 100%
+  );
+}
+
 /* Scrollbar */
 ::-webkit-scrollbar {
   width: 6px;

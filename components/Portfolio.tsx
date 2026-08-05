@@ -40,7 +40,8 @@ function TextColumn({ p }: { p: Product }) {
       whileInView={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
       viewport={{ once: true, margin: "-80px" }}
-      className="flex flex-col justify-center"
+      /* Voile local : cette colonne de texte est posee sur le calque anime. */
+      className="voile-texte flex flex-col justify-center"
     >
       <div className="flex items-center gap-2 mb-5 flex-wrap">
         <span
@@ -175,7 +176,10 @@ export default function Portfolio() {
       id="produits"
       className="relative"
       style={{
-        background: "#09090b",
+        // Fond volontairement transparent : le calque anime de FondSections
+        // passe DERRIERE cette section. Un aplat #09090b ici le masquait
+        // entierement — c'etait la cause du calque invisible en bas de bloc.
+        background: "transparent",
         borderTop: "1px solid var(--border)",
         borderBottom: "1px solid var(--border)",
       }}
@@ -186,7 +190,8 @@ export default function Portfolio() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-          className="mb-12 md:mb-16"
+          /* Voile local : en-tete de section posee sur le calque anime. */
+          className="voile-texte mb-12 md:mb-16"
         >
           <div
             className="text-[11px] font-medium tracking-[3px] uppercase mb-4 flex items-center gap-2"

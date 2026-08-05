@@ -75,31 +75,34 @@ export default function HowItWorks() {
       className="py-24 px-10 max-[900px]:px-5 max-[900px]:py-16"
       style={{ maxWidth: 1200, margin: "0 auto" }}
     >
-      <div
-        className="text-[11px] font-medium tracking-[3px] uppercase mb-4 flex items-center gap-2"
-        style={{ color: "var(--gold)" }}
-      >
-        <span className="block w-4 h-px" style={{ background: "var(--gold)" }} />
-        {t("eyebrow")}
+      {/* Voile local : ce bloc est pose sur le calque anime. */}
+      <div className="voile-texte mb-16">
+        <div
+          className="text-[11px] font-medium tracking-[3px] uppercase mb-4 flex items-center gap-2"
+          style={{ color: "var(--gold)" }}
+        >
+          <span className="block w-4 h-px" style={{ background: "var(--gold)" }} />
+          {t("eyebrow")}
+        </div>
+        <h2
+          className="font-bold leading-tight mb-4"
+          style={{
+            fontFamily: "var(--font-syne)",
+            fontSize: "clamp(28px, 4vw, 52px)",
+            letterSpacing: "-1.5px",
+            color: "var(--text)",
+            maxWidth: 900,
+          }}
+        >
+          {t("title")}
+        </h2>
+        <p
+          className="text-[16px] font-light"
+          style={{ color: "var(--text-muted)", maxWidth: 700, lineHeight: 1.7 }}
+        >
+          {t("subtitle")}
+        </p>
       </div>
-      <h2
-        className="font-bold leading-tight mb-4"
-        style={{
-          fontFamily: "var(--font-syne)",
-          fontSize: "clamp(28px, 4vw, 52px)",
-          letterSpacing: "-1.5px",
-          color: "var(--text)",
-          maxWidth: 900,
-        }}
-      >
-        {t("title")}
-      </h2>
-      <p
-        className="text-[16px] font-light mb-16"
-        style={{ color: "var(--text-muted)", maxWidth: 700, lineHeight: 1.7 }}
-      >
-        {t("subtitle")}
-      </p>
 
       <div className="relative" style={{ paddingLeft: 8 }}>
         {/* Vertical gold line */}
@@ -150,10 +153,16 @@ export default function HowItWorks() {
               <div
                 className="flex-1 p-6 max-[700px]:p-4"
                 style={{
-                  background: "rgba(255,255,255,0.02)",
+                  // Voile local. Le fond passe de rgba(255,255,255,0.02) —
+                  // transparent, concu pour une page sans calque derriere — a
+                  // un aplat de couleur de page a 78 %, qui rend le texte
+                  // lisible sur le reseau anime tout en le laissant paraitre.
+                  // Le backdropFilter blur(8px) est retire : un flou permanent
+                  // au-dessus d'une video plein cadre est un cout par image,
+                  // et le voile rend le service sans ce cout.
+                  background: "rgba(9,9,11,0.78)",
                   border: "1px solid var(--border)",
                   borderRadius: "var(--radius)",
-                  backdropFilter: "blur(8px)",
                 }}
               >
                 <div className="flex items-start justify-between gap-3 mb-3 flex-wrap">
