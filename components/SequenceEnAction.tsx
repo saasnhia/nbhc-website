@@ -65,25 +65,45 @@ const PX_PAR_IMAGE = 10;
  * page reste au-dessus et en dessous, pour garder un point d'ancrage sombre
  * pendant toute la traversee.
  */
-const HAUTEUR_BANDE = "55vh";
+const BANDE_VH = 55;
+const HAUTEUR_BANDE = `${BANDE_VH}vh`;
+
+/**
+ * Hauteur de la SECTION, et decalage de l'epinglage.
+ *
+ * Elle reservait 100 vh dont la premiere moitie etait vide par construction : la
+ * bande balayait l'ecran a opacite nulle, si bien que le visiteur traversait un
+ * ecran entierement noir. Mesure : onze positions consecutives sous 3,2 de
+ * luminance, soit environ 900 px de defilement dans le vide, pour 420 px
+ * seulement qui montraient quelque chose.
+ *
+ * La section descend a 75 vh, ce qui laisse 10 vh de noir de page au-dessus et
+ * en dessous de la bande et garantit que la section precedente ne quitte jamais
+ * completement le cadre avant que la bande soit en place. L'epinglage est decale
+ * de 12,5 vh vers le bas pour que la bande reste centree pendant la course :
+ * 12,5 + 10 = 22,5 vh, soit (100 - 55) / 2.
+ */
+const SECTION_VH = 75;
+const DEBUT_EPINGLAGE_VH = (100 - BANDE_VH) / 2 - (SECTION_VH - BANDE_VH) / 2;
+
+/**
+ * Distance de glissement pendant laquelle l'opacite monte, en unites de
+ * viewport : de l'entree de la bande par le bas jusqu'au debut de l'epinglage.
+ *
+ * LA BANDE EST DESORMAIS VISIBLE PENDANT CE GLISSEMENT, et le critere anti-flash
+ * tient quand meme. Une opacite CONSTANTE a 1 pendant le glissement donnerait
+ * bien 17,9 sur 100 px au moment ou l'interieur opaque traverse l'ecran — c'est
+ * ce qui avait impose de le rendre invisible. Mais une opacite qui monte
+ * lineairement avec le glissement ne vaut encore que 0,44 a cet instant precis,
+ * ce qui ramene le pic a 7,9. Le produit surface x opacite etant quadratique, sa
+ * pente maximale tombe en fin de glissement, quand la surface ne bouge plus.
+ */
+const GLISSEMENT_VH = 100 - (SECTION_VH - BANDE_VH) / 2 - DEBUT_EPINGLAGE_VH;
 
 /**
  * Distance de la descente d'opacite apres l'epinglage, en pixels de defilement.
  *
- * LA MONTEE, ELLE, SE JOUE PENDANT L'EPINGLAGE, et c'est une contrainte de
- * physique, pas un choix. Quand la bande entre dans le viewport elle defile a la
- * vitesse du scroll : chaque rangee de son interieur opaque, a environ 155 de
- * luminance, ajoute (155 - 9) / 860 = 0,17 a la moyenne du viewport. Sur 100 px
- * de defilement cela fait 17, au-dela du critere de 15, et ce chiffre ne depend
- * NI de la hauteur de la bande NI de la largeur de son fondu. Mesures : 17,2
- * avec une rampe lineaire sur la traversee, 23,0 en quadratique, 16,9 en racine
- * carree, 16,8 en exposant 0,4 avec la bande ramenee a 55 % et le fondu a 30 %.
- *
- * On rend donc ce balayage invisible — opacite nulle tant que l'epinglage n'a
- * pas commence — et la montee se joue ensuite sur les 420 px d'epinglage, ou la
- * bande est IMMOBILE. L'amplitude de 43 s'y etale a 11,4 pour 100 px. La bande
- * apparait donc en meme temps qu'elle se construit, ce qui est exactement
- * l'intention : une apparition, pas un objet qui arrive.
+ * La descente se joue apres l'epinglage, pendant que la bande quitte le cadre.
  */
 const SORTIE = 900;
 const REPLI = "/sequences/enaction-fixe.jpg";
@@ -216,16 +236,16 @@ export default function SequenceEnAction({ alt }: Props) {
 
     const declencheur = ScrollTrigger.create({
       trigger: section,
-      start: "top top",
+      start: `top ${DEBUT_EPINGLAGE_VH}%`,
       end: "+=" + NB_IMAGES * PX_PAR_IMAGE,
       pin: true,
       pinSpacing: true,
       scrub: 1,
       invalidateOnRefresh: true,
       onUpdate: (self) => {
-        // Pendant l'epinglage, l'opacite suit directement la progression du
-        // scrub : la montee et la construction avancent ensemble.
-        opacite.current = self.progress;
+        // Pendant l'epinglage la bande est a pleine force : sa montee s'est
+        // jouee pendant le glissement, ou elle etait deja visible.
+        opacite.current = 1;
         const i = Math.min(
           NB_IMAGES - 1,
           Math.max(0, Math.round(self.progress * (NB_IMAGES - 1)))
@@ -243,8 +263,10 @@ export default function SequenceEnAction({ alt }: Props) {
     const rampe = (y: number) => {
       const debut = declencheur.start;
       const fin = declencheur.end;
-      if (y <= debut) return 0;
-      if (y < fin) return (y - debut) / (fin - debut);
+      const glissement = (window.innerHeight * GLISSEMENT_VH) / 100;
+      if (y <= debut - glissement) return 0;
+      if (y < debut) return (y - (debut - glissement)) / glissement;
+      if (y <= fin) return 1;
       return Math.max(0, 1 - (y - fin) / SORTIE);
     };
 
@@ -290,7 +312,7 @@ export default function SequenceEnAction({ alt }: Props) {
       // collant en aval. La lecon vient du calque de fond, elle vaut ici aussi.
       className="relative w-full"
       style={{
-        height: anime ? "100vh" : "auto",
+        height: anime ? `${SECTION_VH}vh` : "auto",
         background: "var(--bg)",
         overflowX: "clip",
       }}
