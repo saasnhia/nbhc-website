@@ -5,7 +5,7 @@ import WhyNow from "@/components/WhyNow";
 import Sectors from "@/components/Sectors";
 import VideoShowcase from "@/components/VideoShowcase";
 import SequenceEnAction from "@/components/SequenceEnAction";
-import FondAnime from "@/components/FondAnime";
+import FondSections from "@/components/FondSections";
 import HowItWorks from "@/components/HowItWorks";
 import Portfolio from "@/components/Portfolio";
 import Pricing from "@/components/Pricing";
@@ -105,10 +105,11 @@ export default async function Home({
         alt={t("seqAlt")}
       />
       <VideoShowcase />
-      {/* Respiration animee avant l'explication du fonctionnement. */}
-      <FondAnime alt={t("fondAlt")} />
-      <HowItWorks />
-      <Portfolio />
+      {/* Calque anime derriere ces deux sections, pas entre elles. */}
+      <FondSections>
+        <HowItWorks />
+        <Portfolio />
+      </FondSections>
       <Pricing />
       <Differentiators />
       <FAQ />
