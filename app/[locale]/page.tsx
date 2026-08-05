@@ -98,12 +98,9 @@ export default async function Home({
       <Hero />
       <WhyNow />
       <Sectors />
-      {/* On voit l'automatisation se construire, puis on la pilote. */}
-      <SequenceEnAction
-        eyebrow={t("seqEyebrow")}
-        legende={t("seqLegende")}
-        alt={t("seqAlt")}
-      />
+      {/* Amene la section suivante, sans rien enoncer : le sens est porte par
+          le lecteur interactif. Plus de sur-titre ni de legende. */}
+      <SequenceEnAction alt={t("seqAlt")} />
       <VideoShowcase />
       {/* Calque anime derriere ces trois sections, pas entre elles.
           Tarifs est inclus : la sortie du calque a la frontiere
