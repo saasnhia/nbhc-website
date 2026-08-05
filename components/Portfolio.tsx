@@ -133,7 +133,11 @@ function ProductSection({ p }: { p: Product }) {
         <div style={{ order: textOnLeft ? 0 : 1 }} className="max-lg:order-2">
           <TextColumn p={p} />
         </div>
-        <div style={{ order: textOnLeft ? 1 : 0 }} className="max-lg:order-1">
+        {/* relative z-10 : le voile de la colonne de texte deborde de 45 % et
+            depasse la gouttiere. Dans un conteneur en grille, l'ordre de
+            peinture suit l'ordre modifie par `order` — quand le texte est a
+            droite il peint APRES la maquette, et son voile l'assombrirait. */}
+        <div style={{ order: textOnLeft ? 1 : 0 }} className="max-lg:order-1 relative z-10">
           <MockupColumn p={p} />
         </div>
       </div>

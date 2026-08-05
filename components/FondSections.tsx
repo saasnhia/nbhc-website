@@ -77,7 +77,14 @@ export default function FondSections({ children }: { children: React.ReactNode }
   }, [reduit]);
 
   return (
-    <div className="relative" style={{ background: "var(--bg)" }}>
+    // overflowX clip, et surtout PAS hidden. Les voiles locaux debordent
+    // horizontalement des blocs de texte ; sur un ecran etroit le bloc occupe
+    // presque toute la largeur, donc ce debordement creait une barre de
+    // defilement horizontale — mesure : 39 a 74 px selon la largeur, contre 0 a
+    // 1440. `clip` decoupe sans creer de conteneur de defilement, ce qui laisse
+    // le calque collant se resoudre contre le viewport ; `hidden` en ferait un
+    // scrollport et le calque cesserait de coller.
+    <div className="relative" style={{ background: "var(--bg)", overflowX: "clip" }}>
       <div aria-hidden="true" className="pointer-events-none absolute inset-0">
         <div className="sticky top-0 h-screen overflow-hidden">
           {reduit ? (
