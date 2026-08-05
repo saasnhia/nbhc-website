@@ -30,6 +30,16 @@
 // resout alors contre une boite qui ne defile pas — donc ne colle plus.
 import { useCallback, useEffect, useRef, useSyncExternalStore } from "react";
 
+/**
+ * Hauteur des deux fondus de l'enveloppe, et decalage de celle-ci vers le haut.
+ *
+ * Une seule valeur pour les deux, en unites de viewport : le fondu d'entree
+ * doit couvrir exactement la zone dont l'enveloppe a ete remontee, sinon il
+ * deborderait sur le contenu ou laisserait une marche. 65 % du viewport — un
+ * fondu court se voit autant qu'une coupure.
+ */
+const FONDU = "65vh";
+
 const POSTER = "/fond/fond-anime-poster.jpg";
 const BUREAU = "/fond/fond-anime.mp4";
 const MOBILE = "/fond/fond-anime-mobile.mp4";
@@ -84,7 +94,21 @@ export default function FondSections({ children }: { children: React.ReactNode }
     // 1440. `clip` decoupe sans creer de conteneur de defilement, ce qui laisse
     // le calque collant se resoudre contre le viewport ; `hidden` en ferait un
     // scrollport et le calque cesserait de coller.
-    <div className="relative" style={{ background: "var(--bg)", overflowX: "clip" }}>
+    // MARGE NEGATIVE COMPENSEE PAR UNE MARGE INTERNE EGALE. L'enveloppe demarre
+    // ainsi FONDU px plus haut sans deplacer d'un pixel le contenu qu'elle
+    // porte. Le fondu d'entree se joue donc derriere la section EN ACTION, qui
+    // la precede, et le maillage est deja a pleine force la ou le premier titre
+    // apparait. Sans ce decalage, le fondu occupait les 600 premiers pixels de
+    // l'enveloppe et le reseau n'atteignait sa pleine force qu'APRES le titre.
+    <div
+      className="relative"
+      style={{
+        background: "var(--bg)",
+        overflowX: "clip",
+        marginTop: `-${FONDU}`,
+        paddingTop: FONDU,
+      }}
+    >
       <div aria-hidden="true" className="pointer-events-none absolute inset-0">
         <div className="sticky top-0 h-screen overflow-hidden">
           {reduit ? (
@@ -110,6 +134,21 @@ export default function FondSections({ children }: { children: React.ReactNode }
           )}
         </div>
       </div>
+
+      {/* FONDUS DE L'ENVELOPPE, au-dessus de la video et sous le contenu.
+          Deux degrades plats, rasterises une fois : aucun mask-image, aucun
+          filter, aucun blur, donc aucun cout par image. C'est la seule raison
+          de proceder ainsi. */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 top-0"
+        style={{ height: FONDU, background: "linear-gradient(to bottom, var(--bg), transparent)" }}
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 bottom-0"
+        style={{ height: FONDU, background: "linear-gradient(to top, var(--bg), transparent)" }}
+      />
 
       <div className="relative">{children}</div>
     </div>

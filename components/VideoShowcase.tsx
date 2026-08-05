@@ -72,8 +72,13 @@ export default function VideoShowcase() {
         maxWidth: 1320,
         margin: "0 auto",
         borderRadius: 28,
+        // Base OPAQUE sous le degrade translucide. Le degrade est inchange, et
+        // comme cette carte reposait deja sur la couleur de page, son rendu ne
+        // bouge pas. Ce qui change, c'est qu'elle devient couvrante : le fondu
+        // d'entree du calque anime se joue derriere elle, et sans cette base le
+        // maillage se lisait au travers, dans la moitie basse du lecteur.
         background:
-          "linear-gradient(180deg, rgba(255,255,255,0.045) 0%, rgba(255,255,255,0.012) 38%, rgba(255,255,255,0.005) 100%)",
+          "linear-gradient(180deg, rgba(255,255,255,0.045) 0%, rgba(255,255,255,0.012) 38%, rgba(255,255,255,0.005) 100%), #09090b",
         border: "1px solid var(--border)",
       }}
     >
