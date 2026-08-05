@@ -111,6 +111,75 @@ main {
   z-index: auto;
 }
 
+/* Voile local — lisibilite d'un bloc de texte pose sur le calque anime.
+
+   Le contraste se traite AU TEXTE, pas a l'image : la video est le fond, elle
+   n'est pas assombrie pour laisser passer les libelles. Le voile ne couvre
+   donc que l'emprise d'un bloc, avec une chute a zero sur les bords, et le
+   reseau reste lisible partout ailleurs.
+
+   Ni backdrop-filter ni blur : un flou permanent au-dessus d'une video plein
+   cadre est un cout par image, et cette page tourne a 13 images par seconde
+   sur WebKit. Un degrade est peint une fois et composite gratuitement.
+
+   z-index -1 avec isolation:isolate — sans l'isolation, un empilement negatif
+   peut glisser derriere le fond d'un ancetre au lieu de rester sous le seul
+   texte du bloc. */
+.voile-texte {
+  position: relative;
+  isolation: isolate;
+}
+
+/* La decroissance DEBORDE le bloc au lieu de s'arreter a sa frontiere.
+
+   Premiere version : inset -1,75rem/-2,5rem et un degrade centre a 22 %,
+   de rayons 115 % et 105 %. L'ellipse depassait donc la boite de tous les
+   cotes : sur les bords, l'alpha valait encore 0,6 a 0,8 et la boite se
+   terminait net. On devinait un rectangle derriere chaque paragraphe.
+
+   Correction en deux points. Les rayons du degrade valent 42 % de la boite :
+   l'alpha atteint zero STRICTEMENT AVANT ses bords, en laissant une marge de
+   pur zero plus large que la bande de 24 px sur laquelle le raccord est
+   verifie. Sept arrets, pour qu'aucun front ne se lise dans la descente.
+
+   DEBORDEMENT ASYMETRIQUE, et c'est une contrainte de geometrie, pas un choix
+   de gout. Ces blocs occupent 1 120 px dans un viewport de 1 440 : il ne reste
+   que 160 px de marge de chaque cote. Un debordement de 45 % horizontal ferait
+   448 px par cote, soit une boite de 2 192 px dont les deux bords lateraux
+   sortent de l'ecran — mesure faite. On ne verrait donc jamais l'extinction,
+   et surtout on ne pourrait pas la verifier. Verticalement rien ne s'y oppose
+   et on garde les 45 % ; horizontalement on prend la valeur qui permet a
+   l'alpha de retomber a zero DANS le champ visible. */
+.voile-texte::before {
+  content: '';
+  position: absolute;
+  top: calc(-45% - 1.5rem);
+  bottom: calc(-45% - 1.5rem);
+  left: calc(-8% - 1rem);
+  right: calc(-8% - 1rem);
+  z-index: -1;
+  pointer-events: none;
+  /* Le plateau haut a ete elargi apres le retrait du fondu cuit dans le calque.
+     Ce fondu assombrissait les 90 premiers et derniers pixels de l'ECRAN en
+     permanence ; en le supprimant, le maillage est passe a pleine force sur
+     toute la hauteur du viewport, et deux textes situes en peripherie de leur
+     voile sont tombes a 4,34:1 et 2,92:1, puis les sous-titres de Tarifs et de
+     HowItWorks a 4,40 et 4,38 — tous sieges en bas de leur bloc, la ou l'alpha
+     avait deja decru. Le plateau couvre donc plus large,
+     tandis que les derniers arrets sont conserves pour que l'alpha atteigne
+     toujours zero avant le bord de la boite — le raccord reste a 0,00. */
+  background: radial-gradient(
+    42% 42% at 50% 50%,
+    rgba(9, 9, 11, 0.95) 0%,
+    rgba(9, 9, 11, 0.93) 66%,
+    rgba(9, 9, 11, 0.74) 78%,
+    rgba(9, 9, 11, 0.42) 87%,
+    rgba(9, 9, 11, 0.15) 93%,
+    rgba(9, 9, 11, 0.03) 97%,
+    rgba(9, 9, 11, 0) 100%
+  );
+}
+
 /* Scrollbar */
 ::-webkit-scrollbar {
   width: 6px;

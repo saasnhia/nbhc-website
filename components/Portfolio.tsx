@@ -19,14 +19,19 @@ type Product = {
   textSide: "left" | "right";
 };
 
+// Base OPAQUE sous la teinte translucide de chaque pastille. Ces fonds a 12 %
+// laissaient passer le maillage du calque : mesure sur la page, « Bientot
+// disponible » tombait a 3,14:1 pour un seuil de 4,5 selon la maille qui
+// passait derriere. La teinte est inchangee — la pastille reposait deja sur la
+// couleur de page — mais elle ne depend plus de ce qu'il y a dessous.
 const statusBadge: Record<string, React.CSSProperties> = {
   live: {
-    background: "rgba(34,197,94,0.12)",
+    background: "linear-gradient(rgba(34,197,94,0.12), rgba(34,197,94,0.12)), #09090b",
     color: "#4ade80",
     border: "1px solid rgba(34,197,94,0.2)",
   },
   soon: {
-    background: "rgba(99,102,241,0.12)",
+    background: "linear-gradient(rgba(99,102,241,0.12), rgba(99,102,241,0.12)), #09090b",
     color: "#818cf8",
     border: "1px solid rgba(99,102,241,0.2)",
   },
@@ -40,7 +45,8 @@ function TextColumn({ p }: { p: Product }) {
       whileInView={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
       viewport={{ once: true, margin: "-80px" }}
-      className="flex flex-col justify-center"
+      /* Voile local : cette colonne de texte est posee sur le calque anime. */
+      className="voile-texte flex flex-col justify-center"
     >
       <div className="flex items-center gap-2 mb-5 flex-wrap">
         <span
@@ -132,7 +138,11 @@ function ProductSection({ p }: { p: Product }) {
         <div style={{ order: textOnLeft ? 0 : 1 }} className="max-lg:order-2">
           <TextColumn p={p} />
         </div>
-        <div style={{ order: textOnLeft ? 1 : 0 }} className="max-lg:order-1">
+        {/* relative z-10 : le voile de la colonne de texte deborde de 45 % et
+            depasse la gouttiere. Dans un conteneur en grille, l'ordre de
+            peinture suit l'ordre modifie par `order` — quand le texte est a
+            droite il peint APRES la maquette, et son voile l'assombrirait. */}
+        <div style={{ order: textOnLeft ? 1 : 0 }} className="max-lg:order-1 relative z-10">
           <MockupColumn p={p} />
         </div>
       </div>
@@ -175,7 +185,10 @@ export default function Portfolio() {
       id="produits"
       className="relative"
       style={{
-        background: "#09090b",
+        // Fond volontairement transparent : le calque anime de FondSections
+        // passe DERRIERE cette section. Un aplat #09090b ici le masquait
+        // entierement — c'etait la cause du calque invisible en bas de bloc.
+        background: "transparent",
         borderTop: "1px solid var(--border)",
         borderBottom: "1px solid var(--border)",
       }}
@@ -186,7 +199,8 @@ export default function Portfolio() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-          className="mb-12 md:mb-16"
+          /* Voile local : en-tete de section posee sur le calque anime. */
+          className="voile-texte mb-12 md:mb-16"
         >
           <div
             className="text-[11px] font-medium tracking-[3px] uppercase mb-4 flex items-center gap-2"

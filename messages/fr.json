@@ -1462,9 +1462,6 @@
     "videoAriaStudio": "Vidéo de présentation d'un studio, réalisée à partir de photos"
   },
   "home": {
-    "seqEyebrow": "L'automatisation se construit",
-    "seqLegende": "Faites défiler",
-    "seqAlt": "Illustration : une automatisation qui se ramifie étape par étape",
-    "fondAlt": "Motif de réseau animé, décoratif"
+    "seqAlt": "Illustration : une automatisation qui se ramifie étape par étape"
   }
 }

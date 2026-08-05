@@ -5,7 +5,7 @@ import WhyNow from "@/components/WhyNow";
 import Sectors from "@/components/Sectors";
 import VideoShowcase from "@/components/VideoShowcase";
 import SequenceEnAction from "@/components/SequenceEnAction";
-import FondAnime from "@/components/FondAnime";
+import FondSections from "@/components/FondSections";
 import HowItWorks from "@/components/HowItWorks";
 import Portfolio from "@/components/Portfolio";
 import Pricing from "@/components/Pricing";
@@ -98,18 +98,20 @@ export default async function Home({
       <Hero />
       <WhyNow />
       <Sectors />
-      {/* On voit l'automatisation se construire, puis on la pilote. */}
-      <SequenceEnAction
-        eyebrow={t("seqEyebrow")}
-        legende={t("seqLegende")}
-        alt={t("seqAlt")}
-      />
+      {/* Amene la section suivante, sans rien enoncer : le sens est porte par
+          le lecteur interactif. Plus de sur-titre ni de legende. */}
+      <SequenceEnAction alt={t("seqAlt")} />
       <VideoShowcase />
-      {/* Respiration animee avant l'explication du fonctionnement. */}
-      <FondAnime alt={t("fondAlt")} />
-      <HowItWorks />
-      <Portfolio />
-      <Pricing />
+      {/* Calque anime derriere ces trois sections, pas entre elles.
+          Tarifs est inclus : la sortie du calque a la frontiere
+          Portfolio/Tarifs se lisait comme une coupure nette, et prolonger
+          supprime la couture au lieu de la maquiller. Le fondu ne tombe donc
+          qu'au vrai debut et a la vraie fin du parcours couvert. */}
+      <FondSections>
+        <HowItWorks />
+        <Portfolio />
+        <Pricing />
+      </FondSections>
       <Differentiators />
       <FAQ />
       <FinalCta />

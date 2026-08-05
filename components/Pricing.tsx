@@ -44,30 +44,33 @@ export default function Pricing() {
       className="py-24 px-10 max-[900px]:px-5 max-[900px]:py-16"
       style={{ maxWidth: 1200, margin: "0 auto" }}
     >
-      <div
-        className="text-[11px] font-medium tracking-[3px] uppercase mb-4 flex items-center gap-2"
-        style={{ color: "var(--gold)" }}
-      >
-        <span className="block w-4 h-px" style={{ background: "var(--gold)" }} />
-        {t("eyebrow")}
+      {/* Voile local : cette section est desormais posee sur le calque anime. */}
+      <div className="voile-texte mb-14">
+        <div
+          className="text-[11px] font-medium tracking-[3px] uppercase mb-4 flex items-center gap-2"
+          style={{ color: "var(--gold)" }}
+        >
+          <span className="block w-4 h-px" style={{ background: "var(--gold)" }} />
+          {t("eyebrow")}
+        </div>
+        <h2
+          className="font-bold leading-tight mb-4"
+          style={{
+            fontFamily: "var(--font-syne)",
+            fontSize: "clamp(28px, 4vw, 52px)",
+            letterSpacing: "-1.5px",
+            color: "var(--text)",
+          }}
+        >
+          {t("title")}
+        </h2>
+        <p
+          className="text-[16px] font-light"
+          style={{ color: "var(--text-muted)", maxWidth: 700, lineHeight: 1.7 }}
+        >
+          {t("subtitle")}
+        </p>
       </div>
-      <h2
-        className="font-bold leading-tight mb-4"
-        style={{
-          fontFamily: "var(--font-syne)",
-          fontSize: "clamp(28px, 4vw, 52px)",
-          letterSpacing: "-1.5px",
-          color: "var(--text)",
-        }}
-      >
-        {t("title")}
-      </h2>
-      <p
-        className="text-[16px] font-light mb-14"
-        style={{ color: "var(--text-muted)", maxWidth: 700, lineHeight: 1.7 }}
-      >
-        {t("subtitle")}
-      </p>
 
       <div className="grid grid-cols-3 max-[900px]:grid-cols-1 gap-5 items-stretch">
         <div data-pricing-card className="flex flex-col h-full [&>div]:flex-1 [&>div]:flex [&>div]:flex-col">
@@ -136,7 +139,10 @@ export default function Pricing() {
       <div
         className="mt-12 p-6 max-[900px]:p-5 text-center"
         style={{
-          background: "rgba(255,255,255,0.02)",
+          // Voile local. rgba(255,255,255,0.02) etait concu pour une page sans
+          // calque derriere ; l'encart est desormais pose sur le reseau anime.
+          // Les cartes de tarifs, elles, sont deja opaques (--card #161619).
+          background: "rgba(9,9,11,0.78)",
           border: "1px solid var(--border)",
           borderRadius: "var(--radius)",
         }}

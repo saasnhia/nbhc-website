@@ -2,32 +2,110 @@
 
 // Sequence scrubee juste avant la section EN ACTION.
 //
-// Le recit : le visiteur voit une automatisation se ramifier au fil du
-// scroll, puis arrive sur EN ACTION ou il la pilote lui-meme.
+// ELLE N'A PAS A RACONTER. Le sens est porte par le lecteur interactif qui
+// suit — huit etapes, fiche rendez-vous, bouton Valider. Celle-ci AMENE la
+// section, puis cede la place : distance de scroll courte, aucun libelle,
+// aucun sur-titre, aucun indicateur de progression.
 //
-// LA RUPTURE CLAIRE EST ASSUMEE, DONC ELLE EST MISE EN SCENE. La source est
-// une animation sur fond creme, a l'oppose du fond sombre du site. Plutot que
-// de la poser en pleine largeur — ou elle ferait tache — elle est enfermee
-// dans un cadre : bordure doree fine, rayon et ombre repris des cartes du
-// site, marges genereuses autour. Le bloc clair devient une piece exposee sur
-// le fond sombre, pas un accident de montage. Les fondus haut et bas etirent
-// le passage sombre -> clair -> sombre sur toute la hauteur de la section.
+// PLEIN CADRE, PLUS DE CARTE. La version precedente enfermait la sequence dans
+// une carte a bordure doree, rayon et ombre, sur le raisonnement qu'une source
+// claire devait etre presentee comme une piece exposee. Le traitement a change :
+// les images portent desormais un duotone cuit vers (150,124,82), exactement le
+// dore du calque de fond, donc il n'y a plus de rupture claire a encadrer. Le
+// cadre, le rayon, le liseré, l'ombre et le degrade de vignettage sont retires.
+//
+// LES BORDS SONT DANS L'ALPHA DES IMAGES, pas en CSS. Chaque WebP porte un
+// fondu vertical cuit dans son canal alpha, 18 % en haut et en bas : la bande
+// se dissout dans la couleur de page sans mask-image ni filtre, donc sans cout
+// par image.
 //
 // POURQUOI UN CANVAS ET PAS UNE <video> : le seek video n'est pas fiable a
 // l'image pres, et le sens arriere varie selon le codec et le moteur. Des
 // images decodees a l'avance rendent le scrub deterministe.
 //
-// BUDGET, MESURE : 72 images WebP de 1280 px, 1045 Ko, 14 Ko l'image. Le
-// segment source ne contient que 94 images (3,62 s a 24 ips) — au-dela de 94
-// on dupliquerait. 72 en conserve 77 %, la progression reste continue ;
-// descendre a 60 laisse voir des paliers sur une croissance aussi rapide.
-import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react";
+// POLARITE INVERSEE A L'EXTRACTION. La source est une animation d'objets
+// colores sur fond GRIS CLAIR — luminance moyenne 176, mediane 200. Une rampe
+// posee telle quelle mappait le FOND vers le dore : un aplat dore plein cadre
+// avec les objets en taches sombres, l'inverse exact de l'intention. La
+// luminance est donc inversee, puis les niveaux recales pour que le fond
+// retombe sur la couleur de page.
+//
+// LOT MESURE : 42 images WebP de 1280x800, 1201 Ko, 28 Ko l'image, budget
+// 1 229 Ko. Segment 17,40 s jusqu'a la fin de la source. Aucune duplication —
+// les deux dernieres images de la source sont identiques au pixel pres, la
+// derniere est ecartee a l'extraction. Occupation 2,9 % a 29,1 %, monotone.
+// Teinte 37,6 a 38,8 degres, celle du calque de fond mesuree entre 35,9 et
+// 38,1 : les deux sequences parlent bien la meme langue.
+import { useCallback, useEffect, useRef, useSyncExternalStore } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const NB_IMAGES = 72;
+const NB_IMAGES = 42;
+
+/**
+ * Pixels de scroll par image. C'est LE critere du scrub, pas le nombre
+ * d'images : la distance epinglee vaut NB_IMAGES x cette valeur, donc chaque
+ * image dispose exactement de ce budget. On prend la valeur maximale autorisee :
+ * la montee d'opacite se jouant pendant l'epinglage, allonger celui-ci de 378 a
+ * 420 px etale d'autant l'amplitude de luminance, et le pire palier passe de
+ * 11,3 a 10,2 sur Chromium et de 14,7 a 13,2 sur WebKit. La distance reste celle
+ * d'un passage court.
+ */
+const PX_PAR_IMAGE = 10;
+
+/**
+ * Hauteur de la bande, en fraction de la hauteur du viewport.
+ *
+ * Elle N'OCCUPE PLUS TOUT L'ECRAN. Avec les couleurs de la source restaurees,
+ * une bande plein ecran ferait passer l'integralite du viewport de 9 a environ
+ * 200 de luminance puis reviendrait, sur 378 px de defilement : un flash plein
+ * ecran, inconfortable et dangereux pour une personne photosensible. Du noir de
+ * page reste au-dessus et en dessous, pour garder un point d'ancrage sombre
+ * pendant toute la traversee.
+ */
+const BANDE_VH = 55;
+const HAUTEUR_BANDE = `${BANDE_VH}vh`;
+
+/**
+ * Hauteur de la SECTION, et decalage de l'epinglage.
+ *
+ * Elle reservait 100 vh dont la premiere moitie etait vide par construction : la
+ * bande balayait l'ecran a opacite nulle, si bien que le visiteur traversait un
+ * ecran entierement noir. Mesure : onze positions consecutives sous 3,2 de
+ * luminance, soit environ 900 px de defilement dans le vide, pour 420 px
+ * seulement qui montraient quelque chose.
+ *
+ * La section descend a 75 vh, ce qui laisse 10 vh de noir de page au-dessus et
+ * en dessous de la bande et garantit que la section precedente ne quitte jamais
+ * completement le cadre avant que la bande soit en place. L'epinglage est decale
+ * de 12,5 vh vers le bas pour que la bande reste centree pendant la course :
+ * 12,5 + 10 = 22,5 vh, soit (100 - 55) / 2.
+ */
+const SECTION_VH = 75;
+const DEBUT_EPINGLAGE_VH = (100 - BANDE_VH) / 2 - (SECTION_VH - BANDE_VH) / 2;
+
+/**
+ * Distance de glissement pendant laquelle l'opacite monte, en unites de
+ * viewport : de l'entree de la bande par le bas jusqu'au debut de l'epinglage.
+ *
+ * LA BANDE EST DESORMAIS VISIBLE PENDANT CE GLISSEMENT, et le critere anti-flash
+ * tient quand meme. Une opacite CONSTANTE a 1 pendant le glissement donnerait
+ * bien 17,9 sur 100 px au moment ou l'interieur opaque traverse l'ecran — c'est
+ * ce qui avait impose de le rendre invisible. Mais une opacite qui monte
+ * lineairement avec le glissement ne vaut encore que 0,44 a cet instant precis,
+ * ce qui ramene le pic a 7,9. Le produit surface x opacite etant quadratique, sa
+ * pente maximale tombe en fin de glissement, quand la surface ne bouge plus.
+ */
+const GLISSEMENT_VH = 100 - (SECTION_VH - BANDE_VH) / 2 - DEBUT_EPINGLAGE_VH;
+
+/**
+ * Distance de la descente d'opacite apres l'epinglage, en pixels de defilement.
+ *
+ * La descente se joue apres l'epinglage, pendant que la bande quitte le cadre.
+ */
+const SORTIE = 900;
 const REPLI = "/sequences/enaction-fixe.jpg";
 const source = (i: number) =>
   `/sequences/enaction/f_${String(i + 1).padStart(3, "0")}.webp`;
@@ -53,30 +131,42 @@ function useMediaQuery(query: string) {
   );
 }
 
-type Props = { eyebrow: string; legende: string; alt: string };
+type Props = { alt: string };
 
-export default function SequenceEnAction({ eyebrow, legende, alt }: Props) {
+export default function SequenceEnAction({ alt }: Props) {
   const sectionRef = useRef<HTMLElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const barreRef = useRef<HTMLDivElement>(null);
   const images = useRef<(HTMLImageElement | null)[]>([]);
   const indexCourant = useRef(0);
-  const [charge, setCharge] = useState(0);
+  const opacite = useRef(0);
 
   const large = useMediaQuery("(min-width: 1024px)");
   const reduit = useMediaQuery("(prefers-reduced-motion: reduce)");
   const anime = large && !reduit;
 
-  /** Dessin en « cover » : le cadre est rempli quel que soit son rapport. */
+  /**
+   * Dessin en « cover », a l'opacite courante de la rampe.
+   *
+   * On efface avant de dessiner : sous une opacite inferieure a 1, un dessin
+   * pose sur le precedent s'accumulerait au lieu de le remplacer. L'opacite est
+   * appliquee par globalAlpha, donc au moment du dessin, ce qui ne coute rien —
+   * a l'oppose d'une opacite CSS sur le canvas, qui ferait recomposer la couche
+   * a chaque image.
+   */
   const dessiner = useCallback((img: HTMLImageElement) => {
     const canvas = canvasRef.current;
-    const ctx = canvas?.getContext("2d", { alpha: false });
+    // alpha CONSERVE : le fondu des bords est dans le canal alpha des
+    // images, et un contexte opaque le remplacerait par du noir.
+    const ctx = canvas?.getContext("2d", { alpha: true });
     if (!canvas || !ctx) return;
     const { width: w, height: h } = canvas;
     const r = Math.max(w / img.naturalWidth, h / img.naturalHeight);
     const dw = img.naturalWidth * r;
     const dh = img.naturalHeight * r;
+    ctx.clearRect(0, 0, w, h);
+    ctx.globalAlpha = opacite.current;
     ctx.drawImage(img, (w - dw) / 2, (h - dh) / 2, dw, dh);
+    ctx.globalAlpha = 1;
   }, []);
 
   const redimensionner = useCallback(() => {
@@ -110,42 +200,85 @@ export default function SequenceEnAction({ eyebrow, legende, alt }: Props) {
           .then(() => {
             if (annule) return;
             images.current[i] = img;
-            setCharge((n) => n + 1);
             resolve();
           })
           .catch(() => resolve());
       });
 
-    (async () => {
-      redimensionner();
+    // CHARGEMENT DIFFERE JUSQU'A L'APPROCHE DE LA SECTION.
+    //
+    // Les 42 images pesent 1 295 Ko et etaient demandees des l'hydratation,
+    // donc en concurrence avec les assets du hero : le LCP median sur WebKit
+    // passait de 492 a 632 ms, au-dela du seuil de 564. Un observateur
+    // d'intersection avec une marge d'une hauteur et demie d'ecran laisse le
+    // haut de page se charger d'abord, tout en laissant largement le temps de
+    // decoder avant que la section soit atteinte.
+    //
+    // Rien n'est perdu a l'ecran : l'opacite de la bande vaut zero tant que
+    // l'epinglage n'a pas commence, donc un canvas encore vide est invisible.
+    redimensionner();
+    const demarrer = async () => {
       await charger(0);
       if (annule) return;
       const premiere = images.current[0];
       if (premiere) dessiner(premiere);
       for (let i = 1; i < NB_IMAGES && !annule; i++) await charger(i);
-    })();
+    };
+    const observateur = new IntersectionObserver(
+      (entrees) => {
+        if (!entrees[0].isIntersecting) return;
+        observateur.disconnect();
+        void demarrer();
+      },
+      { rootMargin: "150% 0px" }
+    );
+    observateur.observe(section);
 
     const declencheur = ScrollTrigger.create({
       trigger: section,
-      start: "top top",
-      end: () => "+=" + window.innerHeight * 1.25,
+      start: `top ${DEBUT_EPINGLAGE_VH}%`,
+      end: "+=" + NB_IMAGES * PX_PAR_IMAGE,
       pin: true,
       pinSpacing: true,
       scrub: 1,
       invalidateOnRefresh: true,
       onUpdate: (self) => {
-        // L'indicateur dore suit la progression : c'est le seul element qui
-        // rattache visuellement le bloc clair a la charte pendant le scrub.
-        if (barreRef.current) {
-          barreRef.current.style.transform = `scaleX(${self.progress})`;
-        }
+        // Pendant l'epinglage la bande est a pleine force : sa montee s'est
+        // jouee pendant le glissement, ou elle etait deja visible.
+        opacite.current = 1;
         const i = Math.min(
           NB_IMAGES - 1,
           Math.max(0, Math.round(self.progress * (NB_IMAGES - 1)))
         );
-        if (i === indexCourant.current) return;
         indexCourant.current = i;
         const img = images.current[i];
+        if (img) dessiner(img);
+      },
+    });
+
+    // RAMPE D'OPACITE, calculee sur les positions de defilement REELLES du
+    // declencheur d'epinglage plutot que sur une fraction de la traversee : ce
+    // sont ses bornes qui doivent encadrer la montee, et elles dependent de la
+    // hauteur du viewport.
+    const rampe = (y: number) => {
+      const debut = declencheur.start;
+      const fin = declencheur.end;
+      const glissement = (window.innerHeight * GLISSEMENT_VH) / 100;
+      if (y <= debut - glissement) return 0;
+      if (y < debut) return (y - (debut - glissement)) / glissement;
+      if (y <= fin) return 1;
+      return Math.max(0, 1 - (y - fin) / SORTIE);
+    };
+
+    const fondu = ScrollTrigger.create({
+      trigger: section,
+      start: "top bottom",
+      end: "bottom top",
+      onUpdate: (self) => {
+        const a = Math.max(0, Math.min(1, rampe(self.scroll())));
+        if (Math.abs(a - opacite.current) < 0.004) return;
+        opacite.current = a;
+        const img = images.current[indexCourant.current];
         if (img) dessiner(img);
       },
     });
@@ -164,116 +297,51 @@ export default function SequenceEnAction({ eyebrow, legende, alt }: Props) {
       annule = true;
       clearTimeout(minuteur);
       window.removeEventListener("resize", auRedimensionnement);
+      observateur.disconnect();
       declencheur.kill();
+      fondu.kill();
       images.current = [];
     };
   }, [anime, dessiner, redimensionner]);
 
-  const pret = charge >= Math.min(10, NB_IMAGES);
-
   return (
     <section
       ref={sectionRef}
-      className="relative w-full overflow-hidden flex flex-col items-center justify-center"
-      style={{ height: anime ? "100vh" : "auto", background: "var(--bg)" }}
+      // overflowX clip et jamais hidden : un ancetre en overflow:hidden devient
+      // un conteneur de defilement, ce qui casserait tout positionnement
+      // collant en aval. La lecon vient du calque de fond, elle vaut ici aussi.
+      className="relative w-full"
+      style={{
+        height: anime ? `${SECTION_VH}vh` : "auto",
+        background: "var(--bg)",
+        overflowX: "clip",
+      }}
     >
-      <div className="w-full px-10 max-[1100px]:px-6 py-16 max-[1023px]:py-14"
-           style={{ maxWidth: 1240, margin: "0 auto" }}>
+      {anime ? (
+        // BANDE PLEINE LARGEUR, CENTREE, moins haute que l'ecran. Aucun
+        // conteneur, aucun rayon, aucune bordure, aucune ombre, aucun libelle :
+        // ce n'est pas une carte, c'est une apparition. Les bords se dissolvent
+        // par le canal alpha des images, la bande entiere par la rampe
+        // d'opacite appliquee au dessin.
         <div
-          className="text-[11px] font-medium tracking-[3px] uppercase mb-5 flex items-center gap-2"
-          style={{ color: "var(--gold)" }}
+          className="absolute inset-x-0 top-1/2 w-full -translate-y-1/2"
+          style={{ height: HAUTEUR_BANDE }}
         >
-          <span className="block w-6 h-px" style={{ background: "var(--gold)" }} />
-          {eyebrow}
+          <canvas ref={canvasRef} aria-hidden="true" className="block h-full w-full" />
         </div>
-
-        {/* Le cadre : c'est lui qui fait tenir le bloc clair sur le fond
-            sombre. Bordure doree, rayon et ombre repris des cartes du site. */}
-        <div
-          className="relative w-full overflow-hidden"
-          style={{
-            aspectRatio: "1600 / 1000",
-            borderRadius: 16,
-            border: "1px solid var(--gold-border)",
-            boxShadow: "0 16px 36px rgba(0,0,0,0.55)",
-            background: "#0e0e10",
-          }}
-        >
-          {anime ? (
-            <canvas ref={canvasRef} aria-hidden="true" className="absolute inset-0 h-full w-full block" />
-          ) : (
-            // Sous 1024 px et en mouvement reduit : une image, aucune sequence.
-            <img
-              src={REPLI}
-              alt={alt}
-              loading="lazy"
-              decoding="async"
-              className="absolute inset-0 h-full w-full object-cover"
-            />
-          )}
-          {/* Adoucit la rencontre entre le creme de l'image et le dore du
-              cadre. Un degrade radial et non un box-shadow interne : le flou
-              d'une ombre de 90 px coutait 1 image par seconde sur WebKit,
-              mesure a l'appui, alors qu'un degrade est rasterise une fois. */}
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-0"
-            style={{
-              borderRadius: 16,
-              background:
-                "radial-gradient(120% 120% at 50% 50%, transparent 55%, rgba(10,10,11,0.34) 100%)",
-            }}
-          />
-        </div>
-
-        <div className="mt-5 flex items-center gap-4">
-          {/* Indicateur de progression, en doré. */}
-          <div
-            aria-hidden="true"
-            className="h-px flex-1 overflow-hidden"
-            style={{ background: "var(--gold-border)" }}
-          >
-            <div
-              ref={barreRef}
-              className="h-px w-full"
-              style={{
-                background: "var(--gold)",
-                transform: "scaleX(0)",
-                transformOrigin: "left center",
-              }}
-            />
-          </div>
-          <p className="text-[12px] font-light tracking-[1.5px] uppercase shrink-0"
-             style={{ color: "var(--text-muted)" }}>
-            {legende}
-          </p>
-        </div>
-      </div>
-
-      {/* Fondus genereux : le passage sombre -> clair -> sombre est etire sur
-          toute la hauteur, pour qu'il se lise comme une transition voulue. */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 top-0 h-40"
-        style={{ background: "linear-gradient(to bottom, var(--bg), transparent)" }}
-      />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 bottom-0 h-40"
-        style={{ background: "linear-gradient(to top, var(--bg), transparent)" }}
-      />
-
-      {anime && !pret && (
-        <div
-          aria-hidden="true"
-          className="absolute bottom-6 right-8 h-px"
-          style={{ width: 40, background: "var(--gold-border)" }}
-        >
-          <div
-            className="h-px"
-            style={{ width: `${Math.round((charge / NB_IMAGES) * 100)}%`, background: "var(--gold)" }}
-          />
-        </div>
+      ) : (
+        // Sous 1024 px et en mouvement reduit : une image, aucune sequence, et
+        // aucune image de sequence telechargee. Elle reste DANS LE FLUX et la
+        // section prend sa hauteur : la bande centree dans 100 vh laisserait
+        // 45 % de vide sur un ecran ou la hauteur est la ressource rare.
+        <img
+          src={REPLI}
+          alt={alt}
+          loading="lazy"
+          decoding="async"
+          className="block w-full"
+          style={{ aspectRatio: "1280 / 440" }}
+        />
       )}
     </section>
   );
