@@ -45,12 +45,16 @@ function useMediaQuery(query: string) {
 export default function FondAnime({ alt }: { alt: string }) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const reduit = useMediaQuery("(prefers-reduced-motion: reduce)");
+  const large = useMediaQuery("(min-width: 1024px)");
+  // Sous 1024 px on sert le poster : 829 Ko de decor sur un forfait mobile ne
+  // se justifient pas, et c'est la meme regle que partout ailleurs sur le site.
+  const anime = large && !reduit;
 
   // Hors de l'ecran, une video en lecture continue de decoder : c'est du
   // travail perdu qui pese sur le reste de la page. On la met en pause.
   useEffect(() => {
     const v = videoRef.current;
-    if (!v || reduit) return;
+    if (!v || !anime) return;
     const observateur = new IntersectionObserver(
       ([e]) => {
         if (e.isIntersecting) void v.play().catch(() => {});
@@ -60,7 +64,7 @@ export default function FondAnime({ alt }: { alt: string }) {
     );
     observateur.observe(v);
     return () => observateur.disconnect();
-  }, [reduit]);
+  }, [anime]);
 
   return (
     <section
@@ -68,7 +72,7 @@ export default function FondAnime({ alt }: { alt: string }) {
       className="relative w-full overflow-hidden"
       style={{ height: "50vh", minHeight: 300, background: "var(--bg)" }}
     >
-      {reduit ? (
+      {!anime ? (
         <img
           src={POSTER}
           alt={alt}
