@@ -16,9 +16,18 @@
 // navigateur ne se rabat pas sur la source suivante. C'est ce qui rendait le
 // calque precedent invisible.
 //
-// FORMAT VERTICAL 720x1440. Le calque couvre deux sections empilees, soit un
-// bloc d'environ 1:2 sur un ecran large. Une video 16:9 etiree dans ce cadre
-// subissait un agrandissement de 4x.
+// FORMAT VIEWPORT ET CALQUE COLLANT. La premiere version dimensionnait le
+// fichier sur le BLOC entier — 720x1440 pour deux sections empilees. Mesure du
+// rendu : 1440x2940, soit un agrandissement de 2,04x. Les mailles doublaient
+// et le reseau cessait de se lire ; il n'en restait que deux ou trois a
+// l'ecran. Le fichier est desormais au format du viewport et le calque est
+// rendu en position collante : il reste a l'echelle 1:1 quelle que soit la
+// hauteur du bloc traverse. Mesure apres correction : 27 a 47 noeuds dans la
+// bande centrale.
+//
+// L'OVERFLOW EST SUR L'ELEMENT COLLANT, PAS SUR SON PARENT. Un ancetre en
+// overflow:hidden devient un conteneur de defilement, et l'element collant se
+// resout alors contre une boite qui ne defile pas — donc ne colle plus.
 import { useCallback, useEffect, useRef, useSyncExternalStore } from "react";
 
 const POSTER = "/fond/fond-anime-poster.jpg";
@@ -69,28 +78,30 @@ export default function FondSections({ children }: { children: React.ReactNode }
 
   return (
     <div className="relative" style={{ background: "var(--bg)" }}>
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
-        {reduit ? (
-          <img
-            src={POSTER}
-            alt=""
-            loading="lazy"
-            decoding="async"
-            className="h-full w-full object-cover"
-          />
-        ) : (
-          <video
-            ref={videoRef}
-            poster={POSTER}
-            muted
-            playsInline
-            loop
-            preload="none"
-            className="h-full w-full object-cover"
-            // Une seule source, et en MP4 : voir l'entete du fichier.
-            src={large ? BUREAU : MOBILE}
-          />
-        )}
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0">
+        <div className="sticky top-0 h-screen overflow-hidden">
+          {reduit ? (
+            <img
+              src={POSTER}
+              alt=""
+              loading="lazy"
+              decoding="async"
+              className="h-full w-full object-cover"
+            />
+          ) : (
+            <video
+              ref={videoRef}
+              poster={POSTER}
+              muted
+              playsInline
+              loop
+              preload="none"
+              className="h-full w-full object-cover"
+              // Une seule source, et en MP4 : voir l'entete du fichier.
+              src={large ? BUREAU : MOBILE}
+            />
+          )}
+        </div>
       </div>
 
       <div className="relative">{children}</div>
