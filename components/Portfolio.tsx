@@ -19,14 +19,19 @@ type Product = {
   textSide: "left" | "right";
 };
 
+// Base OPAQUE sous la teinte translucide de chaque pastille. Ces fonds a 12 %
+// laissaient passer le maillage du calque : mesure sur la page, « Bientot
+// disponible » tombait a 3,14:1 pour un seuil de 4,5 selon la maille qui
+// passait derriere. La teinte est inchangee — la pastille reposait deja sur la
+// couleur de page — mais elle ne depend plus de ce qu'il y a dessous.
 const statusBadge: Record<string, React.CSSProperties> = {
   live: {
-    background: "rgba(34,197,94,0.12)",
+    background: "linear-gradient(rgba(34,197,94,0.12), rgba(34,197,94,0.12)), #09090b",
     color: "#4ade80",
     border: "1px solid rgba(34,197,94,0.2)",
   },
   soon: {
-    background: "rgba(99,102,241,0.12)",
+    background: "linear-gradient(rgba(99,102,241,0.12), rgba(99,102,241,0.12)), #09090b",
     color: "#818cf8",
     border: "1px solid rgba(99,102,241,0.2)",
   },

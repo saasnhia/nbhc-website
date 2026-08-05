@@ -159,14 +159,21 @@ main {
   right: calc(-8% - 1rem);
   z-index: -1;
   pointer-events: none;
+  /* Le plateau haut a ete elargi apres le retrait du fondu cuit dans le calque.
+     Ce fondu assombrissait les 90 premiers et derniers pixels de l'ECRAN en
+     permanence ; en le supprimant, le maillage est passe a pleine force sur
+     toute la hauteur du viewport, et deux textes situes en peripherie de leur
+     voile sont tombes a 4,34:1 et 2,92:1. Le plateau couvre donc plus large,
+     tandis que les derniers arrets sont conserves pour que l'alpha atteigne
+     toujours zero avant le bord de la boite — le raccord reste a 0,00. */
   background: radial-gradient(
     42% 42% at 50% 50%,
-    rgba(9, 9, 11, 0.94) 0%,
-    rgba(9, 9, 11, 0.9) 30%,
-    rgba(9, 9, 11, 0.76) 50%,
-    rgba(9, 9, 11, 0.46) 68%,
-    rgba(9, 9, 11, 0.18) 84%,
-    rgba(9, 9, 11, 0.04) 94%,
+    rgba(9, 9, 11, 0.95) 0%,
+    rgba(9, 9, 11, 0.93) 45%,
+    rgba(9, 9, 11, 0.8) 62%,
+    rgba(9, 9, 11, 0.45) 78%,
+    rgba(9, 9, 11, 0.16) 90%,
+    rgba(9, 9, 11, 0.03) 96%,
     rgba(9, 9, 11, 0) 100%
   );
 }
