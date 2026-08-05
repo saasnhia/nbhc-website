@@ -195,7 +195,7 @@ export default function SequenceEnAction({ eyebrow, legende, alt }: Props) {
             aspectRatio: "1600 / 1000",
             borderRadius: 16,
             border: "1px solid var(--gold-border)",
-            boxShadow: "0 46px 110px rgba(0,0,0,0.62), 0 0 0 1px rgba(255,255,255,0.02) inset",
+            boxShadow: "0 16px 36px rgba(0,0,0,0.55)",
             background: "#0e0e10",
           }}
         >
@@ -211,15 +211,17 @@ export default function SequenceEnAction({ eyebrow, legende, alt }: Props) {
               className="absolute inset-0 h-full w-full object-cover"
             />
           )}
-
-          {/* Vignetage interne : adoucit la rencontre entre le creme de
-              l'image et le doré du cadre. */}
+          {/* Adoucit la rencontre entre le creme de l'image et le dore du
+              cadre. Un degrade radial et non un box-shadow interne : le flou
+              d'une ombre de 90 px coutait 1 image par seconde sur WebKit,
+              mesure a l'appui, alors qu'un degrade est rasterise une fois. */}
           <div
             aria-hidden="true"
             className="pointer-events-none absolute inset-0"
             style={{
-              boxShadow: "inset 0 0 90px 18px rgba(10,10,11,0.30)",
               borderRadius: 16,
+              background:
+                "radial-gradient(120% 120% at 50% 50%, transparent 55%, rgba(10,10,11,0.34) 100%)",
             }}
           />
         </div>
