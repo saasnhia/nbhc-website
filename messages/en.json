@@ -403,7 +403,7 @@
     "subtitle": "Four clear steps, no surprises. This is the path of a custom automation. You know what will be done, when, and how much it costs.",
     "step1Number": "01",
     "step1Title": "We understand your daily life",
-    "step1Desc": "30 minutes via video call. We identify the tasks wasting your time, evaluate whether AI can help, and estimate the concrete gain. Free, no commitment.",
+    "step1Desc": "We identify the tasks wasting your time, evaluate whether AI can help.",
     "step1Badge": "30 min · Free",
     "step2Number": "02",
     "step2Title": "We design your solution",
@@ -411,12 +411,14 @@
     "step2Badge": "1-2 weeks",
     "step3Number": "03",
     "step3Title": "We build and test on your real cases",
-    "step3Desc": "We build the workflow, calibrate the AI on your business vocabulary, and test on 100 to 500 real cases. Not a prototype — a system that runs.",
+    "step3Desc": "We build the workflow, calibrate the AI on your business vocabulary. Not a prototype — a system that runs.",
     "step3Badge": "2-5 weeks",
     "step4Number": "04",
     "step4Title": "We deliver, you decide what's next",
-    "step4Desc": "The build is tested and delivered. If you want us to keep monitoring, updating and maintaining the automation, the support plan takes over — it's your call, never forced.",
-    "step4Badge": "Delivery + optional support"
+    "step4Desc": "The build is tested and delivered. If you want us to keep going, the support plan takes over — it's never forced.",
+    "step4Badge": "Delivery + optional support",
+    "illustrationAlt": "A chain of four stations on a gold-edged plinth, linked by a continuous golden line: a flat frame on the ground, an open post framework, the same framework with a roof, then a solid volume. Between the second and third station, an upright sheet bearing a golden band. After the fourth, the line breaks and resumes as a detached segment.",
+    "legendeSignature": "before you sign"
   },
   "products": {
     "eyebrow": "OUR PRODUCTS",

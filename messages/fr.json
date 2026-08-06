@@ -403,7 +403,7 @@
     "subtitle": "Quatre étapes claires, sans surprise. C'est le parcours d'une automatisation sur mesure. Vous savez ce qui sera fait, quand, et combien ça coûte.",
     "step1Number": "01",
     "step1Title": "On comprend votre quotidien",
-    "step1Desc": "30 minutes en visio. On identifie les tâches qui vous font perdre du temps, on évalue si l'IA peut aider, et on estime le gain concret. Gratuit, sans engagement.",
+    "step1Desc": "On identifie les tâches qui vous font perdre du temps, on évalue si l'IA peut aider.",
     "step1Badge": "30 min · Gratuit",
     "step2Number": "02",
     "step2Title": "On conçoit votre solution",
@@ -411,12 +411,14 @@
     "step2Badge": "1-2 semaines",
     "step3Number": "03",
     "step3Title": "On construit et on teste sur vos vrais cas",
-    "step3Desc": "On construit le workflow, on calibre l'IA sur votre vocabulaire métier, et on teste sur 100 à 500 cas réels. Pas de prototype — un système qui tourne.",
+    "step3Desc": "On construit le workflow, on calibre l'IA sur votre vocabulaire métier. Pas de prototype — un système qui tourne.",
     "step3Badge": "2-5 semaines",
     "step4Number": "04",
     "step4Title": "On livre, vous décidez de la suite",
-    "step4Desc": "Le build est testé et livré. Si vous voulez qu'on continue à surveiller, mettre à jour et maintenir l'automatisation, l'accompagnement prend le relais — à vous de choisir, ce n'est jamais imposé.",
-    "step4Badge": "Livraison + accompagnement optionnel"
+    "step4Desc": "Le build est testé et livré. Si vous voulez qu'on continue, l'accompagnement prend le relais — ce n'est jamais imposé.",
+    "step4Badge": "Livraison + accompagnement optionnel",
+    "illustrationAlt": "Une chaîne de quatre stations posées sur un socle bordé d'or, reliées par une ligne dorée continue : un cadre plat au sol, une ossature de poteaux ajourée, la même ossature couverte d'une toiture, puis un volume plein. Entre la deuxième et la troisième station, une feuille dressée portant une bande dorée. Après la quatrième, la ligne s'interrompt et reprend en un segment détaché.",
+    "legendeSignature": "avant de signer"
   },
   "products": {
     "eyebrow": "NOS PRODUITS",
