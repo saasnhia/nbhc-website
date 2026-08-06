@@ -4,6 +4,38 @@
 // de contrôle humain doit se lire exactement pareil dans tous les secteurs.
 // Le curseur y est monté DANS le bouton, donc sa cible est le centre du
 // bouton par construction, quelle que soit la mise en page du secteur.
+//
+// ===========================================================================
+// RÈGLE D'ANIMATION — ON N'ANIME QUE transform ET opacity
+// ===========================================================================
+// Animer width, height, top, left, margin, padding ou gap force le navigateur
+// à refaire une mise en page À CHAQUE IMAGE. transform et opacity ne passent
+// pas par la mise en page : le compositeur les applique seul.
+//
+// Ici la composition tourne à 30 ips dans la page du prospect, à côté de Lenis
+// et de ScrollTrigger. Chaque image qui déclenche une mise en page se paie deux
+// fois : en ips, et en décalages de mise en page rapportés au CLS.
+//
+// LA CONVERSION EST GRATUITE quand on garde la géométrie rendue identique :
+//   taille  ->  taille de base FIXE + transform: scale(e)
+//               et si l'élément a une bordure, la contre-mettre à l'échelle
+//               (`${3 / e}px`) pour que son épaisseur rendue ne bouge pas
+//   position -> transform: translate(x, y) au lieu de top / left
+// Un cas fait : les ondes d'appel de scenes.tsx (ShotAppel).
+//
+// ELLE N'EST PAS TOUJOURS GRATUITE, et on ne la force pas : scaleY sur une
+// barre à coins arrondis déforme les arrondis. Les 54 barres d'onde de
+// ShotRepond et ShotComprend animent donc encore leur height, en connaissance
+// de cause — et le commentaire est là pour qu'on ne le redécouvre pas.
+//
+// DEUX FAITS MESURÉS, pour ne pas se tromper sur ce que le CLS prouve :
+//   - Chromium NE RAPPORTE RIEN en dessous de 3 px de déplacement (1 et 2 px
+//     donnent zéro entrée, trois essais chacun ; à partir de 3 px la valeur
+//     attendue tombe juste). Une animation douce de height reste donc sous le
+//     radar du CLS tout en coûtant une mise en page par image.
+//   - Un CLS conforme NE DIT DONC RIEN sur le travail de mise en page. Pour
+//     juger celui-là il faut mesurer les ips, pas le CLS.
+// ===========================================================================
 import React from "react";
 import { Easing, interpolate, useCurrentFrame } from "remotion";
 import { COLORS, FONTS, SURFACE } from "./theme";
