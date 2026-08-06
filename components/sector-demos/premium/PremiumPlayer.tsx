@@ -9,12 +9,36 @@
 // L'habillage suit la charte de la home (rayons --radius, bordures --border,
 // glassmorphism léger) pour que la section appartienne visuellement à la page ;
 // seule la démo elle-même garde son accent bleu, qui est son identité.
-import { Player, type PlayerRef } from "@remotion/player";
+//
+// CE COMPOSANT EST RENDU IMMEDIATEMENT, et seul son canvas attend.
+// L'ossature (surtitre, titre, contexte, liste d'etapes, benefice) est du DOM
+// leger : elle ne justifiait pas d'etre differee, et l'attendre coutait un saut
+// de mise en page de 359 px quand le lecteur remplacait un substitut de 439 px.
+// Les deux imports lourds — @remotion/player et DEMO_REGISTRY, 205 Ko mesures —
+// vivent desormais dans PremiumPlayerCanvas, charge par next/dynamic derriere une
+// boite au meme rapport 16/9. Voir aussi la meme correction cote mobile dans
+// MobileDemoVideo.
+import type { PlayerRef } from "@remotion/player";
+import type { ComponentType } from "react";
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
-import { DEMO_REGISTRY, type DemoKey } from "./registry";
-import { PREMIUM_FORMAT } from "./theme";
+import type { DemoKey } from "./registry";
 import { PHONE_STEPS } from "./steps";
 import { premiumFontClass } from "./premiumFonts";
+
+/**
+ * Boite du media, au rapport exact du Player. C'est elle qui tient la place
+ * pendant le chargement du canvas : meme largeur, meme rapport, donc meme
+ * hauteur, donc aucun decalage au remplacement.
+ */
+const BoiteMedia = () => (
+  <div style={{ width: "100%", aspectRatio: "16 / 9", display: "block" }} />
+);
+
+type ProprietesCanvas = {
+  demoKey: DemoKey;
+  refLecteur: React.RefObject<PlayerRef | null>;
+  onPret: () => void;
+};
 
 type Rect = { left: number; top: number; width: number; height: number };
 
@@ -30,6 +54,8 @@ type Props = {
   title?: string;
   contextLine?: string;
   benefit?: string;
+  /** Faux tant que la section n'est pas approchee : le canvas n'est pas demande. */
+  chargerMedia?: boolean;
 };
 
 export default function PremiumPlayer({
@@ -43,8 +69,8 @@ export default function PremiumPlayer({
   title,
   contextLine,
   benefit,
+  chargerMedia = true,
 }: Props) {
-  const entry = DEMO_REGISTRY[demoKey];
   const steps = PHONE_STEPS; // découpage commun aux deux moules
   const playerRef = useRef<PlayerRef>(null);
   const holderRef = useRef<HTMLDivElement>(null);
@@ -53,6 +79,29 @@ export default function PremiumPlayer({
   const [awaitingClick, setAwaitingClick] = useState(false);
   const [autoplay, setAutoplay] = useState(true);
   const [buttonRect, setButtonRect] = useState<Rect | null>(null);
+  // Le canvas arrive apres le reste : les effets qui pilotent le Player doivent
+  // donc attendre ce signal au lieu de se contenter du montage du composant.
+  const [pret, setPret] = useState(false);
+  const marquerPret = useCallback(() => setPret(true), []);
+
+  // LE CANVAS EST IMPORTE PAR UN EFFET, PAS PAR next/dynamic — et c'est mesure.
+  // Avec `dynamic()` en tete de module, le chunk lourd etait demande des le
+  // premier rendu du parent, alors meme que le canvas n'etait pas monte : a
+  // 1440 px, sans le moindre defilement, la page tirait 1 294,5 Ko de JS dont un
+  // chunk de 199 Ko. Le composant etait bien differe, son chunk non — ce qui
+  // alourdissait la premiere visite, exactement ce qu'on voulait eviter.
+  // Ici l'import() ne s'evalue que quand l'effet s'execute, donc a l'approche.
+  const [Canvas, setCanvas] = useState<ComponentType<ProprietesCanvas> | null>(null);
+  useEffect(() => {
+    if (!chargerMedia) return;
+    let vivant = true;
+    void import("./PremiumPlayerCanvas").then((m) => {
+      if (vivant) setCanvas(() => m.default);
+    });
+    return () => {
+      vivant = false;
+    };
+  }, [chargerMedia]);
 
   const stopAt = useRef<number | null>(null);
   const gatePassed = useRef(false);
@@ -157,17 +206,22 @@ export default function PremiumPlayer({
     };
     p.addEventListener("frameupdate", onFrame);
     return () => p.removeEventListener("frameupdate", onFrame);
-  }, [autoplay, current, playRange, steps]);
+    // `pret` est dans les dependances parce que playerRef.current est nul avant
+    // l'arrivee du canvas : sans lui l'effet sortait sur `if (!p) return` une
+    // seule fois et l'ecouteur n'etait jamais pose.
+  }, [autoplay, current, playRange, steps, pret]);
 
   useEffect(() => {
+    if (!pret) return;
     if (reduced) {
       playerRef.current?.seekTo(steps[0].from);
       return;
     }
     playRange(steps[0].from, steps[0].to);
-    // Volontairement au montage seul : chaque onglet monte un lecteur neuf.
+    // Volontairement au premier `pret` seul : chaque onglet monte un lecteur neuf,
+    // et `pret` repasse a faux avec lui.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [pret]);
 
   const onValidate = useCallback(() => {
     const step = steps[current];
@@ -199,6 +253,20 @@ export default function PremiumPlayer({
   const listRef = useRef<HTMLOListElement>(null);
 
   useEffect(() => {
+    // PAS DE RECENTRAGE AVANT L'APPROCHE, et cette garde n'est pas cosmetique.
+    //
+    // Ce composant est desormais rendu des le chargement de la page. Sans cette
+    // ligne, l'effet se declenchait au montage, donc en haut de page, et
+    // scrollIntoView TIRAIT LE VISITEUR jusqu'a #en-action : mesure a l'appui,
+    // #en-action passait de y = 5529 a y = 385 sans le moindre coup de molette.
+    // Auparavant le composant n'existait pas encore a ce moment-la, ce qui
+    // rendait le probleme invisible — et mon instrument de CLS neutralise
+    // scrollIntoView, donc il ne pouvait pas le voir non plus.
+    //
+    // La garde retablit exactement le calendrier d'avant : le recentrage ne
+    // s'active qu'a partir de l'approche. Le comportement lui-meme n'est pas
+    // touche, il est seulement rendu a son moment.
+    if (!chargerMedia) return;
     // Recentrage UNIQUEMENT quand la liste est en colonne laterale (desktop).
     // Sous ce seuil la liste est SOUS le lecteur : recentrer l'etape poussait
     // le lecteur hors de l'ecran — on tapait une etape et la demo disparaissait.
@@ -207,7 +275,7 @@ export default function PremiumPlayer({
     if (!window.matchMedia("(min-width: 1024px)").matches) return;
     const el = listRef.current?.children[current] as HTMLElement | undefined;
     el?.scrollIntoView({ block: "nearest", behavior: reduced ? "auto" : "smooth" });
-  }, [current, reduced]);
+  }, [current, reduced, chargerMedia]);
 
   // Une seule forme de puce, verticale, a toutes les largeurs.
   const stepButton = (i: number, s: { key: string }) => (
@@ -329,23 +397,11 @@ export default function PremiumPlayer({
               background: "#08080B",
             }}
           >
-            <Player
-              ref={playerRef}
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              component={entry.component as any}
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              inputProps={entry.props as any}
-              durationInFrames={PREMIUM_FORMAT.durationFrames}
-              fps={PREMIUM_FORMAT.fps}
-              compositionWidth={PREMIUM_FORMAT.width}
-              compositionHeight={PREMIUM_FORMAT.height}
-              style={{ width: "100%", aspectRatio: "16 / 9", display: "block" }}
-              controls={false}
-              clickToPlay={false}
-              doubleClickToFullscreen={false}
-              spaceKeyToPlayOrPause={false}
-              acknowledgeRemotionLicense
-            />
+            {Canvas ? (
+              <Canvas demoKey={demoKey} refLecteur={playerRef} onPret={marquerPret} />
+            ) : (
+              <BoiteMedia />
+            )}
 
             {awaitingClick && buttonRect && (
               <button
