@@ -72,14 +72,16 @@
   "whyNow": {
     "eyebrow": "LE CONSTAT",
     "title": "L'IA change tout. Et vous le voyez.",
-    "subtitle": "Vous voyez passer les actus sur l'IA tous les jours. ChatGPT, agents autonomes, automatisation... Mais concrètement, comment en profiter quand on gère un cabinet, un chantier, une agence ? Par où commencer ? C'est exactement la question à laquelle on répond.",
-    "card1Title": "Vous perdez du temps",
-    "card1Desc": "Devis à la main, relances oubliées, reporting copié-collé... Des heures chaque semaine sur des tâches que l'IA traite en secondes.",
-    "card2Title": "Vous ne savez pas par où commencer",
-    "card2Desc": "100 outils IA sur le marché, zéro qui s'adapte à votre métier. Vous avez besoin d'un expert, pas d'un énième abonnement.",
-    "card3Title": "Vos concurrents s'y mettent",
-    "card3Desc": "Pendant que vous hésitez, d'autres automatisent déjà. Le bon moment pour agir, c'est maintenant.",
-    "illustrationAlt": "Un poste de travail vu de trois quarts : une pile de onze feuilles, puis trois, puis une seule, reliées par une chaîne dorée qui aboutit à un téléphone silencieux."
+    "subtitle": "Vous voyez passer les actus sur l'IA tous les jours. Mais concrètement, comment en profiter quand on gère un cabinet, un chantier, une agence ? C'est exactement la question à laquelle on répond.",
+    "panel1Title": "Vous perdez du temps",
+    "panel1Text": "Devis à la main, relances oubliées, reporting copié-collé.",
+    "panel1Alt": "Un poste de travail vu de trois quarts : une pile de onze feuilles, puis une pile de trois, puis une seule feuille, relayées par des segments dorés, et un téléphone posé au bout du plateau.",
+    "panel2Title": "Par où commencer ?",
+    "panel2Text": "100 outils IA sur le marché, zéro qui s'adapte à votre métier.",
+    "panel2Alt": "Un amas de blocs cubiques identiques posé sur un socle, à côté d'une plaque fendue d'une longue rainure bordée d'or ; deux blocs reposent en travers de la fente sans y entrer.",
+    "panel3Title": "Vos concurrents s'y mettent",
+    "panel3Text": "Pendant que vous hésitez, d'autres automatisent déjà.",
+    "panel3Alt": "Deux postes de travail identiques sur deux socles séparés bordés d'or : sur celui de gauche une haute pile de documents et un téléphone dont sortent trois traits dorés, sur celui de droite une seule feuille et un téléphone muet."
   },
   "sectors": {
     "eyebrow": "POUR QUI",
