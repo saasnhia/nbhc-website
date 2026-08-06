@@ -61,9 +61,13 @@ const LOCALES = (process.argv[3] || "fr,en").split(",");
 // jour cette liste — c'est le point ou l'intention est ecrite.
 const ATTENDUS = [
   {
-    quoi: "sizes du panneau 1 de WhyNow (pleine largeur)",
+    // DEUX OCCURRENCES ET NON UNE, et c'est le garde-fou qui l'a signale : le
+    // panneau 1 de WhyNow et la chaine de HowItWorks portent la MEME valeur, tous
+    // deux etant en pleine largeur dans un conteneur de 1 200 px. Si l'une des deux
+    // sections change de mise en page, ce compte doit bouger et l'ecart sera vu.
+    quoi: "sizes pleine largeur — WhyNow panneau 1 ET chaine de HowItWorks",
     texte: 'sizes="(max-width: 900px) calc(100vw - 40px), (max-width: 1200px) calc(100vw - 80px), 1120px"',
-    occurrences: 1,
+    occurrences: 2,
   },
   {
     quoi: "sizes des panneaux 2 et 3 de WhyNow (emplacement de 590 px)",
@@ -83,6 +87,21 @@ const ATTENDUS = [
   {
     quoi: "srcset du panneau 3, quatre paliers",
     texte: "/whynow-caisses-370.webp 370w, /whynow-caisses-590.webp 590w, /whynow-caisses-740.webp 740w, /whynow-caisses-1180.webp 1180w",
+    occurrences: 1,
+  },
+  {
+    quoi: "srcset de la chaine de HowItWorks, quatre paliers",
+    texte: "/hiw-chaine-760.webp 760w, /hiw-chaine-1120.webp 1120w, /hiw-chaine-1480.webp 1480w, /hiw-chaine-2240.webp 2240w",
+    occurrences: 1,
+  },
+  {
+    quoi: "source mobile de HowItWorks, avec sa requete de media et ses dimensions",
+    texte: 'media="(max-width: 767px)"',
+    occurrences: 1,
+  },
+  {
+    quoi: "srcset du recadrage mobile de HowItWorks",
+    texte: "/hiw-etape2-340.webp 340w, /hiw-etape2-440.webp 440w, /hiw-etape2-680.webp 680w, /hiw-etape2-878.webp 878w",
     occurrences: 1,
   },
 ];
