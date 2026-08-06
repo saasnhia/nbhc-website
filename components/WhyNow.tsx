@@ -154,7 +154,14 @@ const SEUIL_COTE_A_COTE = 1145;
 // maitre : c'est ce couple qui reserve la boite et met le CLS a zero.
 const LATERALES = [
   { fichier: "whynow-outils", largeur: 1480, hauteur: 925 },   // 369 px a 590
-  { fichier: "whynow-postes", largeur: 1480, hauteur: 631 },   // 252 px a 590
+  // SECONDE VERSION DU PANNEAU 3. La premiere montrait deux postes de travail et
+  // elle RIMAIT avec le panneau 1 sur la page : on n'y lisait pas deux bureaux, on
+  // lisait le bureau du panneau 1 deux fois. L'agrandissement a 590 px n'a pas
+  // resolu la rime, il l'a aggravee — il a rendu lisible l'identite du mobilier en
+  // meme temps que la separation des socles. Celle-ci n'emprunte aucun objet ni au
+  // panneau 1 ni au panneau 2 : deux caisses, l'une close, l'autre ouverte avec de
+  // l'or dedans.
+  { fichier: "whynow-caisses", largeur: 1480, hauteur: 1034 }, // 412 px a 590
 ] as const;
 const PALIERS_LATERAUX = [370, 590, 740, 1180] as const;
 
@@ -170,7 +177,13 @@ function TitrePanneau({ children }: { children: React.ReactNode }) {
       className="font-bold m-0"
       style={{
         fontFamily: "var(--font-syne)",
-        fontSize: "clamp(19px, 2.1vw, 26px)",
+        // PLAFOND A 24 px ET NON 26, ET C'EST UNE MESURE. A 26 px, le titre du
+        // panneau 3 — « Vos concurrents s'y mettent », 27 caracteres — ne tenait pas
+        // dans la colonne de 358 px et passait sur deux lignes alors que les deux
+        // autres tenaient sur une. Un titre sur deux lignes au milieu de trois
+        // panneaux casse le rythme. A 24 px les trois tiennent sur une ligne,
+        // verifie au navigateur, et le rapport au h2 passe de 2,00 a 2,17.
+        fontSize: "clamp(19px, 2.1vw, 24px)",
         letterSpacing: "-0.5px",
         lineHeight: 1.2,
         color: "var(--text)",
