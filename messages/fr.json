@@ -78,7 +78,8 @@
     "card2Title": "Vous ne savez pas par où commencer",
     "card2Desc": "100 outils IA sur le marché, zéro qui s'adapte à votre métier. Vous avez besoin d'un expert, pas d'un énième abonnement.",
     "card3Title": "Vos concurrents s'y mettent",
-    "card3Desc": "Pendant que vous hésitez, d'autres automatisent déjà. Le bon moment pour agir, c'est maintenant."
+    "card3Desc": "Pendant que vous hésitez, d'autres automatisent déjà. Le bon moment pour agir, c'est maintenant.",
+    "illustrationAlt": "Un poste de travail vu de trois quarts : une pile de onze feuilles, puis trois, puis une seule, reliées par une chaîne dorée qui aboutit à un téléphone silencieux."
   },
   "sectors": {
     "eyebrow": "POUR QUI",
