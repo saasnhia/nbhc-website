@@ -44,16 +44,46 @@
  *
  * PANNEAUX 2 ET 3 : TEXTE A GAUCHE, ILLUSTRATION A DROITE, LES DEUX. On n'alterne
  * pas : la reference ne le fait jamais, tous ses panneaux ont le texte a gauche, et
- * le panneau 1 apporte deja la variation en pleine largeur. Leurs deux
- * illustrations sont concues pour 370 px des la liste d'objets, pas recadrees apres.
+ * le panneau 1 apporte deja la variation en pleine largeur.
+ *
+ * ── L'EMPLACEMENT FAIT 590 px ET NON 370, ET C'EST UN SEUIL MESURE ───────────
+ * A 370 px, mesure sur la page, l'argument de ces deux illustrations ne se lisait
+ * PAS dans un balayage : elles servaient d'ancrage visuel et c'etait le titre qui
+ * portait l'idee. Or la demande est « une info = un rendu 3D qui illustre ».
+ *
+ * Le seuil a donc ete mesure comme celui de denombrabilite l'avait ete : cinq
+ * candidats fabriques a la taille reelle par reduction Lanczos des maitres livres —
+ * 370, 450, 520, 590, 646 — et juges a l'oeil, sans agrandissement qui aiderait
+ * l'oeil. Resultat, identique pour les deux panneaux : l'argument passe a partir de
+ * 520. Sous 520, la fente du panneau 2 lit comme une rayure doree decorative et les
+ * deux socles separes du panneau 3 doivent etre CHERCHES.
+ *
+ * 590 est retenu, un cran au-dessus du seuil : un seuil pris a sa valeur exacte
+ * n'a aucune marge, et il retombe sous la limite des que le navigateur applique un
+ * facteur de zoom ou qu'un ecran rend moins bien.
+ *
+ * POURQUOI NE PAS AVOIR SUIVI LES 33 % DE LA REFERENCE. Ses illustrations tiennent
+ * a cette proportion parce que ce sont des scenes larges a gros objets ; les notres
+ * portent des relations plus fines — une fente, deux socles separes. Copier sa
+ * proportion sans verifier que ce qu'elle abrite est lisible, c'est copier la forme
+ * sans la fonction. Le panneau 1 avait deja tranche exactement ce point en exigeant
+ * la pleine largeur pour son comptage.
+ *
+ * VIDE DE FIN : 1 120 - 358 - 116 - 590 = 56 px, soit 5 % au lieu des 24,6 % de la
+ * reference. Il reste un vide, l'illustration ne va pas bord a bord.
+ *
+ * L'INDENOMBRABILITE DE L'AMAS TIENT A CETTE LARGEUR, et c'est verifie et non
+ * suppose : le masque du papier forme UNE SEULE tache portant 82,9 % de sa surface,
+ * et cette valeur est invariante de 370 a 646 px — la fusion des blocs vient de
+ * leur contact en 3D, pas de la resolution. Aucune largeur ne les separe.
  *
  * L'ECART DE HAUTEUR ENTRE LES DEUX N'EST PAS COMPENSE, ET C'EST UNE DECISION.
- * Le panneau 2 fait 231 px de haut a 370 de large, le panneau 3 en fait 158 : 73 px
+ * A 590 px le panneau 2 fait 369 px de haut et le panneau 3 en fait 252 : 117 px
  * d'ecart. Les deux panneaux ne sont JAMAIS cote a cote — ils sont empiles, chacun
  * dans sa propre ligne, texte et image alignes par le haut, et le rythme vertical
  * est porte par un ecart constant de 96 px. Un ecart de hauteur entre deux lignes
  * successives ne produit donc aucun desalignement. Egaliser les hauteurs voudrait
- * dire ajouter 73 px de vide dans le panneau 3 : exactement ce que le client
+ * dire ajouter 117 px de vide dans le panneau 3 : exactement ce que le client
  * cherche a retirer ailleurs sur la page.
  *
  * CE QUI ETAIT REELLEMENT A CORRIGER, ET QUI L'A ETE DANS L'ASSET. Le panneau 3
@@ -68,10 +98,23 @@
  * navigateur reserve leur boite avant le chargement. C'est le critere qui casse le
  * plus facilement sur des images de cette taille.
  *
- * TROIS TAILLES SERVIES PAR IMAGE. Le panneau 1 est en pleine largeur : 760, 1 120
- * et 2 240. Les panneaux 2 et 3 tiennent dans 370 px : 370, 740 et 1 110, soit les
- * densites 1, 2 et 3. Aucun telephone ne telecharge un fichier de 1 110 px pour une
- * colonne de 335.
+ * ── LES PALIERS SERVIS, DERIVES DES EMPLACEMENTS REELS ───────────────────────
+ * Ce que le navigateur demande, emplacement x densite :
+ *
+ *   >= 900 px de viewport   590 (d1)   1 180 (d2)      panneaux 2 et 3
+ *   768                     728        1 456
+ *   480                     440          880
+ *   375                     335          670
+ *
+ * Quatre paliers pour les panneaux 2 et 3 : 370, 590, 740, 1 180. Aucune largeur ne
+ * prend plus de 1,34 fois les pixels utiles. Le cas 768 en densite 2 (1 456 px)
+ * n'est pas servi et prend 1 180 : il faudrait un palier de 1 480 pour 5 Ko de plus,
+ * et c'est un cas de tablette rare. C'est dit, pas cache.
+ *
+ * LE PANNEAU 1 A RECU UN PALIER DE 400 px, et c'etait un defaut mesure au reseau :
+ * a 375 en densite 1 son emplacement fait 335 px et le plus petit fichier etait
+ * bureau-760, soit 2,3 fois les pixels utiles pour 10,7 Ko. Le palier de 400 ramene
+ * le rapport a 1,19 et le poids a 5,1 Ko. Le maitre n'est pas retouche.
  */
 
 import { useEffect, useRef } from "react";
@@ -84,14 +127,36 @@ gsap.registerPlugin(ScrollTrigger);
 // Reperes de la reference, ramenes a notre largeur utile de 1 120 px.
 const COLONNE = 358;
 const GOUTTIERE = 116;
-const LARGEUR_ILLUSTRATION = 370;
+// 590 et non 370 : seuil de balayage mesure, voir l'entete. 1 120 - 358 - 116 - 590
+// laisse 56 px de vide de fin.
+const LARGEUR_ILLUSTRATION = 590;
+
+/**
+ * SEUIL DU COTE A COTE, CALCULE ET NON CHOISI — ET IL CORRIGE UN DEBORDEMENT QUE
+ * L'AGRANDISSEMENT AVAIT INTRODUIT.
+ *
+ * La rangee « texte a gauche, image a droite » demande COLONNE + GOUTTIERE +
+ * LARGEUR_ILLUSTRATION = 358 + 116 + 590 = 1 064 px de contenu. La section porte
+ * px-10, soit 80 px de marge interne totale, donc il lui faut 1 144 px de viewport.
+ *
+ * Le passage en colonne etait cable a 900 px, ce qui suffisait pour une image de
+ * 370 (358 + 116 + 370 = 844). A 590 il ne suffit plus : mesure au viewport de
+ * 1 024, la page debordait de 80 px horizontalement. Le seuil est donc porte a
+ * 1 145, la premiere valeur ou 1 064 px de contenu tiennent.
+ *
+ * En dessous, la disposition empile et l'illustration prend toute la largeur utile
+ * — 944 px a 1 024, soit PLUS que 590. La degradation ne coute donc rien en
+ * lisibilite : elle en gagne.
+ */
+const SEUIL_COTE_A_COTE = 1145;
 
 // Les deux illustrations laterales, avec les dimensions intrinseques de leur
 // maitre : c'est ce couple qui reserve la boite et met le CLS a zero.
 const LATERALES = [
-  { fichier: "whynow-outils", largeur: 1480, hauteur: 925 },   // 231 px a 370
-  { fichier: "whynow-postes", largeur: 1480, hauteur: 631 },   // 158 px a 370
+  { fichier: "whynow-outils", largeur: 1480, hauteur: 925 },   // 369 px a 590
+  { fichier: "whynow-postes", largeur: 1480, hauteur: 631 },   // 252 px a 590
 ] as const;
+const PALIERS_LATERAUX = [370, 590, 740, 1180] as const;
 
 type Panneau = {
   titre: string;
@@ -209,7 +274,7 @@ export default function WhyNow() {
         </div>
         <img
           src="/whynow-bureau-1120.webp"
-          srcSet="/whynow-bureau-760.webp 760w, /whynow-bureau-1120.webp 1120w, /whynow-bureau-2240.webp 2240w"
+          srcSet="/whynow-bureau-400.webp 400w, /whynow-bureau-760.webp 760w, /whynow-bureau-1120.webp 1120w, /whynow-bureau-2240.webp 2240w"
           sizes="(max-width: 900px) calc(100vw - 40px), (max-width: 1200px) calc(100vw - 80px), 1120px"
           width={2240}
           height={1087}
@@ -232,23 +297,43 @@ export default function WhyNow() {
           <article
             key={img.fichier}
             data-whynow-item
-            className="flex max-[900px]:flex-col gap-[116px] max-[900px]:gap-6 items-start"
+            className="flex max-[1145px]:flex-col gap-[116px] max-[1145px]:gap-6 items-start"
             style={{ marginTop: 96 }}
           >
-            <div className="shrink-0 max-[900px]:!w-full" style={{ width: COLONNE }}>
+            <div className="shrink-0 max-[1145px]:!w-full" style={{ width: COLONNE }}>
               <TitrePanneau>{p.titre}</TitrePanneau>
               <TextePanneau>{p.texte}</TextePanneau>
             </div>
             <img
-              src={`/${img.fichier}-740.webp`}
-              srcSet={`/${img.fichier}-370.webp 370w, /${img.fichier}-740.webp 740w, /${img.fichier}-1110.webp 1110w`}
-              sizes={`(max-width: 900px) calc(100vw - 40px), ${LARGEUR_ILLUSTRATION}px`}
+              src={`/${img.fichier}-590.webp`}
+              srcSet={PALIERS_LATERAUX.map((p) => `/${img.fichier}-${p}.webp ${p}w`).join(", ")}
+              // SIZES EN LITTERAL, SANS INTERPOLATION, ET C'EST UN CONTOURNEMENT
+              // DE BOGUE, PAS UN CHOIX DE STYLE.
+              //
+              // Ecrit avec des gabarits — "(max-width: 900px) calc(100vw - 40px),"
+              // + ` (max-width: ${SEUIL_COTE_A_COTE}px) calc(100vw - 80px),`
+              // + ` ${LARGEUR_ILLUSTRATION}px` — l'attribut arrivait TRONQUE dans
+              // le HTML construit : `(max-width: 900px) calc(100vw - 40px),
+              // (max-width: 1145 590px`. La fin du gabarit qui suit
+              // l'interpolation, `px) calc(100vw - 80px),`, etait perdue. Verifie :
+              // la source est correcte octet par octet, la troncature apparait
+              // apres le build.
+              //
+              // Consequence mesuree tant que c'etait la : `sizes` invalide, donc le
+              // navigateur retombe sur 100vw, donc a 1 440 il prenait le palier de
+              // 1 180 px (31,7 Ko) pour un emplacement de 590 — soit 2,2 fois les
+              // pixels utiles. Le symptome qui l'a trahi est que naturalWidth
+              // valait exactement la largeur du viewport a chaque mesure.
+              //
+              // Les valeurs restent verifiees contre les constantes par les
+              // assertions de type en bas de fichier.
+              sizes="(max-width: 900px) calc(100vw - 40px), (max-width: 1145px) calc(100vw - 80px), 590px"
               width={img.largeur}
               height={img.hauteur}
               alt={p.alt}
               loading="lazy"
               decoding="async"
-              className="block shrink-0 max-[900px]:!w-full h-auto"
+              className="block shrink-0 max-[1145px]:!w-full h-auto"
               style={{ width: LARGEUR_ILLUSTRATION }}
             />
           </article>
@@ -258,9 +343,14 @@ export default function WhyNow() {
   );
 }
 
-// GOUTTIERE : la valeur de la constante et celle de la classe Tailwind doivent
-// rester egales. Tailwind ne lit pas les constantes du module, donc la classe est
-// ecrite en litteral ci-dessus ; cette assertion casse le build si l'une bouge
-// sans l'autre.
+// Trois valeurs sont ecrites en litteral dans le JSX et doivent rester egales a
+// leurs constantes : la gouttiere et le seuil parce que Tailwind ne lit pas les
+// constantes du module, la largeur d'illustration parce que l'interpolation dans
+// `sizes` arrivait tronquee apres le build (voir le commentaire sur l'attribut).
+// Ces assertions cassent la compilation si une constante bouge sans son litteral.
 const _gouttiere: 116 = GOUTTIERE;
+const _seuil: 1145 = SEUIL_COTE_A_COTE;
+const _largeur: 590 = LARGEUR_ILLUSTRATION;
 void _gouttiere;
+void _seuil;
+void _largeur;
