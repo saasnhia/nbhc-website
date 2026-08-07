@@ -176,10 +176,51 @@ const SEUIL_COTE_A_COTE = 1145;
  * (0,2552 + 0,7448 = 1,0000) ; ecart vertical 0,3045 contre 0,3030 x l'ecart en
  * x predit par la docstring de la scene.
  */
-const ETIQUETTES_CAISSES = [
-  { cle: "panel3LabelVous", x: 0.2552, y: 0.4807 },
-  { cle: "panel3LabelAutres", x: 0.7448, y: 0.1761 },
+/**
+ * Un jeu d'etiquettes par panneau lateral, dans l'ordre de LATERALES : panneau 2
+ * (outils) puis panneau 3 (caisses). Toutes les ancres sortent des scenes, dans
+ * <nom>.ancres.json, ecrit APRES st.ecrire().
+ *
+ * LA PLAQUE EST DECIDEE PAR PANNEAU, ET MESUREE A CHAQUE FOIS. Elle coute en
+ * proprete visuelle, donc on ne la pose que la ou le fond l'impose. 95e centile
+ * du fond dans la boite d'etiquette, contraste avec #F0EDE6 :
+ *
+ *   panneau 2, amas      16,92:1   -> aucune plaque
+ *   panneau 2, fente     16,92:1   -> aucune plaque
+ *   panneau 3, les deux   0,86:1 et 0,90:1  -> plaque indispensable
+ *
+ * La difference n'est pas un hasard : sur les caisses, le dessus du socle eclaire
+ * occupe tout l'espace au-dessus des deux sujets, et la seule bande sombre
+ * commune est y <= 0,125, trop loin des objets. Sur outils, il suffit de monter
+ * l'ancre — de 0,30 unite au-dessus de l'amas, 0,46 au-dessus de la plaque
+ * fendue — pour retomber sur du fond de page. C'est le plus PETIT decalage qui
+ * donne du fond de page dans les deux cas : l'etiquette est aussi pres de son
+ * objet que la lumiere le permet.
+ */
+const ETIQUETTES_LATERALES = [
+  [
+    { cle: "panel2LabelOutils", x: 0.2866, y: 0.3507 },
+    { cle: "panel2LabelMetier", x: 0.6745, y: 0.1198 },
+  ],
+  [
+    { cle: "panel3LabelVous", x: 0.2552, y: 0.4807 },
+    { cle: "panel3LabelAutres", x: 0.7448, y: 0.1761 },
+  ],
 ] as const;
+
+/** Mesure, panneau par panneau. Voir le commentaire ci-dessus. */
+const PLAQUE_LATERALE = [false, true] as const;
+
+/**
+ * Panneau 1. Ancre sortie par scene_bureau_gradient.py, EXPRIMEE DANS LE CADRE
+ * LIVRE : ce maitre est le seul des trois a etre recadre — rendu 2 240 x 1 400,
+ * livre 2 240 x 1 087, 313 px retires EN HAUT (recalage des deux images, erreur
+ * moyenne 0,0000). Sans cette correction l'ancre serait decalee de 313/1087 =
+ * 0,288 de hauteur. La sonde asymetrique de la scene la valide : a la hauteur du
+ * sommet de la pile de onze feuilles, cette station rend Y = 199,3 et la station
+ * a une seule feuille Y = 9,1 — un recadrage mal compte casserait les deux.
+ */
+const ETIQUETTE_BUREAU = { x: 0.548, y: 0.1233 } as const;
 
 /**
  * POURQUOI LES DEUX ETIQUETTES PORTENT UNE PLAQUE SEMI-OPAQUE.
@@ -337,18 +378,52 @@ export default function WhyNow() {
           <TitrePanneau>{panneaux[0].titre}</TitrePanneau>
           <TextePanneau>{panneaux[0].texte}</TextePanneau>
         </div>
-        <img
-          src="/whynow-bureau-1120.webp"
-          srcSet="/whynow-bureau-400.webp 400w, /whynow-bureau-760.webp 760w, /whynow-bureau-1120.webp 1120w, /whynow-bureau-2240.webp 2240w"
-          sizes="(max-width: 900px) calc(100vw - 40px), (max-width: 1200px) calc(100vw - 80px), 1120px"
-          width={2240}
-          height={1087}
-          alt={panneaux[0].alt}
-          loading="lazy"
-          decoding="async"
-          className="block w-full h-auto"
-          style={{ marginTop: 40 }}
-        />
+        {/* Le conteneur porte la marge et la position ; l'image passe en w-full.
+            La boite est donc inchangee. */}
+        <div className="relative" style={{ marginTop: 40 }}>
+          <img
+            src="/whynow-bureau-1120.webp"
+            srcSet="/whynow-bureau-400.webp 400w, /whynow-bureau-760.webp 760w, /whynow-bureau-1120.webp 1120w, /whynow-bureau-2240.webp 2240w"
+            sizes="(max-width: 900px) calc(100vw - 40px), (max-width: 1200px) calc(100vw - 80px), 1120px"
+            width={2240}
+            height={1087}
+            alt={panneaux[0].alt}
+            loading="lazy"
+            decoding="async"
+            className="block w-full h-auto"
+          />
+          {/* UNE SEULE ETIQUETTE, DE GROUPE, et c'est un arbitrage et non une
+              economie. Mapper « devis », « relances » et « reporting » sur trois
+              piles de HAUTEURS DIFFERENTES affirmerait un classement — que les
+              devis coutent plus que les relances — que panel1Text n'enonce pas :
+              il les enumere sans les ordonner. Une etiquette de groupe nomme
+              sans classer.
+
+              PLAQUE NECESSAIRE ICI, et pour une raison propre a ce maitre : il
+              est le seul des trois a etre RECADRE, de 313 px en haut, ce qui a
+              precisement retire l'air au-dessus du sujet. Balayage du decalage :
+              0,34 -> 0,90:1 (plaque), 0,50 -> 17,02:1 sans plaque mais l'ancre
+              tombe alors a 0,0576 de hauteur, soit 4 px du bord haut au palier
+              de 400 px. Un libelle a 4 px du bord n'est pas une mise en page,
+              c'est un ecretage en attente. On garde 0,34 et la plaque. */}
+          <span
+            className="pointer-events-none absolute text-[11px] font-medium uppercase text-center"
+            style={{
+              left: `${ETIQUETTE_BUREAU.x * 100}%`,
+              top: `${ETIQUETTE_BUREAU.y * 100}%`,
+              transform: "translate(-50%, -100%)",
+              color: "var(--text)",
+              letterSpacing: 2,
+              lineHeight: 1.35,
+              maxWidth: "44%",
+              background: `rgba(9, 9, 11, ${VOILE_ETIQUETTE})`,
+              padding: "3px 7px",
+              borderRadius: 4,
+            }}
+          >
+            {t("panel1LabelGroupe")}
+          </span>
+        </div>
       </article>
 
       {/* PANNEAUX 2 ET 3 — texte a gauche, illustration a droite, les deux dans
@@ -409,8 +484,7 @@ export default function WhyNow() {
                   de flex et la largeur que l'image portait, et l'image passe en
                   w-full — la boite est donc inchangee, et il n'y a pas deux
                   chemins de mise en page a comparer. */}
-              {i === 1 &&
-                ETIQUETTES_CAISSES.map((e) => (
+              {ETIQUETTES_LATERALES[i].map((e) => (
                   <span
                     key={e.cle}
                     className="pointer-events-none absolute text-[11px] font-medium uppercase text-center"
@@ -424,14 +498,18 @@ export default function WhyNow() {
                       letterSpacing: 2,
                       lineHeight: 1.35,
                       maxWidth: "44%",
-                      background: `rgba(9, 9, 11, ${VOILE_ETIQUETTE})`,
-                      padding: "3px 7px",
-                      borderRadius: 4,
+                      ...(PLAQUE_LATERALE[i]
+                        ? {
+                            background: `rgba(9, 9, 11, ${VOILE_ETIQUETTE})`,
+                            padding: "3px 7px",
+                            borderRadius: 4,
+                          }
+                        : null),
                     }}
                   >
-                    {t(e.cle)}
-                  </span>
-                ))}
+                  {t(e.cle)}
+                </span>
+              ))}
             </div>
           </article>
         );

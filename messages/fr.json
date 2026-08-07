@@ -76,14 +76,17 @@
     "panel1Title": "Vous perdez du temps",
     "panel1Text": "Devis à la main, relances oubliées, reporting copié-collé.",
     "panel1Alt": "Un poste de travail vu de trois quarts : une pile de onze feuilles, puis une pile de trois, puis une seule feuille, relayées par des segments dorés, et un téléphone posé au bout du plateau.",
+    "panel1LabelGroupe": "devis, relances, reporting",
     "panel2Title": "Par où commencer ?",
     "panel2Text": "100 outils IA sur le marché, zéro qui s'adapte à votre métier.",
     "panel2Alt": "Un amas de blocs cubiques identiques posé sur un socle, à côté d'une plaque fendue d'une longue rainure bordée d'or ; deux blocs reposent en travers de la fente sans y entrer.",
+    "panel2LabelOutils": "outils IA",
+    "panel2LabelMetier": "votre métier",
     "panel3Title": "Vos concurrents s'y mettent",
     "panel3Text": "Pendant que vous hésitez, d'autres automatisent déjà.",
     "panel3Alt": "Deux caisses identiques posées sur un socle bordé d'or : celle de gauche est fermée, celle de droite est ouverte, son couvercle déposé et appuyé au sol contre son flanc, et une masse dorée occupe le fond de son intérieur.",
-    "panel3LabelVous": "vous hésitez",
-    "panel3LabelAutres": "d'autres automatisent déjà"
+    "panel3LabelVous": "vous",
+    "panel3LabelAutres": "d'autres"
   },
   "sectors": {
     "eyebrow": "POUR QUI",
