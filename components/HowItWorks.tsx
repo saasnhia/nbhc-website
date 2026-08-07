@@ -169,9 +169,21 @@ const SEUIL_LARGE = 768;
 /** Abscisse au sol des quatre stations, pour le tiret de rappel. */
 const X_STATIONS = [0.1278, 0.3409, 0.5541, 0.7673] as const;
 
+/**
+ * OU LE RAIL PASSE EN POINTILLE : l'abscisse de la station 04, LUE dans X_STATIONS et
+ * non recopiee. Au-dela, la scene rend la ligne doree PHYSIQUEMENT DETACHEE — c'est
+ * ainsi qu'elle code l'accompagnement optionnel, et l'etiquette « accompagnement
+ * optionnel » y pend a 0,9202. Un rail continu jusqu'au bout contredisait donc
+ * l'image qu'il longe : il annoncait une suite acquise la ou le rendu montre une
+ * option.
+ */
+const X_QUEUE = X_STATIONS[3];
+
 export default function HowItWorks() {
   const sectionRef = useRef<HTMLElement>(null);
+  const bandeRef = useRef<HTMLDivElement>(null);
   const remplissageRef = useRef<HTMLSpanElement>(null);
+  const queueRef = useRef<HTMLSpanElement>(null);
   const tiretsRef = useRef<(HTMLSpanElement | null)[]>([]);
   const reduit = usePrefersReducedMotion();
   const t = useTranslations("howItWorks");
@@ -236,31 +248,71 @@ export default function HowItWorks() {
    */
   useEffect(() => {
     const el = sectionRef.current;
+    const bande = bandeRef.current;
     const rail = remplissageRef.current;
-    if (!el || !rail) return;
+    const queue = queueRef.current;
+    if (!el || !bande || !rail || !queue) return;
     const tirets = tiretsRef.current.filter((n): n is HTMLSpanElement => n !== null);
 
     // MOUVEMENT REDUIT : LE RAIL EST PLEIN ET STATIQUE. L'information reste — le
-    // parcours entier et ses quatre etapes — et seul le mouvement part.
+    // parcours entier, ses quatre etapes et la queue detachee — seul le mouvement part.
+    // Le principal va jusqu'a X_QUEUE, la queue jusqu'au bout de SA boite.
     if (reduit) {
-      gsap.set(rail, { scaleX: 1, transformOrigin: "left center" });
+      gsap.set(rail, { scaleX: X_QUEUE, transformOrigin: "left center" });
+      gsap.set(queue, { scaleX: 1, transformOrigin: "left center" });
       if (tirets.length) gsap.set(tirets, { opacity: 1 });
       return;
     }
 
     gsap.set(rail, { scaleX: 0, transformOrigin: "left center" });
+    gsap.set(queue, { scaleX: 0, transformOrigin: "left center" });
     if (tirets.length) gsap.set(tirets, { opacity: 0 });
 
     const tl = gsap.timeline({
       scrollTrigger: {
-        trigger: el,
-        start: "top 70%",
-        end: "bottom 65%",
+        // LA PLAGE PART DE LA BANDE, PAS DE LA SECTION, ET C'EST UNE MESURE QUI L'A
+        // DECIDE. Avec `trigger: section, start: "top 70%"`, la bande n'entrait dans la
+        // fenetre qu'a 54,8 % de remplissage a 1440, 48,2 % a 1024 et 38,4 % a 768 :
+        // le visiteur decouvrait un rail deja a moitie fait, ce qui ne raconte rien.
+        //
+        // `trigger: bande, start: "bottom bottom"` place l'origine a l'instant EXACT ou
+        // le bas de la bande atteint le bas de la fenetre — donc ou la bande devient
+        // entierement visible, sa hauteur n'etant que de 24 px. La progression y vaut 0
+        // par construction, et non par reglage.
+        trigger: bande,
+        start: "bottom bottom",
+        // ET LA FIN EST ANCREE SUR LA SECTION, par endTrigger : le rail doit etre plein
+        // AVANT que la section ne quitte la fenetre.
+        //
+        // 60 % ET NON 30 %, ET C'EST LA MESURE QUI L'A CORRIGE. A `bottom 30%`, le
+        // rail n'atteignait 100 % qu'avec le bas de section a +8 px du haut de fenetre
+        // a 1440, +33 a 1024 et -30 A 768 — donc APRES la sortie. La cause n'est pas la
+        // plage mais LE LISSAGE DU SCRUB : quand la ScrollTrigger atteint sa fin, le
+        // tween a encore environ 260 px de defilement de retard a rattraper. La fin
+        // doit donc etre posee un retard AVANT la sortie, pas a la sortie.
+        //
+        // A `bottom 60%` la marge devient 540 px de cible moins ~260 px de retard, soit
+        // environ 280 px de hauteur de fenetre encore disponibles quand le rail est
+        // plein. Le retard croit avec la vitesse de defilement ; il ne peut rendre le
+        // rail QUE tardif, jamais faux.
+        endTrigger: el,
+        end: "bottom 60%",
         scrub: 1,
       },
     });
-    // duree totale 1, pour que le temps de la timeline SOIT la fraction parcourue
-    tl.to(rail, { scaleX: 1, ease: "none", duration: 1 }, 0);
+    // DUREE TOTALE 1, pour que le TEMPS de la timeline soit la fraction parcourue.
+    //
+    // Le principal couvre 0 -> X_QUEUE en un temps egal a X_QUEUE : a l'instant t sa
+    // mise a l'echelle vaut donc exactement t, et son bord droit tombe a la fraction t
+    // de la bande.
+    tl.to(rail, { scaleX: X_QUEUE, ease: "none", duration: X_QUEUE }, 0);
+    // La queue couvre X_QUEUE -> 1. Sa BOITE ne fait que (1 - X_QUEUE) de la bande,
+    // donc sa mise a l'echelle ne peut pas valoir t : elle vaut (t - X_QUEUE) / (1 -
+    // X_QUEUE). Ce qui reste vrai — et c'est l'invariant que la contrainte protege —
+    // est que SON BORD DROIT tombe a X_QUEUE + (1 - X_QUEUE) x scaleX = t. Le bout
+    // visible du rail vaut donc le temps de la timeline sur les deux elements, et les
+    // allumages places au temps de leur fraction ne peuvent pas decrocher.
+    tl.to(queue, { scaleX: 1, ease: "none", duration: 1 - X_QUEUE }, X_QUEUE);
     X_STATIONS.forEach((x, k) => {
       if (tirets[k]) tl.to(tirets[k], { opacity: 1, ease: "none", duration: 0.02 }, x);
     });
@@ -476,22 +528,63 @@ export default function HowItWorks() {
           vertical ne peut pas viser a la fois l'objet et le centre du texte ; il vise
           l'objet, qui est ce qu'il designe. */}
       {/* LE RAIL DE PROGRESSION, DANS LA BANDE QUI EXISTE DEJA.
-          Deux traits horizontaux superposes a mi-hauteur : la PISTE en or eteint, qui
-          montre le parcours entier des le depart, et le REMPLISSAGE en or plein, mis a
-          l'echelle de 0 a 1 sur la descente. Les quatre tirets s'allument quand le
-          remplissage les atteint.
+          Quatre traits a mi-hauteur : la PISTE en or eteint et le REMPLISSAGE en or
+          plein jusqu'a la station 04, puis leurs deux equivalents EN POINTILLE au-dela.
+          Les quatre tirets s'allument quand le remplissage les atteint.
+
+          POURQUOI UN z-index SUR LA BANDE, ET C'EST LA CORRECTION DU LOT.
+          Le rail rendait 7 % de son encre : il etait peint SOUS les voiles des quatre
+          colonnes. Ce n'est pas le transform residuel des revelations — GSAP le retire
+          par clearProps et le seul style en ligne restant est `opacity: 1`, qui ne cree
+          aucun contexte d'empilement. La cause est `isolation: isolate` sur
+          `.voile-texte` (globals.css:130) : elle cree un contexte d'empilement A ELLE
+          SEULE, ce qui ENFERME le ::before a z-index:-1 dans la colonne. Le pseudo ne
+          peut donc plus passer sous un element exterieur, et la colonne se peint apres
+          la bande dans l'ordre de l'arbre. Son voile deborde de 131 px au-dessus d'une
+          colonne de 238 px — la bande de 24 px est entierement dedans.
+
+          Contre-epreuves, voiles jamais touches : retirer le style en ligne de GSAP ne
+          change rien (encre mediane 25 %) ; neutraliser `isolation` la porte a 100 % ;
+          un z-index sur la bande aussi. On prend le z-index : c'est la sortie la plus
+          etroite, et elle ne retire aux colonnes aucune protection — elles sont
+          toujours sur le maillage, ou le fond mesure 0/450 pixel exact.
 
           POSITIONNEMENT SANS translateY. Un `top: 50%` + `translateY(-50%)` obligerait
           GSAP a composer sa mise a l'echelle avec une translation deja inscrite ; on
           centre donc par une marge negative et le transform ne porte QUE le scaleX.
           C'est aussi la regle du depot : on n'animate ni largeur ni hauteur. */}
-      <div data-hiw-rail className="relative h-6 max-[768px]:hidden" aria-hidden="true">
+      <div
+        ref={bandeRef}
+        data-hiw-rail
+        className="relative h-6 max-[768px]:hidden"
+        aria-hidden="true"
+        style={{ zIndex: 1 }}
+      >
         <span
           data-hiw-rail-piste
           className="absolute block"
-          style={{ left: 0, right: 0, top: "50%", marginTop: -0.5, height: 1,
-                   background: "var(--gold-dim)" }}
+          style={{ left: 0, right: `${(1 - X_QUEUE) * 100}%`, top: "50%", marginTop: -0.5,
+                   height: 1, background: "var(--gold-dim)" }}
         />
+        {/* LA PISTE DE LA QUEUE EST POINTILLEE, ELLE AUSSI. Si seul le remplissage
+            l'etait, le pointille se lirait comme des points POSES SUR un trait continu,
+            donc comme un trait abime. En pointillant les deux, la portion au-dela de la
+            station 04 est detachee qu'elle soit parcourue ou non — ce que dit le rendu,
+            ou le dernier segment de la ligne doree est physiquement separe.
+            LE MOTIF COMMENCE PAR UN VIDE, pour que la rupture tombe exactement sur la
+            station et non un tiret plus loin. */}
+        <span
+          data-hiw-rail-piste-queue
+          className="absolute block"
+          style={{ left: `${X_QUEUE * 100}%`, right: 0, top: "50%", marginTop: -0.5,
+                   height: 1,
+                   backgroundImage:
+                     "repeating-linear-gradient(to right, transparent 0 6px,"
+                     + " var(--gold-dim) 6px 14px)" }}
+        />
+        {/* LE REMPLISSAGE PRINCIPAL garde la boite PLEINE LARGEUR et ne monte qu'a
+            X_QUEUE : sa mise a l'echelle vaut donc exactement le temps de la timeline,
+            et son bord droit tombe a la fraction parcourue. */}
         <span
           ref={remplissageRef}
           data-hiw-rail-rempli
@@ -501,6 +594,21 @@ export default function HowItWorks() {
                    // Etat de depart declare ICI et pas seulement dans la timeline : sans
                    // cette ligne le rail apparait plein le temps d'une image, comme le
                    // filet de Contact avant sa correction.
+                   transform: "scaleX(0)", transformOrigin: "left center" }}
+        />
+        {/* LE REMPLISSAGE DE LA QUEUE, meme motif que sa piste mais en or plein. Sa
+            boite commence a la station 04, donc son echelle va de 0 a 1 sur (1 - X_QUEUE)
+            de la bande — voir la note de la timeline sur ce que « scaleX egale le temps »
+            devient ici. */}
+        <span
+          ref={queueRef}
+          data-hiw-rail-queue
+          className="absolute block"
+          style={{ left: `${X_QUEUE * 100}%`, right: 0, top: "50%", marginTop: -0.5,
+                   height: 1,
+                   backgroundImage:
+                     "repeating-linear-gradient(to right, transparent 0 6px,"
+                     + " var(--gold) 6px 14px)",
                    transform: "scaleX(0)", transformOrigin: "left center" }}
         />
         {X_STATIONS.map((x, k) => (
