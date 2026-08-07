@@ -46,11 +46,28 @@ export default function Contact() {
         );
       }
       if (lineRef.current) {
+        // ECHELLE, PAS HAUTEUR — voir la regle d'animation en tete de
+        // components/sector-demos/premium/shared.tsx.
+        //
+        // Ce filet animait sa `height` de 0 a 120 : la mise en page etait donc
+        // refaite a chaque image, et le contenu en dessous SE FAISAIT POUSSER
+        // pendant que le filet grandissait. Mesure : #contact passait de 505 a
+        // 643 px pendant la descente, la page de 14 515 a 14 653, et le bandeau
+        // comme le pied de page sautaient jusqu'a 44 px d'un releve au suivant.
+        // Chacun de ces sauts depasse le seuil de 3 px de Chromium, d'ou une
+        // traine de decalages valant 0,0075 a 0,0143.
+        //
+        // La place est desormais reservee (height: 120 en dur) et le filet se
+        // TRACE sur du contenu deja en place. scaleY est exact ici : c'est un
+        // rectangle de 2 px sans arrondi et sans bordure, donc rien ne se
+        // deforme — contrairement aux barres d'onde de ShotRepond, qui gardent
+        // leur height pour cette raison precise.
         gsap.fromTo(
           lineRef.current,
-          { height: 0 },
+          { scaleY: 0, transformOrigin: "top" },
           {
-            height: 120,
+            scaleY: 1,
+            transformOrigin: "top",
             duration: 1,
             ease: "power2.out",
             scrollTrigger: { trigger: lineRef.current, start: "top 80%", once: true },
@@ -109,10 +126,15 @@ export default function Contact() {
             ref={lineRef}
             style={{
               width: 2,
-              height: 0,
+              height: 120,
               background: "var(--gold)",
               marginLeft: 40,
               marginBottom: 32,
+              // L'etat de depart est declare ICI et pas seulement dans le tween :
+              // le tween n'existe qu'apres le premier effet, et sans cette ligne
+              // le filet apparaissait a pleine hauteur le temps d'une image.
+              transform: "scaleY(0)",
+              transformOrigin: "top",
             }}
           />
 

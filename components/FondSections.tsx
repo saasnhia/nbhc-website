@@ -40,7 +40,13 @@ import { useCallback, useEffect, useRef, useSyncExternalStore } from "react";
  */
 const FONDU = "65vh";
 
+// DEUX POSTERS, UN PAR FORME. La variante mobile est en portrait depuis le
+// reencodage : un poster paysage y subirait exactement l'agrandissement qu'on
+// vient de corriger sur la video. Et ce poster n'est pas un detail — avec
+// `preload="none"` c'est lui qui tient l'ecran jusqu'a ce que la video arrive,
+// et c'est le seul visuel affiche sous prefers-reduced-motion.
 const POSTER = "/fond/fond-anime-poster.jpg";
+const POSTER_MOBILE = "/fond/fond-anime-poster-mobile.jpg";
 const BUREAU = "/fond/fond-anime.mp4";
 const MOBILE = "/fond/fond-anime-mobile.mp4";
 
@@ -113,7 +119,7 @@ export default function FondSections({ children }: { children: React.ReactNode }
         <div className="sticky top-0 h-screen overflow-hidden">
           {reduit ? (
             <img
-              src={POSTER}
+              src={large ? POSTER : POSTER_MOBILE}
               alt=""
               loading="lazy"
               decoding="async"
@@ -122,7 +128,7 @@ export default function FondSections({ children }: { children: React.ReactNode }
           ) : (
             <video
               ref={videoRef}
-              poster={POSTER}
+              poster={large ? POSTER : POSTER_MOBILE}
               muted
               playsInline
               loop

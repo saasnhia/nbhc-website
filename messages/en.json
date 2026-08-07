@@ -72,13 +72,16 @@
   "whyNow": {
     "eyebrow": "THE TRUTH",
     "title": "AI changes everything. And you see it.",
-    "subtitle": "You see AI news every day. ChatGPT, autonomous agents, automation... But concretely, how do you take advantage of it when running a firm, a job site, an agency? Where to start? That's exactly what we answer.",
-    "card1Title": "You're losing time",
-    "card1Desc": "Manual quotes, forgotten follow-ups, copy-paste reporting... Hours every week on tasks AI handles in seconds.",
-    "card2Title": "You don't know where to start",
-    "card2Desc": "100 AI tools on the market, none tailored to your trade. You need an expert, not yet another subscription.",
-    "card3Title": "Your competitors are getting started",
-    "card3Desc": "While you hesitate, others are already automating. The right time to act is now."
+    "subtitle": "You see AI news every day. But concretely, how do you take advantage of it when running a firm, a job site, an agency? That's exactly what we answer.",
+    "panel1Title": "You're losing time",
+    "panel1Text": "Manual quotes, forgotten follow-ups, copy-paste reporting.",
+    "panel1Alt": "A workstation seen from three quarters: a stack of eleven sheets, then a stack of three, then a single sheet, relayed by golden segments, and a telephone at the end of the desktop.",
+    "panel2Title": "Where to start?",
+    "panel2Text": "100 AI tools on the market, none tailored to your trade.",
+    "panel2Alt": "A heap of identical cubic blocks on a plinth, next to a plate cut by a long gold-edged slot; two blocks rest across the slot without fitting into it.",
+    "panel3Title": "Your competitors are getting started",
+    "panel3Text": "While you hesitate, others are already automating.",
+    "panel3Alt": "Two identical crates on a gold-edged plinth: the left one is closed, the right one is open with its lid taken off and leaning against its side on the ground, and a golden mass fills the bottom of its interior."
   },
   "sectors": {
     "eyebrow": "WHO IT'S FOR",
@@ -397,10 +400,10 @@
   "howItWorks": {
     "eyebrow": "HOW IT WORKS",
     "title": "From diagnostic to result. No jargon.",
-    "subtitle": "Four clear steps, no surprises. You know what will be done, when, and how much it costs.",
+    "subtitle": "Four clear steps, no surprises. This is the path of a custom automation. You know what will be done, when, and how much it costs.",
     "step1Number": "01",
     "step1Title": "We understand your daily life",
-    "step1Desc": "30 minutes via video call. We identify the tasks wasting your time, evaluate whether AI can help, and estimate the concrete gain. Free, no commitment.",
+    "step1Desc": "We identify the tasks wasting your time, evaluate whether AI can help.",
     "step1Badge": "30 min · Free",
     "step2Number": "02",
     "step2Title": "We design your solution",
@@ -408,12 +411,14 @@
     "step2Badge": "1-2 weeks",
     "step3Number": "03",
     "step3Title": "We build and test on your real cases",
-    "step3Desc": "We build the workflow, calibrate the AI on your business vocabulary, and test on 100 to 500 real cases. Not a prototype — a system that runs.",
+    "step3Desc": "We build the workflow, calibrate the AI on your business vocabulary. Not a prototype — a system that runs.",
     "step3Badge": "2-5 weeks",
     "step4Number": "04",
     "step4Title": "We deliver, you decide what's next",
-    "step4Desc": "The build is tested and delivered. If you want us to keep monitoring, updating and maintaining the automation, the support plan takes over — it's your call, never forced.",
-    "step4Badge": "Delivery + optional support"
+    "step4Desc": "The build is tested and delivered. If you want us to keep going, the support plan takes over — it's never forced.",
+    "step4Badge": "Delivery + optional support",
+    "illustrationAlt": "A chain of four stations on a gold-edged plinth, linked by a continuous golden line: a flat frame on the ground, an open post framework, the same framework with a roof, then a solid volume. Between the second and third station, an upright sheet bearing a golden band. After the fourth, the line breaks and resumes as a detached segment.",
+    "legendeSignature": "before you sign"
   },
   "products": {
     "eyebrow": "OUR PRODUCTS",
@@ -1252,7 +1257,7 @@
       "essentielDesc": "A workflow already built at NBHC, configured for you, that runs without connecting to your business software. From €200 for a single automation (e.g. AI phone agent).",
       "essentielFeature1": "Free 30-min diagnostic",
       "essentielFeature2": "Pre-built workflow, configured for your business",
-      "essentielFeature3": "Delivered in 1-2 weeks",
+      "essentielFeature3": "Delivered in 1-2 weeks — the workflow already exists, it just needs configuring",
       "essentielFeature4": "Initial onboarding included",
       "surMesureLegerTag": "Custom automation",
       "surMesureLegerName": "Light Custom",
@@ -1460,8 +1465,5 @@
     "videoAriaVilla": "Presentation video of a villa, made from photographs",
     "typeStudio": "Studio",
     "videoAriaStudio": "Presentation video of a studio flat, made from photographs"
-  },
-  "home": {
-    "seqAlt": "Illustration: an automation branching out step by step"
   }
 }

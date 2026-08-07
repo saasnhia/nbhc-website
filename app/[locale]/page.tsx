@@ -1,10 +1,9 @@
-import { getTranslations, setRequestLocale } from "next-intl/server";
+import { setRequestLocale } from "next-intl/server";
 import Nav from "@/components/Nav";
 import Hero from "@/components/Hero";
 import WhyNow from "@/components/WhyNow";
 import Sectors from "@/components/Sectors";
 import VideoShowcase from "@/components/VideoShowcase";
-import SequenceEnAction from "@/components/SequenceEnAction";
 import FondSections from "@/components/FondSections";
 import HowItWorks from "@/components/HowItWorks";
 import Portfolio from "@/components/Portfolio";
@@ -24,7 +23,6 @@ export default async function Home({
 }) {
   const { locale } = await params;
   setRequestLocale(locale);
-  const t = await getTranslations("home");
 
   const homeUrl = `https://nbhc.fr/${locale}`;
   const isFr = locale === "fr";
@@ -98,9 +96,25 @@ export default async function Home({
       <Hero />
       <WhyNow />
       <Sectors />
-      {/* Amene la section suivante, sans rien enoncer : le sens est porte par
-          le lecteur interactif. Plus de sur-titre ni de legende. */}
-      <SequenceEnAction alt={t("seqAlt")} />
+      {/* TRANSITION ENTRE POUR QUI ET EN ACTION.
+          Une sequence scrubee de 75 vh occupait cette place et assurait la
+          respiration entre l'appel a l'action de Pour qui et la carte du
+          lecteur. En la retirant, les deux se retrouvaient adjacents : un
+          bouton dore, puis un cadre borde, sans rien entre les deux.
+          On reprend le filet deja employe entre les deux produits de Portfolio
+          — un degrade horizontal a 4 % de blanc, peint une fois, sans filtre ni
+          animation — et on lui donne de l'air. */}
+      <div aria-hidden="true" className="py-20 max-[900px]:py-12">
+        <div className="px-10 max-[900px]:px-5" style={{ maxWidth: 1200, margin: "0 auto" }}>
+          <div
+            style={{
+              height: 1,
+              background:
+                "linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.04) 50%, transparent 100%)",
+            }}
+          />
+        </div>
+      </div>
       <VideoShowcase />
       {/* Calque anime derriere ces trois sections, pas entre elles.
           Tarifs est inclus : la sortie du calque a la frontiere

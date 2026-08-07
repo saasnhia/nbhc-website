@@ -72,13 +72,16 @@
   "whyNow": {
     "eyebrow": "LE CONSTAT",
     "title": "L'IA change tout. Et vous le voyez.",
-    "subtitle": "Vous voyez passer les actus sur l'IA tous les jours. ChatGPT, agents autonomes, automatisation... Mais concrètement, comment en profiter quand on gère un cabinet, un chantier, une agence ? Par où commencer ? C'est exactement la question à laquelle on répond.",
-    "card1Title": "Vous perdez du temps",
-    "card1Desc": "Devis à la main, relances oubliées, reporting copié-collé... Des heures chaque semaine sur des tâches que l'IA traite en secondes.",
-    "card2Title": "Vous ne savez pas par où commencer",
-    "card2Desc": "100 outils IA sur le marché, zéro qui s'adapte à votre métier. Vous avez besoin d'un expert, pas d'un énième abonnement.",
-    "card3Title": "Vos concurrents s'y mettent",
-    "card3Desc": "Pendant que vous hésitez, d'autres automatisent déjà. Le bon moment pour agir, c'est maintenant."
+    "subtitle": "Vous voyez passer les actus sur l'IA tous les jours. Mais concrètement, comment en profiter quand on gère un cabinet, un chantier, une agence ? C'est exactement la question à laquelle on répond.",
+    "panel1Title": "Vous perdez du temps",
+    "panel1Text": "Devis à la main, relances oubliées, reporting copié-collé.",
+    "panel1Alt": "Un poste de travail vu de trois quarts : une pile de onze feuilles, puis une pile de trois, puis une seule feuille, relayées par des segments dorés, et un téléphone posé au bout du plateau.",
+    "panel2Title": "Par où commencer ?",
+    "panel2Text": "100 outils IA sur le marché, zéro qui s'adapte à votre métier.",
+    "panel2Alt": "Un amas de blocs cubiques identiques posé sur un socle, à côté d'une plaque fendue d'une longue rainure bordée d'or ; deux blocs reposent en travers de la fente sans y entrer.",
+    "panel3Title": "Vos concurrents s'y mettent",
+    "panel3Text": "Pendant que vous hésitez, d'autres automatisent déjà.",
+    "panel3Alt": "Deux caisses identiques posées sur un socle bordé d'or : celle de gauche est fermée, celle de droite est ouverte, son couvercle déposé et appuyé au sol contre son flanc, et une masse dorée occupe le fond de son intérieur."
   },
   "sectors": {
     "eyebrow": "POUR QUI",
@@ -397,10 +400,10 @@
   "howItWorks": {
     "eyebrow": "COMMENT ÇA MARCHE",
     "title": "Du diagnostic au résultat. Sans jargon.",
-    "subtitle": "Quatre étapes claires, sans surprise. Vous savez ce qui sera fait, quand, et combien ça coûte.",
+    "subtitle": "Quatre étapes claires, sans surprise. C'est le parcours d'une automatisation sur mesure. Vous savez ce qui sera fait, quand, et combien ça coûte.",
     "step1Number": "01",
     "step1Title": "On comprend votre quotidien",
-    "step1Desc": "30 minutes en visio. On identifie les tâches qui vous font perdre du temps, on évalue si l'IA peut aider, et on estime le gain concret. Gratuit, sans engagement.",
+    "step1Desc": "On identifie les tâches qui vous font perdre du temps, on évalue si l'IA peut aider.",
     "step1Badge": "30 min · Gratuit",
     "step2Number": "02",
     "step2Title": "On conçoit votre solution",
@@ -408,12 +411,14 @@
     "step2Badge": "1-2 semaines",
     "step3Number": "03",
     "step3Title": "On construit et on teste sur vos vrais cas",
-    "step3Desc": "On construit le workflow, on calibre l'IA sur votre vocabulaire métier, et on teste sur 100 à 500 cas réels. Pas de prototype — un système qui tourne.",
+    "step3Desc": "On construit le workflow, on calibre l'IA sur votre vocabulaire métier. Pas de prototype — un système qui tourne.",
     "step3Badge": "2-5 semaines",
     "step4Number": "04",
     "step4Title": "On livre, vous décidez de la suite",
-    "step4Desc": "Le build est testé et livré. Si vous voulez qu'on continue à surveiller, mettre à jour et maintenir l'automatisation, l'accompagnement prend le relais — à vous de choisir, ce n'est jamais imposé.",
-    "step4Badge": "Livraison + accompagnement optionnel"
+    "step4Desc": "Le build est testé et livré. Si vous voulez qu'on continue, l'accompagnement prend le relais — ce n'est jamais imposé.",
+    "step4Badge": "Livraison + accompagnement optionnel",
+    "illustrationAlt": "Une chaîne de quatre stations posées sur un socle bordé d'or, reliées par une ligne dorée continue : un cadre plat au sol, une ossature de poteaux ajourée, la même ossature couverte d'une toiture, puis un volume plein. Entre la deuxième et la troisième station, une feuille dressée portant une bande dorée. Après la quatrième, la ligne s'interrompt et reprend en un segment détaché.",
+    "legendeSignature": "avant de signer"
   },
   "products": {
     "eyebrow": "NOS PRODUITS",
@@ -1252,7 +1257,7 @@
       "essentielDesc": "Un workflow déjà construit chez NBHC, configuré pour vous, qui tourne sans se brancher à votre logiciel métier. À partir de 200 € pour une automatisation seule (ex. IA téléphonique).",
       "essentielFeature1": "Diagnostic 30 min gratuit",
       "essentielFeature2": "Workflow pré-construit, configuré pour votre activité",
-      "essentielFeature3": "Livré en 1-2 semaines",
+      "essentielFeature3": "Livré en 1-2 semaines — le workflow existe déjà, il n'y a qu'à le configurer",
       "essentielFeature4": "Prise en main initiale incluse",
       "surMesureLegerTag": "Automatisation sur mesure",
       "surMesureLegerName": "Sur Mesure Léger",
@@ -1460,8 +1465,5 @@
     "videoAriaVilla": "Vidéo de présentation d'une villa, réalisée à partir de photos",
     "typeStudio": "Studio",
     "videoAriaStudio": "Vidéo de présentation d'un studio, réalisée à partir de photos"
-  },
-  "home": {
-    "seqAlt": "Illustration : une automatisation qui se ramifie étape par étape"
   }
 }

@@ -2,39 +2,56 @@
 
 // Enveloppe de montage — c'est ici que se joue le coût réseau.
 //
-// Le lecteur et les compositions ne sont téléchargés QUE lorsque la section
-// entre dans le viewport (import dynamique sans SSR + IntersectionObserver).
-// Et un seul lecteur vit à la fois : la `key` sur le secteur force React à
-// démonter complètement le précédent au changement d'onglet, plutôt que d'en
-// garder neuf en mémoire.
-import dynamic from "next/dynamic";
-import { useEffect, useRef, useState } from "react";
+// ON REND CE QUI EST BON MARCHÉ, ON NE DIFFÈRE QUE CE QUI EST COÛTEUX.
+//
+// La version précédente différait le composant ENTIER derrière un substitut qui
+// ne réservait que la boîte 16/9 de la vidéo. Mesuré : 187 px réservés pour
+// 962 occupés à 375 px, 408 pour 1157 à 768, 439 pour 798 à 1440 — un manque de
+// 333 à 801 px à toutes les largeurs. Toute la page était poussée d'autant,
+// enveloppe FondSections comprise, ce qui donnait un CLS de 0,25 à 375 et 0,34
+// à 768. Réserver la bonne hauteur était hors d'atteinte : elle croît
+// continûment avec la largeur (955 → 1209 px sur la branche mobile), donc aucune
+// valeur fixe par palier ne pouvait suivre.
+//
+// Le poids différé, mesuré au réseau au franchissement du seuil :
+//   branche mobile   :   6,2 Ko de JS  +  le MP4 du secteur (382 Ko)
+//   branche bureau   : 206,2 Ko de JS  (@remotion/player + les 9 compositions)
+//
+// Donc : les deux composants sont rendus immédiatement — leur ossature est du DOM
+// léger — et chacun ne diffère que son média, qui a un rapport 16/9 et se réserve
+// tout seul. Le lecteur Remotion reste derrière next/dynamic, dans
+// PremiumPlayerCanvas ; le MP4 mobile n'obtient son `src` qu'à l'approche.
+//
+// Un seul lecteur vit à la fois : la `key` sur le secteur force React à démonter
+// complètement le précédent au changement d'onglet.
+import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react";
+import MobileDemoVideo from "./MobileDemoVideo";
+import PremiumPlayer from "./PremiumPlayer";
 import type { DemoKey } from "./registry";
 
-const PremiumPlayer = dynamic(() => import("./PremiumPlayer"), {
-  ssr: false,
-  loading: () => <Placeholder />,
-});
-
-// Repli mobile : sous 1024 px on sert le MP4 du secteur au lieu du lecteur
-// Remotion. Mesure a l'appui — WebKit tombe a 3,7 fps avec le lecteur, et
-// plafonne a 9,5 meme en sacrifiant tous les filtres et toutes les ombres.
-// La video est fluide par nature, et le geste de validation est conserve.
-const MobileDemoVideo = dynamic(() => import("./MobileDemoVideo"), {
-  ssr: false,
-  loading: () => <Placeholder />,
-});
-
-function Placeholder() {
-  return (
-    <div
-      className="w-full min-[1024px]:ml-auto min-[1024px]:w-[63%]"
-      style={{
-        aspectRatio: "16 / 9",
-        borderRadius: 16,
-        background: "linear-gradient(150deg, #1A1A24, #0B0B10)",
-      }}
-    />
+/**
+ * Media query sans setState dans un effet. Le rendu serveur répond « non » :
+ * la branche bureau n'est donc jamais rendue avant que le navigateur ait
+ * confirmé la largeur, et le MP4 mobile n'est jamais demandé pour autant
+ * puisque son `src` dépend de l'approche, pas de la largeur.
+ *
+ * Jumeau volontairement séparé de celui de FondSections : ce composant-là est
+ * hors périmètre à cette porte, et on ne le touche pas pour partager douze
+ * lignes. À mutualiser le jour où l'un des deux bouge pour une autre raison.
+ */
+function useMediaQuery(query: string) {
+  const subscribe = useCallback(
+    (onChange: () => void) => {
+      const mq = window.matchMedia(query);
+      mq.addEventListener("change", onChange);
+      return () => mq.removeEventListener("change", onChange);
+    },
+    [query]
+  );
+  return useSyncExternalStore(
+    subscribe,
+    () => window.matchMedia(query).matches,
+    () => false
   );
 }
 
@@ -62,30 +79,20 @@ export default function PremiumDemoSection({
   benefit?: string;
 }) {
   const holder = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(false);
-  // `null` tant qu'on n'a pas mesure : on ne monte rien avant de savoir quel
-  // des deux servir, pour ne jamais charger le lecteur puis la video.
-  const [desktop, setDesktop] = useState<boolean | null>(null);
-
-  useEffect(() => {
-    const mq = window.matchMedia("(min-width: 1024px)");
-    const sync = () => setDesktop(mq.matches);
-    sync();
-    mq.addEventListener("change", sync);
-    return () => mq.removeEventListener("change", sync);
-  }, []);
+  const [approche, setApproche] = useState(false);
+  const bureau = useMediaQuery("(min-width: 1024px)");
 
   useEffect(() => {
     const el = holder.current;
     if (!el) return;
     if (typeof IntersectionObserver === "undefined") {
-      setVisible(true);
+      setApproche(true);
       return;
     }
     const io = new IntersectionObserver(
       (entries) => {
         if (entries.some((e) => e.isIntersecting)) {
-          setVisible(true);
+          setApproche(true);
           io.disconnect();
         }
       },
@@ -95,38 +102,26 @@ export default function PremiumDemoSection({
     return () => io.disconnect();
   }, []);
 
+  const commun = {
+    demoKey,
+    labels,
+    validateLabel,
+    hintLabel,
+    ariaLabel,
+    stepsLabel,
+    eyebrow,
+    title,
+    contextLine,
+    benefit,
+    chargerMedia: approche,
+  };
+
   return (
     <div ref={holder}>
-      {visible && desktop === false ? (
-        <MobileDemoVideo
-          key={demoKey}
-          demoKey={demoKey}
-          labels={labels}
-          validateLabel={validateLabel}
-          hintLabel={hintLabel}
-          ariaLabel={ariaLabel}
-          stepsLabel={stepsLabel}
-          eyebrow={eyebrow}
-          title={title}
-          contextLine={contextLine}
-          benefit={benefit}
-        />
-      ) : visible && desktop === true ? (
-        <PremiumPlayer
-          key={demoKey}
-          demoKey={demoKey}
-          labels={labels}
-          validateLabel={validateLabel}
-          hintLabel={hintLabel}
-          ariaLabel={ariaLabel}
-          stepsLabel={stepsLabel}
-          eyebrow={eyebrow}
-          title={title}
-          contextLine={contextLine}
-          benefit={benefit}
-        />
+      {bureau ? (
+        <PremiumPlayer key={demoKey} {...commun} />
       ) : (
-        <Placeholder />
+        <MobileDemoVideo key={demoKey} {...commun} />
       )}
     </div>
   );

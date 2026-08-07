@@ -121,11 +121,18 @@ const Reveal: React.FC<{ at: number; span?: number; children: React.ReactNode }>
 // ---------------------------------------------------------------------------
 // Plan 1 — L'appel arrive
 // ---------------------------------------------------------------------------
+// Rayons des ondes de l'appel. Le maximum est DERIVE et non recopie : c'est lui
+// qui sert de taille de base aux anneaux ci-dessous, et un ecart entre les deux
+// se verrait comme un changement d'echelle.
+const ANNEAU_R0 = 190;
+const ANNEAU_DR = 350;
+const ANNEAU_RMAX = ANNEAU_R0 + ANNEAU_DR;
+
 export const ShotAppel: React.FC<ShotProps> = ({ s }) => {
   const f = useCurrentFrame();
   const rings = [0, 1, 2].map((i) => {
     const phase = ((f + i * 8) % 24) / 24;
-    return { r: 190 + phase * 350, o: (1 - phase) * 0.85 };
+    return { r: ANNEAU_R0 + phase * ANNEAU_DR, o: (1 - phase) * 0.85 };
   });
   return (
     <AbsoluteFill style={{ alignItems: "center", justifyContent: "center" }}>
@@ -139,19 +146,33 @@ export const ShotAppel: React.FC<ShotProps> = ({ s }) => {
             background: `radial-gradient(circle at 42% 38%, ${SURFACE.cardHi} 0%, ${SURFACE.card} 52%, ${SURFACE.dim} 78%, rgba(11,11,16,0) 84%)`,
           }}
         />
-        {rings.map((ring, i) => (
-          <div
-            key={i}
-            style={{
-              position: "absolute",
-              width: ring.r * 2,
-              height: ring.r * 2,
-              borderRadius: "50%",
-              border: `3px solid ${COLORS.accent}`,
-              opacity: ring.o,
-            }}
-          />
-        ))}
+        {/* ECHELLE, PAS TAILLE — cf. la regle en tete de shared.tsx.
+            Ces anneaux animaient width et height : chaque image passait donc par
+            une mise en page, et le retour de cycle (rayon 540 -> 190, soit 264 px
+            a l'ecran) etait rapporte comme un decalage. Trois entrees mesurees,
+            0,0055 a 0,0062 chacune, a 1440 px.
+
+            La bordure est CONTRE-MISE A L'ECHELLE : rendue, son epaisseur vaut
+            (3 / e) x e = 3 px exactement, comme avant. Et le diametre exterieur
+            vaut ANNEAU_RMAX x 2 x e = ring.r x 2, identique lui aussi — que la
+            boite soit en border-box (le cas ici, preflight Tailwind) ou non. */}
+        {rings.map((ring, i) => {
+          const e = ring.r / ANNEAU_RMAX;
+          return (
+            <div
+              key={i}
+              style={{
+                position: "absolute",
+                width: ANNEAU_RMAX * 2,
+                height: ANNEAU_RMAX * 2,
+                borderRadius: "50%",
+                border: `${3 / e}px solid ${COLORS.accent}`,
+                opacity: ring.o,
+                transform: `scale(${e})`,
+              }}
+            />
+          );
+        })}
         <div
           style={{
             position: "absolute",
@@ -191,6 +212,9 @@ export const ShotRepond: React.FC<ShotProps> = ({ s }) => {
   return (
     <AbsoluteFill style={{ alignItems: "center", justifyContent: "center" }}>
       <Stage width={1740} height={700}>
+        {/* Ces barres animent leur height, en connaissance de cause : scaleY
+            deformerait leurs coins arrondis. Voir la regle d'animation en tete
+            de shared.tsx, et son exception nommee. */}
         <div style={{ display: "flex", alignItems: "center", gap: 14, height: 470 }}>
           {Array.from({ length: BARS }).map((_, i) => {
             const wave =

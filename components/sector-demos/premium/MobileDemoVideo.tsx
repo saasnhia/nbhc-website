@@ -15,6 +15,17 @@
 // sans geste), yuv420p (le 4:4:4 donnait MEDIA_ERR_DECODE), et le seek se
 // fait par currentTime en JS — JAMAIS par fragment #t= dans l'URL, qui est
 // precisement ce qui avait casse le plan de cloture sur WebKit.
+//
+// CE COMPOSANT EST RENDU IMMEDIATEMENT, et seul son MP4 attend.
+// Il pesait 6,2 Ko de JavaScript, mesures au reseau — le differer ne gagnait
+// donc rien, et coutait tout : le substitut ne reservait que la boite 16/9 de la
+// video (187 px a 375), la ou le composant en occupe 962. Les 775 px d'ecart
+// poussaient toute la page, enveloppe FondSections comprise, pour un CLS de 0,25
+// a 375 et 0,34 a 768.
+//
+// Le report porte maintenant sur le seul poids reel : `src` n'est pose qu'a
+// l'approche. La <video> existe des le premier rendu, avec son rapport 16/9,
+// donc sa boite ne change jamais. Meme correction cote bureau dans PremiumPlayer.
 import { useCallback, useMemo, useRef, useState } from "react";
 import { PHONE_STEPS } from "./steps";
 import { PREMIUM_FORMAT } from "./theme";
@@ -31,6 +42,8 @@ type Props = {
   title?: string;
   contextLine?: string;
   benefit?: string;
+  /** Faux tant que la section n'est pas approchee : le MP4 n'est pas demande. */
+  chargerMedia?: boolean;
 };
 
 const FPS = PREMIUM_FORMAT.fps;
@@ -52,6 +65,7 @@ export default function MobileDemoVideo({
   title,
   contextLine,
   benefit,
+  chargerMedia = true,
 }: Props) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [current, setCurrent] = useState(0);
@@ -177,7 +191,11 @@ export default function MobileDemoVideo({
         <video
           ref={videoRef}
           // Pas de fragment #t= dans l'URL : WebKit le refuse.
-          src={`/demos/${demoKey}_mobile.mp4`}
+          // Pas de src avant l'approche : c'est le seul poids reel de ce bloc, et
+          // la boite est deja tenue par aspectRatio, donc rien ne bouge quand il
+          // arrive. `onLoadedMetadata` demarre alors la lecture, exactement comme
+          // il le faisait au montage.
+          src={chargerMedia ? `/demos/${demoKey}_mobile.mp4` : undefined}
           muted
           playsInline
           preload="auto"
