@@ -76,12 +76,17 @@
     "panel1Title": "You're losing time",
     "panel1Text": "Manual quotes, forgotten follow-ups, copy-paste reporting.",
     "panel1Alt": "A workstation seen from three quarters: a stack of eleven sheets, then a stack of three, then a single sheet, relayed by golden segments, and a telephone at the end of the desktop.",
+    "panel1LabelGroupe": "quotes, follow-ups, reporting",
     "panel2Title": "Where to start?",
     "panel2Text": "100 AI tools on the market, none tailored to your trade.",
     "panel2Alt": "A heap of identical cubic blocks on a plinth, next to a plate cut by a long gold-edged slot; two blocks rest across the slot without fitting into it.",
+    "panel2LabelOutils": "AI tools",
+    "panel2LabelMetier": "your trade",
     "panel3Title": "Your competitors are getting started",
     "panel3Text": "While you hesitate, others are already automating.",
-    "panel3Alt": "Two identical crates on a gold-edged plinth: the left one is closed, the right one is open with its lid taken off and leaning against its side on the ground, and a golden mass fills the bottom of its interior."
+    "panel3Alt": "Two identical crates on a gold-edged plinth: the left one is closed, the right one is open with its lid taken off and leaning against its side on the ground, and a golden mass fills the bottom of its interior.",
+    "panel3LabelVous": "you",
+    "panel3LabelAutres": "others"
   },
   "sectors": {
     "eyebrow": "WHO IT'S FOR",
@@ -418,7 +423,9 @@
     "step4Desc": "The build is tested and delivered. If you want us to keep going, the support plan takes over — it's never forced.",
     "step4Badge": "Delivery + optional support",
     "illustrationAlt": "A chain of four stations on a gold-edged plinth, linked by a continuous golden line: a flat frame on the ground, an open post framework, the same framework with a roof, then a solid volume. Between the second and third station, an upright sheet bearing a golden band. After the fourth, the line breaks and resumes as a detached segment.",
-    "legendeSignature": "before you sign"
+    "legendeSignature": "before you sign",
+    "labelSysteme": "a system that runs",
+    "labelOptionnel": "optional support"
   },
   "products": {
     "eyebrow": "OUR PRODUCTS",

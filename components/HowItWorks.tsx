@@ -68,6 +68,45 @@ const DEMI_STATION = 0.416 / 2.6691 / 2;       // 7,79 %
 const BORD_GAUCHE = 0.1279 - DEMI_STATION;     // 5,00 %
 const BORD_DROIT = 1 - (BORD_GAUCHE + 4 * PAS);
 
+/**
+ * ANCRES SORTIES PAR scene_chaine.py (chaine.ancres.json, ecrit APRES st.ecrire()).
+ *
+ * CE MAITRE N'EST PAS RECADRE — verifie et non suppose, contrairement a celui du
+ * panneau 1 de WhyNow qui l'est de 313 px : les deux fichiers font 2 240 x 1 349
+ * et le recalage donne son minimum a l'offset 0 (0,420 d'ecart moyen contre 0,963
+ * a un pixel), l'ecart residuel etant la seule compression WebP. Les ancres
+ * s'expriment donc directement dans le cadre rendu.
+ *
+ * LE DECALAGE VERTICAL DES DEUX ETIQUETTES EST BALAYE, comme sur whynow-outils, et
+ * on retient le plus PETIT qui donne du fond de page. La falaise est brutale :
+ *
+ * ET LE BALAYAGE DOIT SE FAIRE AVEC LA BOITE DU PLUS PETIT AFFICHAGE, pas du plus
+ * grand. Une etiquette a taille de police FIXE couvre une FRACTION d'image d'autant
+ * plus grande que l'image est affichee petite : 147 x 15 px valent 0,131 x 0,022 de
+ * l'image a 1 120 px d'affichage, mais 0,203 x 0,034 a 726 px — la plus petite
+ * largeur ou ces etiquettes existent. Premier balayage fait avec la boite de 1 120 :
+ * il donnait dz 0,40 et dz 0,50, verts a 1 440 et 1 024 et A 1,17:1 A 768. Refait
+ * avec la boite de 726 :
+ *
+ *   station 04   dz 0,40 -> 1,15:1     dz 0,50 -> 16,92:1
+ *   queue        dz 0,50 -> 0,93:1     dz 0,60 -> 16,92:1
+ *
+ * Aucune plaque n'est donc necessaire ici, contrairement aux caisses et au bureau.
+ */
+const ETIQUETTES_CHAINE = [
+  { cle: "labelSysteme", x: 0.7673, y: 0.2407, bord: false },
+  // `bord` : cette etiquette PEND DE SON BORD DROIT au lieu d'etre centree sur son
+  // ancre. La queue detachee est a 0,9202 de la largeur, soit 9 px du bord droit a
+  // 726 px d'affichage : centree, l'etiquette debordait de l'image, et la figure
+  // est en overflow-hidden — donc coupee. Un mot comme « accompagnement » ne peut
+  // pas non plus se replier. Elle est donc alignee a droite sur son ancre, ce qui
+  // la garde dans le cadre et la laisse toucher son objet.
+  { cle: "labelOptionnel", x: 0.9202, y: 0.3534, bord: true },
+] as const;
+
+/** Abscisse au sol des quatre stations, pour le tiret de rappel. */
+const X_STATIONS = [0.1278, 0.3409, 0.5541, 0.7673] as const;
+
 export default function HowItWorks() {
   const sectionRef = useRef<HTMLElement>(null);
   const t = useTranslations("howItWorks");
@@ -159,7 +198,7 @@ export default function HowItWorks() {
           pas retenue ici. */}
       <figure
         data-hiw-item
-        className="m-0 overflow-hidden"
+        className="relative m-0 overflow-hidden"
         style={{ border: "1px solid var(--border)", borderRadius: "var(--radius)" }}
       >
         <picture>
@@ -182,6 +221,33 @@ export default function HowItWorks() {
             className="block w-full h-auto"
           />
         </picture>
+        {/* DEUX ETIQUETTES, ET ELLES N'AJOUTENT PAS DE LIBELLE D'ETAPE — les quatre
+            stepNTitle sont deja dans les colonnes, alignes sur les stations. Elles
+            expliquent deux CHOIX GRAPHIQUES aujourd'hui muets : pourquoi la station
+            04 est pleine quand les trois autres sont ajourees, et pourquoi le
+            dernier segment est DETACHE. Le detachement code l'option, et personne
+            ne le sait.
+
+            Masquees sous 768 px : c'est le RECADRAGE qui y est servi, un autre
+            cadrage, dont les ancres ne sont pas celles-ci. Voir ETIQUETTES.md. */}
+        {ETIQUETTES_CHAINE.map((e) => (
+          <span
+            key={e.cle}
+            className="pointer-events-none absolute text-[11px] font-medium uppercase text-center max-[767px]:hidden"
+            style={{
+              left: `${e.x * 100}%`,
+              top: `${e.y * 100}%`,
+              transform: e.bord ? "translate(-100%, -100%)" : "translate(-50%, -100%)",
+              color: "var(--text)",
+              letterSpacing: 2,
+              lineHeight: 1.35,
+              maxWidth: "22%",
+              textAlign: e.bord ? "right" : "center",
+            }}
+          >
+            {t(e.cle)}
+          </span>
+        ))}
       </figure>
 
       {/* LA LEGENDE DE LA SIGNATURE, ET ELLE EST INDISPENSABLE.
@@ -215,12 +281,72 @@ export default function HowItWorks() {
         </span>
       </div>
 
+      {/* LE TIRET DE RAPPEL — il transforme une proximite en reference.
+          Les quatre colonnes sont deja alignees sur les stations a 0 px, mais
+          l'alignement seul ne se LIT pas comme un etiquetage : rien ne dit au
+          lecteur que ce texte parle de cet objet.
+
+          IL N'EST PAS DORE, ET C'EST LE POINT. La chaine l'est deja ; un tiret dore
+          rimerait avec elle et se lirait comme un PROLONGEMENT de l'illustration au
+          lieu d'une annotation. Il appartient a la couche du TEXTE. Candidats
+          mesures, contraste sur #09090b :
+
+            --border rgba(255,255,255,0.07)   1,14:1   ECARTE
+            --text-dim  #3E3D3A               1,83:1   ECARTE
+            --text-muted #8C8880              5,64:1   RETENU
+            --gold #C4973A                    7,42:1   exclu par construction
+
+          Les deux premiers sont ecartes par la MESURE et non par gout : le tiret
+          porte la reference, donc c'est un objet graphique necessaire a la
+          comprehension, et WCAG 1.4.11 lui demande 3:1. Et --text-muted est la
+          couleur meme des descriptions des colonnes : le tiret appartient donc
+          litteralement a la couche qu'il designe.
+
+          IL A SA PROPRE BANDE, ET C'EST UNE CORRECTION MESUREE. Pose d'abord DANS
+          la bande de legende, le troisieme tiret tombait DANS la boite de « avant
+          de signer » a TOUTES les largeurs — legende 661..783 et tiret a 781 a
+          1 440, 462..585 et 563 a 1 024, 346..468 et 423 a 768, en francais comme
+          en anglais. La legende est a 44,75 % parce que c'est la position reelle du
+          document dans le rendu : elle ne se deplace pas. Les tirets descendent
+          donc d'un cran, dans une bande de 24 px qui ABSORBE le mt-6 de la grille —
+          hauteur totale entre la figure et les colonnes inchangee, donc aucun
+          risque de CLS.
+
+          Et il ENJAMBE toute sa bande. Premier essai a 10 px : il se lisait comme un
+          MARQUEUR et non comme un lien, flottant sans toucher ni la figure ni les
+          colonnes. Un connecteur doit enjamber ; l'epaisseur reste a 1 px.
+
+          IL TOMBE SUR L'ABSCISSE DE LA STATION, PAS SUR LE CENTRE DE LA COLONNE, et
+          les deux ne coincident pas : BORD_GAUCHE vaut 0,1279 - DEMI_STATION, ce qui
+          aligne le BORD GAUCHE de chaque cellule sur le bord gauche de sa station,
+          non son centre sur son centre. Mesure a 1 440 px : tirets a 303 / 542 /
+          781 / 1019, centres de cellules a 335 / 574 / 813 / 1051, soit -32 px
+          constants. Ce n'est pas un desalignement a corriger — le texte des colonnes
+          est ferre a gauche, donc son ancre percue est son bord gauche, et le tiret
+          tombe A L'INTERIEUR de sa colonne, a 86 px d'une cellule de 238. Un tiret
+          vertical ne peut pas viser a la fois l'objet et le centre du texte ; il vise
+          l'objet, qui est ce qu'il designe. */}
+      <div className="relative h-6 max-[767px]:hidden" aria-hidden="true">
+        {X_STATIONS.map((x, k) => (
+          <span
+            key={k}
+            className="absolute inset-y-0 block"
+            style={{
+              left: `${x * 100}%`,
+              width: 1,
+              background: "var(--text-muted)",
+              transform: "translateX(-50%)",
+            }}
+          />
+        ))}
+      </div>
+
       {/* LES QUATRE LIBELLES, chacun sous sa station. Le conteneur est decale des
           marges derivees du rendu ; en dessous de 768 px la chaine cede la place au
           recadrage et les etapes repassent en pile verticale, donc plus de decalage
           ni de grille. */}
       <div
-        className="mt-6 max-[767px]:!ml-0 max-[767px]:!mr-0"
+        className="max-[767px]:!mt-6 max-[767px]:!ml-0 max-[767px]:!mr-0"
         style={{
           marginLeft: `${BORD_GAUCHE * 100}%`,
           marginRight: `${BORD_DROIT * 100}%`,
