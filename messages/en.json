@@ -423,7 +423,9 @@
     "step4Desc": "The build is tested and delivered. If you want us to keep going, the support plan takes over — it's never forced.",
     "step4Badge": "Delivery + optional support",
     "illustrationAlt": "A chain of four stations on a gold-edged plinth, linked by a continuous golden line: a flat frame on the ground, an open post framework, the same framework with a roof, then a solid volume. Between the second and third station, an upright sheet bearing a golden band. After the fourth, the line breaks and resumes as a detached segment.",
-    "legendeSignature": "before you sign"
+    "legendeSignature": "before you sign",
+    "labelSysteme": "a system that runs",
+    "labelOptionnel": "optional support"
   },
   "products": {
     "eyebrow": "OUR PRODUCTS",

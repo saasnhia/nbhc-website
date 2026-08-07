@@ -423,7 +423,9 @@
     "step4Desc": "Le build est testé et livré. Si vous voulez qu'on continue, l'accompagnement prend le relais — ce n'est jamais imposé.",
     "step4Badge": "Livraison + accompagnement optionnel",
     "illustrationAlt": "Une chaîne de quatre stations posées sur un socle bordé d'or, reliées par une ligne dorée continue : un cadre plat au sol, une ossature de poteaux ajourée, la même ossature couverte d'une toiture, puis un volume plein. Entre la deuxième et la troisième station, une feuille dressée portant une bande dorée. Après la quatrième, la ligne s'interrompt et reprend en un segment détaché.",
-    "legendeSignature": "avant de signer"
+    "legendeSignature": "avant de signer",
+    "labelSysteme": "un système qui tourne",
+    "labelOptionnel": "accompagnement optionnel"
   },
   "products": {
     "eyebrow": "NOS PRODUITS",
