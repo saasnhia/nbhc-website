@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import { Link } from "../i18n/navigation";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -12,6 +13,7 @@ const CALENDLY_URL = "https://calendly.com/saasnhia/30min";
 
 export default function Sectors() {
   const sectionRef = useRef<HTMLElement>(null);
+  const reduit = usePrefersReducedMotion();
   const t = useTranslations("sectors");
 
   // Niches NBHC actively targets, each with its own dedicated, indexable
@@ -80,6 +82,17 @@ export default function Sectors() {
     const el = sectionRef.current;
     if (!el) return;
     const cards = el.querySelectorAll("[data-sector-card]");
+    // MOUVEMENT REDUIT : L'ETAT FINAL, PAS L'ABSENCE DE TWEEN.
+    // Le `gsap.set` ci-dessous pose opacity 0 ; se contenter de ne pas creer le
+    // declencheur laisserait les cartes INVISIBLES. On pose donc l'arrivee.
+    //
+    // ON SORT AVANT LE CABLAGE DU SURVOL, et c'est voulu : le soulevement de
+    // 4 px au passage de la souris est du mouvement decoratif. Sans ces
+    // ecouteurs, la carte garde son etat de survol CSS et perd son deplacement.
+    if (reduit) {
+      gsap.set(cards, { opacity: 1, y: 0, clearProps: "transform" });
+      return;
+    }
     gsap.set(cards, { opacity: 0, y: 40 });
     const st = ScrollTrigger.create({
       trigger: el,
@@ -117,7 +130,7 @@ export default function Sectors() {
         c._cleanup?.();
       });
     };
-  }, []);
+  }, [reduit]);
 
   return (
     <section

@@ -4,18 +4,27 @@ import { useEffect, useRef } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import gsap from "gsap";
 import Logo from "./Logo";
+import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 
 const marqueeText = "NBHC · STUDIO IA · FRANCE · ";
 const CALENDLY_URL = "https://calendly.com/saasnhia/30min";
 
 export default function Footer() {
   const marqueeTrackRef = useRef<HTMLDivElement>(null);
+  const reduit = usePrefersReducedMotion();
   const t = useTranslations("footer");
   const locale = useLocale();
 
   useEffect(() => {
     const track = marqueeTrackRef.current;
     if (!track) return;
+
+    // MOUVEMENT REDUIT : LE BANDEAU S'ARRETE, IL NE DISPARAIT PAS.
+    // C'est un defilement perpetuel purement decoratif — le seul mouvement de la
+    // page qui ne s'arrete jamais de lui-meme. On le laisse a sa position de
+    // depart : le texte reste lisible, ecrete par le `overflow-hidden` de son
+    // parent comme il l'est deja a tout instant de son cycle.
+    if (reduit) return;
 
     const tween = gsap.to(track, {
       x: "-50%",
@@ -27,7 +36,7 @@ export default function Footer() {
     return () => {
       tween.kill();
     };
-  }, []);
+  }, [reduit]);
 
   const navLinks = [
     { href: `/${locale}#comment-ca-marche`, label: t("howItWorks") },

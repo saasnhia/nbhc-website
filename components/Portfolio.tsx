@@ -2,7 +2,7 @@
 
 import React, { ComponentType, useRef } from "react";
 import { useTranslations } from "next-intl";
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, useReducedMotion } from "framer-motion";
 import VlogyzMockup from "./mockups/VlogyzMockup";
 import DevizlyMockup from "./mockups/DevizlyMockup";
 
@@ -39,11 +39,24 @@ const statusBadge: Record<string, React.CSSProperties> = {
 
 function TextColumn({ p }: { p: Product }) {
   const isExternal = p.href !== "#";
+  // MOUVEMENT REDUIT : `useReducedMotion` de framer-motion, deja employe dans le
+  // depot (DemoStage.tsx:42).
+  //
+  // ET LE PIEGE DU LOT EXISTE ICI AUSSI, SOUS FORME FRAMER. J'avais d'abord cru
+  // que non, et n'avais neutralise que le deplacement : l'instrument a lu
+  // opacity 0 sous reduced-motion. `initial` EST applique au montage, et
+  // `whileInView` n'arrive qu'a l'entree dans le viewport — le texte restait donc
+  // invisible tant qu'on n'avait pas defile jusqu'a lui, exactement comme un
+  // `gsap.set(opacity: 0)` dont on aurait saute le tween. En mouvement reduit,
+  // `initial` vaut donc l'ETAT D'ARRIVEE.
+  const reduit = useReducedMotion();
   return (
     <motion.div
-      initial={{ opacity: 0, x: p.textSide === "left" ? -30 : 30 }}
+      initial={
+        reduit ? { opacity: 1, x: 0 } : { opacity: 0, x: p.textSide === "left" ? -30 : 30 }
+      }
       whileInView={{ opacity: 1, x: 0 }}
-      transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+      transition={{ duration: reduit ? 0 : 0.7, ease: [0.16, 1, 0.3, 1] }}
       viewport={{ once: true, margin: "-80px" }}
       /* Voile local : cette colonne de texte est posee sur le calque anime. */
       className="voile-texte flex flex-col justify-center"
@@ -105,6 +118,7 @@ function TextColumn({ p }: { p: Product }) {
 function MockupColumn({ p }: { p: Product }) {
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-80px" });
+  const reduit = useReducedMotion();
   const Mockup = p.Mockup;
 
   return (
@@ -120,9 +134,13 @@ function MockupColumn({ p }: { p: Product }) {
         }}
       />
       <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        // L'etat hors champ est `opacity: 0` : en mouvement reduit on le neutralise
+        // AUSSI, sinon la maquette resterait invisible tant que useInView est faux.
+        initial={reduit ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+        animate={
+          reduit ? { opacity: 1, y: 0 } : inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }
+        }
+        transition={{ duration: reduit ? 0 : 0.8, ease: [0.16, 1, 0.3, 1] }}
       >
         <Mockup />
       </motion.div>
@@ -152,6 +170,7 @@ function ProductSection({ p }: { p: Product }) {
 
 export default function Portfolio() {
   const t = useTranslations("products");
+  const reduit = useReducedMotion();
 
   const products: Product[] = [
     {
@@ -195,10 +214,10 @@ export default function Portfolio() {
     >
       <div className="mx-auto py-24 md:py-28 px-6" style={{ maxWidth: 1200 }}>
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={reduit ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
-          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: reduit ? 0 : 0.7, ease: [0.16, 1, 0.3, 1] }}
           /* Voile local : en-tete de section posee sur le calque anime. */
           className="voile-texte mb-12 md:mb-16"
         >

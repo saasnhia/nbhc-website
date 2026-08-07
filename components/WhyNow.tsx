@@ -121,6 +121,7 @@ import { useEffect, useRef } from "react";
 import { useTranslations } from "next-intl";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -301,6 +302,7 @@ function TextePanneau({ children }: { children: React.ReactNode }) {
 
 export default function WhyNow() {
   const sectionRef = useRef<HTMLElement>(null);
+  const reduit = usePrefersReducedMotion();
   const t = useTranslations("whyNow");
 
   const panneaux: Panneau[] = [
@@ -313,6 +315,13 @@ export default function WhyNow() {
     const el = sectionRef.current;
     if (!el) return;
     const items = el.querySelectorAll("[data-whynow-item]");
+    // MOUVEMENT REDUIT : L'ETAT FINAL, PAS L'ABSENCE DE TWEEN.
+    // Le `gsap.set` ci-dessous pose opacity 0 ; se contenter de ne pas creer le
+    // declencheur laisserait la section INVISIBLE. On pose donc l'arrivee.
+    if (reduit) {
+      gsap.set(items, { opacity: 1, y: 0, clearProps: "transform" });
+      return;
+    }
     gsap.set(items, { opacity: 0, y: 30 });
     const st = ScrollTrigger.create({
       trigger: el,
@@ -330,7 +339,7 @@ export default function WhyNow() {
       },
     });
     return () => st.kill();
-  }, []);
+  }, [reduit]);
 
   return (
     <section

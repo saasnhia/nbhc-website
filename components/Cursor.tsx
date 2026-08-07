@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, useCallback } from "react";
 import gsap from "gsap";
+import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 
 type CursorState = "default" | "link" | "card" | "drag" | "contact";
 
@@ -10,6 +11,16 @@ export default function Cursor() {
   const labelRef = useRef<HTMLDivElement>(null);
   const [enabled, setEnabled] = useState(false);
   const stateRef = useRef<CursorState>("default");
+  const reduit = usePrefersReducedMotion();
+  // FACTEUR DE DUREE PLUTOT QU'UNE BRANCHE PAR TWEEN. Le curseur en compte six ;
+  // les brancher un par un multiplierait les endroits ou l'on peut se tromper.
+  //
+  // CE QUI PART EST LE RETARD, PAS LE SUIVI. Le curseur suit le pointeur : c'est
+  // le pointeur qui bouge, pas une animation. Ce que `prefers-reduced-motion`
+  // vise ici, c'est le glissement de 0,35 s qui le fait deriver derriere la main,
+  // et les fondus du libelle. A duree nulle, le curseur colle au pointeur et le
+  // libelle change d'etat sans transition — la fonction est entiere.
+  const DUREE = reduit ? 0 : 1;
 
   const updateCursor = useCallback((state: CursorState) => {
     if (stateRef.current === state) return;
@@ -20,7 +31,7 @@ export default function Cursor() {
     if (!label) return;
 
     if (state === "default") {
-      gsap.to(label, { opacity: 0, scale: 0.8, duration: 0.2, ease: "power2.out" });
+      gsap.to(label, { opacity: 0, scale: 0.8, duration: 0.2 * DUREE, ease: "power2.out" });
       return;
     }
 
@@ -37,14 +48,14 @@ export default function Cursor() {
       gsap.to(label, {
         opacity: 0,
         scale: 0.8,
-        duration: 0.1,
+        duration: 0.1 * DUREE,
         ease: "power2.out",
         onComplete: () => {
           label.textContent = c.text;
           label.style.background = c.bg;
           label.style.color = c.color;
           label.style.border = c.border;
-          gsap.to(label, { opacity: 1, scale: 1, duration: 0.15, ease: "power2.out" });
+          gsap.to(label, { opacity: 1, scale: 1, duration: 0.15 * DUREE, ease: "power2.out" });
         },
       });
     } else {
@@ -52,9 +63,9 @@ export default function Cursor() {
       label.style.background = c.bg;
       label.style.color = c.color;
       label.style.border = c.border;
-      gsap.to(label, { opacity: 1, scale: 1, duration: 0.2, ease: "power2.out" });
+      gsap.to(label, { opacity: 1, scale: 1, duration: 0.2 * DUREE, ease: "power2.out" });
     }
-  }, []);
+  }, [DUREE]);
 
   useEffect(() => {
     const mq = window.matchMedia("(pointer: coarse)");
@@ -68,8 +79,8 @@ export default function Cursor() {
     const el = cursorRef.current;
     if (!el) return;
 
-    const xTo = gsap.quickTo(el, "x", { duration: 0.35, ease: "power3" });
-    const yTo = gsap.quickTo(el, "y", { duration: 0.35, ease: "power3" });
+    const xTo = gsap.quickTo(el, "x", { duration: 0.35 * DUREE, ease: "power3" });
+    const yTo = gsap.quickTo(el, "y", { duration: 0.35 * DUREE, ease: "power3" });
 
     const onMove = (e: MouseEvent) => {
       xTo(e.clientX - 2);
