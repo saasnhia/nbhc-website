@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import { useTranslations } from "next-intl";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -11,6 +12,7 @@ const CALENDLY_URL = "https://calendly.com/saasnhia/30min";
 
 export default function FinalCta() {
   const sectionRef = useRef<HTMLElement>(null);
+  const reduit = usePrefersReducedMotion();
   const t = useTranslations("ctaFinal");
 
   useEffect(() => {
@@ -18,6 +20,13 @@ export default function FinalCta() {
     if (!el) return;
     const inner = el.querySelector("[data-cta-inner]");
     if (!inner) return;
+    // MOUVEMENT REDUIT : L'ETAT FINAL, PAS L'ABSENCE DE TWEEN.
+    // Le `gsap.set` ci-dessous pose opacity 0 ; se contenter de ne pas creer le
+    // declencheur laisserait la section INVISIBLE. On pose donc l'arrivee.
+    if (reduit) {
+      gsap.set(inner, { opacity: 1, y: 0, clearProps: "transform" });
+      return;
+    }
     gsap.set(inner, { opacity: 0, y: 30 });
     const st = ScrollTrigger.create({
       trigger: el,
@@ -33,7 +42,7 @@ export default function FinalCta() {
       },
     });
     return () => st.kill();
-  }, []);
+  }, [reduit]);
 
   return (
     <section

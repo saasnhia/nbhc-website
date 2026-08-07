@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import { useTranslations } from "next-intl";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -15,8 +16,30 @@ export default function Contact() {
   const rightRef = useRef<HTMLDivElement>(null);
   const lineRef = useRef<HTMLDivElement>(null);
   const t = useTranslations("contact");
+  const reduit = usePrefersReducedMotion();
 
   useEffect(() => {
+    // MOUVEMENT REDUIT : L'ETAT FINAL, ET LES TROIS ETATS DE DEPART SONT ECRITS
+    // DANS LE JSX — c'est ce qui rend ce composant plus piegeux que les autres.
+    //
+    //   - les deux colonnes portent `style={{ opacity: 0 }}` (lignes 120 et 169) ;
+    //   - le filet porte `transform: scaleY(0)` (ligne 156), pose expres pour
+    //     qu'il n'apparaisse pas a pleine hauteur le temps d'une image.
+    //
+    // Aucun de ces trois etats ne vient d'un `gsap.set` : ne pas creer les tweens
+    // laisserait donc les deux colonnes ET le filet invisibles. Il faut ECRASER.
+    //
+    // ET `clearProps` NE SUFFIT PAS, IL NUIRAIT. Il retire ce que GSAP a ecrit et
+    // laisse le style de l'auteur : sur le filet il rendrait la main au
+    // scaleY(0) du JSX. On pose donc opacity et scaleY explicitement, et on ne
+    // nettoie que le `transform` des colonnes, ou l'auteur n'en declare aucun.
+    if (reduit) {
+      const arrivee = [leftRef.current, rightRef.current].filter(Boolean);
+      if (arrivee.length) gsap.set(arrivee, { opacity: 1, y: 0, clearProps: "transform" });
+      if (lineRef.current) gsap.set(lineRef.current, { scaleY: 1, transformOrigin: "top" });
+      return;
+    }
+
     const ctx = gsap.context(() => {
       if (leftRef.current) {
         gsap.fromTo(
@@ -77,7 +100,7 @@ export default function Contact() {
     }, sectionRef);
 
     return () => ctx.revert();
-  }, []);
+  }, [reduit]);
 
   return (
     <section

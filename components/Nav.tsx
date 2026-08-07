@@ -9,6 +9,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Logo from "./Logo";
 import MagneticButton from "./MagneticButton";
 import LanguageSwitcher from "./LanguageSwitcher";
+import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -20,6 +21,7 @@ export default function Nav() {
   const [activeSection, setActiveSection] = useState("");
   const [menuOpen, setMenuOpen] = useState(false);
   const navRef = useRef<HTMLElement>(null);
+  const reduit = usePrefersReducedMotion();
   const overlayRef = useRef<HTMLDivElement>(null);
   const tlRef = useRef<gsap.core.Timeline | null>(null);
   const t = useTranslations("nav");
@@ -56,16 +58,25 @@ export default function Nav() {
     const nav = navRef.current;
     if (!nav) return;
 
-    gsap.set(nav, { y: -64, opacity: 0 });
-    gsap.to(nav, { y: 0, opacity: 1, duration: 0.5, delay: 0.2 });
+    // L'ENTREE DE LA BARRE PORTE LE MEME PIEGE QUE LES REVELATIONS. Le `gsap.set`
+    // la place hors ecran a opacity 0 : sauter le tween laisserait la NAVIGATION
+    // ENTIERE invisible. On pose donc directement l'etat d'arrivee.
+    if (reduit) {
+      gsap.set(nav, { y: 0, opacity: 1 });
+    } else {
+      gsap.set(nav, { y: -64, opacity: 0 });
+      gsap.to(nav, { y: 0, opacity: 1, duration: 0.5, delay: 0.2 });
+    }
 
     const st = ScrollTrigger.create({
       start: "80px top",
       onUpdate: (self) => {
         const scrolled = self.progress > 0;
+        // Changement d'ETAT, pas decoration : la barre doit toujours rapetisser.
+        // En mouvement reduit elle le fait d'un coup, sans transition.
         gsap.to(nav, {
           height: scrolled ? 52 : 64,
-          duration: 0.3,
+          duration: reduit ? 0 : 0.3,
           ease: "power2.out",
         });
         nav.style.background = scrolled
@@ -79,7 +90,7 @@ export default function Nav() {
     });
 
     return () => st.kill();
-  }, []);
+  }, [reduit]);
 
   // Mobile overlay animation
   useEffect(() => {
@@ -91,21 +102,30 @@ export default function Nav() {
       const tl = gsap.timeline();
       tlRef.current = tl;
 
+      // Ouverture du menu : un changement d'etat. En mouvement reduit il est
+      // instantane. Un `fromTo` applique toujours son arrivee, donc l'overlay
+      // s'ouvre dans les deux cas — il n'y a pas d'etat de depart orphelin.
       tl.fromTo(
         overlay,
         { clipPath: "inset(0 0 100% 0)" },
-        { clipPath: "inset(0 0 0% 0)", duration: 0.5, ease: "power3.inOut" }
+        { clipPath: "inset(0 0 0% 0)", duration: reduit ? 0 : 0.5, ease: "power3.inOut" }
       );
 
       const navLinks = overlay.querySelectorAll("[data-mobile-link]");
       tl.fromTo(
         navLinks,
         { opacity: 0, y: 30 },
-        { opacity: 1, y: 0, duration: 0.4, stagger: 0.08, ease: "power3.out" },
-        0.3
+        {
+          opacity: 1,
+          y: 0,
+          duration: reduit ? 0 : 0.4,
+          stagger: reduit ? 0 : 0.08,
+          ease: "power3.out",
+        },
+        reduit ? 0 : 0.3
       );
     }
-  }, [menuOpen]);
+  }, [menuOpen, reduit]);
 
   const closeMenu = useCallback(() => {
     const overlay = overlayRef.current;
@@ -116,14 +136,14 @@ export default function Nav() {
 
     gsap.to(overlay, {
       clipPath: "inset(0 0 100% 0)",
-      duration: 0.4,
+      duration: reduit ? 0 : 0.4,
       ease: "power3.inOut",
       onComplete: () => {
         setMenuOpen(false);
         document.body.style.overflow = "";
       },
     });
-  }, []);
+  }, [reduit]);
 
   const scrollToSection = useCallback(
     (id: string, afterClose?: boolean) => {

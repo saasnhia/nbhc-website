@@ -44,16 +44,33 @@
  * reste a 3,9 px. Le seuil est fixe par l'objet qui porte l'argument, et ce n'est pas
  * celui qu'on epaissirait.
  *
- * ── LES VOILES LOCAUX RESTENT ───────────────────────────────────────────────
- * Cette section est a l'interieur de FondSections : un maillage anime tourne derriere
- * elle. Les blocs de texte gardent donc leur aplat de couleur de page a 78 %, qui les
- * rend lisibles sans le cout par image d'un backdrop-filter.
+ * ── LES VOILES LOCAUX RESTENT, ET LE HAUT SEUL EST SORTI DU MAILLAGE ────────
+ * Cette section n'est plus DANS FondSections, mais elle n'en est pas entierement
+ * dehors, et c'est mesure et non suppose. L'enveloppe porte marginTop: -65vh
+ * (FondSections.tsx:114) pour que son fondu d'entree se joue derriere la section qui
+ * la precede — c'etait EN ACTION, c'est maintenant celle-ci. A 1440x900 :
+ *
+ *   HowItWorks   6836 -> 8283      enveloppe   7698 -> 11371
+ *   recouvrement du bas de la section : 585 px
+ *   les quatre colonnes d'etapes      : 7973 -> 8211, DONC ENTIEREMENT DEDANS
+ *
+ * Fond echantillonne en marge : 348/450 pixels exactement rgb(9,9,11) au HAUT de la
+ * section, ecart maximal 6 (les lignes de la grille doree de body::before, une tous
+ * les 60 px) ; mais 0/450 exact et ecart maximal 47 AU NIVEAU DES COLONNES, ou le
+ * maillage passe toujours.
+ *
+ * Consequence pratique : l'illustration, qui est la raison du deplacement, est bien
+ * sur un fond de page pur — le cadre n'a donc plus d'objet. Les quatre colonnes,
+ * elles, restent posees sur le maillage : LEURS VOILES SONT TOUJOURS NECESSAIRES.
+ * Reduire ce recouvrement demanderait de toucher au -65vh de l'enveloppe, ce qui
+ * changerait aussi l'entree de Portfolio : hors de ce lot.
  */
 
 import { useEffect, useRef } from "react";
 import { useTranslations } from "next-intl";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -104,11 +121,71 @@ const ETIQUETTES_CHAINE = [
   { cle: "labelOptionnel", x: 0.9202, y: 0.3534, bord: true },
 ] as const;
 
+/**
+ * LA FRONTIERE DU RECADRAGE — UN SEUL NOMBRE, DEUX ECRITURES, LA MEME REQUETE.
+ *
+ * Au-dessus de 768 px on sert le cadrage large et tout ce qui vise sa geometrie
+ * existe : les deux etiquettes, les quatre tirets, le rail, la grille de quatre
+ * colonnes et les marges en pourcentage. En dessous, le <picture> sert le RECADRAGE
+ * sur 02 / la signature / 03, dont les abscisses ne sont pas celles-la, et tout cela
+ * disparait.
+ *
+ * POURQUOI CE COMMENTAIRE EXISTE : les deux cotes ne designaient PAS la meme
+ * frontiere, et il y avait un pixel de large ou ils se contredisaient.
+ *
+ *   Tailwind v4 compile `max-[N px]` en `@media not all and (min-width: N px)`.
+ *   Verifie dans le CSS compile : `max-[768px]` y devient
+ *   `not all and (min-width:767px)`, c'est-a-dire « largeur STRICTEMENT INFERIEURE
+ *   a 767 » — 767 exclu.
+ *   Or `<source media="(max-width: 767px)">` INCLUT 767.
+ *
+ * A 767 px exactement, le recadrage mobile etait donc servi tandis que les
+ * etiquettes et les tirets restaient affiches, vises sur une geometrie qui n'etait
+ * plus a l'ecran. Mesure : 768 -> hiw-chaine-760 (rapport 1,659), bande visible,
+ * 2 etiquettes, correct ; 767 -> hiw-etape2-878 (rapport 1,029), bande visible,
+ * 2 etiquettes, FAUX ; 766 -> mobile, bande masquee, 0 etiquette, correct.
+ *
+ * LES DEUX ECRITURES SONT MAINTENANT LA MEME REQUETE, MOT POUR MOT :
+ *
+ *   la classe Tailwind   max-[768px]:hidden
+ *     compilee en        not all and (min-width: 768px)
+ *   le media du <source> not all and (min-width: 768px)     <- construit ci-dessous
+ *
+ * Il n'y a donc plus aucun ecart, meme aux largeurs fractionnaires que produit un
+ * zoom — ce qu'un `(max-width: 767px)` face a un `< 768` laissait passer a 767,5.
+ *
+ * `max-md:` NE CONVIENDRAIT PAS : Tailwind v4 exprime md en rem, donc la frontiere
+ * suivrait la taille de police racine du visiteur et se desynchroniserait d'un media
+ * ecrit en px.
+ *
+ * LA DUPLICATION QUI RESTE, ET ELLE EST INEVITABLE : Tailwind exige un LITTERAL
+ * statique dans la classe, il ne lit pas les constantes du module. Le 768 apparait
+ * donc dans SEUIL_LARGE et dans les classes `max-[768px]:*`. L'assertion de type en
+ * bas de fichier gele la constante ; si quelqu'un change l'une, il doit changer
+ * l'autre, et les deux sont nommees ici.
+ */
+const SEUIL_LARGE = 768;
+
 /** Abscisse au sol des quatre stations, pour le tiret de rappel. */
 const X_STATIONS = [0.1278, 0.3409, 0.5541, 0.7673] as const;
 
+/**
+ * OU LE RAIL PASSE EN POINTILLE : l'abscisse de la station 04, LUE dans X_STATIONS et
+ * non recopiee. Au-dela, la scene rend la ligne doree PHYSIQUEMENT DETACHEE — c'est
+ * ainsi qu'elle code l'accompagnement optionnel, et l'etiquette « accompagnement
+ * optionnel » y pend a 0,9202. Un rail continu jusqu'au bout contredisait donc
+ * l'image qu'il longe : il annoncait une suite acquise la ou le rendu montre une
+ * option.
+ */
+const X_QUEUE = X_STATIONS[3];
+
 export default function HowItWorks() {
   const sectionRef = useRef<HTMLElement>(null);
+  const bandeRef = useRef<HTMLDivElement>(null);
+  const remplissageRef = useRef<HTMLSpanElement>(null);
+  const queueRef = useRef<HTMLSpanElement>(null);
+  const tiretsRef = useRef<(HTMLSpanElement | null)[]>([]);
+  const reduit = usePrefersReducedMotion();
   const t = useTranslations("howItWorks");
 
   const steps = [
@@ -122,6 +199,13 @@ export default function HowItWorks() {
     const el = sectionRef.current;
     if (!el) return;
     const items = el.querySelectorAll("[data-hiw-item]");
+    // MOUVEMENT REDUIT : L'ETAT FINAL, PAS L'ABSENCE DE TWEEN.
+    // Le `gsap.set` ci-dessous pose opacity 0 ; se contenter de ne pas creer le
+    // declencheur laisserait la section INVISIBLE. On pose donc l'arrivee.
+    if (reduit) {
+      gsap.set(items, { opacity: 1, y: 0, clearProps: "transform" });
+      return;
+    }
     gsap.set(items, { opacity: 0, y: 24 });
     const st = ScrollTrigger.create({
       trigger: el,
@@ -139,16 +223,162 @@ export default function HowItWorks() {
       },
     });
     return () => st.kill();
-  }, []);
+  }, [reduit]);
+
+  /**
+   * LE RAIL DE PROGRESSION — GSAP SEUL, SCRUB, AUCUN PIN.
+   *
+   * POURQUOI PAS `animation-timeline` EN CSS NATIF : les deux moteurs le supportent,
+   * mais la coexistence avec Lenis a ete mesuree. Sur WebKit 2203 (Safari 26), une
+   * animation pilotee par le defilement en CSS natif retarde une animation JS lisant
+   * la meme position de 7 % en regime courant et jusqu'a 20 % en pointe, alors qu'au
+   * repos les deux s'accordent a 0,5 px — confirme par deux instruments independants
+   * dont un qui ne passe pas par l'image rendue. Un rail qui doit coincider avec
+   * quatre tirets ne peut pas se payer cela. Un seul pilote pour le defilement.
+   *
+   * ET UNE TIMELINE, PAS UN TWEEN + DES COMPARAISONS. Avec `scrub`, la progression de
+   * la ScrollTrigger et celle du tween ne sont PAS la meme chose : le scrub lisse, donc
+   * le tween retarde le defilement. Allumer les tirets en comparant `self.progress` a
+   * leur fraction les ferait s'allumer AVANT que le remplissage ne les atteigne.
+   * On place donc chaque allumage DANS la timeline scrubee, au temps egal a sa
+   * fraction : la tete de lecture est commune, donc la coincidence est structurelle
+   * et non verifiee apres coup.
+   *
+   * LES FRACTIONS SONT CELLES DE X_STATIONS, LUES ET NON REDERIVEES.
+   */
+  useEffect(() => {
+    const el = sectionRef.current;
+    const bande = bandeRef.current;
+    const rail = remplissageRef.current;
+    const queue = queueRef.current;
+    if (!el || !bande || !rail || !queue) return;
+    const tirets = tiretsRef.current.filter((n): n is HTMLSpanElement => n !== null);
+
+    // MOUVEMENT REDUIT : LE RAIL EST PLEIN ET STATIQUE. L'information reste — le
+    // parcours entier, ses quatre etapes et la queue detachee — seul le mouvement part.
+    // Le principal va jusqu'a X_QUEUE, la queue jusqu'au bout de SA boite.
+    if (reduit) {
+      gsap.set(rail, { scaleX: X_QUEUE, transformOrigin: "left center" });
+      gsap.set(queue, { scaleX: 1, transformOrigin: "left center" });
+      if (tirets.length) gsap.set(tirets, { opacity: 1 });
+      return;
+    }
+
+    gsap.set(rail, { scaleX: 0, transformOrigin: "left center" });
+    gsap.set(queue, { scaleX: 0, transformOrigin: "left center" });
+    if (tirets.length) gsap.set(tirets, { opacity: 0 });
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        // LA PLAGE PART DE LA BANDE, PAS DE LA SECTION, ET C'EST UNE MESURE QUI L'A
+        // DECIDE. Avec `trigger: section, start: "top 70%"`, la bande n'entrait dans la
+        // fenetre qu'a 54,8 % de remplissage a 1440, 48,2 % a 1024 et 38,4 % a 768 :
+        // le visiteur decouvrait un rail deja a moitie fait, ce qui ne raconte rien.
+        //
+        // `trigger: bande, start: "bottom bottom"` place l'origine a l'instant EXACT ou
+        // le bas de la bande atteint le bas de la fenetre — donc ou la bande devient
+        // entierement visible, sa hauteur n'etant que de 24 px. La progression y vaut 0
+        // par construction, et non par reglage.
+        trigger: bande,
+        start: "bottom bottom",
+        // ET LA FIN EST ANCREE SUR LA SECTION, par endTrigger : le rail doit etre plein
+        // AVANT que la section ne quitte la fenetre.
+        //
+        // ┌── 60 % = 30 % VOULUS + LE RETARD DU SCRUB. LIRE AVANT DE TOUCHER. ──────┐
+        //
+        // CE QUE L'ON VEUT est 30 % : le rail plein quand il reste 30 % de hauteur de
+        // fenetre avant la sortie de la section. `end: "bottom 30%"` a ete essaye et
+        // MESURE — le rail n'atteignait 100 % qu'avec le bas de section a +8 px du haut
+        // de fenetre a 1440, +33 a 1024 et -30 A 768, donc apres la sortie.
+        //
+        // LA CAUSE N'EST PAS LA PLAGE, C'EST `scrub: 1`. Le scrub lisse : quand la
+        // ScrollTrigger atteint sa fin, le tween n'y est pas encore et lui court apres.
+        // Le rail est donc plein NON PAS a la fin de la plage, mais un retard plus tard.
+        // Les 30 % supplementaires paient ce retard.
+        //
+        // CONDITION DE VALIDITE DU CHIFFRE, ET ELLE EST ETROITE :
+        //
+        //   1. LE RETARD A ETE MESURE A LA VITESSE DE MON INSTRUMENT — des crans de
+        //      100 px toutes les 140 ms, soit environ 700 px/s. Il valait alors ~260 px
+        //      de defilement. Un visiteur plus rapide aura un retard PLUS GRAND, un
+        //      visiteur plus lent un retard plus petit : 260 px n'est pas une constante
+        //      de la page, c'est un releve a une vitesse donnee.
+        //
+        //   2. LE RETARD EST PROPORTIONNEL A LA VITESSE DE DEFILEMENT, PAS A LA PLAGE.
+        //      Allonger ou raccourcir start/end ne le change pas. Ce n'est donc pas en
+        //      reglant la plage qu'on le supprime — on ne fait que lui laisser de la
+        //      place.
+        //
+        //   3. TOUCHER A `scrub: 1` INVALIDE LE 60 %. Le retard est proportionnel a
+        //      cette valeur : la passer a 0,5 le divise par deux et 60 % devient trop
+        //      genereux ; la passer a 2 le double et 60 % redevient trop juste. Qui
+        //      change le scrub doit REMESURER, avec verif_rail_lisible.js, le controle
+        //      « plein AVANT que la section ne quitte la fenetre ».
+        //
+        //   4. CE QUE LE RETARD NE PEUT PAS FAIRE : rendre le rail FAUX. Il ne le rend
+        //      que tardif, et la coincidence tirets/remplissage reste exacte puisque
+        //      les deux vivent sur la meme tete de lecture.
+        //
+        // Marges relevees a 60 % : bas de section a 209 px du haut de fenetre a 1440,
+        // 251 a 1024, 280 a 768 — en /fr comme en /en.
+        // └────────────────────────────────────────────────────────────────────────┘
+        endTrigger: el,
+        end: "bottom 60%",
+        scrub: 1,
+      },
+    });
+    // DUREE TOTALE 1, pour que le TEMPS de la timeline soit la fraction parcourue.
+    //
+    // Le principal couvre 0 -> X_QUEUE en un temps egal a X_QUEUE : a l'instant t sa
+    // mise a l'echelle vaut donc exactement t, et son bord droit tombe a la fraction t
+    // de la bande.
+    tl.to(rail, { scaleX: X_QUEUE, ease: "none", duration: X_QUEUE }, 0);
+    // La queue couvre X_QUEUE -> 1. Sa BOITE ne fait que (1 - X_QUEUE) de la bande,
+    // donc sa mise a l'echelle ne peut pas valoir t : elle vaut (t - X_QUEUE) / (1 -
+    // X_QUEUE). Ce qui reste vrai — et c'est l'invariant que la contrainte protege —
+    // est que SON BORD DROIT tombe a X_QUEUE + (1 - X_QUEUE) x scaleX = t. Le bout
+    // visible du rail vaut donc le temps de la timeline sur les deux elements, et les
+    // allumages places au temps de leur fraction ne peuvent pas decrocher.
+    tl.to(queue, { scaleX: 1, ease: "none", duration: 1 - X_QUEUE }, X_QUEUE);
+    X_STATIONS.forEach((x, k) => {
+      if (tirets[k]) tl.to(tirets[k], { opacity: 1, ease: "none", duration: 0.02 }, x);
+    });
+
+    return () => {
+      tl.scrollTrigger?.kill();
+      tl.kill();
+    };
+  }, [reduit]);
 
   return (
     <section
       id="comment-ca-marche"
       ref={sectionRef}
       className="py-24 px-10 max-[900px]:px-5 max-[900px]:py-16"
-      style={{ maxWidth: 1200, margin: "0 auto" }}
+      style={{
+        maxWidth: 1200,
+        margin: "0 auto",
+        // ECRETAGE HORIZONTAL, ET IL EST DEVENU NECESSAIRE EN SORTANT DE L'ENVELOPPE.
+        //
+        // `.voile-texte::before` deborde lateralement de calc(-8% - 1rem) de chaque
+        // cote. Tant que cette section vivait dans FondSections, ce debordement etait
+        // contenu par le `overflow-x: clip` de l'enveloppe (FondSections.tsx:113).
+        // Dehors, il s'echappe : mesure apres deplacement, LA PAGE SE DEPLACAIT
+        // HORIZONTALEMENT de 66 px a 1200, 52 a 1024, 42 a 900, 54 a 768 et 24 a 390 —
+        // et l'ampleur egale exactement la bavure du voile de cette section a chaque
+        // largeur. `body { overflow-x: hidden }` (globals.css:74) NE LA CONTIENT PAS ;
+        // c'est la fenetre qui defilait, pas le corps.
+        //
+        // `clip` ET SURTOUT PAS `hidden`, pour la raison deja ecrite en tete de
+        // FondSections : `hidden` ferait de cette section un conteneur de defilement,
+        // et tout element collant a l'interieur se resoudrait contre une boite qui ne
+        // defile pas. `clip` decoupe sans creer de scrollport.
+        overflowX: "clip",
+      }}
     >
-      {/* Voile local : ce bloc est pose sur le calque anime. */}
+      {/* Voile local : ce bloc-ci est au-dessus du recouvrement de l'enveloppe,
+          donc sur fond de page pur. Il ne nuit pas et ne sert plus — contrairement
+          a celui des quatre colonnes. Voir l'en-tete du fichier. */}
       <div className="voile-texte mb-12">
         <div
           className="text-[11px] font-medium tracking-[3px] uppercase mb-4 flex items-center gap-2"
@@ -183,27 +413,25 @@ export default function HowItWorks() {
           height pour que le navigateur reserve la bonne boite avant le chargement —
           les deux rapports d'image different (1,660:1 et 1,029:1), donc sans ces
           attributs le basculement produirait un saut de mise en page. */}
-      {/* LE CADRE DE CARTE N'EST PAS UN ORNEMENT, IL CORRIGE UN DEFAUT VU SUR LA
-          PAGE. L'illustration est un PNG opaque sur #09090b ; posee dans FondSections,
-          elle decoupe un rectangle noir a arete franche dans le maillage anime et lit
-          comme un trou plutot que comme un objet. Le meme traitement que les anciennes
-          cartes de cette section — un filet a var(--border) et le rayon de la charte —
-          transforme le trou en carte. C'est le vocabulaire deja present sur la page,
-          pas une invention.
+      {/* PLUS DE CADRE, ET C'EST LA CAUSE QUI A ETE TRAITEE, PAS LE SYMPTOME.
+          Le filet a var(--border) et le rayon de la charte etaient ici pour une
+          raison mesurable : cette section vivait dans FondSections, et
+          l'illustration est un WebP OPAQUE sur #09090b. Posee sur le maillage
+          anime, elle y decoupait un rectangle noir a arete franche — le fond
+          juste autour d'elle mesurait rgb(12,12,12), l'interieur rgb(9,9,11) —
+          et lisait comme un trou. Le cadre transformait le trou en carte.
+          La section est sortie de l'enveloppe (page.tsx). Le fond autour de
+          l'illustration vaut desormais la meme valeur que son propre fond, donc
+          il n'y a plus d'arete a masquer et plus rien a encadrer.
 
-          L'autre sortie serait de servir l'illustration en ALPHA pour que le maillage
-          traverse son fond. Elle est plus elegante mais elle coute quatre fichiers de
-          plus, un WebP a canal alpha est plus lourd, et les gates precedents ont mesure
-          des halos gris sur les bords en mode alpha. Elle est chiffree dans le rapport,
-          pas retenue ici. */}
-      <figure
-        data-hiw-item
-        className="relative m-0 overflow-hidden"
-        style={{ border: "1px solid var(--border)", borderRadius: "var(--radius)" }}
-      >
+          overflow: hidden RESTE. Il ne servait pas le cadre : c'est lui qui
+          contient le recadrage mobile servi par le <source> ci-dessous, dont le
+          rapport d'image differe (1,029:1 contre 1,660:1). */}
+      <figure data-hiw-item className="relative m-0 overflow-hidden">
         <picture>
           <source
-            media="(max-width: 767px)"
+            // MEME REQUETE QUE `max-[768px]:*`, voir SEUIL_LARGE.
+            media={`not all and (min-width: ${SEUIL_LARGE}px)`}
             srcSet="/hiw-etape2-340.webp 340w, /hiw-etape2-440.webp 440w, /hiw-etape2-680.webp 680w, /hiw-etape2-878.webp 878w"
             sizes="calc(100vw - 40px)"
             width={878}
@@ -233,7 +461,7 @@ export default function HowItWorks() {
         {ETIQUETTES_CHAINE.map((e) => (
           <span
             key={e.cle}
-            className="pointer-events-none absolute text-[11px] font-medium uppercase text-center max-[767px]:hidden"
+            className="pointer-events-none absolute text-[11px] font-medium uppercase text-center max-[768px]:hidden"
             style={{
               left: `${e.x * 100}%`,
               top: `${e.y * 100}%`,
@@ -268,13 +496,13 @@ export default function HowItWorks() {
           spans, chacun visible de son cote du point de rupture. */}
       <div className="relative h-7 mt-2" data-hiw-item aria-hidden="false">
         <span
-          className="voile-texte absolute text-[11px] font-medium tracking-[2px] uppercase whitespace-nowrap max-[767px]:hidden"
+          className="voile-texte absolute text-[11px] font-medium tracking-[2px] uppercase whitespace-nowrap max-[768px]:hidden"
           style={{ left: "44.75%", transform: "translateX(-50%)", color: "var(--gold)" }}
         >
           {t("legendeSignature")}
         </span>
         <span
-          className="voile-texte absolute text-[11px] font-medium tracking-[2px] uppercase whitespace-nowrap hidden max-[767px]:inline"
+          className="voile-texte absolute text-[11px] font-medium tracking-[2px] uppercase whitespace-nowrap hidden max-[768px]:inline"
           style={{ left: "50.1%", transform: "translateX(-50%)", color: "var(--gold)" }}
         >
           {t("legendeSignature")}
@@ -326,7 +554,90 @@ export default function HowItWorks() {
           tombe A L'INTERIEUR de sa colonne, a 86 px d'une cellule de 238. Un tiret
           vertical ne peut pas viser a la fois l'objet et le centre du texte ; il vise
           l'objet, qui est ce qu'il designe. */}
-      <div className="relative h-6 max-[767px]:hidden" aria-hidden="true">
+      {/* LE RAIL DE PROGRESSION, DANS LA BANDE QUI EXISTE DEJA.
+          Quatre traits a mi-hauteur : la PISTE en or eteint et le REMPLISSAGE en or
+          plein jusqu'a la station 04, puis leurs deux equivalents EN POINTILLE au-dela.
+          Les quatre tirets s'allument quand le remplissage les atteint.
+
+          POURQUOI UN z-index SUR LA BANDE, ET C'EST LA CORRECTION DU LOT.
+          Le rail rendait 7 % de son encre : il etait peint SOUS les voiles des quatre
+          colonnes. Ce n'est pas le transform residuel des revelations — GSAP le retire
+          par clearProps et le seul style en ligne restant est `opacity: 1`, qui ne cree
+          aucun contexte d'empilement. La cause est `isolation: isolate` sur
+          `.voile-texte` (globals.css:130) : elle cree un contexte d'empilement A ELLE
+          SEULE, ce qui ENFERME le ::before a z-index:-1 dans la colonne. Le pseudo ne
+          peut donc plus passer sous un element exterieur, et la colonne se peint apres
+          la bande dans l'ordre de l'arbre. Son voile deborde de 131 px au-dessus d'une
+          colonne de 238 px — la bande de 24 px est entierement dedans.
+
+          Contre-epreuves, voiles jamais touches : retirer le style en ligne de GSAP ne
+          change rien (encre mediane 25 %) ; neutraliser `isolation` la porte a 100 % ;
+          un z-index sur la bande aussi. On prend le z-index : c'est la sortie la plus
+          etroite, et elle ne retire aux colonnes aucune protection — elles sont
+          toujours sur le maillage, ou le fond mesure 0/450 pixel exact.
+
+          POSITIONNEMENT SANS translateY. Un `top: 50%` + `translateY(-50%)` obligerait
+          GSAP a composer sa mise a l'echelle avec une translation deja inscrite ; on
+          centre donc par une marge negative et le transform ne porte QUE le scaleX.
+          C'est aussi la regle du depot : on n'animate ni largeur ni hauteur. */}
+      <div
+        ref={bandeRef}
+        data-hiw-rail
+        className="relative h-6 max-[768px]:hidden"
+        aria-hidden="true"
+        style={{ zIndex: 1 }}
+      >
+        <span
+          data-hiw-rail-piste
+          className="absolute block"
+          style={{ left: 0, right: `${(1 - X_QUEUE) * 100}%`, top: "50%", marginTop: -0.5,
+                   height: 1, background: "var(--gold-dim)" }}
+        />
+        {/* LA PISTE DE LA QUEUE EST POINTILLEE, ELLE AUSSI. Si seul le remplissage
+            l'etait, le pointille se lirait comme des points POSES SUR un trait continu,
+            donc comme un trait abime. En pointillant les deux, la portion au-dela de la
+            station 04 est detachee qu'elle soit parcourue ou non — ce que dit le rendu,
+            ou le dernier segment de la ligne doree est physiquement separe.
+            LE MOTIF COMMENCE PAR UN VIDE, pour que la rupture tombe exactement sur la
+            station et non un tiret plus loin. */}
+        <span
+          data-hiw-rail-piste-queue
+          className="absolute block"
+          style={{ left: `${X_QUEUE * 100}%`, right: 0, top: "50%", marginTop: -0.5,
+                   height: 1,
+                   backgroundImage:
+                     "repeating-linear-gradient(to right, transparent 0 6px,"
+                     + " var(--gold-dim) 6px 14px)" }}
+        />
+        {/* LE REMPLISSAGE PRINCIPAL garde la boite PLEINE LARGEUR et ne monte qu'a
+            X_QUEUE : sa mise a l'echelle vaut donc exactement le temps de la timeline,
+            et son bord droit tombe a la fraction parcourue. */}
+        <span
+          ref={remplissageRef}
+          data-hiw-rail-rempli
+          className="absolute block"
+          style={{ left: 0, right: 0, top: "50%", marginTop: -0.5, height: 1,
+                   background: "var(--gold)",
+                   // Etat de depart declare ICI et pas seulement dans la timeline : sans
+                   // cette ligne le rail apparait plein le temps d'une image, comme le
+                   // filet de Contact avant sa correction.
+                   transform: "scaleX(0)", transformOrigin: "left center" }}
+        />
+        {/* LE REMPLISSAGE DE LA QUEUE, meme motif que sa piste mais en or plein. Sa
+            boite commence a la station 04, donc son echelle va de 0 a 1 sur (1 - X_QUEUE)
+            de la bande — voir la note de la timeline sur ce que « scaleX egale le temps »
+            devient ici. */}
+        <span
+          ref={queueRef}
+          data-hiw-rail-queue
+          className="absolute block"
+          style={{ left: `${X_QUEUE * 100}%`, right: 0, top: "50%", marginTop: -0.5,
+                   height: 1,
+                   backgroundImage:
+                     "repeating-linear-gradient(to right, transparent 0 6px,"
+                     + " var(--gold) 6px 14px)",
+                   transform: "scaleX(0)", transformOrigin: "left center" }}
+        />
         {X_STATIONS.map((x, k) => (
           <span
             key={k}
@@ -337,7 +648,16 @@ export default function HowItWorks() {
               background: "var(--text-muted)",
               transform: "translateX(-50%)",
             }}
-          />
+          >
+            {/* La surcouche doree s'allume en OPACITE : le tiret garde sa geometrie et
+                sa couleur de repos dessous, donc rien ne se remet en page. */}
+            <span
+              ref={(n) => { tiretsRef.current[k] = n; }}
+              data-hiw-rail-tiret
+              className="absolute inset-0 block"
+              style={{ background: "var(--gold)", opacity: 0 }}
+            />
+          </span>
         ))}
       </div>
 
@@ -346,7 +666,7 @@ export default function HowItWorks() {
           recadrage et les etapes repassent en pile verticale, donc plus de decalage
           ni de grille. */}
       <div
-        className="max-[767px]:!mt-6 max-[767px]:!ml-0 max-[767px]:!mr-0"
+        className="max-[768px]:!mt-6 max-[768px]:!ml-0 max-[768px]:!mr-0"
         style={{
           marginLeft: `${BORD_GAUCHE * 100}%`,
           marginRight: `${BORD_DROIT * 100}%`,
@@ -362,11 +682,11 @@ export default function HowItWorks() {
             A jour nul, le pas vaut exactement largeur / 4, donc un conteneur de
             4 x 21,31 % aligne les colonnes sur les stations par construction. L'air
             entre colonnes est rendu par une marge interne, qui ne touche pas au pas. */}
-        <div className="grid grid-cols-4 gap-0 max-[767px]:grid-cols-1 max-[767px]:gap-8">
+        <div className="grid grid-cols-4 gap-0 max-[768px]:grid-cols-1 max-[768px]:gap-8">
           {steps.map((s) => (
-            <div key={s.n} data-hiw-item className="voile-texte pr-6 max-[767px]:pr-0">
+            <div key={s.n} data-hiw-item className="voile-texte pr-6 max-[768px]:pr-0">
               <div
-                className="text-[11px] font-bold tracking-[2px] mb-2 max-[767px]:hidden"
+                className="text-[11px] font-bold tracking-[2px] mb-2 max-[768px]:hidden"
                 style={{ fontFamily: "var(--font-syne)", color: "var(--gold)" }}
               >
                 {s.n}
@@ -381,7 +701,7 @@ export default function HowItWorks() {
                   lineHeight: 1.25,
                 }}
               >
-                <span className="hidden max-[767px]:inline" style={{ color: "var(--gold)" }}>
+                <span className="hidden max-[768px]:inline" style={{ color: "var(--gold)" }}>
                   {s.n}
                   {" — "}
                 </span>
@@ -417,3 +737,9 @@ export default function HowItWorks() {
 // sans que les marges soient recalculees.
 const _pas: 0.2131 = PAS;
 void _pas;
+
+// Meme raison pour la frontiere du recadrage : elle est en litteral dans les classes
+// `max-[768px]:*`, que Tailwind ne peut pas deriver d'une constante. Cette assertion
+// casse la compilation si SEUIL_LARGE change sans que les classes suivent.
+const _seuil: 768 = SEUIL_LARGE;
+void _seuil;

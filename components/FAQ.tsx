@@ -4,11 +4,13 @@ import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function FAQ() {
   const sectionRef = useRef<HTMLElement>(null);
+  const reduit = usePrefersReducedMotion();
   const [openIndex, setOpenIndex] = useState<number | null>(0);
   const t = useTranslations("faq");
 
@@ -25,6 +27,13 @@ export default function FAQ() {
     const el = sectionRef.current;
     if (!el) return;
     const rows = el.querySelectorAll("[data-faq-item]");
+    // MOUVEMENT REDUIT : L'ETAT FINAL, PAS L'ABSENCE DE TWEEN.
+    // Le `gsap.set` ci-dessous pose opacity 0 ; se contenter de ne pas creer le
+    // declencheur laisserait la section INVISIBLE. On pose donc l'arrivee.
+    if (reduit) {
+      gsap.set(rows, { opacity: 1, y: 0, clearProps: "transform" });
+      return;
+    }
     gsap.set(rows, { opacity: 0, y: 20 });
     const st = ScrollTrigger.create({
       trigger: el,
@@ -41,7 +50,7 @@ export default function FAQ() {
       },
     });
     return () => st.kill();
-  }, []);
+  }, [reduit]);
 
   return (
     <section

@@ -6,11 +6,13 @@ import { useLocale, useTranslations } from "next-intl";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import PricingPlanCard from "./PricingPlanCard";
+import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Pricing() {
   const sectionRef = useRef<HTMLElement>(null);
+  const reduit = usePrefersReducedMotion();
   const t = useTranslations("pricing");
   const tA = useTranslations("tarifs.blocA");
   const locale = useLocale();
@@ -19,6 +21,13 @@ export default function Pricing() {
     const el = sectionRef.current;
     if (!el) return;
     const cards = el.querySelectorAll("[data-pricing-card]");
+    // MOUVEMENT REDUIT : L'ETAT FINAL, PAS L'ABSENCE DE TWEEN.
+    // Le `gsap.set` ci-dessous pose opacity 0 ; se contenter de ne pas creer le
+    // declencheur laisserait la section INVISIBLE. On pose donc l'arrivee.
+    if (reduit) {
+      gsap.set(cards, { opacity: 1, y: 0, clearProps: "transform" });
+      return;
+    }
     gsap.set(cards, { opacity: 0, y: 40 });
     const st = ScrollTrigger.create({
       trigger: el,
@@ -35,7 +44,7 @@ export default function Pricing() {
       },
     });
     return () => st.kill();
-  }, []);
+  }, [reduit]);
 
   return (
     <section
