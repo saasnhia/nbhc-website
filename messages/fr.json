@@ -81,7 +81,9 @@
     "panel2Alt": "Un amas de blocs cubiques identiques posé sur un socle, à côté d'une plaque fendue d'une longue rainure bordée d'or ; deux blocs reposent en travers de la fente sans y entrer.",
     "panel3Title": "Vos concurrents s'y mettent",
     "panel3Text": "Pendant que vous hésitez, d'autres automatisent déjà.",
-    "panel3Alt": "Deux caisses identiques posées sur un socle bordé d'or : celle de gauche est fermée, celle de droite est ouverte, son couvercle déposé et appuyé au sol contre son flanc, et une masse dorée occupe le fond de son intérieur."
+    "panel3Alt": "Deux caisses identiques posées sur un socle bordé d'or : celle de gauche est fermée, celle de droite est ouverte, son couvercle déposé et appuyé au sol contre son flanc, et une masse dorée occupe le fond de son intérieur.",
+    "panel3LabelVous": "vous hésitez",
+    "panel3LabelAutres": "d'autres automatisent déjà"
   },
   "sectors": {
     "eyebrow": "POUR QUI",
