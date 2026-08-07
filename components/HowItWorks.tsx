@@ -44,10 +44,26 @@
  * reste a 3,9 px. Le seuil est fixe par l'objet qui porte l'argument, et ce n'est pas
  * celui qu'on epaissirait.
  *
- * ── LES VOILES LOCAUX RESTENT ───────────────────────────────────────────────
- * Cette section est a l'interieur de FondSections : un maillage anime tourne derriere
- * elle. Les blocs de texte gardent donc leur aplat de couleur de page a 78 %, qui les
- * rend lisibles sans le cout par image d'un backdrop-filter.
+ * ── LES VOILES LOCAUX RESTENT, ET LE HAUT SEUL EST SORTI DU MAILLAGE ────────
+ * Cette section n'est plus DANS FondSections, mais elle n'en est pas entierement
+ * dehors, et c'est mesure et non suppose. L'enveloppe porte marginTop: -65vh
+ * (FondSections.tsx:114) pour que son fondu d'entree se joue derriere la section qui
+ * la precede — c'etait EN ACTION, c'est maintenant celle-ci. A 1440x900 :
+ *
+ *   HowItWorks   6836 -> 8283      enveloppe   7698 -> 11371
+ *   recouvrement du bas de la section : 585 px
+ *   les quatre colonnes d'etapes      : 7973 -> 8211, DONC ENTIEREMENT DEDANS
+ *
+ * Fond echantillonne en marge : 348/450 pixels exactement rgb(9,9,11) au HAUT de la
+ * section, ecart maximal 6 (les lignes de la grille doree de body::before, une tous
+ * les 60 px) ; mais 0/450 exact et ecart maximal 47 AU NIVEAU DES COLONNES, ou le
+ * maillage passe toujours.
+ *
+ * Consequence pratique : l'illustration, qui est la raison du deplacement, est bien
+ * sur un fond de page pur — le cadre n'a donc plus d'objet. Les quatre colonnes,
+ * elles, restent posees sur le maillage : LEURS VOILES SONT TOUJOURS NECESSAIRES.
+ * Reduire ce recouvrement demanderait de toucher au -65vh de l'enveloppe, ce qui
+ * changerait aussi l'entree de Portfolio : hors de ce lot.
  */
 
 import { useEffect, useRef } from "react";
@@ -155,9 +171,30 @@ export default function HowItWorks() {
       id="comment-ca-marche"
       ref={sectionRef}
       className="py-24 px-10 max-[900px]:px-5 max-[900px]:py-16"
-      style={{ maxWidth: 1200, margin: "0 auto" }}
+      style={{
+        maxWidth: 1200,
+        margin: "0 auto",
+        // ECRETAGE HORIZONTAL, ET IL EST DEVENU NECESSAIRE EN SORTANT DE L'ENVELOPPE.
+        //
+        // `.voile-texte::before` deborde lateralement de calc(-8% - 1rem) de chaque
+        // cote. Tant que cette section vivait dans FondSections, ce debordement etait
+        // contenu par le `overflow-x: clip` de l'enveloppe (FondSections.tsx:113).
+        // Dehors, il s'echappe : mesure apres deplacement, LA PAGE SE DEPLACAIT
+        // HORIZONTALEMENT de 66 px a 1200, 52 a 1024, 42 a 900, 54 a 768 et 24 a 390 —
+        // et l'ampleur egale exactement la bavure du voile de cette section a chaque
+        // largeur. `body { overflow-x: hidden }` (globals.css:74) NE LA CONTIENT PAS ;
+        // c'est la fenetre qui defilait, pas le corps.
+        //
+        // `clip` ET SURTOUT PAS `hidden`, pour la raison deja ecrite en tete de
+        // FondSections : `hidden` ferait de cette section un conteneur de defilement,
+        // et tout element collant a l'interieur se resoudrait contre une boite qui ne
+        // defile pas. `clip` decoupe sans creer de scrollport.
+        overflowX: "clip",
+      }}
     >
-      {/* Voile local : ce bloc est pose sur le calque anime. */}
+      {/* Voile local : ce bloc-ci est au-dessus du recouvrement de l'enveloppe,
+          donc sur fond de page pur. Il ne nuit pas et ne sert plus — contrairement
+          a celui des quatre colonnes. Voir l'en-tete du fichier. */}
       <div className="voile-texte mb-12">
         <div
           className="text-[11px] font-medium tracking-[3px] uppercase mb-4 flex items-center gap-2"
@@ -192,24 +229,21 @@ export default function HowItWorks() {
           height pour que le navigateur reserve la bonne boite avant le chargement —
           les deux rapports d'image different (1,660:1 et 1,029:1), donc sans ces
           attributs le basculement produirait un saut de mise en page. */}
-      {/* LE CADRE DE CARTE N'EST PAS UN ORNEMENT, IL CORRIGE UN DEFAUT VU SUR LA
-          PAGE. L'illustration est un PNG opaque sur #09090b ; posee dans FondSections,
-          elle decoupe un rectangle noir a arete franche dans le maillage anime et lit
-          comme un trou plutot que comme un objet. Le meme traitement que les anciennes
-          cartes de cette section — un filet a var(--border) et le rayon de la charte —
-          transforme le trou en carte. C'est le vocabulaire deja present sur la page,
-          pas une invention.
+      {/* PLUS DE CADRE, ET C'EST LA CAUSE QUI A ETE TRAITEE, PAS LE SYMPTOME.
+          Le filet a var(--border) et le rayon de la charte etaient ici pour une
+          raison mesurable : cette section vivait dans FondSections, et
+          l'illustration est un WebP OPAQUE sur #09090b. Posee sur le maillage
+          anime, elle y decoupait un rectangle noir a arete franche — le fond
+          juste autour d'elle mesurait rgb(12,12,12), l'interieur rgb(9,9,11) —
+          et lisait comme un trou. Le cadre transformait le trou en carte.
+          La section est sortie de l'enveloppe (page.tsx). Le fond autour de
+          l'illustration vaut desormais la meme valeur que son propre fond, donc
+          il n'y a plus d'arete a masquer et plus rien a encadrer.
 
-          L'autre sortie serait de servir l'illustration en ALPHA pour que le maillage
-          traverse son fond. Elle est plus elegante mais elle coute quatre fichiers de
-          plus, un WebP a canal alpha est plus lourd, et les gates precedents ont mesure
-          des halos gris sur les bords en mode alpha. Elle est chiffree dans le rapport,
-          pas retenue ici. */}
-      <figure
-        data-hiw-item
-        className="relative m-0 overflow-hidden"
-        style={{ border: "1px solid var(--border)", borderRadius: "var(--radius)" }}
-      >
+          overflow: hidden RESTE. Il ne servait pas le cadre : c'est lui qui
+          contient le recadrage mobile servi par le <source> ci-dessous, dont le
+          rapport d'image differe (1,029:1 contre 1,660:1). */}
+      <figure data-hiw-item className="relative m-0 overflow-hidden">
         <picture>
           <source
             media="(max-width: 767px)"

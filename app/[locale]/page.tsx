@@ -116,13 +116,22 @@ export default async function Home({
         </div>
       </div>
       <VideoShowcase />
-      {/* Calque anime derriere ces trois sections, pas entre elles.
+      {/* HOWITWORKS EST SORTI DE L'ENVELOPPE, ET C'EST UNE MESURE QUI L'A DECIDE.
+          Son illustration est un WebP OPAQUE sur #09090b. Posee sur le maillage
+          anime, elle y decoupait un rectangle noir a arete franche : le fond
+          immediatement autour d'elle mesurait rgb(12,12,12) — la video qui passe —
+          contre rgb(9,9,11) dans l'image. C'est ce raccord manquant que le cadre
+          de carte compensait, et non un besoin d'ornement.
+          Hors enveloppe, le fond de page vaut exactement la valeur du coin des
+          rendus Blender, la couture disparait, et le cadre n'a plus de raison
+          d'etre. Il est retire dans le meme lot. */}
+      <HowItWorks />
+      {/* Calque anime derriere ces deux sections, pas entre elles.
           Tarifs est inclus : la sortie du calque a la frontiere
           Portfolio/Tarifs se lisait comme une coupure nette, et prolonger
           supprime la couture au lieu de la maquiller. Le fondu ne tombe donc
           qu'au vrai debut et a la vraie fin du parcours couvert. */}
       <FondSections>
-        <HowItWorks />
         <Portfolio />
         <Pricing />
       </FondSections>
