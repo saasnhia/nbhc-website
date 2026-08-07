@@ -284,17 +284,44 @@ export default function HowItWorks() {
         // ET LA FIN EST ANCREE SUR LA SECTION, par endTrigger : le rail doit etre plein
         // AVANT que la section ne quitte la fenetre.
         //
-        // 60 % ET NON 30 %, ET C'EST LA MESURE QUI L'A CORRIGE. A `bottom 30%`, le
-        // rail n'atteignait 100 % qu'avec le bas de section a +8 px du haut de fenetre
-        // a 1440, +33 a 1024 et -30 A 768 — donc APRES la sortie. La cause n'est pas la
-        // plage mais LE LISSAGE DU SCRUB : quand la ScrollTrigger atteint sa fin, le
-        // tween a encore environ 260 px de defilement de retard a rattraper. La fin
-        // doit donc etre posee un retard AVANT la sortie, pas a la sortie.
+        // ┌── 60 % = 30 % VOULUS + LE RETARD DU SCRUB. LIRE AVANT DE TOUCHER. ──────┐
         //
-        // A `bottom 60%` la marge devient 540 px de cible moins ~260 px de retard, soit
-        // environ 280 px de hauteur de fenetre encore disponibles quand le rail est
-        // plein. Le retard croit avec la vitesse de defilement ; il ne peut rendre le
-        // rail QUE tardif, jamais faux.
+        // CE QUE L'ON VEUT est 30 % : le rail plein quand il reste 30 % de hauteur de
+        // fenetre avant la sortie de la section. `end: "bottom 30%"` a ete essaye et
+        // MESURE — le rail n'atteignait 100 % qu'avec le bas de section a +8 px du haut
+        // de fenetre a 1440, +33 a 1024 et -30 A 768, donc apres la sortie.
+        //
+        // LA CAUSE N'EST PAS LA PLAGE, C'EST `scrub: 1`. Le scrub lisse : quand la
+        // ScrollTrigger atteint sa fin, le tween n'y est pas encore et lui court apres.
+        // Le rail est donc plein NON PAS a la fin de la plage, mais un retard plus tard.
+        // Les 30 % supplementaires paient ce retard.
+        //
+        // CONDITION DE VALIDITE DU CHIFFRE, ET ELLE EST ETROITE :
+        //
+        //   1. LE RETARD A ETE MESURE A LA VITESSE DE MON INSTRUMENT — des crans de
+        //      100 px toutes les 140 ms, soit environ 700 px/s. Il valait alors ~260 px
+        //      de defilement. Un visiteur plus rapide aura un retard PLUS GRAND, un
+        //      visiteur plus lent un retard plus petit : 260 px n'est pas une constante
+        //      de la page, c'est un releve a une vitesse donnee.
+        //
+        //   2. LE RETARD EST PROPORTIONNEL A LA VITESSE DE DEFILEMENT, PAS A LA PLAGE.
+        //      Allonger ou raccourcir start/end ne le change pas. Ce n'est donc pas en
+        //      reglant la plage qu'on le supprime — on ne fait que lui laisser de la
+        //      place.
+        //
+        //   3. TOUCHER A `scrub: 1` INVALIDE LE 60 %. Le retard est proportionnel a
+        //      cette valeur : la passer a 0,5 le divise par deux et 60 % devient trop
+        //      genereux ; la passer a 2 le double et 60 % redevient trop juste. Qui
+        //      change le scrub doit REMESURER, avec verif_rail_lisible.js, le controle
+        //      « plein AVANT que la section ne quitte la fenetre ».
+        //
+        //   4. CE QUE LE RETARD NE PEUT PAS FAIRE : rendre le rail FAUX. Il ne le rend
+        //      que tardif, et la coincidence tirets/remplissage reste exacte puisque
+        //      les deux vivent sur la meme tete de lecture.
+        //
+        // Marges relevees a 60 % : bas de section a 209 px du haut de fenetre a 1440,
+        // 251 a 1024, 280 a 768 — en /fr comme en /en.
+        // └────────────────────────────────────────────────────────────────────────┘
         endTrigger: el,
         end: "bottom 60%",
         scrub: 1,
