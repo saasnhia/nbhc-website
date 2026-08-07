@@ -126,6 +126,8 @@ const X_STATIONS = [0.1278, 0.3409, 0.5541, 0.7673] as const;
 
 export default function HowItWorks() {
   const sectionRef = useRef<HTMLElement>(null);
+  const remplissageRef = useRef<HTMLSpanElement>(null);
+  const tiretsRef = useRef<(HTMLSpanElement | null)[]>([]);
   const reduit = usePrefersReducedMotion();
   const t = useTranslations("howItWorks");
 
@@ -164,6 +166,64 @@ export default function HowItWorks() {
       },
     });
     return () => st.kill();
+  }, [reduit]);
+
+  /**
+   * LE RAIL DE PROGRESSION — GSAP SEUL, SCRUB, AUCUN PIN.
+   *
+   * POURQUOI PAS `animation-timeline` EN CSS NATIF : les deux moteurs le supportent,
+   * mais la coexistence avec Lenis a ete mesuree. Sur WebKit 2203 (Safari 26), une
+   * animation pilotee par le defilement en CSS natif retarde une animation JS lisant
+   * la meme position de 7 % en regime courant et jusqu'a 20 % en pointe, alors qu'au
+   * repos les deux s'accordent a 0,5 px — confirme par deux instruments independants
+   * dont un qui ne passe pas par l'image rendue. Un rail qui doit coincider avec
+   * quatre tirets ne peut pas se payer cela. Un seul pilote pour le defilement.
+   *
+   * ET UNE TIMELINE, PAS UN TWEEN + DES COMPARAISONS. Avec `scrub`, la progression de
+   * la ScrollTrigger et celle du tween ne sont PAS la meme chose : le scrub lisse, donc
+   * le tween retarde le defilement. Allumer les tirets en comparant `self.progress` a
+   * leur fraction les ferait s'allumer AVANT que le remplissage ne les atteigne.
+   * On place donc chaque allumage DANS la timeline scrubee, au temps egal a sa
+   * fraction : la tete de lecture est commune, donc la coincidence est structurelle
+   * et non verifiee apres coup.
+   *
+   * LES FRACTIONS SONT CELLES DE X_STATIONS, LUES ET NON REDERIVEES.
+   */
+  useEffect(() => {
+    const el = sectionRef.current;
+    const rail = remplissageRef.current;
+    if (!el || !rail) return;
+    const tirets = tiretsRef.current.filter((n): n is HTMLSpanElement => n !== null);
+
+    // MOUVEMENT REDUIT : LE RAIL EST PLEIN ET STATIQUE. L'information reste — le
+    // parcours entier et ses quatre etapes — et seul le mouvement part.
+    if (reduit) {
+      gsap.set(rail, { scaleX: 1, transformOrigin: "left center" });
+      if (tirets.length) gsap.set(tirets, { opacity: 1 });
+      return;
+    }
+
+    gsap.set(rail, { scaleX: 0, transformOrigin: "left center" });
+    if (tirets.length) gsap.set(tirets, { opacity: 0 });
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: el,
+        start: "top 70%",
+        end: "bottom 65%",
+        scrub: 1,
+      },
+    });
+    // duree totale 1, pour que le temps de la timeline SOIT la fraction parcourue
+    tl.to(rail, { scaleX: 1, ease: "none", duration: 1 }, 0);
+    X_STATIONS.forEach((x, k) => {
+      if (tirets[k]) tl.to(tirets[k], { opacity: 1, ease: "none", duration: 0.02 }, x);
+    });
+
+    return () => {
+      tl.scrollTrigger?.kill();
+      tl.kill();
+    };
   }, [reduit]);
 
   return (
@@ -369,7 +429,34 @@ export default function HowItWorks() {
           tombe A L'INTERIEUR de sa colonne, a 86 px d'une cellule de 238. Un tiret
           vertical ne peut pas viser a la fois l'objet et le centre du texte ; il vise
           l'objet, qui est ce qu'il designe. */}
-      <div className="relative h-6 max-[767px]:hidden" aria-hidden="true">
+      {/* LE RAIL DE PROGRESSION, DANS LA BANDE QUI EXISTE DEJA.
+          Deux traits horizontaux superposes a mi-hauteur : la PISTE en or eteint, qui
+          montre le parcours entier des le depart, et le REMPLISSAGE en or plein, mis a
+          l'echelle de 0 a 1 sur la descente. Les quatre tirets s'allument quand le
+          remplissage les atteint.
+
+          POSITIONNEMENT SANS translateY. Un `top: 50%` + `translateY(-50%)` obligerait
+          GSAP a composer sa mise a l'echelle avec une translation deja inscrite ; on
+          centre donc par une marge negative et le transform ne porte QUE le scaleX.
+          C'est aussi la regle du depot : on n'animate ni largeur ni hauteur. */}
+      <div data-hiw-rail className="relative h-6 max-[767px]:hidden" aria-hidden="true">
+        <span
+          data-hiw-rail-piste
+          className="absolute block"
+          style={{ left: 0, right: 0, top: "50%", marginTop: -0.5, height: 1,
+                   background: "var(--gold-dim)" }}
+        />
+        <span
+          ref={remplissageRef}
+          data-hiw-rail-rempli
+          className="absolute block"
+          style={{ left: 0, right: 0, top: "50%", marginTop: -0.5, height: 1,
+                   background: "var(--gold)",
+                   // Etat de depart declare ICI et pas seulement dans la timeline : sans
+                   // cette ligne le rail apparait plein le temps d'une image, comme le
+                   // filet de Contact avant sa correction.
+                   transform: "scaleX(0)", transformOrigin: "left center" }}
+        />
         {X_STATIONS.map((x, k) => (
           <span
             key={k}
@@ -380,7 +467,16 @@ export default function HowItWorks() {
               background: "var(--text-muted)",
               transform: "translateX(-50%)",
             }}
-          />
+          >
+            {/* La surcouche doree s'allume en OPACITE : le tiret garde sa geometrie et
+                sa couleur de repos dessous, donc rien ne se remet en page. */}
+            <span
+              ref={(n) => { tiretsRef.current[k] = n; }}
+              data-hiw-rail-tiret
+              className="absolute inset-0 block"
+              style={{ background: "var(--gold)", opacity: 0 }}
+            />
+          </span>
         ))}
       </div>
 
