@@ -95,8 +95,15 @@ const ATTENDUS = [
     occurrences: 1,
   },
   {
+    // LA REQUETE A CHANGE VOLONTAIREMENT, ET CE N'EST PAS UN ASSOUPLISSEMENT.
+    // Elle valait media="(max-width: 767px)", qui INCLUT 767, tandis que les classes
+    // `max-[767px]:*` de Tailwind compilent en `not all and (min-width: 767px)`, qui
+    // l'EXCLUT. A 767 px exactement le recadrage mobile etait donc servi avec les
+    // etiquettes et les tirets du cadrage large encore affiches. Les deux cotes
+    // expriment maintenant la meme requete, mot pour mot — voir SEUIL_LARGE dans
+    // components/HowItWorks.tsx. Le controle reste un controle de chaine EXACTE.
     quoi: "source mobile de HowItWorks, avec sa requete de media et ses dimensions",
-    texte: 'media="(max-width: 767px)"',
+    texte: 'media="not all and (min-width: 768px)"',
     occurrences: 1,
   },
   {

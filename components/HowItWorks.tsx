@@ -121,6 +121,51 @@ const ETIQUETTES_CHAINE = [
   { cle: "labelOptionnel", x: 0.9202, y: 0.3534, bord: true },
 ] as const;
 
+/**
+ * LA FRONTIERE DU RECADRAGE — UN SEUL NOMBRE, DEUX ECRITURES, LA MEME REQUETE.
+ *
+ * Au-dessus de 768 px on sert le cadrage large et tout ce qui vise sa geometrie
+ * existe : les deux etiquettes, les quatre tirets, le rail, la grille de quatre
+ * colonnes et les marges en pourcentage. En dessous, le <picture> sert le RECADRAGE
+ * sur 02 / la signature / 03, dont les abscisses ne sont pas celles-la, et tout cela
+ * disparait.
+ *
+ * POURQUOI CE COMMENTAIRE EXISTE : les deux cotes ne designaient PAS la meme
+ * frontiere, et il y avait un pixel de large ou ils se contredisaient.
+ *
+ *   Tailwind v4 compile `max-[N px]` en `@media not all and (min-width: N px)`.
+ *   Verifie dans le CSS compile : `max-[768px]` y devient
+ *   `not all and (min-width:767px)`, c'est-a-dire « largeur STRICTEMENT INFERIEURE
+ *   a 767 » — 767 exclu.
+ *   Or `<source media="(max-width: 767px)">` INCLUT 767.
+ *
+ * A 767 px exactement, le recadrage mobile etait donc servi tandis que les
+ * etiquettes et les tirets restaient affiches, vises sur une geometrie qui n'etait
+ * plus a l'ecran. Mesure : 768 -> hiw-chaine-760 (rapport 1,659), bande visible,
+ * 2 etiquettes, correct ; 767 -> hiw-etape2-878 (rapport 1,029), bande visible,
+ * 2 etiquettes, FAUX ; 766 -> mobile, bande masquee, 0 etiquette, correct.
+ *
+ * LES DEUX ECRITURES SONT MAINTENANT LA MEME REQUETE, MOT POUR MOT :
+ *
+ *   la classe Tailwind   max-[768px]:hidden
+ *     compilee en        not all and (min-width: 768px)
+ *   le media du <source> not all and (min-width: 768px)     <- construit ci-dessous
+ *
+ * Il n'y a donc plus aucun ecart, meme aux largeurs fractionnaires que produit un
+ * zoom — ce qu'un `(max-width: 767px)` face a un `< 768` laissait passer a 767,5.
+ *
+ * `max-md:` NE CONVIENDRAIT PAS : Tailwind v4 exprime md en rem, donc la frontiere
+ * suivrait la taille de police racine du visiteur et se desynchroniserait d'un media
+ * ecrit en px.
+ *
+ * LA DUPLICATION QUI RESTE, ET ELLE EST INEVITABLE : Tailwind exige un LITTERAL
+ * statique dans la classe, il ne lit pas les constantes du module. Le 768 apparait
+ * donc dans SEUIL_LARGE et dans les classes `max-[768px]:*`. L'assertion de type en
+ * bas de fichier gele la constante ; si quelqu'un change l'une, il doit changer
+ * l'autre, et les deux sont nommees ici.
+ */
+const SEUIL_LARGE = 768;
+
 /** Abscisse au sol des quatre stations, pour le tiret de rappel. */
 const X_STATIONS = [0.1278, 0.3409, 0.5541, 0.7673] as const;
 
@@ -306,7 +351,8 @@ export default function HowItWorks() {
       <figure data-hiw-item className="relative m-0 overflow-hidden">
         <picture>
           <source
-            media="(max-width: 767px)"
+            // MEME REQUETE QUE `max-[768px]:*`, voir SEUIL_LARGE.
+            media={`not all and (min-width: ${SEUIL_LARGE}px)`}
             srcSet="/hiw-etape2-340.webp 340w, /hiw-etape2-440.webp 440w, /hiw-etape2-680.webp 680w, /hiw-etape2-878.webp 878w"
             sizes="calc(100vw - 40px)"
             width={878}
@@ -336,7 +382,7 @@ export default function HowItWorks() {
         {ETIQUETTES_CHAINE.map((e) => (
           <span
             key={e.cle}
-            className="pointer-events-none absolute text-[11px] font-medium uppercase text-center max-[767px]:hidden"
+            className="pointer-events-none absolute text-[11px] font-medium uppercase text-center max-[768px]:hidden"
             style={{
               left: `${e.x * 100}%`,
               top: `${e.y * 100}%`,
@@ -371,13 +417,13 @@ export default function HowItWorks() {
           spans, chacun visible de son cote du point de rupture. */}
       <div className="relative h-7 mt-2" data-hiw-item aria-hidden="false">
         <span
-          className="voile-texte absolute text-[11px] font-medium tracking-[2px] uppercase whitespace-nowrap max-[767px]:hidden"
+          className="voile-texte absolute text-[11px] font-medium tracking-[2px] uppercase whitespace-nowrap max-[768px]:hidden"
           style={{ left: "44.75%", transform: "translateX(-50%)", color: "var(--gold)" }}
         >
           {t("legendeSignature")}
         </span>
         <span
-          className="voile-texte absolute text-[11px] font-medium tracking-[2px] uppercase whitespace-nowrap hidden max-[767px]:inline"
+          className="voile-texte absolute text-[11px] font-medium tracking-[2px] uppercase whitespace-nowrap hidden max-[768px]:inline"
           style={{ left: "50.1%", transform: "translateX(-50%)", color: "var(--gold)" }}
         >
           {t("legendeSignature")}
@@ -439,7 +485,7 @@ export default function HowItWorks() {
           GSAP a composer sa mise a l'echelle avec une translation deja inscrite ; on
           centre donc par une marge negative et le transform ne porte QUE le scaleX.
           C'est aussi la regle du depot : on n'animate ni largeur ni hauteur. */}
-      <div data-hiw-rail className="relative h-6 max-[767px]:hidden" aria-hidden="true">
+      <div data-hiw-rail className="relative h-6 max-[768px]:hidden" aria-hidden="true">
         <span
           data-hiw-rail-piste
           className="absolute block"
@@ -485,7 +531,7 @@ export default function HowItWorks() {
           recadrage et les etapes repassent en pile verticale, donc plus de decalage
           ni de grille. */}
       <div
-        className="max-[767px]:!mt-6 max-[767px]:!ml-0 max-[767px]:!mr-0"
+        className="max-[768px]:!mt-6 max-[768px]:!ml-0 max-[768px]:!mr-0"
         style={{
           marginLeft: `${BORD_GAUCHE * 100}%`,
           marginRight: `${BORD_DROIT * 100}%`,
@@ -501,11 +547,11 @@ export default function HowItWorks() {
             A jour nul, le pas vaut exactement largeur / 4, donc un conteneur de
             4 x 21,31 % aligne les colonnes sur les stations par construction. L'air
             entre colonnes est rendu par une marge interne, qui ne touche pas au pas. */}
-        <div className="grid grid-cols-4 gap-0 max-[767px]:grid-cols-1 max-[767px]:gap-8">
+        <div className="grid grid-cols-4 gap-0 max-[768px]:grid-cols-1 max-[768px]:gap-8">
           {steps.map((s) => (
-            <div key={s.n} data-hiw-item className="voile-texte pr-6 max-[767px]:pr-0">
+            <div key={s.n} data-hiw-item className="voile-texte pr-6 max-[768px]:pr-0">
               <div
-                className="text-[11px] font-bold tracking-[2px] mb-2 max-[767px]:hidden"
+                className="text-[11px] font-bold tracking-[2px] mb-2 max-[768px]:hidden"
                 style={{ fontFamily: "var(--font-syne)", color: "var(--gold)" }}
               >
                 {s.n}
@@ -520,7 +566,7 @@ export default function HowItWorks() {
                   lineHeight: 1.25,
                 }}
               >
-                <span className="hidden max-[767px]:inline" style={{ color: "var(--gold)" }}>
+                <span className="hidden max-[768px]:inline" style={{ color: "var(--gold)" }}>
                   {s.n}
                   {" — "}
                 </span>
@@ -556,3 +602,9 @@ export default function HowItWorks() {
 // sans que les marges soient recalculees.
 const _pas: 0.2131 = PAS;
 void _pas;
+
+// Meme raison pour la frontiere du recadrage : elle est en litteral dans les classes
+// `max-[768px]:*`, que Tailwind ne peut pas deriver d'une constante. Cette assertion
+// casse la compilation si SEUIL_LARGE change sans que les classes suivent.
+const _seuil: 768 = SEUIL_LARGE;
+void _seuil;
