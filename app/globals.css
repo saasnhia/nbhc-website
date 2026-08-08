@@ -238,3 +238,35 @@ main {
 
    La reference fait de meme : elle anime ses illustrations de SOLUTION et laisse
    statiques celles de PROBLEME. */
+
+/* ── LE FLOTTEMENT, SUR LE SEUL OBJET QUI EST CENSE ETRE EN L'AIR ───────────
+   Ce n'est pas le retour du flottement retire plus haut : celui-la portait le
+   PLATEAU, ce qui dementait le socle. Celui-ci ne porte qu'un calque contenant
+   l'ordonnance en vol, rendue seule sur fond transparent par la meme camera.
+
+   L'AMPLITUDE EST DIMENSIONNEE POUR ETRE VUE, et le chiffre vient de l'echec
+   precedent : 4 px crete-a-crete sur une demi-periode de 15 s donnaient 0,27 px/s
+   et le client n'a rien vu. Ici 3 % de la hauteur du cadre crete-a-crete, sur une
+   demi-periode de 5 s, soit environ 12 px et 2,4 px/s a la taille servie — dix fois
+   plus. Le garde-fou reste 1 % de mouvement propre a la profondeur concernee.
+
+   L'UNITE EST UN POURCENTAGE, PAS DES PIXELS. Un translate en pourcentage se
+   rapporte a la taille de l'element : le calque fait tout le cadre, donc 1,5 %
+   suivent l'image de 335 px de large sur telephone comme de 650 px sur ecran large.
+   Une valeur en pixels serait quatre fois trop grande en bas de gamme.
+
+   prefers-reduced-motion EST TRAITE EN CSS, donc avant meme que le JavaScript
+   n'ait tourne — une boucle autonome doit pouvoir s'arreter sans lui. */
+@keyframes nbhcTransit {
+  from { transform: translate3d(0, 1.5%, 0); }
+  to   { transform: translate3d(0, -1.5%, 0); }
+}
+
+[data-sect-transit] {
+  animation: nbhcTransit 5s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-sect-transit] { animation: none; transform: none; }
+}

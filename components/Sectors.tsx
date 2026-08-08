@@ -55,6 +55,31 @@ const PALIERS_METIER = [370, 650, 880, 1100, 1480] as const;
  */
 const SCENES_METIER: Record<string, {
   fichier: string;
+  /**
+   * LE CALQUE DE TRANSIT — CE QUI FLOTTE, ET RIEN D'AUTRE.
+   *
+   * Le flottement de l'image entiere a ete retire : le socle existe pour etablir le
+   * contact au sol, le faire flotter dement ce qu'il dit. Ce qui doit flotter est
+   * l'objet CENSE etre en l'air — ici l'ordonnance en vol vers son casier.
+   *
+   * Une image raster ne permet pas d'animer une de ses regions, d'ou une seconde
+   * passe de rendu ne contenant QUE cet objet, sur fond transparent, cadree par la
+   * MEME camera a la MEME resolution. Le recalage est donc exact par construction :
+   * il n'y a aucun offset a calculer, donc aucune erreur possible. Verifie tout de
+   * meme a la source — boite des pixels opaques a 0,5 px de la projection calculee
+   * depuis la geometrie, et ecart de valeur maximal de 6/255 sur les pixels communs,
+   * pour un budget de bruit du debruiteur mesure a 7.
+   *
+   * ET L'IMAGE DE BASE EST RENDUE SANS CET OBJET, mais avec son ombre et son rebond
+   * (`visible_camera=False` le retire des rayons camera seulement). Sans cela, une
+   * lisiere de la feuille d'origine resterait visible sous le calque des qu'il
+   * bouge, et la feuille semblerait s'epaissir au lieu de se deplacer.
+   *
+   * IL EST CHARGE SANS DIFFERE. Si ce calque manquait, la scene perdrait l'objet en
+   * vol — c'est-a-dire precisement ce qui fait lire « personne ne l'a fait ». Ce
+   * n'est pas une decoration qu'on peut charger plus tard.
+   */
+  transit?: boolean;
   etiquettes: { cle: string; x: number; y: number; cx?: number; cy?: number }[];
 }> = {
   garage: {
@@ -66,6 +91,7 @@ const SCENES_METIER: Record<string, {
   },
   pharma: {
     fichier: "metier-pharmacie",
+    transit: true,
     etiquettes: [
       // le tri : l'etiquette est dans le ciel, le trait descend sur la case ouverte
       { cle: "pharmaLabelTri", x: 0.25, y: 0.35, cx: 0.3673, cy: 0.5426 },
@@ -446,6 +472,21 @@ export default function Sectors() {
                       decoding="async"
                       className="block w-full h-auto"
                     />
+                    {scene.transit && (
+                      <img
+                        data-sect-transit
+                        aria-hidden
+                        alt=""
+                        src={`/${scene.fichier}-transit-650.webp`}
+                        srcSet={PALIERS_METIER.map((p) =>
+                          `/${scene.fichier}-transit-${p}.webp ${p}w`).join(", ")}
+                        sizes="(max-width: 900px) calc(100vw - 40px), (max-width: 1200px) calc((100vw - 160px) * 0.625), 650px"
+                        width={1480}
+                        height={925}
+                        decoding="async"
+                        className="pointer-events-none absolute inset-0 block h-full w-full"
+                      />
+                    )}
                     {/* LES TRAITS DE RAPPEL, SOUS LES ETIQUETTES DANS L'ORDRE DU DOM
                         donc peints avant elles. Le viewBox est celui du rendu et la
                         boite est exactement a son rapport : aucune deformation, et
