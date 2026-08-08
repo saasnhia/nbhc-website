@@ -32,6 +32,21 @@ const CALENDLY_URL = "https://calendly.com/saasnhia/30min";
 const PALIERS_METIER = [370, 650, 880, 1100, 1480] as const;
 
 /**
+ * L'ABSCISSE DE LA COLONNE VERTEBRALE, EN MARGE DU RUBAN.
+ *
+ * Elle est NEGATIVE : la colonne vit dans le rembourrage exterieur de la section, qui
+ * existe deja — 160 px de chaque cote a 1440, 40 px a 1024. Aucune emprise de panneau
+ * n'est donc reduite, et l'illustration garde ses 650 px. En dessous de 900 px les
+ * panneaux s'empilent et la colonne est masquee, donc la valeur n'a pas a etre
+ * responsive : le cas le plus serre est 1024, ou la colonne tombe a 12 px du bord de
+ * la fenetre.
+ *
+ * Le jalon fait 14 px plus 3 px de cercle de page, soit 20 px : pour le centrer sur
+ * l'axe de la piste (X_COLONNE + 1), son bord gauche est a X_COLONNE + 1 - 10.
+ */
+const X_COLONNE = -28;
+
+/**
  * LES ANCRES SONT DANS LE CIEL, ET C'EST UNE CONTRAINTE MESUREE, PAS UN CHOIX.
  *
  * Les quatre etiquettes livrees jusqu'ici tombaient sur des objets clairs et
@@ -381,11 +396,33 @@ export default function Sectors() {
             clair ne tiendrait que 2,29:1 ; il est donc CERCLE de la couleur de
             page, si bien que son contraste se juge contre le fond — 7,42:1 pour
             l'or, 5,64:1 au repos. */}
+                {/* ── LA COLONNE VERTEBRALE, EN MARGE ET NON AU CENTRE ─────────────────
+            LA PREMISSE « COLONNE CENTRALE » ETAIT FAUSSE, et c'est une mesure qui l'a
+            montre, pas un avis. A 1440 px les pistes de grille valent 650 et 390 px
+            pour 80 px d'ecart, donc l'axe de la gouttiere tombe a 850 sur les panneaux
+            impairs et a 590 sur les pairs — l'alternance des colonnes le fait changer
+            de cote. Une colonne posee a 50 % du ruban tombe a 720, exactement au
+            milieu des deux, donc DANS l'emprise de l'illustration : 90 px a 1440,
+            68 px a 1024. Et les reserves vides faisaient exactement pareil ; ce
+            qu'elles cachaient, c'est qu'un trait par-dessus du vide ne se voit pas.
+
+            Verifie par MASQUAGE et non par raisonnement sur les z-index : en masquant
+            le ruban, 3 720 pixels changeaient a l'interieur de l'image, sur 15
+            colonnes centrees sur x = 720. Le ruban etait peint PAR-DESSUS la scene.
+
+            Aucune position centrale ne peut convenir tant que les colonnes alternent.
+            Les autres sorties coutaient toutes quelque chose de mesure : colonnes
+            egales, et l'image tombe de 650 a 520 px, donc le clavier du telephone
+            cesse d'etre lu ; illustration au-dessus du ruban, et les sept jalons
+            disparaissent derriere elle ; colonne en zigzag, et le remplissage doit
+            devenir un trace SVG a stroke-dashoffset avec ses sept fractions en
+            longueur de chemin. La marge, elle, ne coute rien de mesurable : elle vit
+            dans le rembourrage exterieur de la section, qui existe deja. */}
         <span
           data-sect-piste
           aria-hidden="true"
           className="absolute max-[900px]:hidden"
-          style={{ left: "50%", marginLeft: -1, top: 0, bottom: 0, width: 2,
+          style={{ left: X_COLONNE, top: 0, bottom: 0, width: 2,
                    background: "#6B6A66", zIndex: 1 }}
         />
         <span
@@ -393,7 +430,7 @@ export default function Sectors() {
           data-sect-rempli
           aria-hidden="true"
           className="absolute max-[900px]:hidden"
-          style={{ left: "50%", marginLeft: -1, top: 0, bottom: 0, width: 2,
+          style={{ left: X_COLONNE, top: 0, bottom: 0, width: 2,
                    background: "var(--text)", zIndex: 1,
                    // Etat de depart declare ICI et pas seulement dans la timeline :
                    // sinon la barre apparait pleine le temps d'une image.
@@ -427,8 +464,8 @@ export default function Sectors() {
                 data-sect-jalon
                 aria-hidden="true"
                 className="absolute max-[900px]:hidden"
-                style={{ left: "50%", top: "50%", width: 14, height: 14,
-                         marginLeft: -7, marginTop: -7, borderRadius: "50%",
+                style={{ left: X_COLONNE + 1 - 10, top: "50%", width: 14, height: 14,
+                         marginTop: -7, borderRadius: "50%",
                          background: "var(--text-muted)",
                          // le cercle de couleur de page isole le jalon du
                          // remplissage : son contraste se juge contre le fond
