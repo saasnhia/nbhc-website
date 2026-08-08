@@ -85,8 +85,10 @@ const SCENES_METIER: Record<string, {
   garage: {
     fichier: "metier-garage",
     etiquettes: [
-      { cle: "garageLabelAccueil", x: 0.2123, y: 0.3190 },   // combine decroche
-      { cle: "garageLabelFiche", x: 0.4680, y: 0.1371 },     // fiche qui se remplit
+      // l'etiquette est dans le ciel, le trait descend sur le combine decroche
+      { cle: "garageLabelAccueil", x: 0.1868, y: 0.2590, cx: 0.1868, cy: 0.4123 },
+      // et sur la feuille en vol qui se remplit
+      { cle: "garageLabelFiche", x: 0.4550, y: 0.1350, cx: 0.5050, cy: 0.2479 },
     ],
   },
   pharma: {
