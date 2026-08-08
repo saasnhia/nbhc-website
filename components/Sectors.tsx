@@ -31,22 +31,46 @@ const CALENDLY_URL = "https://calendly.com/saasnhia/30min";
  */
 const PALIERS_METIER = [370, 650, 880, 1100, 1480] as const;
 
+/**
+ * LES ANCRES SONT DANS LE CIEL, ET C'EST UNE CONTRAINTE MESUREE, PAS UN CHOIX.
+ *
+ * Les quatre etiquettes livrees jusqu'ici tombaient sur des objets clairs et
+ * mesuraient 1,00:1 de contraste sur jusqu'a 92 % de leur surface — du blanc sur du
+ * papier blanc. La cause est dans le decor : le dessus du socle et toutes les faces
+ * horizontales recoivent un voile speculaire tres clair (matiere papier a 0,701 vue
+ * de dessus contre 0,185 vue de face). AUCUNE bande d'etiquette ne peut donc se poser
+ * sur le plateau ; elles ne peuvent etre que dans le fond sombre. Les deux ancres de
+ * chaque scene y sont, a 16,92:1.
+ *
+ * CONSEQUENCE : l'etiquette se retrouve loin au-dessus de l'objet qu'elle nomme —
+ * jusqu'a 237 px pour la boite de medicament. Une etiquette qui ne designe plus rien
+ * ne vaut pas mieux qu'une etiquette illisible, d'ou le TRAIT DE RAPPEL : la scene
+ * emet aussi le point de l'objet, et un trait relie l'un a l'autre.
+ *
+ * LE TRAIT EST DOUBLE, et pour la meme raison que les jalons du ruban sont cercles de
+ * la couleur de page : il traverse le fond sombre PUIS le plateau clair, et aucune
+ * couleur unique ne contraste avec les deux. Un trait large a la couleur du fond
+ * porte donc un trait fin dore — sur le ciel c'est l'or qui se lit, sur le plateau
+ * c'est le halo sombre qui detache l'or.
+ */
 const SCENES_METIER: Record<string, {
   fichier: string;
-  etiquettes: { cle: string; x: number; y: number }[];
+  etiquettes: { cle: string; x: number; y: number; cx?: number; cy?: number }[];
 }> = {
   garage: {
     fichier: "metier-garage",
     etiquettes: [
-      { cle: "garageLabelAccueil", x: 0.4169, y: 0.6502 },   // telephone
-      { cle: "garageLabelFiche", x: 0.6421, y: 0.6154 },     // fiche
+      { cle: "garageLabelAccueil", x: 0.2123, y: 0.3190 },   // combine decroche
+      { cle: "garageLabelFiche", x: 0.4680, y: 0.1371 },     // fiche qui se remplit
     ],
   },
   pharma: {
     fichier: "metier-pharmacie",
     etiquettes: [
-      { cle: "pharmaLabelTri", x: 0.486, y: 0.4038 },        // case active
-      { cle: "pharmaLabelDecision", x: 0.6148, y: 0.6784 },  // ordonnance
+      // le tri : l'etiquette est dans le ciel, le trait descend sur la case ouverte
+      { cle: "pharmaLabelTri", x: 0.25, y: 0.35, cx: 0.3673, cy: 0.5426 },
+      // la decision : le trait descend sur la boite de medicament prete
+      { cle: "pharmaLabelDecision", x: 0.754, y: 0.28, cx: 0.8195, cy: 0.5614 },
     ],
   },
 };
@@ -422,6 +446,38 @@ export default function Sectors() {
                       decoding="async"
                       className="block w-full h-auto"
                     />
+                    {/* LES TRAITS DE RAPPEL, SOUS LES ETIQUETTES DANS L'ORDRE DU DOM
+                        donc peints avant elles. Le viewBox est celui du rendu et la
+                        boite est exactement a son rapport : aucune deformation, et
+                        aucune valeur en pixels — le trait suit l'image a toutes les
+                        largeurs comme les etiquettes. */}
+                    {scene.etiquettes.some((e) => e.cx !== undefined) && (
+                      <svg
+                        aria-hidden
+                        viewBox="0 0 1480 925"
+                        className="pointer-events-none absolute inset-0 h-full w-full
+                                   max-[560px]:hidden"
+                      >
+                        {scene.etiquettes.map((e) =>
+                          e.cx === undefined || e.cy === undefined ? null : (
+                            <g key={e.cle}>
+                              <line
+                                x1={e.x * 1480} y1={e.y * 925}
+                                x2={e.cx * 1480} y2={e.cy * 925}
+                                stroke="var(--bg)" strokeWidth={7} strokeLinecap="round"
+                              />
+                              <line
+                                x1={e.x * 1480} y1={e.y * 925}
+                                x2={e.cx * 1480} y2={e.cy * 925}
+                                stroke="var(--gold)" strokeWidth={2.5} strokeLinecap="round"
+                              />
+                              <circle cx={e.cx * 1480} cy={e.cy * 925} r={9}
+                                      fill="var(--gold)" stroke="var(--bg)" strokeWidth={4} />
+                            </g>
+                          ),
+                        )}
+                      </svg>
+                    )}
                     {scene.etiquettes.map((e) => (
                       <span
                         key={e.cle}
@@ -444,6 +500,29 @@ export default function Sectors() {
                           letterSpacing: 2,
                           lineHeight: 1.35,
                           maxWidth: "46%",
+                          // ── LA PLAQUE, ET ELLE EST MESUREE, PAS DECORATIVE ──────
+                          // Monter l'ancre dans le ciel a fait passer le minimum de
+                          // 1,00:1 a 17,02:1 a 768 px. A 1024 il retombait a 1,00:1,
+                          // et le pire pixel valait rgb(240,237,230) — exactement la
+                          // couleur du papier du rendu. La raison est structurelle :
+                          // le texte fait 11 px quelle que soit la largeur, donc son
+                          // emprise EN FRACTION D'IMAGE grandit quand l'image
+                          // retrecit, et elle finit par depasser la bande sombre
+                          // verifiee cote scene. Aucune position d'ancre ne peut donc
+                          // suffire a toutes les largeurs : il faut la plaque.
+                          //
+                          // L'OPACITE EST CALCULEE, pas choisie. Le fond le plus
+                          // clair rencontre est le papier a L = 0,832. Pour tenir
+                          // 4,5:1 avec un texte a la meme luminance il faut composer
+                          // le fond sous L = 0,146, soit environ 107 par canal, ce
+                          // qui exige alpha >= 0,58. A 0,82 le compose vaut 51 et le
+                          // contraste 10,8:1 — et l'ETENDUE dans la boite tombe a
+                          // 1,6:1, donc aucune arete de contraste ne subsiste.
+                          // Sur le ciel a rgb(9,9,11) la plaque est invisible : elle
+                          // ne se voit que la ou elle sert.
+                          background: "rgba(9, 9, 11, 0.82)",
+                          padding: "3px 7px",
+                          borderRadius: "var(--radius-sm, 4px)",
                         }}
                       >
                         {t(e.cle)}
