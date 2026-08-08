@@ -536,9 +536,27 @@ export default function Sectors() {
                         style={{
                           left: `${e.x * 100}%`,
                           top: `${e.y * 100}%`,
-                          // L'ancre designe le point de l'objet ; l'etiquette se
-                          // pose AU-DESSUS et centree sur lui.
-                          transform: "translate(-50%, -100%)",
+                          // L'ancre designe le point de l'objet ; l'etiquette se pose
+                          // AU-DESSUS de lui.
+                          //
+                          // ── ET ELLE S'ALIGNE SUR LE BORD QUAND L'ANCRE EN EST PRES.
+                          // Le controle livre verifiait « l'etiquette est dans la
+                          // largeur de l'image » en comparant... LE POINT D'ANCRAGE.
+                          // Un point est toujours dans la boite ; c'est la BOITE DU
+                          // TEXTE qui en sort. Mesure : « accueil telephonique
+                          // automatise », ancree a x = 0,1868 et centree, sortait de
+                          // l'image de 15,3 px a 1440 et de 23,3 px a 1024 — parce
+                          // qu'une etiquette centree deborde des que la moitie de sa
+                          // largeur excede la distance de l'ancre au bord.
+                          //
+                          // La regle est donc geometrique et non empirique : sous 30 %
+                          // on aligne le bord GAUCHE de l'etiquette sur l'ancre, au-dela
+                          // de 70 % son bord DROIT, entre les deux on centre. Avec une
+                          // largeur maximale de 46 %, aucune de ces trois positions ne
+                          // peut sortir : 0,1868 + 0,46 = 0,647 et 0,754 - 0,46 = 0,294.
+                          transform: e.x < 0.30 ? "translate(0, -100%)"
+                            : e.x > 0.70 ? "translate(-100%, -100%)"
+                              : "translate(-50%, -100%)",
                           color: "var(--text)",
                           letterSpacing: 2,
                           lineHeight: 1.35,
