@@ -392,15 +392,6 @@ export default function Sectors() {
               <div
                 data-sect-reserve
                 data-sect-livree={scene ? "1" : undefined}
-                // LE FLOTTEMENT PORTE SUR LA BOITE, DONC SUR L'IMAGE ET SES
-                // ETIQUETTES ENSEMBLE. Premiere version : sur l'image seule. Mais les
-                // etiquettes sont ses SOEURS, positionnees en absolu par rapport a
-                // cette boite — l'image aurait derive de 2 px sous une etiquette
-                // restee fixe, et une etiquette qui ne designe plus son point ne
-                // designe rien. Une transformation ne refait pas la mise en page :
-                // l'emprise, le rapport et la reserve restent exactement ce qu'ils
-                // sont. Rien sur les reserves encore vides, qui n'ont rien a bercer.
-                data-sect-flotte={scene ? (s.scene === "pharma" ? "b" : "a") : undefined}
                 className={(imageADroite
                   ? "order-2 max-[900px]:order-1"
                   : "order-1 max-[900px]:order-1") + " relative"}
@@ -434,6 +425,13 @@ export default function Sectors() {
                     {scene.etiquettes.map((e) => (
                       <span
                         key={e.cle}
+                        // CROCHET DE MESURE. Le controle « l'etiquette tient dans la
+                        // largeur de l'image » est de la GEOMETRIE ; il ne dit rien de
+                        // la LISIBILITE. Pour mesurer le contraste contre ce qui est
+                        // reellement derriere, il faut pouvoir masquer les etiquettes
+                        // et rien d'autre — d'ou cet attribut, du meme genre que les
+                        // data-sect-* deja poses sur la piste et les jalons.
+                        data-sect-etiquette={e.cle}
                         className="pointer-events-none absolute text-[11px] font-medium uppercase text-center
                                    max-[560px]:hidden"
                         style={{

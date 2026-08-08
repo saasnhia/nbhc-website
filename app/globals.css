@@ -215,48 +215,26 @@ main {
   display: none;
 }
 
-/* ── FLOTTEMENT DES SCENES DE METIER ────────────────────────────────────────
-   BOUCLE AUTONOME, ET C'EST POUR CELA QU'ELLE EST EN CSS. Elle n'a rien a
-   synchroniser avec le defilement : la mesure du gate de recherche donne 20 % de
-   retard en pointe entre une animation CSS pilotee par le defilement et Lenis sur
-   WebKit, mais une boucle autonome n'a aucun rendez-vous a tenir. La regle du
-   depot est donc respectee a la lettre : GSAP pour ce qui suit le defilement, CSS
-   pour ce qui tourne seul.
+/* ── FLOTTEMENT : RETIRE DE LA SCENE ENTIERE ────────────────────────────────
+   IL ETAIT DOUBLEMENT FAUX, et les deux defauts sont mesures.
 
-   TRANSFORM SEUL. Ni width, ni height, ni top : la mise en page n'est jamais
-   refaite, donc aucun cout par image et aucun decalage possible.
+   1. IL NE SE VOYAIT PAS. 4 px crete-a-crete sur une demi-periode de 15 s font
+      0,27 px/s en moyenne, et mon propre temoin n'a releve que 1,61 px de course
+      en 3,2 s, soit 0,50 px/s au plus vif du cycle. Le temoin prouvait que
+      l'animation TOURNAIT ; il ne prouvait pas qu'elle SE VOYAIT. Encore un
+      instrument qui repond juste a la mauvaise question.
 
-   AMPLITUDE ET PERIODE : 2 px et 15 s. Le garde-fou est chiffre — `secteurs` est a
-   25 % de page et son mouvement propre y est mesure a 0,00 %. Si le flottement fait
-   depasser 1 %, l'amplitude descend ; elle ne se justifie pas.
+   2. IL CONTREDISAIT LA CHARTE. Le socle existe pour etablir le contact au sol
+      par un objet modelise, jamais par une ombre portee. Faire flotter le socle
+      lui-meme dement ce qu'il est la pour dire. Un plateau ne flotte pas.
 
-   DESYNCHRONISEES PAR OPPOSITION DE PHASE EXACTE, ET NON PAR DES PERIODES
-   DIFFERENTES. Premiere version : 15 s et 19 s avec un retard de -6 s. Mesuree, elle
-   donnait 94 pas sur 96 dans le MEME SENS, soit 98 %. La raison est dans `alternate` :
-   la duree declaree est une DEMI-periode, donc un 15 s ne s'inverse pas toutes les
-   7,5 s mais toutes les 15 s. A basculait a 15 s, B a 19 - 6 = 13 s : deux secondes
-   d'ecart, et les deux montaient ensemble le reste du temps.
-   Meme duree et un retard d'exactement une demi-periode mettent B dans la passe
-   retour quand A est dans la passe aller — opposition permanente, quel que soit le
-   moment ou le visiteur arrive. C'est verifiable et ca ne derive pas.
+   CE QUI FLOTTERA A LA PLACE : l'objet qui est CENSE etre en l'air, et lui seul —
+   le combine decroche par personne, la feuille en vol vers son casier. Comme une
+   image raster ne permet pas d'animer une de ses regions, cela demande une seconde
+   passe de rendu en alpha ne contenant QUE cet objet, cadrée par la MEME camera a
+   la MEME resolution : superposee a l'identique, son recalage est exact par
+   construction, et un transform CSS ne fait alors bouger que lui. C'est la suite
+   de ce lot, pas une intention.
 
-   prefers-reduced-motion EST TRAITE ICI, EN CSS, et pas seulement par le hook :
-   une boucle autonome doit s'arreter meme avant que le JavaScript n'ait tourne. */
-@keyframes nbhcFlotte {
-  from { transform: translate3d(0, calc(var(--flotte) * -1), 0); }
-  to   { transform: translate3d(0, var(--flotte), 0); }
-}
-
-[data-sect-flotte] {
-  --flotte: 2px;
-  animation: nbhcFlotte 15s ease-in-out infinite alternate;
-  will-change: transform;
-}
-
-[data-sect-flotte="b"] {
-  animation-delay: -15s;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  [data-sect-flotte] { animation: none; transform: none; }
-}
+   La reference fait de meme : elle anime ses illustrations de SOLUTION et laisse
+   statiques celles de PROBLEME. */
