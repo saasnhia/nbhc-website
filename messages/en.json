@@ -129,7 +129,11 @@
     "opticienHref": "/automatisation-opticien",
     "learnMore": "Learn more →",
     "outroText": "Your sector not listed? The free diagnostic lets us see if we can help.",
-    "outroCta": "Book my diagnostic →"
+    "outroCta": "Book my diagnostic →",
+    "garageLabelAccueil": "automated phone reception",
+    "garageLabelFiche": "the form fills itself",
+    "pharmaLabelTri": "sorting, automated",
+    "pharmaLabelDecision": "you decide and bill"
   },
   "showcase": {
     "eyebrow": "IN ACTION",

@@ -11,6 +11,46 @@ gsap.registerPlugin(ScrollTrigger);
 
 const CALENDLY_URL = "https://calendly.com/saasnhia/30min";
 
+/**
+ * LES SCENES DE METIER LIVREES, ET SEULEMENT ELLES.
+ *
+ * Deux sur sept. Les cinq autres gardent leur reserve : un vide honnete se juge,
+ * un faux visuel ferait juger autre chose que ce qui sera livre.
+ *
+ * LES ANCRES SONT CELLES QUE LA SCENE A EMISES, recopiees de ses .ancres.json et
+ * jamais recalculees ici. Elles sont en fraction du cadre livre (1480 x 925), et le
+ * CSS les pose en pourcentage — donc elles suivent l'image a toutes les largeurs
+ * sans qu'aucune valeur en pixels n'existe.
+ *
+ * L'ancre designe le POINT DE L'OBJET ; l'etiquette se pose au-dessus et centree
+ * sur lui, comme sur WhyNow et HowItWorks (transform translate(-50%, -100%)).
+ *
+ * PALIERS : 370, 650, 880, 1100, 1480 — derives de l'emprise reelle des reserves
+ * (650 px a 1440, 540 a 1024, la pleine largeur en dessous de 900 ou les panneaux
+ * s'empilent). Voir l'en-tete de rendu-3d/exporter_metiers.py.
+ */
+const PALIERS_METIER = [370, 650, 880, 1100, 1480] as const;
+
+const SCENES_METIER: Record<string, {
+  fichier: string;
+  etiquettes: { cle: string; x: number; y: number }[];
+}> = {
+  garage: {
+    fichier: "metier-garage",
+    etiquettes: [
+      { cle: "garageLabelAccueil", x: 0.4169, y: 0.6502 },   // telephone
+      { cle: "garageLabelFiche", x: 0.6421, y: 0.6154 },     // fiche
+    ],
+  },
+  pharma: {
+    fichier: "metier-pharmacie",
+    etiquettes: [
+      { cle: "pharmaLabelTri", x: 0.486, y: 0.4038 },        // case active
+      { cle: "pharmaLabelDecision", x: 0.6148, y: 0.6784 },  // ordonnance
+    ],
+  },
+};
+
 export default function Sectors() {
   const sectionRef = useRef<HTMLElement>(null);
   const rubanRef = useRef<HTMLDivElement>(null);
@@ -38,6 +78,7 @@ export default function Sectors() {
       href: t("sportAssoHref"),
     },
     {
+      scene: "garage",
       name: t("garageName"),
       pain: t("garagePain"),
       solution: t("garageSolution"),
@@ -59,6 +100,7 @@ export default function Sectors() {
       href: t("formationHref"),
     },
     {
+      scene: "pharma",
       name: t("pharmaName"),
       pain: t("pharmaPain"),
       solution: t("pharmaSolution"),
@@ -308,6 +350,7 @@ export default function Sectors() {
 
         {sectors.map((s, i) => {
           const imageADroite = i % 2 === 1;
+          const scene = s.scene ? SCENES_METIER[s.scene] : undefined;
           return (
             <div
               key={s.name}
@@ -348,20 +391,73 @@ export default function Sectors() {
                   un faux visuel ferait juger autre chose que ce qui sera livre. */}
               <div
                 data-sect-reserve
-                className={imageADroite
+                data-sect-livree={scene ? "1" : undefined}
+                // LE FLOTTEMENT PORTE SUR LA BOITE, DONC SUR L'IMAGE ET SES
+                // ETIQUETTES ENSEMBLE. Premiere version : sur l'image seule. Mais les
+                // etiquettes sont ses SOEURS, positionnees en absolu par rapport a
+                // cette boite — l'image aurait derive de 2 px sous une etiquette
+                // restee fixe, et une etiquette qui ne designe plus son point ne
+                // designe rien. Une transformation ne refait pas la mise en page :
+                // l'emprise, le rapport et la reserve restent exactement ce qu'ils
+                // sont. Rien sur les reserves encore vides, qui n'ont rien a bercer.
+                data-sect-flotte={scene ? (s.scene === "pharma" ? "b" : "a") : undefined}
+                className={(imageADroite
                   ? "order-2 max-[900px]:order-1"
-                  : "order-1 max-[900px]:order-1"}
+                  : "order-1 max-[900px]:order-1") + " relative"}
                 style={{
+                  // L'EMPRISE NE BOUGE PAS QUAND L'IMAGE ARRIVE. Le rapport est
+                  // celui du rendu, et il l'etait deja quand la boite etait vide :
+                  // la substitution ne peut donc produire aucun decalage.
                   aspectRatio: "1480 / 925",
-                  border: "1px dashed var(--border-accent, rgba(196,151,58,0.3))",
-                  borderRadius: "var(--radius)",
-                  display: "flex", alignItems: "center", justifyContent: "center",
+                  ...(scene
+                    ? null
+                    : { border: "1px dashed var(--border-accent, rgba(196,151,58,0.3))",
+                        borderRadius: "var(--radius)",
+                        display: "flex", alignItems: "center",
+                        justifyContent: "center" }),
                 }}
               >
-                <span className="text-[12px] tracking-[2px] uppercase text-center px-4"
-                      style={{ color: "var(--text-muted)" }}>
-                  {s.name}
-                </span>
+                {scene ? (
+                  <>
+                    <img
+                      src={`/${scene.fichier}-650.webp`}
+                      srcSet={PALIERS_METIER.map((p) =>
+                        `/${scene.fichier}-${p}.webp ${p}w`).join(", ")}
+                      sizes="(max-width: 900px) calc(100vw - 40px), (max-width: 1200px) calc((100vw - 160px) * 0.625), 650px"
+                      width={1480}
+                      height={925}
+                      alt={s.pain}
+                      loading="lazy"
+                      decoding="async"
+                      className="block w-full h-auto"
+                    />
+                    {scene.etiquettes.map((e) => (
+                      <span
+                        key={e.cle}
+                        className="pointer-events-none absolute text-[11px] font-medium uppercase text-center
+                                   max-[560px]:hidden"
+                        style={{
+                          left: `${e.x * 100}%`,
+                          top: `${e.y * 100}%`,
+                          // L'ancre designe le point de l'objet ; l'etiquette se
+                          // pose AU-DESSUS et centree sur lui.
+                          transform: "translate(-50%, -100%)",
+                          color: "var(--text)",
+                          letterSpacing: 2,
+                          lineHeight: 1.35,
+                          maxWidth: "46%",
+                        }}
+                      >
+                        {t(e.cle)}
+                      </span>
+                    ))}
+                  </>
+                ) : (
+                  <span className="text-[12px] tracking-[2px] uppercase text-center px-4"
+                        style={{ color: "var(--text-muted)" }}>
+                    {s.name}
+                  </span>
+                )}
               </div>
 
               {/* LE TEXTE. Le lien reste sur tout le bloc : chaque metier a sa

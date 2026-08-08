@@ -214,3 +214,49 @@ main {
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
+
+/* ── FLOTTEMENT DES SCENES DE METIER ────────────────────────────────────────
+   BOUCLE AUTONOME, ET C'EST POUR CELA QU'ELLE EST EN CSS. Elle n'a rien a
+   synchroniser avec le defilement : la mesure du gate de recherche donne 20 % de
+   retard en pointe entre une animation CSS pilotee par le defilement et Lenis sur
+   WebKit, mais une boucle autonome n'a aucun rendez-vous a tenir. La regle du
+   depot est donc respectee a la lettre : GSAP pour ce qui suit le defilement, CSS
+   pour ce qui tourne seul.
+
+   TRANSFORM SEUL. Ni width, ni height, ni top : la mise en page n'est jamais
+   refaite, donc aucun cout par image et aucun decalage possible.
+
+   AMPLITUDE ET PERIODE : 2 px et 15 s. Le garde-fou est chiffre — `secteurs` est a
+   25 % de page et son mouvement propre y est mesure a 0,00 %. Si le flottement fait
+   depasser 1 %, l'amplitude descend ; elle ne se justifie pas.
+
+   DESYNCHRONISEES PAR OPPOSITION DE PHASE EXACTE, ET NON PAR DES PERIODES
+   DIFFERENTES. Premiere version : 15 s et 19 s avec un retard de -6 s. Mesuree, elle
+   donnait 94 pas sur 96 dans le MEME SENS, soit 98 %. La raison est dans `alternate` :
+   la duree declaree est une DEMI-periode, donc un 15 s ne s'inverse pas toutes les
+   7,5 s mais toutes les 15 s. A basculait a 15 s, B a 19 - 6 = 13 s : deux secondes
+   d'ecart, et les deux montaient ensemble le reste du temps.
+   Meme duree et un retard d'exactement une demi-periode mettent B dans la passe
+   retour quand A est dans la passe aller — opposition permanente, quel que soit le
+   moment ou le visiteur arrive. C'est verifiable et ca ne derive pas.
+
+   prefers-reduced-motion EST TRAITE ICI, EN CSS, et pas seulement par le hook :
+   une boucle autonome doit s'arreter meme avant que le JavaScript n'ait tourne. */
+@keyframes nbhcFlotte {
+  from { transform: translate3d(0, calc(var(--flotte) * -1), 0); }
+  to   { transform: translate3d(0, var(--flotte), 0); }
+}
+
+[data-sect-flotte] {
+  --flotte: 2px;
+  animation: nbhcFlotte 15s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+[data-sect-flotte="b"] {
+  animation-delay: -15s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-sect-flotte] { animation: none; transform: none; }
+}

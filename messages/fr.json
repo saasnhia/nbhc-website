@@ -129,7 +129,11 @@
     "opticienHref": "/automatisation-opticien",
     "learnMore": "En savoir plus →",
     "outroText": "Votre secteur n'est pas listé ? Le diagnostic gratuit permet de voir si on peut vous aider.",
-    "outroCta": "Réserver mon diagnostic →"
+    "outroCta": "Réserver mon diagnostic →",
+    "garageLabelAccueil": "accueil téléphonique automatisé",
+    "garageLabelFiche": "la fiche se remplit",
+    "pharmaLabelTri": "le tri, automatisé",
+    "pharmaLabelDecision": "vous décidez et facturez"
   },
   "showcase": {
     "eyebrow": "EN ACTION",
