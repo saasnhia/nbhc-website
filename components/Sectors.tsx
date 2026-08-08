@@ -32,7 +32,15 @@ const CALENDLY_URL = "https://calendly.com/saasnhia/30min";
 const PALIERS_METIER = [370, 650, 880, 1100, 1480] as const;
 
 /**
- * L'ABSCISSE DE LA COLONNE VERTEBRALE, EN MARGE DU RUBAN.
+ * L'ABSCISSE DE LA COLONNE VERTEBRALE — AU CENTRE, DANS LA GOUTTIERE.
+ *
+ * Elle vaut -1 en decalage de `left: 50%` : la piste fait 2 px de large, donc son axe
+ * tombe exactement sur le milieu du ruban, qui est desormais l'axe de la gouttiere
+ * puisque les colonnes sont egales. Le passage en marge etait un contournement de la
+ * grille ; la grille corrigee, la colonne reprend sa place.
+ *
+ * ANCIEN COMMENTAIRE, conserve parce qu'il explique pourquoi la marge avait ete
+ * necessaire : la colonne vivait dans le rembourrage exterieur de la section.
  *
  * Elle est NEGATIVE : la colonne vit dans le rembourrage exterieur de la section, qui
  * existe deja — 160 px de chaque cote a 1440, 40 px a 1024. Aucune emprise de panneau
@@ -44,7 +52,7 @@ const PALIERS_METIER = [370, 650, 880, 1100, 1480] as const;
  * Le jalon fait 14 px plus 3 px de cercle de page, soit 20 px : pour le centrer sur
  * l'axe de la piste (X_COLONNE + 1), son bord gauche est a X_COLONNE + 1 - 10.
  */
-const X_COLONNE = -28;
+const X_COLONNE = -1;
 
 /**
  * LES ANCRES SONT DANS LE CIEL, ET C'EST UNE CONTRAINTE MESUREE, PAS UN CHOIX.
@@ -422,7 +430,7 @@ export default function Sectors() {
           data-sect-piste
           aria-hidden="true"
           className="absolute max-[900px]:hidden"
-          style={{ left: X_COLONNE, top: 0, bottom: 0, width: 2,
+          style={{ left: "50%", marginLeft: X_COLONNE, top: 0, bottom: 0, width: 2,
                    background: "#6B6A66", zIndex: 1 }}
         />
         <span
@@ -430,7 +438,7 @@ export default function Sectors() {
           data-sect-rempli
           aria-hidden="true"
           className="absolute max-[900px]:hidden"
-          style={{ left: X_COLONNE, top: 0, bottom: 0, width: 2,
+          style={{ left: "50%", marginLeft: X_COLONNE, top: 0, bottom: 0, width: 2,
                    background: "var(--text)", zIndex: 1,
                    // Etat de depart declare ICI et pas seulement dans la timeline :
                    // sinon la barre apparait pleine le temps d'une image.
@@ -447,13 +455,29 @@ export default function Sectors() {
               data-sect-panneau
               className={"relative grid gap-[80px] items-center"
                 + " max-[900px]:!grid-cols-1 max-[900px]:!gap-8 "
-                // LES COLONNES NE SONT PAS EGALES, ET LE GABARIT SUIT L'ALTERNANCE.
-                // A parts egales avec 96 px de gouttiere, la reserve tombait a
-                // 424 px a 1024 — sous les 519 que la reference affiche. Le visuel
-                // prend donc 1,25 part contre 0,75, et le GABARIT S'INVERSE avec
-                // lui : sans cela, un visuel place en second par `order` atterrit
-                // dans la piste etroite.
-                + (imageADroite ? "grid-cols-[0.75fr_1.25fr]" : "grid-cols-[1.25fr_0.75fr]")}
+                // ── COLONNES EGALES, POUR QUE LA GOUTTIERE SOIT CENTREE ──────────
+                // C'EST LA GRILLE QUI EMPECHAIT LA COLONNE VERTEBRALE D'ETRE AU
+                // MILIEU, pas la colonne. Avec 1,25 part contre 0,75 et 80 px
+                // d'ecart, l'axe de la gouttiere tombait a 850 px sur les panneaux
+                // impairs et a 590 sur les pairs — l'alternance inversait le GABARIT
+                // avec le contenu, donc la geometrie changeait de cote. Une colonne
+                // posee a 50 % tombait a 720, milieu des deux, dans aucune des deux.
+                //
+                // A parts egales, la gouttiere est au centre sur TOUS les panneaux :
+                // l'alternance n'inverse plus que le CONTENU, et la colonne retombe
+                // dedans par construction. Le gabarit n'a donc plus a s'inverser.
+                //
+                // CE QUE CELA COUTE, ET POURQUOI CE N'EST PLUS UN OBSTACLE. L'image
+                // passe de 650 a 520 px a 1440. J'avais avance qu'a 520 px l'ecart
+                // entre les touches du clavier tomberait sous un plancher de 4 px et
+                // que le telephone cesserait d'etre lu. LE TEST A L'AVEUGLE A 335 px
+                // A DEMENTI CETTE EXTRAPOLATION : a cette taille l'ecart vaut 2,4 px
+                // et le lecteur ecrit pourtant « un telephone fixe a touches,
+                // reconnaissable ». Ce qui porte la lecture n'est pas le nombre de
+                // pixels par detail mais le TYPE d'indice — une silhouette simple
+                // survit, un detail interne repete meurt. Un plancher arithmetique ne
+                // predit pas ce qui se comprend.
+                + "grid-cols-[1fr_1fr]"}
               style={{ marginTop: i === 0 ? 0 : 128 }}
             >
               {/* LE JALON, sur la barre, a mi-hauteur du panneau. Il est ici un
@@ -464,7 +488,8 @@ export default function Sectors() {
                 data-sect-jalon
                 aria-hidden="true"
                 className="absolute max-[900px]:hidden"
-                style={{ left: X_COLONNE + 1 - 10, top: "50%", width: 14, height: 14,
+                style={{ left: "50%", marginLeft: X_COLONNE + 1 - 10,
+                         top: "50%", width: 14, height: 14,
                          marginTop: -7, borderRadius: "50%",
                          background: "var(--text-muted)",
                          // le cercle de couleur de page isole le jalon du
