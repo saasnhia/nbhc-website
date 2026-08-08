@@ -108,10 +108,28 @@ const SCENES_METIER: Record<string, {
   garage: {
     fichier: "metier-garage",
     etiquettes: [
-      // l'etiquette est dans le ciel, le trait descend sur le combine decroche
-      { cle: "garageLabelAccueil", x: 0.1868, y: 0.2590, cx: 0.1868, cy: 0.4123 },
-      // et sur la feuille en vol qui se remplit
-      { cle: "garageLabelFiche", x: 0.4550, y: 0.1350, cx: 0.5050, cy: 0.2479 },
+      // ── ANCRES RE-EMISES PAR LA SCENE, ET LA HAUTEUR N'EST PAS 0,111 ────────
+      // `text-[11px]` est une taille FIXE : la hauteur d'une etiquette en pixels ne
+      // depend que de son nombre de lignes, donc sa FRACTION DE CADRE grandit quand
+      // l'image retrecit. Mesure au navigateur, avec les vrais woff2 du build et les
+      // chaines des deux locales : « accueil telephonique automatise » passe a TROIS
+      // lignes sous 520 px d'image, soit 50,55 px = 0,1746 de cadre — 57 % de plus que
+      // les 0,111 que je supposais. Et « la fiche se remplit » passe a deux lignes en
+      // anglais sous 501 px.
+      //
+      // ET LA LARGEUR QUI COMMANDE EST 463 px, PAS 520. Les etiquettes sont masquees
+      // sous 560 px de fenetre ; une fenetre de 901 px sert donc une image de
+      // (901 - 160) x 0,625 = 463 px, la plus petite qui affiche encore une etiquette.
+      // Le pire cas est la, pas a 520.
+      //
+      // Ces deux positions sont les seules qui tiennent : la boite d'accueil est la
+      // HAUTE, elle ne rentre que dans la colonne de gauche, libre jusqu'a y = 0,279 —
+      // a droite le plafond est 0,160 a cause du sommet de la voiture a (0,8210 ;
+      // 0,1187). Et le bord bas de la fiche est a 0,1330 et non a 0,1413 parce qu'a
+      // 0,1413 la garde geometrique a la voiture tombait a 5,62 px, sous son plancher
+      // de 8 : c'est l'ancre qui a bouge, pas le seuil.
+      { cle: "garageLabelAccueil", x: 0.0000, y: 0.2250, cx: 0.1868, cy: 0.4123 },
+      { cle: "garageLabelFiche", x: 0.7200, y: 0.1330, cx: 0.5050, cy: 0.2479 },
     ],
   },
   pharma: {
@@ -119,9 +137,29 @@ const SCENES_METIER: Record<string, {
     transit: true,
     etiquettes: [
       // le tri : l'etiquette est dans le ciel, le trait descend sur la case ouverte
-      { cle: "pharmaLabelTri", x: 0.25, y: 0.35, cx: 0.3673, cy: 0.5426 },
-      // la decision : le trait descend sur la boite de medicament prete
-      { cle: "pharmaLabelDecision", x: 0.754, y: 0.28, cx: 0.8195, cy: 0.5614 },
+      // ── ANCRES COTE A COTE, ET C'EST 35 % QUI L'A PERMIS ───────────────────
+      // Trois positions successives, chacune corrigee par une mesure :
+      //   (0,25 ; 0,35) et (0,754 ; 0,28) : la premiere recouvrait 3,704 % de son
+      //     emprise, son bas tombant sous la limite du ciel libre.
+      //   (0,22 ; 0,14) et (0,754 ; 0,28) : empilees verticalement, seule issue quand
+      //     les boites faisaient 46 % de large — deux fois 46 ne tiennent pas cote a
+      //     cote dans 0,754 de place. Elles avaient 9,43 px de vide.
+      //   ICI : a 35 % elles tiennent COTE A COTE. Balayage exhaustif au pas de 0,005
+      //     sur l'emprise reelle : 9 152 ancres propres par cle et 5 040 349 paires
+      //     tenables ; le choix est donc libre, et il est fait sur le CENTRAGE — la
+      //     boite du tri centree a 0,375 pour une case ouverte a 0,3673, celle de la
+      //     decision a 0,805 pour une boite de medicament a 0,8195.
+      //
+      // Ecart mesure : 37,0 px a 463 px de large, jusqu'a 119,5 px a 1480, pour un
+      // plancher de 8. La paire empilee, elle, tombait a 4,51 px des le passage a 35 %.
+      // Recouvrement : 0,000 % sur les douze emprises, contraste 16,92:1 partout.
+      //
+      // ET LA HAUTEUR A ETE MESUREE, PAS HERITEE : ces deux textes font 18 et 24
+      // caracteres et ne depassent jamais deux lignes, contre trois pour les 33
+      // caracteres de l'accueil du garage. Leur pire fraction de cadre vaut 0,1244 a
+      // 463 px — la ou je supposais 0,111 partout.
+      { cle: "pharmaLabelTri", x: 0.20, y: 0.32, cx: 0.3673, cy: 0.5426 },
+      { cle: "pharmaLabelDecision", x: 0.98, y: 0.28, cx: 0.8195, cy: 0.5614 },
     ],
   },
 };
@@ -622,7 +660,31 @@ export default function Sectors() {
                           color: "var(--text)",
                           letterSpacing: 2,
                           lineHeight: 1.35,
-                          maxWidth: "46%",
+                          // ── 35 % ET NON 46 %, ET LE CHIFFRE EST DEMONTRE ────────
+                          // A 46 % les deux etiquettes du garage NE PEUVENT PAS
+                          // coexister, et ce n'est pas une impression : balayage
+                          // exhaustif au pas de 0,005 sur la position et la hauteur,
+                          // en exigeant 0 % de pixel non-fond aux SIX largeurs
+                          // servies. Resultat : 846 boites propres, toutes avec leur
+                          // bord droit sous x 0,815 — alors que la regle d'alignement
+                          // du site plus 8 px d'ecart imposent un bord droit au-dela
+                          // de 0,9354. Deficit de 0,120 de largeur, soit 62 px a
+                          // 520 px de large. Zero paire.
+                          //
+                          // Le plafond est un seul pixel : le sommet de la voiture se
+                          // projette a (0,8210 ; 0,1187), et rien d'autre dans la
+                          // moitie droite ne monte au-dessus de y = 0,18.
+                          //
+                          // A 35 %, verifie au pire cas — le palier 370, ou l'arete de
+                          // la voiture remonte a 0,1126 apres reechantillonnage — les
+                          // deux logements existent : x [0,00 ; 0,35] et x [0,37 ; 0,72],
+                          // libres jusqu'a y = 0,1775 et 0,1816 la ou il faut 0,1602.
+                          //
+                          // L'AUTRE SORTIE ETAIT DANS LA 3D : descendre la ligne de
+                          // toit de 0,0477 de hauteur, soit 44 px sur le maitre. Elle
+                          // coute un rendu et touche un objet acquis ; celle-ci coute
+                          // une ligne et ne touche a rien.
+                          maxWidth: "35%",
                           // ── LA PLAQUE, ET ELLE EST MESUREE, PAS DECORATIVE ──────
                           // Monter l'ancre dans le ciel a fait passer le minimum de
                           // 1,00:1 a 17,02:1 a 768 px. A 1024 il retombait a 1,00:1,
