@@ -231,12 +231,58 @@ const PLAQUE_LATERALE = [false, true] as const;
  * corriger le seul debordement vertical en gardant x = 0,548 portait le recouvrement
  * a 56-58 %. Les deux defauts etaient ANTAGONISTES.
  *
- * Celle-ci est resolue, pas choisie : 0 pixel non-fond sur les treize combinaisons
- * palier x largeur d'affichage livrees, contraste 17,02:1 contre la plaque a 0,78,
- * boite entierement dans le cadre au pire cas (x 0,0700..0,5100, y 0,0541..0,1965),
- * garde geometrique de 0,0841 au-dessus du plafond, et les deux marges volontairement
- * egales a 0,0541. La fenetre d'ancre admissible ne fait que neuf centiemes,
- * x dans [0,22 ; 0,3147] : au-dela, la bande contient le sablier.
+ * ── DEUX AFFIRMATIONS DE CE COMMENTAIRE ETAIENT FAUSSES, ET ELLES SONT RETIREES ──
+ *
+ * CE QUI ETAIT ECRIT ICI : « 0 pixel non-fond sur les treize combinaisons palier x
+ * largeur d'affichage livrees, contraste 17,02:1 contre la plaque a 0,78 ». Les deux
+ * moities sont fausses, et la premiere l'est deux fois.
+ *
+ *   1. « TREIZE COMBINAISONS » N'A AUCUNE SOURCE. L'instrument qui mesure cette ancre
+ *      — nbhc-broll/airbnb-demo/ancre_whynow_bureau.js — parcourt 19 couples
+ *      largeur x densite dans DEUX locales, soit 38 mesures, et il compte lui-meme
+ *      les combinaisons palier x largeur d'affichage DISTINCTES : il en imprime 30.
+ *      Le nombre treize ne sort d'aucune execution.
+ *   2. « 0 PIXEL NON-FOND » ETAIT FAUX SUR L'IMAGE QUI ETAIT SERVIE, et il ne l'est
+ *      plus depuis que la page sert le rendu de la scene. Les deux etats sont plus
+ *      bas : le chiffre n'a jamais decrit une ancre, il decrivait une IMAGE.
+ *   3. « CONTRASTE 17,02:1 CONTRE LA PLAQUE A 0,78 » est la seule moitie qui se
+ *      verifie : l'instrument LIT la plaque dans le DOM au lieu de la recopier, il y
+ *      lit rgba(9, 9, 11, 0.78), et il rend 17,02:1 aux 38 mesures. Ce chiffre-la
+ *      n'est pas retire. Il etait cependant faux AVANT la correction de l'asset, ou
+ *      le pire cas tombait a 9,71:1 : il decrivait, lui aussi, une autre image.
+ *
+ * MESURE, 38 mesures / 30 combinaisons palier x affichage distinctes, DEUX locales,
+ * sur la page servie a localhost — et il faut deux tableaux, parce que le defaut
+ * n'etait pas dans cette ancre :
+ *
+ *   AVANT, avec l'asset qui etait livre (whynow-bureau-*.webp derives d'un vieux
+ *   rendu C3, cadrage different) :
+ *     boite dans le cadre         38 / 38
+ *     contraste >= 4,5:1          38 / 38, pire cas 9,71:1
+ *     zero pixel non-fond         15 / 38  ->  23 ECHECS, jusqu'a 2 695 px non-fond,
+ *                                 propre seulement a partir de 944 px d'affichage en
+ *                                 `fr` et 1 120 px en `en`
+ *
+ *   APRES, avec l'asset re-derive du rendu de la scene (nbhc-broll/rendu-3d/
+ *   exporter_panneaux.py, panneau 1) — MEME ancre, meme boite, meme plaque :
+ *     boite dans le cadre         38 / 38   (pire bord 14,0 px, en `en` a 521 px)
+ *     contraste >= 4,5:1          38 / 38   17,02:1 aux 38, pire fond vu rgb(9,9,11)
+ *     zero pixel non-fond         38 / 38   0 px non-fond partout, ecart au fond 0
+ *   154 / 154 controles, code de sortie 0, les deux falsifications de l'instrument
+ *   mordent (90,5 % de non-fond quand on pose l'etiquette a 62 % ; -34,7 px de bord
+ *   quand on la pousse a left 99 %).
+ *
+ * CE QUE CELA APPREND, ET C'EST LA VRAIE LECON DU LOT : les 23 echecs n'etaient PAS
+ * un defaut d'ancre. L'ancre n'a pas bouge d'un centieme. Ils venaient de ce que la
+ * page servait une image que la scene n'avait pas produite — un cadrage ou des objets
+ * occupaient la bande que l'ancre suppose vide. Chercher une meilleure ancre aurait
+ * ete corriger le symptome sur le mauvais objet, une fois de plus.
+ *
+ * CE QUI RESTE VRAI DU DIAGNOSTIC : `text-[11px]` est bien une taille fixe, donc la
+ * boite grandit en FRACTION DE CADRE quand l'image rapetisse — 221x21 px a toutes les
+ * largeurs en `fr`, et 229x36 px sur DEUX lignes en `en` sous 560 px d'affichage.
+ * C'est pour ce cas-la, et pour le cas a trois lignes qu'il n'y a plus lieu de servir,
+ * que le masquage sous 560 px reste en place.
  */
 const ETIQUETTE_BUREAU = { x: 0.29, y: 0.1965 } as const;
 
@@ -446,6 +492,10 @@ export default function WhyNow() {
               debordement vertical en gardant x. Les deux defauts sont ANTAGONISTES —
               l'ancre livree doit son taux de 7,6 % au fait qu'une partie de sa boite
               est HORS CADRE, donc non comptee.
+              LA BORNE EST STRICTE, ET C'EST MESURE AU DISPLAY CALCULE :
+              `max-[560px]:hidden` compile en `width < 560px`, donc l'etiquette est
+              MASQUEE a 559 px de fenetre et VISIBLE a 560 — pas l'inverse. Le mot
+              « sous » est donc exact, et l'instrument le verifie avec `<`, pas `<=`.
               MASQUER SOUS 560 px SUPPRIME LE CAS QUI BLOQUE, mais PAS jusqu'a une
               ligne, et j'avais ecrit le contraire. Mesure : avec le `sizes` de ce
               panneau, une fenetre de 561 px sert 521 px d'affichage, donc encore DEUX
@@ -459,7 +509,37 @@ export default function WhyNow() {
               mesuree sur le vrai pire cas restant, 0,142391 — pas sur le cas confortable
               que mon premier commentaire imaginait.
               Une etiquette absente doublee d'un texte present juste a cote vaut mieux
-              qu'une etiquette posee sur 14 % du sujet. */}
+              qu'une etiquette posee sur 14 % du sujet.
+
+              ── ET CE SEUIL A ENFIN ETE MESURE PAR-DESSOUS, CE QUI N'AVAIT JAMAIS ETE
+              FAIT. Tout ce qui precede raisonne sur des largeurs que la CSS MASQUE :
+              on ne pouvait donc pas savoir si la boite y etait placable, et « le
+              masquage a 560 est le bon choix » se prouvait tout seul. L'instrument a
+              recu un mode `NBHC_DEMASQUER=1` qui force l'affichage sous le seuil et
+              ajoute dix largeurs. Mesure sur la locale `en`, le pire cas (libelle le
+              plus long), sur l'asset SERVI apres correction :
+
+                fenetre  affich.  boite      lignes  non-fond  pire bord
+                    320      280  123x51          3         0     -23,9
+                    360      320  141x51          3         0     -20,0
+                    375      335  147x36          2         0      -3,8
+                    420      380  167x36          2         0      +0,5
+                    480      440  194x36          2         0      +6,3
+                    560      520  229x36          2         0     +13,9
+
+              Le critere qui bloque n'est plus le recouvrement — il est a ZERO PIXEL
+              non-fond partout, et le contraste a 17,02:1 partout, y compris a trois
+              lignes. C'est le CADRE qui casse : le bord haut de la boite sort de
+              l'image. La boite redevient placable a 380 px d'affichage, soit 420 px de
+              fenetre, et avec 0,5 px de marge seulement ; le premier palier confortable
+              est 440 px d'affichage (480 de fenetre) a 6,3 px.
+
+              LE MASQUAGE N'EST PAS DEPLACE POUR AUTANT, ET C'EST UNE ABSTENTION
+              DELIBEREE. Le descendre de 560 a 480 afficherait l'etiquette sur quatre-
+              vingts pixels de largeurs qu'aucune lecture a l'oeil n'a jamais vues, pour
+              gagner un libelle deja present en clair dans le texte du panneau juste
+              au-dessus. Le chiffre est la, la decision appartient au client. Ce qui est
+              corrige, c'est qu'elle ne repose plus sur une supposition. */}
           <span
             className="pointer-events-none absolute text-[11px] font-medium uppercase text-center
                        max-[560px]:hidden"
