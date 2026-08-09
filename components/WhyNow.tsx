@@ -221,7 +221,24 @@ const PLAQUE_LATERALE = [false, true] as const;
  * sommet de la pile de onze feuilles, cette station rend Y = 199,3 et la station
  * a une seule feuille Y = 9,1 — un recadrage mal compte casserait les deux.
  */
-const ETIQUETTE_BUREAU = { x: 0.548, y: 0.1233 } as const;
+/**
+ * ANCRE MESUREE SUR LE VRAI PIRE CAS, et l'ancienne etait cassee deux fois.
+ *
+ * (0,548 ; 0,1233) faisait sortir le bord haut de la boite DU CADRE pour toute largeur
+ * d'affichage <= 521 px — jusqu'a -274 px en unites du maitre — et son emprise
+ * recouvrait 7,64 a 9,16 % de pixels non-fond. Elle devait meme son bon score de
+ * recouvrement au fait qu'une partie de sa boite etait hors cadre, donc non comptee :
+ * corriger le seul debordement vertical en gardant x = 0,548 portait le recouvrement
+ * a 56-58 %. Les deux defauts etaient ANTAGONISTES.
+ *
+ * Celle-ci est resolue, pas choisie : 0 pixel non-fond sur les treize combinaisons
+ * palier x largeur d'affichage livrees, contraste 17,02:1 contre la plaque a 0,78,
+ * boite entierement dans le cadre au pire cas (x 0,0700..0,5100, y 0,0541..0,1965),
+ * garde geometrique de 0,0841 au-dessus du plafond, et les deux marges volontairement
+ * egales a 0,0541. La fenetre d'ancre admissible ne fait que neuf centiemes,
+ * x dans [0,22 ; 0,3147] : au-dela, la bande contient le sablier.
+ */
+const ETIQUETTE_BUREAU = { x: 0.29, y: 0.1965 } as const;
 
 /**
  * POURQUOI LES DEUX ETIQUETTES PORTENT UNE PLAQUE SEMI-OPAQUE.
@@ -415,8 +432,37 @@ export default function WhyNow() {
               tombe alors a 0,0576 de hauteur, soit 4 px du bord haut au palier
               de 400 px. Un libelle a 4 px du bord n'est pas une mise en page,
               c'est un ecretage en attente. On garde 0,34 et la plaque. */}
+          {/* ── MASQUEE SOUS 560 px, SUR LE MODELE DE Sectors.tsx ──────────────────
+              LA MESURE FERME TOUTE AUTRE ISSUE. La boite est centree sur l'ancre et
+              son plafond de largeur vaut min(44 % ; 100 % - x) — donc `maxWidth: 44 %`
+              n'est PAS la contrainte, et le porter a 52, 60, 68, 76 ou 88 % ne deplace
+              pas la boite d'un pixel : c'est l'ancre x qui commande le nombre de
+              lignes. Le libelle est une enumeration de trois termes, qui passe a TROIS
+              lignes a 280 px de largeur d'affichage — la plus petite servie, faute de
+              regle de masquage — soit 0,3753 de hauteur de cadre.
+              La fenetre a placer y fait alors 44 % x 37,53 % du cadre, plus grande que
+              toute poche de fond pur de l'image : balayage 2D exhaustif, PLANCHER
+              MESURE A 14,20 % de pixels non-fond, et 56 a 58 % si l'on corrige le seul
+              debordement vertical en gardant x. Les deux defauts sont ANTAGONISTES —
+              l'ancre livree doit son taux de 7,6 % au fait qu'une partie de sa boite
+              est HORS CADRE, donc non comptee.
+              MASQUER SOUS 560 px SUPPRIME LE CAS QUI BLOQUE, mais PAS jusqu'a une
+              ligne, et j'avais ecrit le contraire. Mesure : avec le `sizes` de ce
+              panneau, une fenetre de 561 px sert 521 px d'affichage, donc encore DEUX
+              lignes et 0,142391 de cadre — 2,14 fois les 0,0661 que j'annoncais. La
+              bascule vers une seule ligne est a 582 px d'affichage, soit 622 px de
+              fenetre : entre 561 et 621 px, soixante et un pixels, la boite fait
+              toujours deux lignes. Le seuil qui rendrait vraie la phrase « une ligne »
+              serait 621 px, pas 560.
+              Le masquage a 560 reste le bon choix : il supprime le cas a TROIS lignes,
+              qui est celui dont aucune ancre ne se sortait. Et l'ancre ci-dessous est
+              mesuree sur le vrai pire cas restant, 0,142391 — pas sur le cas confortable
+              que mon premier commentaire imaginait.
+              Une etiquette absente doublee d'un texte present juste a cote vaut mieux
+              qu'une etiquette posee sur 14 % du sujet. */}
           <span
-            className="pointer-events-none absolute text-[11px] font-medium uppercase text-center"
+            className="pointer-events-none absolute text-[11px] font-medium uppercase text-center
+                       max-[560px]:hidden"
             style={{
               left: `${ETIQUETTE_BUREAU.x * 100}%`,
               top: `${ETIQUETTE_BUREAU.y * 100}%`,
