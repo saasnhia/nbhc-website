@@ -14,9 +14,9 @@ const CALENDLY_URL = "https://calendly.com/saasnhia/30min";
 /**
  * LES SCENES DE METIER LIVREES, ET SEULEMENT ELLES.
  *
- * CINQ SUR SEPT au lot du 2026-08-11 : garage, pharmacie, artisans & BTP, organismes
- * de formation, magasins d'optique. Les deux dernieres — salles de sport, associations
- * sportives — gardent leur reserve jusqu'a leur propre passe, et c'est la meme raison
+ * SIX SUR SEPT au lot du 2026-08-11 : garage, pharmacie, artisans & BTP, organismes
+ * de formation, magasins d'optique, salles de sport. La derniere — associations
+ * sportives — garde sa reserve jusqu'a sa propre passe, et c'est la meme raison
  * qu'avant : un vide honnete se juge, un faux visuel ferait juger autre chose que ce
  * qui sera livre.
  *
@@ -250,6 +250,16 @@ const SCENES_METIER: Record<string, {
       { cle: "opticienLabelPrete", x: 0.970, y: 0.262, cx: 0.7210, cy: 0.4315 },
     ],
   },
+  sport: {
+    fichier: "metier-sport",
+    etiquettes: [
+      // la carte de membre posee a plat : le rappel qui n'est pas parti
+      { cle: "sportLabelNoshow", x: 0.180, y: 0.300, cx: 0.4389, cy: 0.6934 },
+      // le casier ouvert et eclaire — meme regle que l'optique : le point vise est le
+      // centre de la bande doree REELLEMENT VUE, le dessus du casier cachant son haut.
+      { cle: "sportLabelRappel", x: 0.970, y: 0.262, cx: 0.6320, cy: 0.4328 },
+    ],
+  },
 };
 
 export default function Sectors() {
@@ -265,6 +275,7 @@ export default function Sectors() {
   // multi-store prospect pipeline — not yet field-canvassed like the others.
   const sectors = [
     {
+      scene: "sport",
       name: t("sportName"),
       pain: t("sportPain"),
       solution: t("sportSolution"),
