@@ -38,9 +38,21 @@
  *
  * PANNEAU 1 EN PLEINE LARGEUR, ET C'EST L'EXCEPTION. Son argument est un COMPTAGE
  * — onze feuilles, puis trois, puis une — et l'epaisseur apparente d'une feuille
- * vaut 6,7 px a 1 120 px de large. A 370 px de colonne elle tomberait a 2,2 px, or
- * le seuil de denombrabilite mesure a l'oeil se situe entre 5,4 et 4,9 px. La
+ * vaut 8,70 px a 1 120 px de large. A 370 px de colonne elle tomberait a 2,87 px,
+ * or le seuil de denombrabilite mesure a l'oeil se situe entre 5,4 et 4,9 px. La
  * proportion de la reference detruirait donc exactement ce qui fait sa force.
+ *
+ * D'OU VIENNENT CES DEUX CHIFFRES, ET CE QU'ILS REMPLACENT. Ils sont la FORMULE DE
+ * LA SCENE SERVIE, `px = EP_FEUILLE x cos(25 deg) x largeur / ECHELLE` avec
+ * EP_FEUILLE = 0,042 et ECHELLE = 4,90 (rendu-3d/scene_bureau_gradient.py:573-582,
+ * qui imprime lui-meme 8,70 px a 1 120). Les valeurs precedentes — 6,7 et 2,2 —
+ * suivaient un ETAT DE SCENE REVOQUE et non une erreur de calcul : leur rapport aux
+ * nouvelles est constant (6,7/8,70 = 0,770 ; 2,2/2,87 = 0,766). Le « onze, puis
+ * trois, puis une » de la ligne ci-dessus vient du MEME etat revoque — la scene
+ * servie empile UNE rame de dix-huit (`N_ATTENTE = 18`) ; il est laisse tel quel
+ * parce que le perimetre de cette correction porte sur les deux chiffres, et le
+ * signaler ici vaut mieux que de le laisser muet. RESERVE : 8,70 et 2,87 sont la
+ * formule, pas une mesure refaite sur les pixels de `bureau_gradient.png`.
  *
  * PANNEAUX 2 ET 3 : TEXTE A GAUCHE, ILLUSTRATION A DROITE, LES DEUX. On n'alterne
  * pas : la reference ne le fait jamais, tous ses panneaux ont le texte a gauche, et
