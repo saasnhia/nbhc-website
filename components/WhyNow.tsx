@@ -197,31 +197,6 @@ const SEUIL_COTE_A_COTE = 1145;
  * fendue — pour retomber sur du fond de page. C'est le plus PETIT decalage qui
  * donne du fond de page dans les deux cas : l'etiquette est aussi pres de son
  * objet que la lumiere le permet.
- *
- * ── LE `alt` DU PANNEAU 2 A DECRIT PENDANT DIX PORTES UNE GEOMETRIE INEXISTANTE ─
- *
- * Il disait « une plaque fendue d'une longue rainure bordee d'or ; deux blocs
- * reposent en travers de la fente SANS Y ENTRER ». `rendu-3d/scene_outils.py`
- * construisait DEUX BOITES PLEINES posees a 0,145 l'une de l'autre, dont le jour
- * descendait jusqu'au socle : balayage de 200 tranches en x, **0** portait de la
- * matiere d'un bord du jour a l'autre. Il n'y avait pas de plaque a fendre.
- *
- * ET CE `alt` NE VIT PAS DANS CE FICHIER, ce qui est la raison pour laquelle il a
- * survecu aux relectures de ce fichier : il est en `messages/fr.json` et
- * `messages/en.json`, clef `whyNow.panel2Alt`, et n'arrive ici que par
- * `panneaux[i].alt`. Chercher « fendue » dans `WhyNow.tsx` ne le trouvait pas.
- *
- * DEUX CORRECTIONS, ET LA SECONDE N'EST PAS UNE CORRECTION DE GEOMETRIE :
- *   1. la scene rend desormais la plaque CONTINUE (`plaque_bout_0` /
- *      `plaque_bout_1` ferment le jour aux deux bouts ; 40 tranches sur 200
- *      portent de la matiere au niveau du dessus). « Plaque » est devenu vrai.
- *   2. « SANS Y ENTRER » est retire. Ce n'est pas une description, c'est une these,
- *      et elle vaut **1,6 px** de porte-a-faux a 335 px : elle a ete vue par
- *      **0 lecteur sur 12** au test a l'aveugle. Le `alt` dit maintenant ce que la
- *      geometrie porte — les blocs sont « plus larges qu'elle », 0,17 contre
- *      0,145 — et laisse la these au TEXTE de la page, qui est ce qui la porte.
- * Le mot « fendue » plus haut dans ce commentaire, lui, decrit desormais la
- * geometrie reelle et reste donc en place.
  */
 const ETIQUETTES_LATERALES = [
   [
