@@ -14,8 +14,11 @@ const CALENDLY_URL = "https://calendly.com/saasnhia/30min";
 /**
  * LES SCENES DE METIER LIVREES, ET SEULEMENT ELLES.
  *
- * Deux sur sept. Les cinq autres gardent leur reserve : un vide honnete se juge,
- * un faux visuel ferait juger autre chose que ce qui sera livre.
+ * QUATRE SUR SEPT au lot du 2026-08-10 : garage, pharmacie, artisans & BTP,
+ * organismes de formation. Les trois autres — magasins d'optique, salles de sport,
+ * associations sportives — gardent leur reserve, et c'est la meme raison qu'avant :
+ * un vide honnete se juge, un faux visuel ferait juger autre chose que ce qui sera
+ * livre.
  *
  * LES ANCRES SONT CELLES QUE LA SCENE A EMISES, recopiees de ses .ancres.json et
  * jamais recalculees ici. Elles sont en fraction du cadre livre (1480 x 925), et le
@@ -162,6 +165,52 @@ const SCENES_METIER: Record<string, {
       { cle: "pharmaLabelDecision", x: 0.98, y: 0.28, cx: 0.8195, cy: 0.5614 },
     ],
   },
+  // ═══════════════════════════════════════════════════════════════════════════
+  // LES DEUX SCENES DU LOT DU 2026-08-10 — BTP ET FORMATION
+  // ═══════════════════════════════════════════════════════════════════════════
+  // MEME REGIME QUE LES DEUX PREMIERES : les ancres sont RECOPIEES des
+  // `.ancres.json` que les scenes emettent APRES `st.ecrire()`, jamais recalculees
+  // ici. Elles sont en fraction du cadre livre (1480 x 925) et le CSS les pose en
+  // pourcentage, donc elles suivent l'image a toutes les largeurs sans qu'aucune
+  // valeur en pixels n'existe.
+  //
+  // LES DEUX ANCRES D'ETIQUETTE SONT LES MEMES SUR LES DEUX SCENES — (0,180 ; 0,300)
+  // a gauche et (0,970 ; 0,262) a droite — et ce n'est pas une facilite : les deux
+  // compositions ont ete construites POUR ces deux emplacements. La bande de ciel est
+  // reservee des la composition, ce qui veut dire que la hauteur des objets est
+  // BORNEE par les boites d'etiquette et non l'inverse. `controler_etiquettes` refuse
+  // de rendre si un volume de matiere claire entre dans l'une des deux boites, aux
+  // SIX largeurs servies — pas seulement au pire cas.
+  //
+  // RESERVE ECRITE, ET ELLE VAUT POUR CES DEUX SCENES : le NOMBRE DE LIGNES de chaque
+  // etiquette n'a pas ete remesure au navigateur pour ces textes-la. Il est transpose
+  // du gabarit de la pharmacie, dont les deux chaines font 18 et 24 caracteres. Les
+  // quatre textes ci-dessous ont ete choisis COURTS pour rester dans ce gabarit — le
+  // plus long fait 25 caracteres en francais, contre 33 pour l'accueil du garage qui,
+  // lui, passe a trois lignes sous 520 px. Le controle d'avant-rendu est donc exact
+  // sur la geometrie et HERITE sur la hauteur ; c'est `contraste_etiquettes.js` qui
+  // mesure la boite REELLE sur la page servie, et c'est la que l'erreur sortira si
+  // elle existe.
+  btp: {
+    fichier: "metier-btp",
+    etiquettes: [
+      // A GAUCHE, BORD GAUCHE SUR L'ANCRE (x < 0,30) : la boite occupe
+      // x 0,180..0,530, centre 0,355, pour un eventail de devis projete a 0,5094.
+      // Le trait de rappel descend donc vers la droite jusqu'aux feuilles.
+      { cle: "btpLabelDevis", x: 0.180, y: 0.300, cx: 0.5094, cy: 0.6913 },
+      // A DROITE, BORD DROIT SUR L'ANCRE (x > 0,70) : la boite occupe
+      // x 0,620..0,970, centre 0,795, pour une fente eclairee projetee a 0,7027.
+      { cle: "btpLabelRelance", x: 0.970, y: 0.262, cx: 0.7027, cy: 0.4252 },
+    ],
+  },
+  formation: {
+    fichier: "metier-formation",
+    etiquettes: [
+      { cle: "formationLabelDossier", x: 0.180, y: 0.300, cx: 0.4620, cy: 0.6774 },
+      // la gorge doree du PREMIER classeur, celui que la fleche designe
+      { cle: "formationLabelSuivi", x: 0.970, y: 0.262, cx: 0.6658, cy: 0.4835 },
+    ],
+  },
 };
 
 export default function Sectors() {
@@ -199,6 +248,7 @@ export default function Sectors() {
       href: t("garageHref"),
     },
     {
+      scene: "btp",
       name: t("btpName"),
       pain: t("btpPain"),
       solution: t("btpSolution"),
@@ -206,6 +256,7 @@ export default function Sectors() {
       href: t("btpHref"),
     },
     {
+      scene: "formation",
       name: t("formationName"),
       pain: t("formationPain"),
       solution: t("formationSolution"),

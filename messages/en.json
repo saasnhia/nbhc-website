@@ -133,7 +133,11 @@
     "garageLabelAccueil": "automated phone reception",
     "garageLabelFiche": "the form fills itself",
     "pharmaLabelTri": "sorting, automated",
-    "pharmaLabelDecision": "you decide and bill"
+    "pharmaLabelDecision": "you decide and bill",
+    "btpLabelDevis": "quotes by hand",
+    "btpLabelRelance": "sent on its own",
+    "formationLabelDossier": "paper sign-in",
+    "formationLabelSuivi": "file closed"
   },
   "showcase": {
     "eyebrow": "IN ACTION",

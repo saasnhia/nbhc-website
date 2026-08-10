@@ -133,7 +133,11 @@
     "garageLabelAccueil": "accueil téléphonique automatisé",
     "garageLabelFiche": "la fiche se remplit",
     "pharmaLabelTri": "le tri, automatisé",
-    "pharmaLabelDecision": "vous décidez et facturez"
+    "pharmaLabelDecision": "vous décidez et facturez",
+    "btpLabelDevis": "devis à la main",
+    "btpLabelRelance": "parti tout seul",
+    "formationLabelDossier": "émargement papier",
+    "formationLabelSuivi": "dossier clos"
   },
   "showcase": {
     "eyebrow": "EN ACTION",
