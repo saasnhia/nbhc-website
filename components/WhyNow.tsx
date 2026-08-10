@@ -55,8 +55,8 @@
  * candidats fabriques a la taille reelle par reduction Lanczos des maitres livres —
  * 370, 450, 520, 590, 646 — et juges a l'oeil, sans agrandissement qui aiderait
  * l'oeil. Resultat, identique pour les deux panneaux : l'argument passe a partir de
- * 520. Sous 520, la fente du panneau 2 lit comme une rayure doree decorative et les
- * deux socles separes du panneau 3 doivent etre CHERCHES.
+ * 520. Sous 520, le jour entre les deux dalles du panneau 2 lit comme une rayure
+ * doree decorative et les deux socles separes du panneau 3 doivent etre CHERCHES.
  *
  * 590 est retenu, un cran au-dessus du seuil : un seuil pris a sa valeur exacte
  * n'a aucune marge, et il retombe sous la limite des que le navigateur applique un
@@ -64,10 +64,10 @@
  *
  * POURQUOI NE PAS AVOIR SUIVI LES 33 % DE LA REFERENCE. Ses illustrations tiennent
  * a cette proportion parce que ce sont des scenes larges a gros objets ; les notres
- * portent des relations plus fines — une fente, deux socles separes. Copier sa
- * proportion sans verifier que ce qu'elle abrite est lisible, c'est copier la forme
- * sans la fonction. Le panneau 1 avait deja tranche exactement ce point en exigeant
- * la pleine largeur pour son comptage.
+ * portent des relations plus fines — un jour entre deux dalles, deux socles
+ * separes. Copier sa proportion sans verifier que ce qu'elle abrite est lisible,
+ * c'est copier la forme sans la fonction. Le panneau 1 avait deja tranche
+ * exactement ce point en exigeant la pleine largeur pour son comptage.
  *
  * VIDE DE FIN : 1 120 - 358 - 116 - 590 = 56 px, soit 5 % au lieu des 24,6 % de la
  * reference. Il reste un vide, l'illustration ne va pas bord a bord.
@@ -187,16 +187,33 @@ const SEUIL_COTE_A_COTE = 1145;
  * du fond dans la boite d'etiquette, contraste avec #F0EDE6 :
  *
  *   panneau 2, amas      16,92:1   -> aucune plaque
- *   panneau 2, fente     16,92:1   -> aucune plaque
+ *   panneau 2, dalles    16,92:1   -> aucune plaque
  *   panneau 3, les deux   0,86:1 et 0,90:1  -> plaque indispensable
  *
  * La difference n'est pas un hasard : sur les caisses, le dessus du socle eclaire
  * occupe tout l'espace au-dessus des deux sujets, et la seule bande sombre
  * commune est y <= 0,125, trop loin des objets. Sur outils, il suffit de monter
- * l'ancre — de 0,30 unite au-dessus de l'amas, 0,46 au-dessus de la plaque
- * fendue — pour retomber sur du fond de page. C'est le plus PETIT decalage qui
- * donne du fond de page dans les deux cas : l'etiquette est aussi pres de son
- * objet que la lumiere le permet.
+ * l'ancre — de 0,30 unite au-dessus de l'amas, 0,46 au-dessus des deux dalles —
+ * pour retomber sur du fond de page. C'est le plus PETIT decalage qui donne du
+ * fond de page dans les deux cas : l'etiquette est aussi pres de son objet que la
+ * lumiere le permet.
+ *
+ * NOMMER LA GEOMETRIE SERVIE, ET NON CELLE QU'UN DOCUMENT AVAIT ANNONCEE. Ce bloc
+ * disait « la plaque fendue », et deux autres passages de ce fichier disaient « la
+ * fente » (le seuil de 520 px, la comparaison avec la reference). Les trois etaient
+ * FAUX de ce que la page sert : `nbhc-broll/rendu-3d/scene_outils.py` pose DEUX
+ * BOITES PLEINES separees par un jour qui descend jusqu'au socle — mesure, balayage
+ * de 200 tranches en x au niveau du dessus, 0 / 200 portantes (GRAMMAIRE_3D.md,
+ * regle 28). La plaque CONTINUE a bien ete construite, elle atteignait sa cible
+ * (0 / 200 -> 40 / 200, objets porteurs de niveau 36 -> 37) et elle a ete REFUSEE
+ * par le client sur sa lecture : 6 sous-agents lecteurs sur 6 y ont lu « unsorted
+ * input becomes ordered output », « a pipeline, a sorting process », c'est-a-dire
+ * l'inverse de l'argument de `whyNow.panel2Text` (regles 33 et 35, et le registre
+ * `nbhc-broll/rendu-3d/REGISTRE_LECTURES.jsonl`). La geometrie servie est donc
+ * celle-ci, et les mots de ce fichier la nomment enfin. Les deux `panel2Alt` de
+ * `messages/*.json` avaient ete corriges seuls, a `097e876` : une description peut
+ * vivre ailleurs que dans le composant qui l'affiche (regle 34), et l'inverse est
+ * vrai aussi — corriger les messages ne corrige pas le commentaire.
  */
 const ETIQUETTES_LATERALES = [
   [
