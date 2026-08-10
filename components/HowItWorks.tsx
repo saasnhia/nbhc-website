@@ -176,6 +176,26 @@ const X_STATIONS = [0.1278, 0.3409, 0.5541, 0.7673] as const;
  * optionnel » y pend a 0,9202. Un rail continu jusqu'au bout contredisait donc
  * l'image qu'il longe : il annoncait une suite acquise la ou le rendu montre une
  * option.
+ *
+ * ── CE COMMENTAIRE A CHANGE DE SENS, ET LE RAIL N'A PAS BOUGE ────────────────
+ * `scene_chaine.py` rendait un TRAIT PLEIN continu de la station 01 a la station 04.
+ * Il est desormais un POINTILLE A VIDES FRANCS termine par une FLECHE au sol —
+ * releve de lecture : trois lecteurs sur quatre lisaient « un fil ou cordon » sur le
+ * trait continu.
+ *
+ * Consequence a dire, parce qu'elle affaiblit l'argument ci-dessus : le contraste
+ * « continu jusqu'a 04, pointille apres » ne decrit plus une opposition PLEIN /
+ * POINTILLE dans l'image, puisque toute l'image est pointillee. Ce que le rail
+ * continue de coder juste, et c'est le seul point qui portait vraiment, est le
+ * DETACHEMENT : la queue est separee par 50,4 px a 1 120 quand un vide ordinaire du
+ * pointille en fait 38,7, et rien ne pointe vers elle — la fleche s'arrete a la
+ * station 04. Un rail continu jusqu'au bout annoncerait toujours une suite acquise.
+ *
+ * LES QUATRE ABSCISSES DE X_STATIONS SONT INCHANGEES A L'IDENTIQUE — verifie sur le
+ * `chaine.ancres.json` re-emis : 0,1278 / 0,3409 / 0,5541 / 0,7673, et les deux
+ * ancres d'etiquette valent toujours (0,7673 ; 0,2407) et (0,9202 ; 0,3534). Le
+ * rail, ses quatre tirets et la grille de colonnes ne visent donc rien qui ait
+ * bouge, et ce lot ne les a pas touches.
  */
 const X_QUEUE = X_STATIONS[3];
 
