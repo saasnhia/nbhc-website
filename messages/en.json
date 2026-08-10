@@ -137,7 +137,13 @@
     "btpLabelDevis": "quotes by hand",
     "btpLabelRelance": "sent on its own",
     "formationLabelDossier": "paper sign-in",
-    "formationLabelSuivi": "file closed"
+    "formationLabelSuivi": "file closed",
+    "opticienLabelRelance": "follow-up missed",
+    "opticienLabelPrete": "order ready",
+    "sportLabelNoshow": "class no-show",
+    "sportLabelRappel": "reminder sent",
+    "sportAssoLabelCertificat": "certificate missing",
+    "sportAssoLabelDossier": "file completed"
   },
   "showcase": {
     "eyebrow": "IN ACTION",

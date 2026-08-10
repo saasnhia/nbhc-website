@@ -137,7 +137,13 @@
     "btpLabelDevis": "devis à la main",
     "btpLabelRelance": "parti tout seul",
     "formationLabelDossier": "émargement papier",
-    "formationLabelSuivi": "dossier clos"
+    "formationLabelSuivi": "dossier clos",
+    "opticienLabelRelance": "relance oubliée",
+    "opticienLabelPrete": "commande prête",
+    "sportLabelNoshow": "no-show au cours",
+    "sportLabelRappel": "rappel envoyé",
+    "sportAssoLabelCertificat": "certificat manquant",
+    "sportAssoLabelDossier": "dossier bouclé"
   },
   "showcase": {
     "eyebrow": "EN ACTION",

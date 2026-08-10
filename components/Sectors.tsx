@@ -14,11 +14,11 @@ const CALENDLY_URL = "https://calendly.com/saasnhia/30min";
 /**
  * LES SCENES DE METIER LIVREES, ET SEULEMENT ELLES.
  *
- * QUATRE SUR SEPT au lot du 2026-08-10 : garage, pharmacie, artisans & BTP,
- * organismes de formation. Les trois autres — magasins d'optique, salles de sport,
- * associations sportives — gardent leur reserve, et c'est la meme raison qu'avant :
- * un vide honnete se juge, un faux visuel ferait juger autre chose que ce qui sera
- * livre.
+ * CINQ SUR SEPT au lot du 2026-08-11 : garage, pharmacie, artisans & BTP, organismes
+ * de formation, magasins d'optique. Les deux dernieres — salles de sport, associations
+ * sportives — gardent leur reserve jusqu'a leur propre passe, et c'est la meme raison
+ * qu'avant : un vide honnete se juge, un faux visuel ferait juger autre chose que ce
+ * qui sera livre.
  *
  * LES ANCRES SONT CELLES QUE LA SCENE A EMISES, recopiees de ses .ancres.json et
  * jamais recalculees ici. Elles sont en fraction du cadre livre (1480 x 925), et le
@@ -211,6 +211,45 @@ const SCENES_METIER: Record<string, {
       { cle: "formationLabelSuivi", x: 0.970, y: 0.262, cx: 0.6658, cy: 0.4835 },
     ],
   },
+  // ═══════════════════════════════════════════════════════════════════════════
+  // LOT DU 2026-08-11 — LES TROIS DERNIERES SCENES DE METIER
+  // ═══════════════════════════════════════════════════════════════════════════
+  // MEME REGIME QUE LES QUATRE PRECEDENTES : les ancres sont RECOPIEES des
+  // `.ancres.json` que les scenes emettent APRES `st.ecrire()`, jamais recalculees ici.
+  //
+  // CE QUI CHANGE PAR RAPPORT AU LOT PRECEDENT, ET C'EST UNE MESURE :
+  //
+  //   1. LE NOMBRE DE LIGNES DE CHAQUE ETIQUETTE EST MESURE AU NAVIGATEUR, plus
+  //      transpose d'un gabarit. `nbhc-broll/airbnb-demo/lignes_etiquettes.js` clone une
+  //      etiquette REELLE de cette page, y met le texte a mesurer et lit `offsetHeight`,
+  //      dans les deux locales et aux onze largeurs CSS ou les etiquettes sont
+  //      affichees. La reserve ecrite du lot precedent est donc levee, et elle n'etait
+  //      pas anodine : la table heritee se trompait sur les quatre cles deja livrees.
+  //
+  //   2. LE PIRE CAS N'EST PAS 463 px MAIS 370 px. La plus petite largeur CSS ou
+  //      l'illustration est affichee vaut 370 px, a 901 px de fenetre — et elle CHUTE de
+  //      859 a 370 quand la fenetre passe de 899 a 901, parce que la grille passe d'un
+  //      panneau empile a deux colonnes egales. Les 463 px venaient du `sizes` de la
+  //      balise, qui sert a choisir un FICHIER et ne decrit pas la mise en page.
+  //
+  //   3. AUCUNE DES TROIS N'A D'ELEMENT QUI FLOTTE, et c'est signale comme une decision
+  //      a trancher : la grammaire l'autorise (« un seul element qui flotte, ET
+  //      SEULEMENT s'il a une raison propre d'etre en l'air »), et deux mesures du lot
+  //      precedent la motivent — le statut « en vol » de la feuille de la scene
+  //      formation n'a pas ete lu (« une carte inclinee avec une icone jaune »), et
+  //      cette meme feuille a du etre deplacee parce qu'elle occultait la tete de
+  //      fleche et l'or, « les deux seules choses que l'image doit prouver ».
+  optique: {
+    fichier: "metier-optique",
+    etiquettes: [
+      // la fiche client posee a plat : la relance qui n'est pas partie
+      { cle: "opticienLabelRelance", x: 0.180, y: 0.300, cx: 0.4698, cy: 0.6773 },
+      // la case allumee du presentoir — le point vise est le centre de la bande doree
+      // REELLEMENT VUE, pas le centre de la plaque : la traverse du dessus en cache le
+      // haut, et viser le centre geometrique aurait pointe un pixel invisible.
+      { cle: "opticienLabelPrete", x: 0.970, y: 0.262, cx: 0.7210, cy: 0.4315 },
+    ],
+  },
 };
 
 export default function Sectors() {
@@ -272,6 +311,7 @@ export default function Sectors() {
       href: t("pharmaHref"),
     },
     {
+      scene: "optique",
       name: t("opticienName"),
       pain: t("opticienPain"),
       solution: t("opticienSolution"),
@@ -685,7 +725,45 @@ export default function Sectors() {
                         className="pointer-events-none absolute text-[11px] font-medium uppercase text-center
                                    max-[560px]:hidden"
                         style={{
-                          left: `${e.x * 100}%`,
+                          // ── LE BORD DROIT S'ANCRE PAR `right`, ET NON PAR `left` PLUS
+                          //    UNE TRANSLATION. C'EST UN DEFAUT MESURE, PAS UN GOUT.
+                          // Une boite absolue posee par `left: 97%` sans `right` a une
+                          // largeur DISPONIBLE de 3 % du parent. Le retrecissement au
+                          // contenu prend alors le maximum entre cette place et la
+                          // largeur MINIMALE du contenu — donc la largeur du mot le plus
+                          // long. `transform: translate(-100%)` deplace ensuite la boite,
+                          // mais ne lui rend PAS la place : elle reste retrecie.
+                          //
+                          // MESURE SUR LA PAGE SERVIE, a 1440 px de fenetre (image de
+                          // 520 px CSS) : « parti tout seul » sortait a 48,8 px de large
+                          // et 65,4 px de haut — QUATRE lignes d'un mot chacune — la ou
+                          // 35 % valent 182 px et le texte tient sur une seule ligne.
+                          // Meme defaut sur « vous decidez et facturez » (82,6 px, quatre
+                          // lignes) et « dossier clos » (72,8 px, deux lignes). Verifie a
+                          // l'oeil sur une capture de la scene BTP : les trois mots sont
+                          // empiles en colonne.
+                          //
+                          // CONSEQUENCE, ET C'EST CE QUI EN FAIT UN DEFAUT ET NON UNE
+                          // VARIANTE : la boite REELLE ne ressemblait plus a la boite
+                          // MODELISEE. `metier_commun.emprise_etiquette` calcule une
+                          // emprise de 35 % alignee par un bord, et c'est sur elle que
+                          // toutes les scenes ont ete composees — recouvrement, garde aux
+                          // objets clairs, ecart entre les deux boites. Le controle
+                          // d'avant-rendu mesurait donc exactement le bon rectangle sur
+                          // une page qui en peignait un autre.
+                          //
+                          // ET IL EN CORRIGE HUIT DEPASSEMENTS SUR DOUZE. A 370 px CSS
+                          // (fenetre de 901 px, la plus petite image ou les etiquettes
+                          // sont encore affichees), quatre lignes debordent du haut de
+                          // l'image : « sent on its own » de 4,8 px et « vous decidez et
+                          // facturez » de 0,6 px. Rendues a 35 %, les deux repassent a
+                          // deux lignes et rentrent. Les quatre qui restent sont celles
+                          // de « la fiche se remplit » du garage, dont l'ancre a y =
+                          // 0,1330 ne laisse pas la place a deux lignes a cette largeur —
+                          // c'est une dette de composition, pas de mise en page.
+                          ...(e.x > 0.70
+                            ? { right: `${(1 - e.x) * 100}%` }
+                            : { left: `${e.x * 100}%` }),
                           top: `${e.y * 100}%`,
                           // L'ancre designe le point de l'objet ; l'etiquette se pose
                           // AU-DESSUS de lui.
@@ -705,8 +783,11 @@ export default function Sectors() {
                           // de 70 % son bord DROIT, entre les deux on centre. Avec une
                           // largeur maximale de 46 %, aucune de ces trois positions ne
                           // peut sortir : 0,1868 + 0,46 = 0,647 et 0,754 - 0,46 = 0,294.
+                          // Le bord DROIT est deja pose par `right` ci-dessus : sa
+                          // translation horizontale devient nulle, sinon la boite
+                          // partirait une largeur trop a gauche.
                           transform: e.x < 0.30 ? "translate(0, -100%)"
-                            : e.x > 0.70 ? "translate(-100%, -100%)"
+                            : e.x > 0.70 ? "translate(0, -100%)"
                               : "translate(-50%, -100%)",
                           color: "var(--text)",
                           letterSpacing: 2,
