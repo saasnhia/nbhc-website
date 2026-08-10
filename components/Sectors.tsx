@@ -14,11 +14,10 @@ const CALENDLY_URL = "https://calendly.com/saasnhia/30min";
 /**
  * LES SCENES DE METIER LIVREES, ET SEULEMENT ELLES.
  *
- * SIX SUR SEPT au lot du 2026-08-11 : garage, pharmacie, artisans & BTP, organismes
- * de formation, magasins d'optique, salles de sport. La derniere — associations
- * sportives — garde sa reserve jusqu'a sa propre passe, et c'est la meme raison
- * qu'avant : un vide honnete se juge, un faux visuel ferait juger autre chose que ce
- * qui sera livre.
+ * SEPT SUR SEPT au lot du 2026-08-11. Les sept metiers de la section ont desormais
+ * leur scene : garage, pharmacie, artisans & BTP, organismes de formation, magasins
+ * d'optique, salles de sport, associations sportives. Il ne reste plus de reserve
+ * vide dans cette section.
  *
  * LES ANCRES SONT CELLES QUE LA SCENE A EMISES, recopiees de ses .ancres.json et
  * jamais recalculees ici. Elles sont en fraction du cadre livre (1480 x 925), et le
@@ -250,6 +249,15 @@ const SCENES_METIER: Record<string, {
       { cle: "opticienLabelPrete", x: 0.970, y: 0.262, cx: 0.7210, cy: 0.4315 },
     ],
   },
+  asso: {
+    fichier: "metier-asso",
+    etiquettes: [
+      // le certificat medical pose a plat : le dossier qui n'est pas boucle
+      { cle: "sportAssoLabelCertificat", x: 0.180, y: 0.300, cx: 0.4700, cy: 0.6826 },
+      // le fond dore de la bannette d'inscriptions
+      { cle: "sportAssoLabelDossier", x: 0.970, y: 0.262, cx: 0.7488, cy: 0.4871 },
+    ],
+  },
   sport: {
     fichier: "metier-sport",
     etiquettes: [
@@ -283,6 +291,7 @@ export default function Sectors() {
       href: t("sportHref"),
     },
     {
+      scene: "asso",
       name: t("sportAssoName"),
       pain: t("sportAssoPain"),
       solution: t("sportAssoSolution"),
