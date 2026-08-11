@@ -706,6 +706,10 @@
         "Modèle de message validé par vous une fois",
         "Relances envoyées automatiquement (J+3, J+7, J+14)"
       ],
+      "relanceSceneAlt": "Un devis dont la zone de signature est vide, un tampon de validation, trois enveloppes de relance qui se suivent, et un trajet en pointillé doré qui aboutit à une boîte aux lettres",
+      "relanceLabelDevis": "devis envoyé, sans signature",
+      "relanceLabelSeules": "les relances partent seules — J+3 · J+7 · J+14",
+      "relanceLabelCadence": "modèle validé une fois",
       "w0103": [
         "Kilométrage et dernière intervention suivis",
         "Échéance prévisible calculée (révision, CT)",

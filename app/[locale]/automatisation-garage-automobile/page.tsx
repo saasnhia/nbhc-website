@@ -5,6 +5,7 @@ import { serviceSchema, breadcrumbSchema, faqPageSchema } from "../../../lib/sch
 import { zipFlowSteps, type FlowStepKind } from "../../../components/AutomationFlow";
 import ChatMockup, { type ChatBubbleData } from "../../../components/ChatMockup";
 import DemoVideo from "../../../components/DemoVideo";
+import SceneSecteur from "../../../components/SceneSecteur";
 
 const FLOW_KINDS: Record<string, FlowStepKind[]> = {
   "W-AUTO-02": ["trigger", "validation", "action"],
@@ -240,6 +241,32 @@ export default async function Page({
         return {
           ...a,
           customFlow: <DemoVideo name="garage" ariaLabel={a.title} />,
+        };
+      }
+      if (a.code === "W-AUTO-02") {
+        // La scene 3D remplace le diagramme SVG. Ancres en fraction du cadre
+        // 1480x925, re-emises par la scene (secteur-garage-relance.ancres.json) ;
+        // les deux positions de depart des traits sont MESUREES sur le rendu :
+        // 0 pixel dore a moins de 5 px sur les 401 points echantillonnes de
+        // chaque trait (l'un passe entre les tirets de l'arc).
+        return {
+          ...a,
+          customFlow: (
+            <SceneSecteur
+              fichier="secteur-garage-relance"
+              alt={t("relanceSceneAlt")}
+              etiquettes={[
+                { texte: t("relanceLabelDevis"), x: 0.02, y: 0.3, cx: 0.2279, cy: 0.6519, largeurMax: 0.26 },
+                { texte: t("relanceLabelSeules"), x: 0.47, y: 0.2, cx: 0.5055, cy: 0.5749 },
+                /* Sous le socle : le seul couloir vers le tampon que l'arc ne
+                   barre pas — toutes les positions de ciel mesurees donnaient
+                   13 a 16 points de collision avec les tirets dores, celle-ci 0.
+                   Le fond y est aussi sombre que le ciel, la plaque y est donc
+                   invisible de la meme maniere. */
+                { texte: t("relanceLabelCadence"), x: 0.3, y: 0.9, cx: 0.3272, cy: 0.6638, sousLeSocle: true, largeurMax: 0.52 },
+              ]}
+            />
+          ),
         };
       }
       if (a.code === "W-AUTO-03") {

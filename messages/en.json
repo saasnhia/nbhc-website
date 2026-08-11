@@ -706,6 +706,10 @@
         "Message template approved by you once",
         "Follow-ups sent automatically (day 3, 7, 14)"
       ],
+      "relanceSceneAlt": "A quote with an empty signature area, a validation stamp, three follow-up envelopes in a row, and a dotted golden path ending at a letterbox",
+      "relanceLabelDevis": "quote sent, unsigned",
+      "relanceLabelSeules": "follow-ups go out on their own — day 3 · 7 · 14",
+      "relanceLabelCadence": "template approved once",
       "w0103": [
         "Mileage and last service tracked",
         "Predictable due date calculated (service, inspection)",
