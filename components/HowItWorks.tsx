@@ -206,6 +206,27 @@ const X_STATIONS = [0.1278, 0.3409, 0.5541, 0.7673] as const;
  * une chance : `resoudre()` ne lit que JOUR, JOUR_QUEUE, QUEUE, EP et la
  * demi-profondeur du socle, et aucun parametre du pointille n'y entre. Le rail, ses
  * quatre tirets et la grille de colonnes ne visent donc rien qui ait bouge.
+ *
+ * ── ET C'EST ENCORE VRAI APRES LA REFONTE DES QUATRE CORPS DE STATION ───────
+ * Le client a refuse les quatre cadres gris de completude croissante : « ils ne
+ * disent ni diagnostic ni resultat ». Les quatre corps sont donc refaits — un
+ * dossier a onglets, une planche a dessin, un boitier en montage, un porte-dossiers
+ * — et la cause en est mesuree : dans le releve des lectures a l'aveugle du
+ * chantier, tous les objets qu'un lecteur a NOMMES ont une silhouette composee de
+ * plusieurs volumes, et tous ceux qui ont echoue sont un volume unique ou la
+ * repetition d'un volume unique. Quatre cadres gris etaient le second cas.
+ *
+ * CE FICHIER N'A RIEN A CHANGER POUR AUTANT, ET CE N'EST PAS UNE PAROLE : la scene
+ * RE-EMET ses quatre abscisses et les compare elle-meme aux quatre litteraux de
+ * `X_STATIONS` ci-dessus, controle par controle, et sort en CODE 1 avant de rendre
+ * si l'un differe. Releve du rendu livre — 0,1278 / 0,3409 / 0,5541 / 0,7673 et les
+ * deux ancres d'etiquette a (0,7673 ; 0,2407) et (0,9202 ; 0,3534), donc IDENTIQUES
+ * au chiffre pres. La raison est structurelle : `resoudre()`, JOUR, JOUR_QUEUE,
+ * QUEUE, HAUTEUR_STATION, EP, ECHELLE, HAUTEUR et CIBLE ne sont pas touches, et
+ * chaque nouvel objet est CONFINE dans le carre L x L de sa station et sous
+ * HAUTEUR_STATION — verifie maillage par maillage, pire depassement 0,000 mm monde.
+ * Le recadrage mobile est donc lui aussi inchange : x 0,2513..0,6433,
+ * y 0,2239..0,8562, soit les memes 878 x 853 que le <source> declare.
  */
 const X_QUEUE = X_STATIONS[3];
 
