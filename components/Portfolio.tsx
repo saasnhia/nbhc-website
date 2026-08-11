@@ -3,8 +3,8 @@
 import React, { ComponentType, useRef } from "react";
 import { useTranslations } from "next-intl";
 import { motion, useInView, useReducedMotion } from "framer-motion";
-import VlogyzMockup from "./mockups/VlogyzMockup";
-import DevizlyMockup from "./mockups/DevizlyMockup";
+import VlogyzDemo from "./mockups/VlogyzDemo";
+import DevizlyDemo from "./mockups/DevizlyDemo";
 
 type Product = {
   id: string;
@@ -179,7 +179,7 @@ export default function Portfolio() {
       badgeLabel: t("devizlyBadge"),
       name: t("devizlyName"),
       tagline: t("devizlyDesc"),
-      Mockup: DevizlyMockup,
+      Mockup: DevizlyDemo,
       link: t("devizlyLink"),
       href: "https://devizly.fr",
       accent: "#5B5BD6",
@@ -191,7 +191,7 @@ export default function Portfolio() {
       badgeLabel: t("vlogyzBadge"),
       name: t("vlogyzName"),
       tagline: t("vlogyzDesc"),
-      Mockup: VlogyzMockup,
+      Mockup: VlogyzDemo,
       link: t("vlogyzLink"),
       href: "https://vlogyz.com",
       accent: "#6366f1",
