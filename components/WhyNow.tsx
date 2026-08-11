@@ -182,12 +182,21 @@ const SEUIL_COTE_A_COTE = 1145;
  * script inchange.
  *
  * ET ELLES CORRIGENT MON ESTIMATION. J'avais propose y = 0,1968 et 0,5014 en
- * supposant la caisse haute de 0,35 a 0,52 ; elle fait 0,46, et la scene rend
+ * supposant la caisse haute de 0,35 a 0,52 ; elle fait 0,46, et la scene rendait
  * 0,1761 et 0,4807. C'est exactement pourquoi c'est la scene qui les sort.
  *
+ * CES DEUX VALEURS NE SONT PLUS CELLES QUI SONT LIVREES, et la trace en est gardee
+ * parce que le RAISONNEMENT tient et que seul le CADRE a change : le maitre du
+ * panneau 3 passe de 1 480 x 1 034 a 1 480 x 1 041 quand la scene cesse de rogner
+ * le socle, et la scene rend desormais 0,1710 et 0,4547. Voir le bloc juste avant
+ * `ETIQUETTES_LATERALES`.
+ *
  * Controles portes par le JSON : norme de l'axe vertical = 1,0 ; symetrie en x
- * (0,2552 + 0,7448 = 1,0000) ; ecart vertical 0,3045 contre 0,3030 x l'ecart en
- * x predit par la docstring de la scene.
+ * — elle N'EST PLUS EXACTE et c'est attendu : 0,2654 + 0,7245 = 0,9899, parce que
+ * la cible de la camera n'est plus sur l'axe de symetrie du sujet (elle est calee
+ * pour donner 44,4 px de marge de chaque cote, pas pour centrer les deux caisses).
+ * L'ecart vertical, lui, reste le controle utile : 0,2837 mesure contre
+ * 0,3030 x l'ecart en x, ecart de projection conforme a la docstring de la scene.
  */
 /**
  * Un jeu d'etiquettes par panneau lateral, dans l'ordre de LATERALES : panneau 2
@@ -205,10 +214,15 @@ const SEUIL_COTE_A_COTE = 1145;
  * La difference n'est pas un hasard : sur les caisses, le dessus du socle eclaire
  * occupe tout l'espace au-dessus des deux sujets, et la seule bande sombre
  * commune est y <= 0,125, trop loin des objets. Sur outils, il suffit de monter
- * l'ancre — de 0,30 unite au-dessus de l'amas, 0,46 au-dessus des deux dalles —
- * pour retomber sur du fond de page. C'est le plus PETIT decalage qui donne du
- * fond de page dans les deux cas : l'etiquette est aussi pres de son objet que la
- * lumiere le permet.
+ * l'ancre pour retomber sur du fond de page. C'est le plus PETIT decalage qui
+ * donne du fond de page : l'etiquette est aussi pres de son objet que la lumiere
+ * le permet.
+ *
+ * LES DEUX DECALAGES DU PANNEAU 2 ETAIENT 0,30 ET 0,46 ; ILS SONT MAINTENANT 0,34
+ * ET 0,26, RE-MESURES SUR LE MAITRE QUI NE ROGNE PLUS. Le socle retaille montre
+ * moins de dessus eclaire derriere les sujets, donc le fond de page descend d'un
+ * cote et l'ancien 0,46 devenait un ECRETAGE de l'autre. Le detail est dans le
+ * bloc juste avant `ETIQUETTES_LATERALES`.
  *
  * NOMMER LA GEOMETRIE SERVIE, ET NON CELLE QU'UN DOCUMENT AVAIT ANNONCEE. Ce bloc
  * disait « la plaque fendue », et deux autres passages de ce fichier disaient « la
@@ -227,14 +241,43 @@ const SEUIL_COTE_A_COTE = 1145;
  * vivre ailleurs que dans le composant qui l'affiche (regle 34), et l'inverse est
  * vrai aussi — corriger les messages ne corrige pas le commentaire.
  */
+/**
+ * ── LES QUATRE ANCRES ONT ETE RE-SORTIES PAR LES SCENES APRES LA CORRECTION DU
+ *    ROGNAGE, ET DEUX D'ENTRE ELLES ONT CHANGE POUR UNE AUTRE RAISON QUE LE CADRE.
+ *
+ * CE QUI A BOUGE, ET POURQUOI. Les deux maitres lateraux etaient ROGNES : le socle
+ * partage sortait du cadre a droite, a gauche et en bas (mesure : 210 et 271 px
+ * non-fond sur la premiere colonne, 232 et 197 sur la derniere, 212 et 305 sur la
+ * derniere ligne, contre ZERO sur les quatre bords du panneau 1). Les deux scenes
+ * retaillent maintenant le socle et re-derivent leur cadre — 1 480 x 845 et
+ * 1 480 x 1 041 au lieu de 925 et 1 034 — donc TOUTES les fractions changent.
+ *
+ * ET UNE ANCRE N'A PAS SEULEMENT CHANGE DE CADRE. Sur le panneau 2, qui n'a pas de
+ * plaque, le decalage vertical est le plus PETIT qui donne du fond de page ; il
+ * depend de la bande de dessus de socle eclairee, qui rapetisse quand le socle
+ * passe de 1,76 a 1,1854 de profondeur. Balayage refait sur le nouveau maitre, a
+ * 370 px d'affichage et dans les deux cas de lignes (une en `fr`, deux en `en`) :
+ *   AMAS   dz 0,30 -> 1,92:1 a une ligne  ->  porte a 0,34, ou les deux passent
+ *   FENTE  dz 0,46 -> passait, mais l'ancre tombait a 0,0646 et la boite sortait
+ *          du cadre par le HAUT de 28,8 px du maitre a une ligne, 88,2 px a deux
+ *          ->  ramene a 0,26, le plus petit qui donne 16,92:1 aux deux
+ * Reconduire les dz sans les re-mesurer aurait livre une etiquette ecretee.
+ *
+ * LE PANNEAU 3 GARDE SON dz DE 0,10, ET C'EST LA PLAQUE QUI LE PERMET : son
+ * contraste ne se lit pas contre le rendu mais contre la plaque a 0,78, donc son
+ * seul critere est de tenir dans le cadre — a 0,10 la boite a 35 px de marge en
+ * haut au pire cas a deux lignes. La plaque reste, et les 17,02:1 avec elle.
+ */
 const ETIQUETTES_LATERALES = [
   [
-    { cle: "panel2LabelOutils", x: 0.2866, y: 0.3507 },
-    { cle: "panel2LabelMetier", x: 0.6745, y: 0.1198 },
+    // rendus/outils.ancres.json — amas_etiquette (dz 0,34) et fente_etiquette (0,26)
+    { cle: "panel2LabelOutils", x: 0.3492, y: 0.2584 },
+    { cle: "panel2LabelMetier", x: 0.6793, y: 0.1705 },
   ],
   [
-    { cle: "panel3LabelVous", x: 0.2552, y: 0.4807 },
-    { cle: "panel3LabelAutres", x: 0.7448, y: 0.1761 },
+    // rendus/caisses.ancres.json — caisse_close_au_dessus / caisse_ouverte_au_dessus
+    { cle: "panel3LabelVous", x: 0.2654, y: 0.4547 },
+    { cle: "panel3LabelAutres", x: 0.7245, y: 0.1710 },
   ],
 ] as const;
 
@@ -339,7 +382,16 @@ const ETIQUETTE_BUREAU = { x: 0.29, y: 0.1965 } as const;
 const VOILE_ETIQUETTE = 0.78;
 
 const LATERALES = [
-  { fichier: "whynow-outils", largeur: 1480, hauteur: 925 },   // 369 px a 590
+  // ── LES DEUX MAITRES ONT CHANGE DE FORME PARCE QU'ILS ETAIENT ROGNES ──────────
+  // 1 480 x 925 et 1 480 x 1 034 cadraient le sujet en le COUPANT : le socle
+  // partage sortait a droite, a gauche et en bas. Cause mesuree DANS LE RENDU et
+  // non dans la page — les quatre WebP de chaque panneau ont le rapport de leur
+  // maitre a 3.10-4 pres, l'image est en `block w-full h-auto`, il n'y a ni
+  // `object-fit`, ni `aspect-ratio` impose, ni `overflow: hidden` sur un ancetre.
+  // Voir le bloc de tete de `nbhc-broll/rendu-3d/scene_outils.py`.
+  // Nouvelles formes, sorties des scenes : 845 et 1 041 px de haut, ZERO pixel de
+  // sujet sur les quatre bords, marge minimale 46 et 47 px du maitre.
+  { fichier: "whynow-outils", largeur: 1480, hauteur: 845 },   // 337 px a 590
   // SECONDE VERSION DU PANNEAU 3. La premiere montrait deux postes de travail et
   // elle RIMAIT avec le panneau 1 sur la page : on n'y lisait pas deux bureaux, on
   // lisait le bureau du panneau 1 deux fois. L'agrandissement a 590 px n'a pas
@@ -347,7 +399,7 @@ const LATERALES = [
   // meme temps que la separation des socles. Celle-ci n'emprunte aucun objet ni au
   // panneau 1 ni au panneau 2 : deux caisses, l'une close, l'autre ouverte avec de
   // l'or dedans.
-  { fichier: "whynow-caisses", largeur: 1480, hauteur: 1034 }, // 412 px a 590
+  { fichier: "whynow-caisses", largeur: 1480, hauteur: 1041 }, // 415 px a 590
 ] as const;
 const PALIERS_LATERAUX = [370, 590, 740, 1180] as const;
 
@@ -643,7 +695,11 @@ export default function WhyNow() {
               decoding="async"
               className="block w-full h-auto"
             />
-              {/* Les etiquettes ne portent QUE sur le panneau 3. Le conteneur,
+              {/* CE COMMENTAIRE DISAIT « les etiquettes ne portent QUE sur le
+                  panneau 3 », ET C'EST FAUX : `ETIQUETTES_LATERALES` porte DEUX
+                  etiquettes par panneau, donc quatre en tout, et la boucle ci-dessous
+                  les rend pour les deux. C'est la PLAQUE qui ne porte que sur le
+                  panneau 3 (`PLAQUE_LATERALE = [false, true]`). Le conteneur,
                   lui, enveloppe les deux : il reprend exactement les contraintes
                   de flex et la largeur que l'image portait, et l'image passe en
                   w-full — la boite est donc inchangee, et il n'y a pas deux
