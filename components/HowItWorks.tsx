@@ -207,14 +207,34 @@ const X_STATIONS = [0.1278, 0.3409, 0.5541, 0.7673] as const;
  * demi-profondeur du socle, et aucun parametre du pointille n'y entre. Le rail, ses
  * quatre tirets et la grille de colonnes ne visent donc rien qui ait bouge.
  *
- * ── ET C'EST ENCORE VRAI APRES LA REFONTE DES QUATRE CORPS DE STATION ───────
- * Le client a refuse les quatre cadres gris de completude croissante : « ils ne
- * disent ni diagnostic ni resultat ». Les quatre corps sont donc refaits — un
- * dossier a onglets, une planche a dessin, un boitier en montage, un porte-dossiers
- * — et la cause en est mesuree : dans le releve des lectures a l'aveugle du
- * chantier, tous les objets qu'un lecteur a NOMMES ont une silhouette composee de
- * plusieurs volumes, et tous ceux qui ont echoue sont un volume unique ou la
- * repetition d'un volume unique. Quatre cadres gris etaient le second cas.
+ * ── ET C'EST ENCORE VRAI APRES DEUX REFONTES DES QUATRE CORPS DE STATION ────
+ * PREMIERE REFONTE. Le client a refuse les quatre cadres gris de completude
+ * croissante : « ils ne disent ni diagnostic ni resultat ». Les quatre corps sont
+ * devenus quatre OBJETS — un dossier a onglets, une planche a dessin, un boitier en
+ * montage, un porte-dossiers.
+ *
+ * SECONDE REFONTE, ET C'EST CE QUE L'ASSET SERT AUJOURD'HUI. Le client a refuse ces
+ * quatre objets aussi, et pour une autre raison : ils sont bien rendus mais ILS NE
+ * DISENT PAS QUATRE ETAPES. La cause etait dans le code — quatre fonctions batissaient
+ * quatre objets sans rapport, sans un maillage partage ni aucune machine a etats, et
+ * le seul fil etait une matiere. Les quatre stations sont donc maintenant UN SEUL
+ * OBJET — le dossier du client : une couverture, un rabat, trois onglets, trois
+ * feuilles — dans QUATRE ETATS, batis par une seule fonction appelee quatre fois :
+ * ferme et vide avec les feuilles en tas dessus ; ouvert avec les feuilles dedans,
+ * alignees et annotees ; redresse a 20 deg, le rabat redescendant ; debout, ferme,
+ * lisere dore. L'invariant est MESURE et non affirme : la scene compare les
+ * dimensions locales des huit volumes structurels cote a cote aux quatre stations et
+ * sort en code 1 avant de rendre si l'une differe.
+ *
+ * CE QUE LES LECTURES A L'AVEUGLE DISENT DE L'ASSET SERVI, Y COMPRIS CE QUI RATE.
+ * Huit lectures au registre `rendu-3d/REGISTRE_LECTURES.jsonl`. Sur l'asset servi,
+ * 4 lecteurs sur 4 repondent « une meme chose » et donnent l'ordre 01 -> 04 — mais
+ * les quatre citent LES NUMEROS GRAVES ET LES FLECHES comme raison, pas les formes.
+ * Sur un temoin rendu sans les numeros, 2 sur 4 seulement : les deux de 1 120 px de
+ * largeur d'AFFICHAGE oui, les deux de 728 px non. A 728 px la progression est donc
+ * portee par les chiffres. La corriger demanderait un objet plus grand que le carre
+ * de station de 0,294, donc un autre ECHELLE, donc d'autres abscisses que les quatre
+ * de X_STATIONS ci-dessus : c'est un arbitrage du client, pas un reglage.
  *
  * CE FICHIER N'A RIEN A CHANGER POUR AUTANT, ET CE N'EST PAS UNE PAROLE : la scene
  * RE-EMET ses quatre abscisses et les compare elle-meme aux quatre litteraux de
