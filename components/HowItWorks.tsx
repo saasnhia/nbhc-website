@@ -176,6 +176,57 @@ const X_STATIONS = [0.1278, 0.3409, 0.5541, 0.7673] as const;
  * optionnel » y pend a 0,9202. Un rail continu jusqu'au bout contredisait donc
  * l'image qu'il longe : il annoncait une suite acquise la ou le rendu montre une
  * option.
+ *
+ * ── CE COMMENTAIRE A CHANGE DE SENS, ET LE RAIL N'A PAS BOUGE ────────────────
+ * `scene_chaine.py` rendait un TRAIT PLEIN continu de la station 01 a la station 04.
+ * Il est desormais un POINTILLE A VIDES FRANCS termine par une FLECHE au sol —
+ * releve de lecture : trois lecteurs sur quatre lisaient « un fil ou cordon » sur le
+ * trait continu.
+ *
+ * Consequence a dire, parce qu'elle affaiblit l'argument ci-dessus : le contraste
+ * « continu jusqu'a 04, pointille apres » ne decrit plus une opposition PLEIN /
+ * POINTILLE dans l'image, puisque toute l'image est pointillee. Ce que le rail
+ * continue de coder juste, et c'est le seul point qui portait vraiment, est le
+ * DETACHEMENT : la queue est separee par 50,4 px a 1 120 quand un vide ordinaire du
+ * pointille en fait 22,7, et rien ne pointe vers elle — la fleche s'arrete a la
+ * station 04. Un rail continu jusqu'au bout annoncerait toujours une suite acquise.
+ *
+ * ── LE 22,7 ETAIT 38,7, ET C'EST LA SEULE LIGNE QUE LA PASSE SUIVANTE A CHANGEE ──
+ * Constat du client a l'oeil : les tirets SE PERDAIENT entre les stations, et l'ancien
+ * trait continu se lisait mieux comme un parcours. Ils ont donc ete EPAISSIS (section
+ * 0,038 x 0,024 -> 0,048 x 0,031, epaisseur vue 15,9 -> 20,3 px a 1 120) et SERRES
+ * (periode 0,176 -> 0,145, part pleine 0,45 -> 0,62 : 7 tirets deviennent 8, le vide
+ * tombe de 38,7 a 22,7 px). Le rapport de detachement de la queue passe donc de 1,30x
+ * a 2,22x : l'argument ci-dessus est RENFORCE par ce changement, pas affaibli.
+ *
+ * LES QUATRE ABSCISSES DE X_STATIONS SONT INCHANGEES A L'IDENTIQUE — verifie sur le
+ * `chaine.ancres.json` re-emis APRES l'epaississement, au cadre maitre 2240x1349 :
+ * 0,1278 / 0,3409 / 0,5541 / 0,7673, et les deux ancres d'etiquette valent toujours
+ * (0,7673 ; 0,2407) et (0,9202 ; 0,3534). C'est une propriete de construction et non
+ * une chance : `resoudre()` ne lit que JOUR, JOUR_QUEUE, QUEUE, EP et la
+ * demi-profondeur du socle, et aucun parametre du pointille n'y entre. Le rail, ses
+ * quatre tirets et la grille de colonnes ne visent donc rien qui ait bouge.
+ *
+ * ── ET C'EST ENCORE VRAI APRES LA REFONTE DES QUATRE CORPS DE STATION ───────
+ * Le client a refuse les quatre cadres gris de completude croissante : « ils ne
+ * disent ni diagnostic ni resultat ». Les quatre corps sont donc refaits — un
+ * dossier a onglets, une planche a dessin, un boitier en montage, un porte-dossiers
+ * — et la cause en est mesuree : dans le releve des lectures a l'aveugle du
+ * chantier, tous les objets qu'un lecteur a NOMMES ont une silhouette composee de
+ * plusieurs volumes, et tous ceux qui ont echoue sont un volume unique ou la
+ * repetition d'un volume unique. Quatre cadres gris etaient le second cas.
+ *
+ * CE FICHIER N'A RIEN A CHANGER POUR AUTANT, ET CE N'EST PAS UNE PAROLE : la scene
+ * RE-EMET ses quatre abscisses et les compare elle-meme aux quatre litteraux de
+ * `X_STATIONS` ci-dessus, controle par controle, et sort en CODE 1 avant de rendre
+ * si l'un differe. Releve du rendu livre — 0,1278 / 0,3409 / 0,5541 / 0,7673 et les
+ * deux ancres d'etiquette a (0,7673 ; 0,2407) et (0,9202 ; 0,3534), donc IDENTIQUES
+ * au chiffre pres. La raison est structurelle : `resoudre()`, JOUR, JOUR_QUEUE,
+ * QUEUE, HAUTEUR_STATION, EP, ECHELLE, HAUTEUR et CIBLE ne sont pas touches, et
+ * chaque nouvel objet est CONFINE dans le carre L x L de sa station et sous
+ * HAUTEUR_STATION — verifie maillage par maillage, pire depassement 0,000 mm monde.
+ * Le recadrage mobile est donc lui aussi inchange : x 0,2513..0,6433,
+ * y 0,2239..0,8562, soit les memes 878 x 853 que le <source> declare.
  */
 const X_QUEUE = X_STATIONS[3];
 

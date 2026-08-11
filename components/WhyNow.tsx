@@ -38,9 +38,21 @@
  *
  * PANNEAU 1 EN PLEINE LARGEUR, ET C'EST L'EXCEPTION. Son argument est un COMPTAGE
  * — onze feuilles, puis trois, puis une — et l'epaisseur apparente d'une feuille
- * vaut 6,7 px a 1 120 px de large. A 370 px de colonne elle tomberait a 2,2 px, or
- * le seuil de denombrabilite mesure a l'oeil se situe entre 5,4 et 4,9 px. La
+ * vaut 8,70 px a 1 120 px de large. A 370 px de colonne elle tomberait a 2,87 px,
+ * or le seuil de denombrabilite mesure a l'oeil se situe entre 5,4 et 4,9 px. La
  * proportion de la reference detruirait donc exactement ce qui fait sa force.
+ *
+ * D'OU VIENNENT CES DEUX CHIFFRES, ET CE QU'ILS REMPLACENT. Ils sont la FORMULE DE
+ * LA SCENE SERVIE, `px = EP_FEUILLE x cos(25 deg) x largeur / ECHELLE` avec
+ * EP_FEUILLE = 0,042 et ECHELLE = 4,90 (rendu-3d/scene_bureau_gradient.py:573-582,
+ * qui imprime lui-meme 8,70 px a 1 120). Les valeurs precedentes — 6,7 et 2,2 —
+ * suivaient un ETAT DE SCENE REVOQUE et non une erreur de calcul : leur rapport aux
+ * nouvelles est constant (6,7/8,70 = 0,770 ; 2,2/2,87 = 0,766). Le « onze, puis
+ * trois, puis une » de la ligne ci-dessus vient du MEME etat revoque — la scene
+ * servie empile UNE rame de dix-huit (`N_ATTENTE = 18`) ; il est laisse tel quel
+ * parce que le perimetre de cette correction porte sur les deux chiffres, et le
+ * signaler ici vaut mieux que de le laisser muet. RESERVE : 8,70 et 2,87 sont la
+ * formule, pas une mesure refaite sur les pixels de `bureau_gradient.png`.
  *
  * PANNEAUX 2 ET 3 : TEXTE A GAUCHE, ILLUSTRATION A DROITE, LES DEUX. On n'alterne
  * pas : la reference ne le fait jamais, tous ses panneaux ont le texte a gauche, et
@@ -55,8 +67,8 @@
  * candidats fabriques a la taille reelle par reduction Lanczos des maitres livres —
  * 370, 450, 520, 590, 646 — et juges a l'oeil, sans agrandissement qui aiderait
  * l'oeil. Resultat, identique pour les deux panneaux : l'argument passe a partir de
- * 520. Sous 520, la fente du panneau 2 lit comme une rayure doree decorative et les
- * deux socles separes du panneau 3 doivent etre CHERCHES.
+ * 520. Sous 520, le jour entre les deux dalles du panneau 2 lit comme une rayure
+ * doree decorative et les deux socles separes du panneau 3 doivent etre CHERCHES.
  *
  * 590 est retenu, un cran au-dessus du seuil : un seuil pris a sa valeur exacte
  * n'a aucune marge, et il retombe sous la limite des que le navigateur applique un
@@ -64,10 +76,10 @@
  *
  * POURQUOI NE PAS AVOIR SUIVI LES 33 % DE LA REFERENCE. Ses illustrations tiennent
  * a cette proportion parce que ce sont des scenes larges a gros objets ; les notres
- * portent des relations plus fines — une fente, deux socles separes. Copier sa
- * proportion sans verifier que ce qu'elle abrite est lisible, c'est copier la forme
- * sans la fonction. Le panneau 1 avait deja tranche exactement ce point en exigeant
- * la pleine largeur pour son comptage.
+ * portent des relations plus fines — un jour entre deux dalles, deux socles
+ * separes. Copier sa proportion sans verifier que ce qu'elle abrite est lisible,
+ * c'est copier la forme sans la fonction. Le panneau 1 avait deja tranche
+ * exactement ce point en exigeant la pleine largeur pour son comptage.
  *
  * VIDE DE FIN : 1 120 - 358 - 116 - 590 = 56 px, soit 5 % au lieu des 24,6 % de la
  * reference. Il reste un vide, l'illustration ne va pas bord a bord.
@@ -170,12 +182,21 @@ const SEUIL_COTE_A_COTE = 1145;
  * script inchange.
  *
  * ET ELLES CORRIGENT MON ESTIMATION. J'avais propose y = 0,1968 et 0,5014 en
- * supposant la caisse haute de 0,35 a 0,52 ; elle fait 0,46, et la scene rend
+ * supposant la caisse haute de 0,35 a 0,52 ; elle fait 0,46, et la scene rendait
  * 0,1761 et 0,4807. C'est exactement pourquoi c'est la scene qui les sort.
  *
+ * CES DEUX VALEURS NE SONT PLUS CELLES QUI SONT LIVREES, et la trace en est gardee
+ * parce que le RAISONNEMENT tient et que seul le CADRE a change : le maitre du
+ * panneau 3 passe de 1 480 x 1 034 a 1 480 x 1 041 quand la scene cesse de rogner
+ * le socle, et la scene rend desormais 0,1710 et 0,4547. Voir le bloc juste avant
+ * `ETIQUETTES_LATERALES`.
+ *
  * Controles portes par le JSON : norme de l'axe vertical = 1,0 ; symetrie en x
- * (0,2552 + 0,7448 = 1,0000) ; ecart vertical 0,3045 contre 0,3030 x l'ecart en
- * x predit par la docstring de la scene.
+ * — elle N'EST PLUS EXACTE et c'est attendu : 0,2654 + 0,7245 = 0,9899, parce que
+ * la cible de la camera n'est plus sur l'axe de symetrie du sujet (elle est calee
+ * pour donner 44,4 px de marge de chaque cote, pas pour centrer les deux caisses).
+ * L'ecart vertical, lui, reste le controle utile : 0,2837 mesure contre
+ * 0,3030 x l'ecart en x, ecart de projection conforme a la docstring de la scene.
  */
 /**
  * Un jeu d'etiquettes par panneau lateral, dans l'ordre de LATERALES : panneau 2
@@ -187,25 +208,76 @@ const SEUIL_COTE_A_COTE = 1145;
  * du fond dans la boite d'etiquette, contraste avec #F0EDE6 :
  *
  *   panneau 2, amas      16,92:1   -> aucune plaque
- *   panneau 2, fente     16,92:1   -> aucune plaque
+ *   panneau 2, dalles    16,92:1   -> aucune plaque
  *   panneau 3, les deux   0,86:1 et 0,90:1  -> plaque indispensable
  *
  * La difference n'est pas un hasard : sur les caisses, le dessus du socle eclaire
  * occupe tout l'espace au-dessus des deux sujets, et la seule bande sombre
  * commune est y <= 0,125, trop loin des objets. Sur outils, il suffit de monter
- * l'ancre — de 0,30 unite au-dessus de l'amas, 0,46 au-dessus de la plaque
- * fendue — pour retomber sur du fond de page. C'est le plus PETIT decalage qui
- * donne du fond de page dans les deux cas : l'etiquette est aussi pres de son
- * objet que la lumiere le permet.
+ * l'ancre pour retomber sur du fond de page. C'est le plus PETIT decalage qui
+ * donne du fond de page : l'etiquette est aussi pres de son objet que la lumiere
+ * le permet.
+ *
+ * LES DEUX DECALAGES DU PANNEAU 2 ETAIENT 0,30 ET 0,46 ; ILS SONT MAINTENANT 0,34
+ * ET 0,26, RE-MESURES SUR LE MAITRE QUI NE ROGNE PLUS. Le socle retaille montre
+ * moins de dessus eclaire derriere les sujets, donc le fond de page descend d'un
+ * cote et l'ancien 0,46 devenait un ECRETAGE de l'autre. Le detail est dans le
+ * bloc juste avant `ETIQUETTES_LATERALES`.
+ *
+ * NOMMER LA GEOMETRIE SERVIE, ET NON CELLE QU'UN DOCUMENT AVAIT ANNONCEE. Ce bloc
+ * disait « la plaque fendue », et deux autres passages de ce fichier disaient « la
+ * fente » (le seuil de 520 px, la comparaison avec la reference). Les trois etaient
+ * FAUX de ce que la page sert : `nbhc-broll/rendu-3d/scene_outils.py` pose DEUX
+ * BOITES PLEINES separees par un jour qui descend jusqu'au socle — mesure, balayage
+ * de 200 tranches en x au niveau du dessus, 0 / 200 portantes (GRAMMAIRE_3D.md,
+ * regle 28). La plaque CONTINUE a bien ete construite, elle atteignait sa cible
+ * (0 / 200 -> 40 / 200, objets porteurs de niveau 36 -> 37) et elle a ete REFUSEE
+ * par le client sur sa lecture : 6 sous-agents lecteurs sur 6 y ont lu « unsorted
+ * input becomes ordered output », « a pipeline, a sorting process », c'est-a-dire
+ * l'inverse de l'argument de `whyNow.panel2Text` (regles 33 et 35, et le registre
+ * `nbhc-broll/rendu-3d/REGISTRE_LECTURES.jsonl`). La geometrie servie est donc
+ * celle-ci, et les mots de ce fichier la nomment enfin. Les deux `panel2Alt` de
+ * `messages/*.json` avaient ete corriges seuls, a `097e876` : une description peut
+ * vivre ailleurs que dans le composant qui l'affiche (regle 34), et l'inverse est
+ * vrai aussi — corriger les messages ne corrige pas le commentaire.
+ */
+/**
+ * ── LES QUATRE ANCRES ONT ETE RE-SORTIES PAR LES SCENES APRES LA CORRECTION DU
+ *    ROGNAGE, ET DEUX D'ENTRE ELLES ONT CHANGE POUR UNE AUTRE RAISON QUE LE CADRE.
+ *
+ * CE QUI A BOUGE, ET POURQUOI. Les deux maitres lateraux etaient ROGNES : le socle
+ * partage sortait du cadre a droite, a gauche et en bas (mesure : 210 et 271 px
+ * non-fond sur la premiere colonne, 232 et 197 sur la derniere, 212 et 305 sur la
+ * derniere ligne, contre ZERO sur les quatre bords du panneau 1). Les deux scenes
+ * retaillent maintenant le socle et re-derivent leur cadre — 1 480 x 845 et
+ * 1 480 x 1 041 au lieu de 925 et 1 034 — donc TOUTES les fractions changent.
+ *
+ * ET UNE ANCRE N'A PAS SEULEMENT CHANGE DE CADRE. Sur le panneau 2, qui n'a pas de
+ * plaque, le decalage vertical est le plus PETIT qui donne du fond de page ; il
+ * depend de la bande de dessus de socle eclairee, qui rapetisse quand le socle
+ * passe de 1,76 a 1,1854 de profondeur. Balayage refait sur le nouveau maitre, a
+ * 370 px d'affichage et dans les deux cas de lignes (une en `fr`, deux en `en`) :
+ *   AMAS   dz 0,30 -> 1,92:1 a une ligne  ->  porte a 0,34, ou les deux passent
+ *   FENTE  dz 0,46 -> passait, mais l'ancre tombait a 0,0646 et la boite sortait
+ *          du cadre par le HAUT de 28,8 px du maitre a une ligne, 88,2 px a deux
+ *          ->  ramene a 0,26, le plus petit qui donne 16,92:1 aux deux
+ * Reconduire les dz sans les re-mesurer aurait livre une etiquette ecretee.
+ *
+ * LE PANNEAU 3 GARDE SON dz DE 0,10, ET C'EST LA PLAQUE QUI LE PERMET : son
+ * contraste ne se lit pas contre le rendu mais contre la plaque a 0,78, donc son
+ * seul critere est de tenir dans le cadre — a 0,10 la boite a 35 px de marge en
+ * haut au pire cas a deux lignes. La plaque reste, et les 17,02:1 avec elle.
  */
 const ETIQUETTES_LATERALES = [
   [
-    { cle: "panel2LabelOutils", x: 0.2866, y: 0.3507 },
-    { cle: "panel2LabelMetier", x: 0.6745, y: 0.1198 },
+    // rendus/outils.ancres.json — amas_etiquette (dz 0,34) et fente_etiquette (0,26)
+    { cle: "panel2LabelOutils", x: 0.3492, y: 0.2584 },
+    { cle: "panel2LabelMetier", x: 0.6793, y: 0.1705 },
   ],
   [
-    { cle: "panel3LabelVous", x: 0.2552, y: 0.4807 },
-    { cle: "panel3LabelAutres", x: 0.7448, y: 0.1761 },
+    // rendus/caisses.ancres.json — caisse_close_au_dessus / caisse_ouverte_au_dessus
+    { cle: "panel3LabelVous", x: 0.2654, y: 0.4547 },
+    { cle: "panel3LabelAutres", x: 0.7245, y: 0.1710 },
   ],
 ] as const;
 
@@ -221,7 +293,70 @@ const PLAQUE_LATERALE = [false, true] as const;
  * sommet de la pile de onze feuilles, cette station rend Y = 199,3 et la station
  * a une seule feuille Y = 9,1 — un recadrage mal compte casserait les deux.
  */
-const ETIQUETTE_BUREAU = { x: 0.548, y: 0.1233 } as const;
+/**
+ * ANCRE MESUREE SUR LE VRAI PIRE CAS, et l'ancienne etait cassee deux fois.
+ *
+ * (0,548 ; 0,1233) faisait sortir le bord haut de la boite DU CADRE pour toute largeur
+ * d'affichage <= 521 px — jusqu'a -274 px en unites du maitre — et son emprise
+ * recouvrait 7,64 a 9,16 % de pixels non-fond. Elle devait meme son bon score de
+ * recouvrement au fait qu'une partie de sa boite etait hors cadre, donc non comptee :
+ * corriger le seul debordement vertical en gardant x = 0,548 portait le recouvrement
+ * a 56-58 %. Les deux defauts etaient ANTAGONISTES.
+ *
+ * ── DEUX AFFIRMATIONS DE CE COMMENTAIRE ETAIENT FAUSSES, ET ELLES SONT RETIREES ──
+ *
+ * CE QUI ETAIT ECRIT ICI : « 0 pixel non-fond sur les treize combinaisons palier x
+ * largeur d'affichage livrees, contraste 17,02:1 contre la plaque a 0,78 ». Les deux
+ * moities sont fausses, et la premiere l'est deux fois.
+ *
+ *   1. « TREIZE COMBINAISONS » N'A AUCUNE SOURCE. L'instrument qui mesure cette ancre
+ *      — nbhc-broll/airbnb-demo/ancre_whynow_bureau.js — parcourt 19 couples
+ *      largeur x densite dans DEUX locales, soit 38 mesures, et il compte lui-meme
+ *      les combinaisons palier x largeur d'affichage DISTINCTES : il en imprime 30.
+ *      Le nombre treize ne sort d'aucune execution.
+ *   2. « 0 PIXEL NON-FOND » ETAIT FAUX SUR L'IMAGE QUI ETAIT SERVIE, et il ne l'est
+ *      plus depuis que la page sert le rendu de la scene. Les deux etats sont plus
+ *      bas : le chiffre n'a jamais decrit une ancre, il decrivait une IMAGE.
+ *   3. « CONTRASTE 17,02:1 CONTRE LA PLAQUE A 0,78 » est la seule moitie qui se
+ *      verifie : l'instrument LIT la plaque dans le DOM au lieu de la recopier, il y
+ *      lit rgba(9, 9, 11, 0.78), et il rend 17,02:1 aux 38 mesures. Ce chiffre-la
+ *      n'est pas retire. Il etait cependant faux AVANT la correction de l'asset, ou
+ *      le pire cas tombait a 9,71:1 : il decrivait, lui aussi, une autre image.
+ *
+ * MESURE, 38 mesures / 30 combinaisons palier x affichage distinctes, DEUX locales,
+ * sur la page servie a localhost — et il faut deux tableaux, parce que le defaut
+ * n'etait pas dans cette ancre :
+ *
+ *   AVANT, avec l'asset qui etait livre (whynow-bureau-*.webp derives d'un vieux
+ *   rendu C3, cadrage different) :
+ *     boite dans le cadre         38 / 38
+ *     contraste >= 4,5:1          38 / 38, pire cas 9,71:1
+ *     zero pixel non-fond         15 / 38  ->  23 ECHECS, jusqu'a 2 695 px non-fond,
+ *                                 propre seulement a partir de 944 px d'affichage en
+ *                                 `fr` et 1 120 px en `en`
+ *
+ *   APRES, avec l'asset re-derive du rendu de la scene (nbhc-broll/rendu-3d/
+ *   exporter_panneaux.py, panneau 1) — MEME ancre, meme boite, meme plaque :
+ *     boite dans le cadre         38 / 38   (pire bord 14,0 px, en `en` a 521 px)
+ *     contraste >= 4,5:1          38 / 38   17,02:1 aux 38, pire fond vu rgb(9,9,11)
+ *     zero pixel non-fond         38 / 38   0 px non-fond partout, ecart au fond 0
+ *   154 / 154 controles, code de sortie 0, les deux falsifications de l'instrument
+ *   mordent (90,5 % de non-fond quand on pose l'etiquette a 62 % ; -34,7 px de bord
+ *   quand on la pousse a left 99 %).
+ *
+ * CE QUE CELA APPREND, ET C'EST LA VRAIE LECON DU LOT : les 23 echecs n'etaient PAS
+ * un defaut d'ancre. L'ancre n'a pas bouge d'un centieme. Ils venaient de ce que la
+ * page servait une image que la scene n'avait pas produite — un cadrage ou des objets
+ * occupaient la bande que l'ancre suppose vide. Chercher une meilleure ancre aurait
+ * ete corriger le symptome sur le mauvais objet, une fois de plus.
+ *
+ * CE QUI RESTE VRAI DU DIAGNOSTIC : `text-[11px]` est bien une taille fixe, donc la
+ * boite grandit en FRACTION DE CADRE quand l'image rapetisse — 221x21 px a toutes les
+ * largeurs en `fr`, et 229x36 px sur DEUX lignes en `en` sous 560 px d'affichage.
+ * C'est pour ce cas-la, et pour le cas a trois lignes qu'il n'y a plus lieu de servir,
+ * que le masquage sous 560 px reste en place.
+ */
+const ETIQUETTE_BUREAU = { x: 0.29, y: 0.1965 } as const;
 
 /**
  * POURQUOI LES DEUX ETIQUETTES PORTENT UNE PLAQUE SEMI-OPAQUE.
@@ -247,7 +382,16 @@ const ETIQUETTE_BUREAU = { x: 0.548, y: 0.1233 } as const;
 const VOILE_ETIQUETTE = 0.78;
 
 const LATERALES = [
-  { fichier: "whynow-outils", largeur: 1480, hauteur: 925 },   // 369 px a 590
+  // ── LES DEUX MAITRES ONT CHANGE DE FORME PARCE QU'ILS ETAIENT ROGNES ──────────
+  // 1 480 x 925 et 1 480 x 1 034 cadraient le sujet en le COUPANT : le socle
+  // partage sortait a droite, a gauche et en bas. Cause mesuree DANS LE RENDU et
+  // non dans la page — les quatre WebP de chaque panneau ont le rapport de leur
+  // maitre a 3.10-4 pres, l'image est en `block w-full h-auto`, il n'y a ni
+  // `object-fit`, ni `aspect-ratio` impose, ni `overflow: hidden` sur un ancetre.
+  // Voir le bloc de tete de `nbhc-broll/rendu-3d/scene_outils.py`.
+  // Nouvelles formes, sorties des scenes : 845 et 1 041 px de haut, ZERO pixel de
+  // sujet sur les quatre bords, marge minimale 46 et 47 px du maitre.
+  { fichier: "whynow-outils", largeur: 1480, hauteur: 845 },   // 337 px a 590
   // SECONDE VERSION DU PANNEAU 3. La premiere montrait deux postes de travail et
   // elle RIMAIT avec le panneau 1 sur la page : on n'y lisait pas deux bureaux, on
   // lisait le bureau du panneau 1 deux fois. L'agrandissement a 590 px n'a pas
@@ -255,7 +399,7 @@ const LATERALES = [
   // meme temps que la separation des socles. Celle-ci n'emprunte aucun objet ni au
   // panneau 1 ni au panneau 2 : deux caisses, l'une close, l'autre ouverte avec de
   // l'or dedans.
-  { fichier: "whynow-caisses", largeur: 1480, hauteur: 1034 }, // 412 px a 590
+  { fichier: "whynow-caisses", largeur: 1480, hauteur: 1041 }, // 415 px a 590
 ] as const;
 const PALIERS_LATERAUX = [370, 590, 740, 1180] as const;
 
@@ -415,8 +559,71 @@ export default function WhyNow() {
               tombe alors a 0,0576 de hauteur, soit 4 px du bord haut au palier
               de 400 px. Un libelle a 4 px du bord n'est pas une mise en page,
               c'est un ecretage en attente. On garde 0,34 et la plaque. */}
+          {/* ── MASQUEE SOUS 560 px, SUR LE MODELE DE Sectors.tsx ──────────────────
+              LA MESURE FERME TOUTE AUTRE ISSUE. La boite est centree sur l'ancre et
+              son plafond de largeur vaut min(44 % ; 100 % - x) — donc `maxWidth: 44 %`
+              n'est PAS la contrainte, et le porter a 52, 60, 68, 76 ou 88 % ne deplace
+              pas la boite d'un pixel : c'est l'ancre x qui commande le nombre de
+              lignes. Le libelle est une enumeration de trois termes, qui passe a TROIS
+              lignes a 280 px de largeur d'affichage — la plus petite servie, faute de
+              regle de masquage — soit 0,3753 de hauteur de cadre.
+              La fenetre a placer y fait alors 44 % x 37,53 % du cadre, plus grande que
+              toute poche de fond pur de l'image : balayage 2D exhaustif, PLANCHER
+              MESURE A 14,20 % de pixels non-fond, et 56 a 58 % si l'on corrige le seul
+              debordement vertical en gardant x. Les deux defauts sont ANTAGONISTES —
+              l'ancre livree doit son taux de 7,6 % au fait qu'une partie de sa boite
+              est HORS CADRE, donc non comptee.
+              LA BORNE EST STRICTE, ET C'EST MESURE AU DISPLAY CALCULE :
+              `max-[560px]:hidden` compile en `width < 560px`, donc l'etiquette est
+              MASQUEE a 559 px de fenetre et VISIBLE a 560 — pas l'inverse. Le mot
+              « sous » est donc exact, et l'instrument le verifie avec `<`, pas `<=`.
+              MASQUER SOUS 560 px SUPPRIME LE CAS QUI BLOQUE, mais PAS jusqu'a une
+              ligne, et j'avais ecrit le contraire. Mesure : avec le `sizes` de ce
+              panneau, une fenetre de 561 px sert 521 px d'affichage, donc encore DEUX
+              lignes et 0,142391 de cadre — 2,14 fois les 0,0661 que j'annoncais. La
+              bascule vers une seule ligne est a 582 px d'affichage, soit 622 px de
+              fenetre : entre 561 et 621 px, soixante et un pixels, la boite fait
+              toujours deux lignes. Le seuil qui rendrait vraie la phrase « une ligne »
+              serait 621 px, pas 560.
+              Le masquage a 560 reste le bon choix : il supprime le cas a TROIS lignes,
+              qui est celui dont aucune ancre ne se sortait. Et l'ancre ci-dessous est
+              mesuree sur le vrai pire cas restant, 0,142391 — pas sur le cas confortable
+              que mon premier commentaire imaginait.
+              Une etiquette absente doublee d'un texte present juste a cote vaut mieux
+              qu'une etiquette posee sur 14 % du sujet.
+
+              ── ET CE SEUIL A ENFIN ETE MESURE PAR-DESSOUS, CE QUI N'AVAIT JAMAIS ETE
+              FAIT. Tout ce qui precede raisonne sur des largeurs que la CSS MASQUE :
+              on ne pouvait donc pas savoir si la boite y etait placable, et « le
+              masquage a 560 est le bon choix » se prouvait tout seul. L'instrument a
+              recu un mode `NBHC_DEMASQUER=1` qui force l'affichage sous le seuil et
+              ajoute dix largeurs. Mesure sur la locale `en`, le pire cas (libelle le
+              plus long), sur l'asset SERVI apres correction :
+
+                fenetre  affich.  boite      lignes  non-fond  pire bord
+                    320      280  123x51          3         0     -23,9
+                    360      320  141x51          3         0     -20,0
+                    375      335  147x36          2         0      -3,8
+                    420      380  167x36          2         0      +0,5
+                    480      440  194x36          2         0      +6,3
+                    560      520  229x36          2         0     +13,9
+
+              Le critere qui bloque n'est plus le recouvrement — il est a ZERO PIXEL
+              non-fond partout, et le contraste a 17,02:1 partout, y compris a trois
+              lignes. C'est le CADRE qui casse : le bord haut de la boite sort de
+              l'image. La boite redevient placable a 380 px d'affichage, soit 420 px de
+              fenetre, et avec 0,5 px de marge seulement ; le premier palier confortable
+              est 440 px d'affichage (480 de fenetre) a 6,3 px.
+
+              LE MASQUAGE N'EST PAS DEPLACE POUR AUTANT, ET C'EST UNE ABSTENTION
+              DELIBEREE. Le descendre de 560 a 480 afficherait l'etiquette sur quatre-
+              vingts pixels de largeurs qu'aucune lecture a l'oeil n'a jamais vues, pour
+              gagner un libelle deja present en clair dans le texte du panneau juste
+              au-dessus. Le chiffre est la, la decision appartient au client. Ce qui est
+              corrige, c'est qu'elle ne repose plus sur une supposition. */}
           <span
-            className="pointer-events-none absolute text-[11px] font-medium uppercase text-center"
+            className="pointer-events-none absolute text-[11px] font-medium uppercase text-center
+                       max-[560px]:hidden"
             style={{
               left: `${ETIQUETTE_BUREAU.x * 100}%`,
               top: `${ETIQUETTE_BUREAU.y * 100}%`,
@@ -488,7 +695,11 @@ export default function WhyNow() {
               decoding="async"
               className="block w-full h-auto"
             />
-              {/* Les etiquettes ne portent QUE sur le panneau 3. Le conteneur,
+              {/* CE COMMENTAIRE DISAIT « les etiquettes ne portent QUE sur le
+                  panneau 3 », ET C'EST FAUX : `ETIQUETTES_LATERALES` porte DEUX
+                  etiquettes par panneau, donc quatre en tout, et la boucle ci-dessous
+                  les rend pour les deux. C'est la PLAQUE qui ne porte que sur le
+                  panneau 3 (`PLAQUE_LATERALE = [false, true]`). Le conteneur,
                   lui, enveloppe les deux : il reprend exactement les contraintes
                   de flex et la largeur que l'image portait, et l'image passe en
                   w-full — la boite est donc inchangee, et il n'y a pas deux

@@ -11,8 +11,270 @@ gsap.registerPlugin(ScrollTrigger);
 
 const CALENDLY_URL = "https://calendly.com/saasnhia/30min";
 
+/**
+ * LES SCENES DE METIER LIVREES, ET SEULEMENT ELLES.
+ *
+ * SEPT SUR SEPT au lot du 2026-08-11. Les sept metiers de la section ont desormais
+ * leur scene : garage, pharmacie, artisans & BTP, organismes de formation, magasins
+ * d'optique, salles de sport, associations sportives. Il ne reste plus de reserve
+ * vide dans cette section.
+ *
+ * LES ANCRES SONT CELLES QUE LA SCENE A EMISES, recopiees de ses .ancres.json et
+ * jamais recalculees ici. Elles sont en fraction du cadre livre (1480 x 925), et le
+ * CSS les pose en pourcentage — donc elles suivent l'image a toutes les largeurs
+ * sans qu'aucune valeur en pixels n'existe.
+ *
+ * L'ancre designe le POINT DE L'OBJET ; l'etiquette se pose au-dessus et centree
+ * sur lui, comme sur WhyNow et HowItWorks (transform translate(-50%, -100%)).
+ *
+ * PALIERS : 370, 650, 880, 1100, 1480 — derives de l'emprise reelle des reserves
+ * (650 px a 1440, 540 a 1024, la pleine largeur en dessous de 900 ou les panneaux
+ * s'empilent). Voir l'en-tete de rendu-3d/exporter_metiers.py.
+ */
+const PALIERS_METIER = [370, 650, 880, 1100, 1480] as const;
+
+/**
+ * L'ABSCISSE DE LA COLONNE VERTEBRALE — AU CENTRE, DANS LA GOUTTIERE.
+ *
+ * Elle vaut -1 en decalage de `left: 50%` : la piste fait 2 px de large, donc son axe
+ * tombe exactement sur le milieu du ruban, qui est desormais l'axe de la gouttiere
+ * puisque les colonnes sont egales. Le passage en marge etait un contournement de la
+ * grille ; la grille corrigee, la colonne reprend sa place.
+ *
+ * ANCIEN COMMENTAIRE, conserve parce qu'il explique pourquoi la marge avait ete
+ * necessaire : la colonne vivait dans le rembourrage exterieur de la section.
+ *
+ * Elle est NEGATIVE : la colonne vit dans le rembourrage exterieur de la section, qui
+ * existe deja — 160 px de chaque cote a 1440, 40 px a 1024. Aucune emprise de panneau
+ * n'est donc reduite, et l'illustration garde ses 650 px. En dessous de 900 px les
+ * panneaux s'empilent et la colonne est masquee, donc la valeur n'a pas a etre
+ * responsive : le cas le plus serre est 1024, ou la colonne tombe a 12 px du bord de
+ * la fenetre.
+ *
+ * Le jalon fait 14 px plus 3 px de cercle de page, soit 20 px : pour le centrer sur
+ * l'axe de la piste (X_COLONNE + 1), son bord gauche est a X_COLONNE + 1 - 10.
+ */
+const X_COLONNE = -1;
+
+/**
+ * LES ANCRES SONT DANS LE CIEL, ET C'EST UNE CONTRAINTE MESUREE, PAS UN CHOIX.
+ *
+ * Les quatre etiquettes livrees jusqu'ici tombaient sur des objets clairs et
+ * mesuraient 1,00:1 de contraste sur jusqu'a 92 % de leur surface — du blanc sur du
+ * papier blanc. La cause est dans le decor : le dessus du socle et toutes les faces
+ * horizontales recoivent un voile speculaire tres clair (matiere papier a 0,701 vue
+ * de dessus contre 0,185 vue de face). AUCUNE bande d'etiquette ne peut donc se poser
+ * sur le plateau ; elles ne peuvent etre que dans le fond sombre. Les deux ancres de
+ * chaque scene y sont, a 16,92:1.
+ *
+ * CONSEQUENCE : l'etiquette se retrouve loin au-dessus de l'objet qu'elle nomme —
+ * jusqu'a 237 px pour la boite de medicament. Une etiquette qui ne designe plus rien
+ * ne vaut pas mieux qu'une etiquette illisible, d'ou le TRAIT DE RAPPEL : la scene
+ * emet aussi le point de l'objet, et un trait relie l'un a l'autre.
+ *
+ * LE TRAIT EST DOUBLE, et pour la meme raison que les jalons du ruban sont cercles de
+ * la couleur de page : il traverse le fond sombre PUIS le plateau clair, et aucune
+ * couleur unique ne contraste avec les deux. Un trait large a la couleur du fond
+ * porte donc un trait fin dore — sur le ciel c'est l'or qui se lit, sur le plateau
+ * c'est le halo sombre qui detache l'or.
+ */
+const SCENES_METIER: Record<string, {
+  fichier: string;
+  /**
+   * LE CALQUE DE TRANSIT — CE QUI FLOTTE, ET RIEN D'AUTRE.
+   *
+   * Le flottement de l'image entiere a ete retire : le socle existe pour etablir le
+   * contact au sol, le faire flotter dement ce qu'il dit. Ce qui doit flotter est
+   * l'objet CENSE etre en l'air — ici l'ordonnance en vol vers son casier.
+   *
+   * Une image raster ne permet pas d'animer une de ses regions, d'ou une seconde
+   * passe de rendu ne contenant QUE cet objet, sur fond transparent, cadree par la
+   * MEME camera a la MEME resolution. Le recalage est donc exact par construction :
+   * il n'y a aucun offset a calculer, donc aucune erreur possible. Verifie tout de
+   * meme a la source — boite des pixels opaques a 0,5 px de la projection calculee
+   * depuis la geometrie, et ecart de valeur maximal de 6/255 sur les pixels communs,
+   * pour un budget de bruit du debruiteur mesure a 7.
+   *
+   * ET L'IMAGE DE BASE EST RENDUE SANS CET OBJET, mais avec son ombre et son rebond
+   * (`visible_camera=False` le retire des rayons camera seulement). Sans cela, une
+   * lisiere de la feuille d'origine resterait visible sous le calque des qu'il
+   * bouge, et la feuille semblerait s'epaissir au lieu de se deplacer.
+   *
+   * IL EST CHARGE SANS DIFFERE. Si ce calque manquait, la scene perdrait l'objet en
+   * vol — c'est-a-dire precisement ce qui fait lire « personne ne l'a fait ». Ce
+   * n'est pas une decoration qu'on peut charger plus tard.
+   */
+  transit?: boolean;
+  etiquettes: { cle: string; x: number; y: number; cx?: number; cy?: number }[];
+}> = {
+  garage: {
+    fichier: "metier-garage",
+    etiquettes: [
+      // ── ANCRES RE-EMISES PAR LA SCENE, ET LA HAUTEUR N'EST PAS 0,111 ────────
+      // `text-[11px]` est une taille FIXE : la hauteur d'une etiquette en pixels ne
+      // depend que de son nombre de lignes, donc sa FRACTION DE CADRE grandit quand
+      // l'image retrecit. Mesure au navigateur, avec les vrais woff2 du build et les
+      // chaines des deux locales : « accueil telephonique automatise » passe a TROIS
+      // lignes sous 520 px d'image, soit 50,55 px = 0,1746 de cadre — 57 % de plus que
+      // les 0,111 que je supposais. Et « la fiche se remplit » passe a deux lignes en
+      // anglais sous 501 px.
+      //
+      // ET LA LARGEUR QUI COMMANDE EST 463 px, PAS 520. Les etiquettes sont masquees
+      // sous 560 px de fenetre ; une fenetre de 901 px sert donc une image de
+      // (901 - 160) x 0,625 = 463 px, la plus petite qui affiche encore une etiquette.
+      // Le pire cas est la, pas a 520.
+      //
+      // Ces deux positions sont les seules qui tiennent : la boite d'accueil est la
+      // HAUTE, elle ne rentre que dans la colonne de gauche, libre jusqu'a y = 0,279 —
+      // a droite le plafond est 0,160 a cause du sommet de la voiture a (0,8210 ;
+      // 0,1187). Et le bord bas de la fiche est a 0,1330 et non a 0,1413 parce qu'a
+      // 0,1413 la garde geometrique a la voiture tombait a 5,62 px, sous son plancher
+      // de 8 : c'est l'ancre qui a bouge, pas le seuil.
+      { cle: "garageLabelAccueil", x: 0.0000, y: 0.2250, cx: 0.1868, cy: 0.4123 },
+      { cle: "garageLabelFiche", x: 0.7200, y: 0.1330, cx: 0.5050, cy: 0.2479 },
+    ],
+  },
+  pharma: {
+    fichier: "metier-pharmacie",
+    transit: true,
+    etiquettes: [
+      // le tri : l'etiquette est dans le ciel, le trait descend sur la case ouverte
+      // ── ANCRES COTE A COTE, ET C'EST 35 % QUI L'A PERMIS ───────────────────
+      // Trois positions successives, chacune corrigee par une mesure :
+      //   (0,25 ; 0,35) et (0,754 ; 0,28) : la premiere recouvrait 3,704 % de son
+      //     emprise, son bas tombant sous la limite du ciel libre.
+      //   (0,22 ; 0,14) et (0,754 ; 0,28) : empilees verticalement, seule issue quand
+      //     les boites faisaient 46 % de large — deux fois 46 ne tiennent pas cote a
+      //     cote dans 0,754 de place. Elles avaient 9,43 px de vide.
+      //   ICI : a 35 % elles tiennent COTE A COTE. Balayage exhaustif au pas de 0,005
+      //     sur l'emprise reelle : 9 152 ancres propres par cle et 5 040 349 paires
+      //     tenables ; le choix est donc libre, et il est fait sur le CENTRAGE — la
+      //     boite du tri centree a 0,375 pour une case ouverte a 0,3673, celle de la
+      //     decision a 0,805 pour une boite de medicament a 0,8195.
+      //
+      // Ecart mesure : 37,0 px a 463 px de large, jusqu'a 119,5 px a 1480, pour un
+      // plancher de 8. La paire empilee, elle, tombait a 4,51 px des le passage a 35 %.
+      // Recouvrement : 0,000 % sur les douze emprises, contraste 16,92:1 partout.
+      //
+      // ET LA HAUTEUR A ETE MESUREE, PAS HERITEE : ces deux textes font 18 et 24
+      // caracteres et ne depassent jamais deux lignes, contre trois pour les 33
+      // caracteres de l'accueil du garage. Leur pire fraction de cadre vaut 0,1244 a
+      // 463 px — la ou je supposais 0,111 partout.
+      { cle: "pharmaLabelTri", x: 0.20, y: 0.32, cx: 0.3673, cy: 0.5426 },
+      { cle: "pharmaLabelDecision", x: 0.98, y: 0.28, cx: 0.8195, cy: 0.5614 },
+    ],
+  },
+  // ═══════════════════════════════════════════════════════════════════════════
+  // LES DEUX SCENES DU LOT DU 2026-08-10 — BTP ET FORMATION
+  // ═══════════════════════════════════════════════════════════════════════════
+  // MEME REGIME QUE LES DEUX PREMIERES : les ancres sont RECOPIEES des
+  // `.ancres.json` que les scenes emettent APRES `st.ecrire()`, jamais recalculees
+  // ici. Elles sont en fraction du cadre livre (1480 x 925) et le CSS les pose en
+  // pourcentage, donc elles suivent l'image a toutes les largeurs sans qu'aucune
+  // valeur en pixels n'existe.
+  //
+  // LES DEUX ANCRES D'ETIQUETTE SONT LES MEMES SUR LES DEUX SCENES — (0,180 ; 0,300)
+  // a gauche et (0,970 ; 0,262) a droite — et ce n'est pas une facilite : les deux
+  // compositions ont ete construites POUR ces deux emplacements. La bande de ciel est
+  // reservee des la composition, ce qui veut dire que la hauteur des objets est
+  // BORNEE par les boites d'etiquette et non l'inverse. `controler_etiquettes` refuse
+  // de rendre si un volume de matiere claire entre dans l'une des deux boites, aux
+  // SIX largeurs servies — pas seulement au pire cas.
+  //
+  // RESERVE ECRITE, ET ELLE VAUT POUR CES DEUX SCENES : le NOMBRE DE LIGNES de chaque
+  // etiquette n'a pas ete remesure au navigateur pour ces textes-la. Il est transpose
+  // du gabarit de la pharmacie, dont les deux chaines font 18 et 24 caracteres. Les
+  // quatre textes ci-dessous ont ete choisis COURTS pour rester dans ce gabarit — le
+  // plus long fait 25 caracteres en francais, contre 33 pour l'accueil du garage qui,
+  // lui, passe a trois lignes sous 520 px. Le controle d'avant-rendu est donc exact
+  // sur la geometrie et HERITE sur la hauteur ; c'est `contraste_etiquettes.js` qui
+  // mesure la boite REELLE sur la page servie, et c'est la que l'erreur sortira si
+  // elle existe.
+  btp: {
+    fichier: "metier-btp",
+    etiquettes: [
+      // A GAUCHE, BORD GAUCHE SUR L'ANCRE (x < 0,30) : la boite occupe
+      // x 0,180..0,530, centre 0,355, pour un eventail de devis projete a 0,5094.
+      // Le trait de rappel descend donc vers la droite jusqu'aux feuilles.
+      { cle: "btpLabelDevis", x: 0.180, y: 0.300, cx: 0.5094, cy: 0.6913 },
+      // A DROITE, BORD DROIT SUR L'ANCRE (x > 0,70) : la boite occupe
+      // x 0,620..0,970, centre 0,795, pour une fente eclairee projetee a 0,7027.
+      { cle: "btpLabelRelance", x: 0.970, y: 0.262, cx: 0.7027, cy: 0.4252 },
+    ],
+  },
+  formation: {
+    fichier: "metier-formation",
+    etiquettes: [
+      { cle: "formationLabelDossier", x: 0.180, y: 0.300, cx: 0.4620, cy: 0.6774 },
+      // la gorge doree du PREMIER classeur, celui que la fleche designe
+      { cle: "formationLabelSuivi", x: 0.970, y: 0.262, cx: 0.6658, cy: 0.4835 },
+    ],
+  },
+  // ═══════════════════════════════════════════════════════════════════════════
+  // LOT DU 2026-08-11 — LES TROIS DERNIERES SCENES DE METIER
+  // ═══════════════════════════════════════════════════════════════════════════
+  // MEME REGIME QUE LES QUATRE PRECEDENTES : les ancres sont RECOPIEES des
+  // `.ancres.json` que les scenes emettent APRES `st.ecrire()`, jamais recalculees ici.
+  //
+  // CE QUI CHANGE PAR RAPPORT AU LOT PRECEDENT, ET C'EST UNE MESURE :
+  //
+  //   1. LE NOMBRE DE LIGNES DE CHAQUE ETIQUETTE EST MESURE AU NAVIGATEUR, plus
+  //      transpose d'un gabarit. `nbhc-broll/airbnb-demo/lignes_etiquettes.js` clone une
+  //      etiquette REELLE de cette page, y met le texte a mesurer et lit `offsetHeight`,
+  //      dans les deux locales et aux onze largeurs CSS ou les etiquettes sont
+  //      affichees. La reserve ecrite du lot precedent est donc levee, et elle n'etait
+  //      pas anodine : la table heritee se trompait sur les quatre cles deja livrees.
+  //
+  //   2. LE PIRE CAS N'EST PAS 463 px MAIS 370 px. La plus petite largeur CSS ou
+  //      l'illustration est affichee vaut 370 px, a 901 px de fenetre — et elle CHUTE de
+  //      859 a 370 quand la fenetre passe de 899 a 901, parce que la grille passe d'un
+  //      panneau empile a deux colonnes egales. Les 463 px venaient du `sizes` de la
+  //      balise, qui sert a choisir un FICHIER et ne decrit pas la mise en page.
+  //
+  //   3. AUCUNE DES TROIS N'A D'ELEMENT QUI FLOTTE, et c'est signale comme une decision
+  //      a trancher : la grammaire l'autorise (« un seul element qui flotte, ET
+  //      SEULEMENT s'il a une raison propre d'etre en l'air »), et deux mesures du lot
+  //      precedent la motivent — le statut « en vol » de la feuille de la scene
+  //      formation n'a pas ete lu (« une carte inclinee avec une icone jaune »), et
+  //      cette meme feuille a du etre deplacee parce qu'elle occultait la tete de
+  //      fleche et l'or, « les deux seules choses que l'image doit prouver ».
+  optique: {
+    fichier: "metier-optique",
+    etiquettes: [
+      // la fiche client posee a plat : la relance qui n'est pas partie
+      { cle: "opticienLabelRelance", x: 0.180, y: 0.300, cx: 0.4698, cy: 0.6773 },
+      // la case allumee du presentoir — le point vise est le centre de la bande doree
+      // REELLEMENT VUE, pas le centre de la plaque : la traverse du dessus en cache le
+      // haut, et viser le centre geometrique aurait pointe un pixel invisible.
+      { cle: "opticienLabelPrete", x: 0.970, y: 0.262, cx: 0.7210, cy: 0.4315 },
+    ],
+  },
+  asso: {
+    fichier: "metier-asso",
+    etiquettes: [
+      // le certificat medical pose a plat : le dossier qui n'est pas boucle
+      { cle: "sportAssoLabelCertificat", x: 0.180, y: 0.300, cx: 0.4700, cy: 0.6826 },
+      // le fond dore de la bannette d'inscriptions
+      { cle: "sportAssoLabelDossier", x: 0.970, y: 0.262, cx: 0.7488, cy: 0.4871 },
+    ],
+  },
+  sport: {
+    fichier: "metier-sport",
+    etiquettes: [
+      // la carte de membre posee a plat : le rappel qui n'est pas parti
+      { cle: "sportLabelNoshow", x: 0.180, y: 0.300, cx: 0.4389, cy: 0.6934 },
+      // le casier ouvert et eclaire — meme regle que l'optique : le point vise est le
+      // centre de la bande doree REELLEMENT VUE, le dessus du casier cachant son haut.
+      { cle: "sportLabelRappel", x: 0.970, y: 0.262, cx: 0.6320, cy: 0.4328 },
+    ],
+  },
+};
+
 export default function Sectors() {
   const sectionRef = useRef<HTMLElement>(null);
+  const rubanRef = useRef<HTMLDivElement>(null);
+  const remplissageRef = useRef<HTMLSpanElement>(null);
+  const jalonsRef = useRef<(HTMLSpanElement | null)[]>([]);
   const reduit = usePrefersReducedMotion();
   const t = useTranslations("sectors");
 
@@ -21,7 +283,7 @@ export default function Sectors() {
   // multi-store prospect pipeline — not yet field-canvassed like the others.
   const sectors = [
     {
-      icon: "🏋️",
+      scene: "sport",
       name: t("sportName"),
       pain: t("sportPain"),
       solution: t("sportSolution"),
@@ -29,7 +291,7 @@ export default function Sectors() {
       href: t("sportHref"),
     },
     {
-      icon: "🤝",
+      scene: "asso",
       name: t("sportAssoName"),
       pain: t("sportAssoPain"),
       solution: t("sportAssoSolution"),
@@ -37,7 +299,7 @@ export default function Sectors() {
       href: t("sportAssoHref"),
     },
     {
-      icon: "🔧",
+      scene: "garage",
       name: t("garageName"),
       pain: t("garagePain"),
       solution: t("garageSolution"),
@@ -45,7 +307,7 @@ export default function Sectors() {
       href: t("garageHref"),
     },
     {
-      icon: "🏗️",
+      scene: "btp",
       name: t("btpName"),
       pain: t("btpPain"),
       solution: t("btpSolution"),
@@ -53,7 +315,7 @@ export default function Sectors() {
       href: t("btpHref"),
     },
     {
-      icon: "🎓",
+      scene: "formation",
       name: t("formationName"),
       pain: t("formationPain"),
       solution: t("formationSolution"),
@@ -61,7 +323,7 @@ export default function Sectors() {
       href: t("formationHref"),
     },
     {
-      icon: "💊",
+      scene: "pharma",
       name: t("pharmaName"),
       pain: t("pharmaPain"),
       solution: t("pharmaSolution"),
@@ -69,7 +331,7 @@ export default function Sectors() {
       href: t("pharmaHref"),
     },
     {
-      icon: "👓",
+      scene: "optique",
       name: t("opticienName"),
       pain: t("opticienPain"),
       solution: t("opticienSolution"),
@@ -132,6 +394,105 @@ export default function Sectors() {
     };
   }, [reduit]);
 
+  /**
+   * LA COLONNE VERTEBRALE — GSAP SEUL, scaleY, AUCUN PIN.
+   *
+   * CE QUI DIFFERE DU RAIL HORIZONTAL DE HowItWorks, ET C'EST TOUT LE SUJET.
+   * Là-bas les quatre fractions sont des CONSTANTES GEOMETRIQUES sorties du
+   * rendu (X_STATIONS) : elles ne bougent jamais, donc la timeline se construit
+   * une fois. ICI les sept fractions dependent de LA MISE EN PAGE — hauteur des
+   * textes, largeur de la fenetre, police chargee ou non. Elles doivent donc etre
+   * MESUREES au montage, et REMESUREES quand la mise en page change.
+   *
+   * D'ou deux mecanismes, et pas un :
+   *   1. `invalidateOnRefresh` recalcule start/end de la ScrollTrigger ;
+   *   2. un ResizeObserver RECONSTRUIT la timeline, parce qu'`invalidateOnRefresh`
+   *      ne deplace pas les enfants deja poses d'une timeline. Sans lui, un
+   *      changement de largeur laisserait les jalons s'allumer aux anciennes
+   *      fractions — le defaut exact que la structure en timeline evite au
+   *      chargement se reintroduirait au redimensionnement.
+   *
+   * ON NE COMPARE JAMAIS A self.progress. Le scrub lisse le tween mais pas la
+   * ScrollTrigger : un jalon compare a la progression du declencheur s'allumerait
+   * AVANT que le remplissage ne l'atteigne. Chaque allumage est place DANS la
+   * timeline au temps egal a sa fraction, donc la coincidence est structurelle.
+   *
+   * LA PLAGE, et le piege du retard est documente en detail sur le rail
+   * horizontal (voir le commentaire du `bottom 60%` dans HowItWorks.tsx) : le
+   * retard du scrub est proportionnel a la VITESSE de defilement, pas a la plage.
+   * On part du HAUT DU RUBAN atteignant 75 % de la fenetre — donc quand le
+   * premier panneau est franchement visible — et l'on finit au bas du ruban a
+   * 60 % de la fenetre, ce qui laisse de la place au rattrapage.
+   */
+  useEffect(() => {
+    const ruban = rubanRef.current;
+    const rempli = remplissageRef.current;
+    if (!ruban || !rempli) return;
+
+    // MOUVEMENT REDUIT : L'ETAT D'ARRIVEE, pas l'absence de tween. Le style en
+    // ligne pose scaleY(0) ; ne pas creer la timeline laisserait la barre vide et
+    // les sept jalons eteints, donc une enumeration sans son fil.
+    if (reduit) {
+      gsap.set(rempli, { scaleY: 1, transformOrigin: "top center" });
+      const j = jalonsRef.current.filter(Boolean) as HTMLSpanElement[];
+      if (j.length) gsap.set(j, { backgroundColor: "var(--gold)" });
+      return;
+    }
+
+    let tl: gsap.core.Timeline | null = null;
+
+    const poser = () => {
+      if (tl) { tl.scrollTrigger?.kill(); tl.kill(); tl = null; }
+      const jalons = jalonsRef.current.filter(Boolean) as HTMLSpanElement[];
+      const boite = ruban.getBoundingClientRect();
+      if (boite.height < 10) return;
+      // LES FRACTIONS SONT MESUREES, PAS DERIVEES. Centre du jalon rapporte a la
+      // hauteur du ruban : c'est exactement la meme grandeur que celle que le
+      // remplissage parcourt, donc les deux ne peuvent pas se desynchroniser.
+      const fractions = jalons.map((n) => {
+        const b = n.getBoundingClientRect();
+        return Math.min(1, Math.max(0, (b.top + b.height / 2 - boite.top) / boite.height));
+      });
+
+      gsap.set(rempli, { scaleY: 0, transformOrigin: "top center" });
+      gsap.set(jalons, { backgroundColor: "var(--text-muted)" });
+
+      tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: ruban,
+          start: "top 75%",
+          end: "bottom 60%",
+          scrub: 1,
+          invalidateOnRefresh: true,
+        },
+      });
+      // duree totale 1 : le TEMPS de la timeline est la fraction parcourue
+      tl.to(rempli, { scaleY: 1, ease: "none", duration: 1 }, 0);
+      fractions.forEach((f, k) => {
+        if (jalons[k]) {
+          tl!.to(jalons[k], { backgroundColor: "var(--gold)", ease: "none",
+                              duration: 0.02 }, f);
+        }
+      });
+    };
+
+    poser();
+    // Le ResizeObserver reconstruit ; on le laisse respirer pour ne pas repose
+    // la timeline a chaque image d'un redimensionnement continu.
+    let minuteur: ReturnType<typeof setTimeout> | null = null;
+    const ro = new ResizeObserver(() => {
+      if (minuteur) clearTimeout(minuteur);
+      minuteur = setTimeout(() => { poser(); ScrollTrigger.refresh(); }, 180);
+    });
+    ro.observe(ruban);
+
+    return () => {
+      ro.disconnect();
+      if (minuteur) clearTimeout(minuteur);
+      if (tl) { tl.scrollTrigger?.kill(); tl.kill(); }
+    };
+  }, [reduit]);
+
   return (
     <section
       id="secteurs"
@@ -164,63 +525,398 @@ export default function Sectors() {
         {t("subtitle")}
       </p>
 
-      <div className="grid grid-cols-2 max-[700px]:grid-cols-1 gap-5">
-        {sectors.map((s) => (
-          <Link
-            key={s.name}
-            href={s.href}
-            data-sector-card
-            data-cursor="card"
-            className="p-7 block no-underline transition-colors duration-300 group"
-            style={{
-              background: "rgba(255,255,255,0.02)",
-              border: "1px solid var(--border)",
-              borderRadius: "var(--radius)",
-              backdropFilter: "blur(8px)",
-            }}
-          >
-            <div className="text-4xl mb-5">{s.icon}</div>
+      {/* ═══ SEPT PANNEAUX ALTERNES, SUR UNE COLONNE VERTEBRALE ═══════════════
+          Le patron C de la reference : illustration d'un cote, texte de l'autre,
+          inverse a chaque metier, et une barre CENTRALE qui se remplit. Mesure
+          sur la capture de la reference : sa barre est a x=950 sur 1920, donc au
+          milieu, et les illustrations alternent de part et d'autre.
+
+          LA BARRE JALONNE UNE LISTE, ELLE N'AFFIRME AUCUNE SEQUENCE. C'est la
+          difference avec WhyNow, ou j'avais refuse une barre : trois problemes
+          independants n'ont pas d'ordre, alors que sept metiers sont une
+          enumeration — et une enumeration a un debut et une fin. */}
+      <div ref={rubanRef} className="relative">
+        {/* LA PISTE ET LE REMPLISSAGE.
+            LE COUPLE DE COULEURS EST MESURE, ET IL A FALLU RENONCER A L'OR SUR LE
+            REMPLISSAGE. Sur un fond a #09090b les deux exigences sont
+            arithmetiquement opposees : rendre la piste visible demande de
+            l'eclaircir, et le remplissage doit alors etre plus clair encore.
+            Table calculee sur la charte — l'or en remplissage ne depasse jamais
+            1,32:1 contre une piste visible. Retenu :
+
+              piste       #6B6A66   3,67:1 du fond (plancher WCAG 1.4.11, la
+                                    valeur que l'en-tete de nbhc_studio.py derive)
+              remplissage #F0EDE6   4,63:1 de la piste, 17,02:1 du fond
+
+            L'or n'est pas perdu : il passe sur LES JALONS, la ou il signifie
+            « franchi » au lieu de decorer. Un jalon dore POSE SUR le remplissage
+            clair ne tiendrait que 2,29:1 ; il est donc CERCLE de la couleur de
+            page, si bien que son contraste se juge contre le fond — 7,42:1 pour
+            l'or, 5,64:1 au repos. */}
+                {/* ── LA COLONNE VERTEBRALE, EN MARGE ET NON AU CENTRE ─────────────────
+            LA PREMISSE « COLONNE CENTRALE » ETAIT FAUSSE, et c'est une mesure qui l'a
+            montre, pas un avis. A 1440 px les pistes de grille valent 650 et 390 px
+            pour 80 px d'ecart, donc l'axe de la gouttiere tombe a 850 sur les panneaux
+            impairs et a 590 sur les pairs — l'alternance des colonnes le fait changer
+            de cote. Une colonne posee a 50 % du ruban tombe a 720, exactement au
+            milieu des deux, donc DANS l'emprise de l'illustration : 90 px a 1440,
+            68 px a 1024. Et les reserves vides faisaient exactement pareil ; ce
+            qu'elles cachaient, c'est qu'un trait par-dessus du vide ne se voit pas.
+
+            Verifie par MASQUAGE et non par raisonnement sur les z-index : en masquant
+            le ruban, 3 720 pixels changeaient a l'interieur de l'image, sur 15
+            colonnes centrees sur x = 720. Le ruban etait peint PAR-DESSUS la scene.
+
+            Aucune position centrale ne peut convenir tant que les colonnes alternent.
+            Les autres sorties coutaient toutes quelque chose de mesure : colonnes
+            egales, et l'image tombe de 650 a 520 px, donc le clavier du telephone
+            cesse d'etre lu ; illustration au-dessus du ruban, et les sept jalons
+            disparaissent derriere elle ; colonne en zigzag, et le remplissage doit
+            devenir un trace SVG a stroke-dashoffset avec ses sept fractions en
+            longueur de chemin. La marge, elle, ne coute rien de mesurable : elle vit
+            dans le rembourrage exterieur de la section, qui existe deja. */}
+        <span
+          data-sect-piste
+          aria-hidden="true"
+          className="absolute max-[900px]:hidden"
+          style={{ left: "50%", marginLeft: X_COLONNE, top: 0, bottom: 0, width: 2,
+                   background: "#6B6A66", zIndex: 1 }}
+        />
+        <span
+          ref={remplissageRef}
+          data-sect-rempli
+          aria-hidden="true"
+          className="absolute max-[900px]:hidden"
+          style={{ left: "50%", marginLeft: X_COLONNE, top: 0, bottom: 0, width: 2,
+                   background: "var(--text)", zIndex: 1,
+                   // Etat de depart declare ICI et pas seulement dans la timeline :
+                   // sinon la barre apparait pleine le temps d'une image.
+                   transform: "scaleY(0)", transformOrigin: "top center" }}
+        />
+
+        {sectors.map((s, i) => {
+          const imageADroite = i % 2 === 1;
+          const scene = s.scene ? SCENES_METIER[s.scene] : undefined;
+          return (
             <div
-              className="text-xl font-bold mb-4"
-              style={{
-                fontFamily: "var(--font-syne)",
-                color: "var(--text)",
-                letterSpacing: "-0.5px",
-              }}
+              key={s.name}
+              data-sector-card
+              data-sect-panneau
+              className={"relative grid gap-[80px] items-center"
+                + " max-[900px]:!grid-cols-1 max-[900px]:!gap-8 "
+                // ── COLONNES EGALES, POUR QUE LA GOUTTIERE SOIT CENTREE ──────────
+                // C'EST LA GRILLE QUI EMPECHAIT LA COLONNE VERTEBRALE D'ETRE AU
+                // MILIEU, pas la colonne. Avec 1,25 part contre 0,75 et 80 px
+                // d'ecart, l'axe de la gouttiere tombait a 850 px sur les panneaux
+                // impairs et a 590 sur les pairs — l'alternance inversait le GABARIT
+                // avec le contenu, donc la geometrie changeait de cote. Une colonne
+                // posee a 50 % tombait a 720, milieu des deux, dans aucune des deux.
+                //
+                // A parts egales, la gouttiere est au centre sur TOUS les panneaux :
+                // l'alternance n'inverse plus que le CONTENU, et la colonne retombe
+                // dedans par construction. Le gabarit n'a donc plus a s'inverser.
+                //
+                // CE QUE CELA COUTE, ET POURQUOI CE N'EST PLUS UN OBSTACLE. L'image
+                // passe de 650 a 520 px a 1440. J'avais avance qu'a 520 px l'ecart
+                // entre les touches du clavier tomberait sous un plancher de 4 px et
+                // que le telephone cesserait d'etre lu. LE TEST A L'AVEUGLE A 335 px
+                // A DEMENTI CETTE EXTRAPOLATION : a cette taille l'ecart vaut 2,4 px
+                // et le lecteur ecrit pourtant « un telephone fixe a touches,
+                // reconnaissable ». Ce qui porte la lecture n'est pas le nombre de
+                // pixels par detail mais le TYPE d'indice — une silhouette simple
+                // survit, un detail interne repete meurt. Un plancher arithmetique ne
+                // predit pas ce qui se comprend.
+                + "grid-cols-[1fr_1fr]"}
+              style={{ marginTop: i === 0 ? 0 : 128 }}
             >
-              {s.name}
+              {/* LE JALON, sur la barre, a mi-hauteur du panneau. Il est ici un
+                  enfant du panneau : sa position suit donc la mise en page sans
+                  qu'aucune constante ne la decrive. */}
+              <span
+                ref={(n) => { jalonsRef.current[i] = n; }}
+                data-sect-jalon
+                aria-hidden="true"
+                className="absolute max-[900px]:hidden"
+                style={{ left: "50%", marginLeft: X_COLONNE + 1 - 10,
+                         top: "50%", width: 14, height: 14,
+                         marginTop: -7, borderRadius: "50%",
+                         background: "var(--text-muted)",
+                         // le cercle de couleur de page isole le jalon du
+                         // remplissage : son contraste se juge contre le fond
+                         border: "3px solid var(--bg)", zIndex: 2 }}
+              />
+
+              {/* LA RESERVE — un vide HONNETE, a l'emprise du rendu a venir.
+                  Rapport 1480/925 : c'est la forme exacte de nos rendus, donc le
+                  jour ou l'image arrive, la boite ne bouge pas d'un pixel et il
+                  n'y a aucun decalage de mise en page a craindre.
+                  Ni emoji agrandi, ni illustration empruntee a une autre section :
+                  un faux visuel ferait juger autre chose que ce qui sera livre. */}
+              <div
+                data-sect-reserve
+                data-sect-livree={scene ? "1" : undefined}
+                className={(imageADroite
+                  ? "order-2 max-[900px]:order-1"
+                  : "order-1 max-[900px]:order-1") + " relative"}
+                style={{
+                  // L'EMPRISE NE BOUGE PAS QUAND L'IMAGE ARRIVE. Le rapport est
+                  // celui du rendu, et il l'etait deja quand la boite etait vide :
+                  // la substitution ne peut donc produire aucun decalage.
+                  aspectRatio: "1480 / 925",
+                  ...(scene
+                    ? null
+                    : { border: "1px dashed var(--border-accent, rgba(196,151,58,0.3))",
+                        borderRadius: "var(--radius)",
+                        display: "flex", alignItems: "center",
+                        justifyContent: "center" }),
+                }}
+              >
+                {scene ? (
+                  <>
+                    <img
+                      src={`/${scene.fichier}-650.webp`}
+                      srcSet={PALIERS_METIER.map((p) =>
+                        `/${scene.fichier}-${p}.webp ${p}w`).join(", ")}
+                      sizes="(max-width: 900px) calc(100vw - 40px), (max-width: 1200px) calc((100vw - 160px) * 0.625), 650px"
+                      width={1480}
+                      height={925}
+                      alt={s.pain}
+                      loading="lazy"
+                      decoding="async"
+                      className="block w-full h-auto"
+                    />
+                    {scene.transit && (
+                      <img
+                        data-sect-transit
+                        aria-hidden
+                        alt=""
+                        src={`/${scene.fichier}-transit-650.webp`}
+                        srcSet={PALIERS_METIER.map((p) =>
+                          `/${scene.fichier}-transit-${p}.webp ${p}w`).join(", ")}
+                        sizes="(max-width: 900px) calc(100vw - 40px), (max-width: 1200px) calc((100vw - 160px) * 0.625), 650px"
+                        width={1480}
+                        height={925}
+                        decoding="async"
+                        className="pointer-events-none absolute inset-0 block h-full w-full"
+                      />
+                    )}
+                    {/* LES TRAITS DE RAPPEL, SOUS LES ETIQUETTES DANS L'ORDRE DU DOM
+                        donc peints avant elles. Le viewBox est celui du rendu et la
+                        boite est exactement a son rapport : aucune deformation, et
+                        aucune valeur en pixels — le trait suit l'image a toutes les
+                        largeurs comme les etiquettes. */}
+                    {scene.etiquettes.some((e) => e.cx !== undefined) && (
+                      <svg
+                        aria-hidden
+                        viewBox="0 0 1480 925"
+                        className="pointer-events-none absolute inset-0 h-full w-full
+                                   max-[560px]:hidden"
+                      >
+                        {scene.etiquettes.map((e) =>
+                          e.cx === undefined || e.cy === undefined ? null : (
+                            <g key={e.cle}>
+                              <line
+                                x1={e.x * 1480} y1={e.y * 925}
+                                x2={e.cx * 1480} y2={e.cy * 925}
+                                stroke="var(--bg)" strokeWidth={7} strokeLinecap="round"
+                              />
+                              <line
+                                x1={e.x * 1480} y1={e.y * 925}
+                                x2={e.cx * 1480} y2={e.cy * 925}
+                                stroke="var(--gold)" strokeWidth={2.5} strokeLinecap="round"
+                              />
+                              <circle cx={e.cx * 1480} cy={e.cy * 925} r={9}
+                                      fill="var(--gold)" stroke="var(--bg)" strokeWidth={4} />
+                            </g>
+                          ),
+                        )}
+                      </svg>
+                    )}
+                    {scene.etiquettes.map((e) => (
+                      <span
+                        key={e.cle}
+                        // CROCHET DE MESURE. Le controle « l'etiquette tient dans la
+                        // largeur de l'image » est de la GEOMETRIE ; il ne dit rien de
+                        // la LISIBILITE. Pour mesurer le contraste contre ce qui est
+                        // reellement derriere, il faut pouvoir masquer les etiquettes
+                        // et rien d'autre — d'ou cet attribut, du meme genre que les
+                        // data-sect-* deja poses sur la piste et les jalons.
+                        data-sect-etiquette={e.cle}
+                        className="pointer-events-none absolute text-[11px] font-medium uppercase text-center
+                                   max-[560px]:hidden"
+                        style={{
+                          // ── LE BORD DROIT S'ANCRE PAR `right`, ET NON PAR `left` PLUS
+                          //    UNE TRANSLATION. C'EST UN DEFAUT MESURE, PAS UN GOUT.
+                          // Une boite absolue posee par `left: 97%` sans `right` a une
+                          // largeur DISPONIBLE de 3 % du parent. Le retrecissement au
+                          // contenu prend alors le maximum entre cette place et la
+                          // largeur MINIMALE du contenu — donc la largeur du mot le plus
+                          // long. `transform: translate(-100%)` deplace ensuite la boite,
+                          // mais ne lui rend PAS la place : elle reste retrecie.
+                          //
+                          // MESURE SUR LA PAGE SERVIE, a 1440 px de fenetre (image de
+                          // 520 px CSS) : « parti tout seul » sortait a 48,8 px de large
+                          // et 65,4 px de haut — QUATRE lignes d'un mot chacune — la ou
+                          // 35 % valent 182 px et le texte tient sur une seule ligne.
+                          // Meme defaut sur « vous decidez et facturez » (82,6 px, quatre
+                          // lignes) et « dossier clos » (72,8 px, deux lignes). Verifie a
+                          // l'oeil sur une capture de la scene BTP : les trois mots sont
+                          // empiles en colonne.
+                          //
+                          // CONSEQUENCE, ET C'EST CE QUI EN FAIT UN DEFAUT ET NON UNE
+                          // VARIANTE : la boite REELLE ne ressemblait plus a la boite
+                          // MODELISEE. `metier_commun.emprise_etiquette` calcule une
+                          // emprise de 35 % alignee par un bord, et c'est sur elle que
+                          // toutes les scenes ont ete composees — recouvrement, garde aux
+                          // objets clairs, ecart entre les deux boites. Le controle
+                          // d'avant-rendu mesurait donc exactement le bon rectangle sur
+                          // une page qui en peignait un autre.
+                          //
+                          // ET IL EN CORRIGE HUIT DEPASSEMENTS SUR DOUZE. A 370 px CSS
+                          // (fenetre de 901 px, la plus petite image ou les etiquettes
+                          // sont encore affichees), quatre lignes debordent du haut de
+                          // l'image : « sent on its own » de 4,8 px et « vous decidez et
+                          // facturez » de 0,6 px. Rendues a 35 %, les deux repassent a
+                          // deux lignes et rentrent. Les quatre qui restent sont celles
+                          // de « la fiche se remplit » du garage, dont l'ancre a y =
+                          // 0,1330 ne laisse pas la place a deux lignes a cette largeur —
+                          // c'est une dette de composition, pas de mise en page.
+                          ...(e.x > 0.70
+                            ? { right: `${(1 - e.x) * 100}%` }
+                            : { left: `${e.x * 100}%` }),
+                          top: `${e.y * 100}%`,
+                          // L'ancre designe le point de l'objet ; l'etiquette se pose
+                          // AU-DESSUS de lui.
+                          //
+                          // ── ET ELLE S'ALIGNE SUR LE BORD QUAND L'ANCRE EN EST PRES.
+                          // Le controle livre verifiait « l'etiquette est dans la
+                          // largeur de l'image » en comparant... LE POINT D'ANCRAGE.
+                          // Un point est toujours dans la boite ; c'est la BOITE DU
+                          // TEXTE qui en sort. Mesure : « accueil telephonique
+                          // automatise », ancree a x = 0,1868 et centree, sortait de
+                          // l'image de 15,3 px a 1440 et de 23,3 px a 1024 — parce
+                          // qu'une etiquette centree deborde des que la moitie de sa
+                          // largeur excede la distance de l'ancre au bord.
+                          //
+                          // La regle est donc geometrique et non empirique : sous 30 %
+                          // on aligne le bord GAUCHE de l'etiquette sur l'ancre, au-dela
+                          // de 70 % son bord DROIT, entre les deux on centre. Avec une
+                          // largeur maximale de 46 %, aucune de ces trois positions ne
+                          // peut sortir : 0,1868 + 0,46 = 0,647 et 0,754 - 0,46 = 0,294.
+                          // Le bord DROIT est deja pose par `right` ci-dessus : sa
+                          // translation horizontale devient nulle, sinon la boite
+                          // partirait une largeur trop a gauche.
+                          transform: e.x < 0.30 ? "translate(0, -100%)"
+                            : e.x > 0.70 ? "translate(0, -100%)"
+                              : "translate(-50%, -100%)",
+                          color: "var(--text)",
+                          letterSpacing: 2,
+                          lineHeight: 1.35,
+                          // ── 35 % ET NON 46 %, ET LE CHIFFRE EST DEMONTRE ────────
+                          // A 46 % les deux etiquettes du garage NE PEUVENT PAS
+                          // coexister, et ce n'est pas une impression : balayage
+                          // exhaustif au pas de 0,005 sur la position et la hauteur,
+                          // en exigeant 0 % de pixel non-fond aux SIX largeurs
+                          // servies. Resultat : 846 boites propres, toutes avec leur
+                          // bord droit sous x 0,815 — alors que la regle d'alignement
+                          // du site plus 8 px d'ecart imposent un bord droit au-dela
+                          // de 0,9354. Deficit de 0,120 de largeur, soit 62 px a
+                          // 520 px de large. Zero paire.
+                          //
+                          // Le plafond est un seul pixel : le sommet de la voiture se
+                          // projette a (0,8210 ; 0,1187), et rien d'autre dans la
+                          // moitie droite ne monte au-dessus de y = 0,18.
+                          //
+                          // A 35 %, verifie au pire cas — le palier 370, ou l'arete de
+                          // la voiture remonte a 0,1126 apres reechantillonnage — les
+                          // deux logements existent : x [0,00 ; 0,35] et x [0,37 ; 0,72],
+                          // libres jusqu'a y = 0,1775 et 0,1816 la ou il faut 0,1602.
+                          //
+                          // L'AUTRE SORTIE ETAIT DANS LA 3D : descendre la ligne de
+                          // toit de 0,0477 de hauteur, soit 44 px sur le maitre. Elle
+                          // coute un rendu et touche un objet acquis ; celle-ci coute
+                          // une ligne et ne touche a rien.
+                          maxWidth: "35%",
+                          // ── LA PLAQUE, ET ELLE EST MESUREE, PAS DECORATIVE ──────
+                          // Monter l'ancre dans le ciel a fait passer le minimum de
+                          // 1,00:1 a 17,02:1 a 768 px. A 1024 il retombait a 1,00:1,
+                          // et le pire pixel valait rgb(240,237,230) — exactement la
+                          // couleur du papier du rendu. La raison est structurelle :
+                          // le texte fait 11 px quelle que soit la largeur, donc son
+                          // emprise EN FRACTION D'IMAGE grandit quand l'image
+                          // retrecit, et elle finit par depasser la bande sombre
+                          // verifiee cote scene. Aucune position d'ancre ne peut donc
+                          // suffire a toutes les largeurs : il faut la plaque.
+                          //
+                          // L'OPACITE EST CALCULEE, pas choisie. Le fond le plus
+                          // clair rencontre est le papier a L = 0,832. Pour tenir
+                          // 4,5:1 avec un texte a la meme luminance il faut composer
+                          // le fond sous L = 0,146, soit environ 107 par canal, ce
+                          // qui exige alpha >= 0,58. A 0,82 le compose vaut 51 et le
+                          // contraste 10,8:1 — et l'ETENDUE dans la boite tombe a
+                          // 1,6:1, donc aucune arete de contraste ne subsiste.
+                          // Sur le ciel a rgb(9,9,11) la plaque est invisible : elle
+                          // ne se voit que la ou elle sert.
+                          background: "rgba(9, 9, 11, 0.82)",
+                          padding: "3px 7px",
+                          borderRadius: "var(--radius-sm, 4px)",
+                        }}
+                      >
+                        {t(e.cle)}
+                      </span>
+                    ))}
+                  </>
+                ) : (
+                  <span className="text-[12px] tracking-[2px] uppercase text-center px-4"
+                        style={{ color: "var(--text-muted)" }}>
+                    {s.name}
+                  </span>
+                )}
+              </div>
+
+              {/* LE TEXTE. Le lien reste sur tout le bloc : chaque metier a sa
+                  page indexable dediee, c'est de l'acquisition et cela ne se
+                  perd pas dans une refonte de mise en page. */}
+              <Link
+                href={s.href}
+                data-cursor="card"
+                className={(imageADroite
+                  ? "order-1 max-[900px]:order-2"
+                  : "order-2 max-[900px]:order-2") + " block no-underline group"}
+              >
+                <div
+                  className="text-xl font-bold mb-4"
+                  style={{ fontFamily: "var(--font-syne)", color: "var(--text)",
+                           letterSpacing: "-0.5px" }}
+                >
+                  {s.name}
+                </div>
+                <p className="text-sm mb-3"
+                   style={{ color: "var(--text-muted)", lineHeight: 1.65 }}>
+                  <span style={{ color: "#f87171", fontWeight: 600 }}>↳</span>{" "}
+                  {s.pain}
+                </p>
+                <p className="text-sm mb-5"
+                   style={{ color: "var(--text)", lineHeight: 1.65 }}>
+                  <span style={{ color: "#4ade80", fontWeight: 600 }}>✓</span>{" "}
+                  {s.solution}
+                </p>
+                <div
+                  className="text-[12px] font-bold tracking-wide pt-4"
+                  style={{ color: "var(--gold)", borderTop: "1px solid var(--border)" }}
+                >
+                  {s.footnote}
+                </div>
+                <div
+                  className="mt-4 text-[13px] font-medium transition-transform duration-200 group-hover:translate-x-1"
+                  style={{ color: "var(--gold-light)" }}
+                >
+                  {t("learnMore")}
+                </div>
+              </Link>
             </div>
-            <p
-              className="text-sm mb-3"
-              style={{ color: "var(--text-muted)", lineHeight: 1.65 }}
-            >
-              <span style={{ color: "#f87171", fontWeight: 600 }}>↳</span>{" "}
-              {s.pain}
-            </p>
-            <p
-              className="text-sm mb-5"
-              style={{ color: "var(--text)", lineHeight: 1.65 }}
-            >
-              <span style={{ color: "#4ade80", fontWeight: 600 }}>✓</span>{" "}
-              {s.solution}
-            </p>
-            <div
-              className="text-[12px] font-bold tracking-wide pt-4"
-              style={{
-                color: "var(--gold)",
-                borderTop: "1px solid var(--border)",
-              }}
-            >
-              {s.footnote}
-            </div>
-            <div
-              className="mt-4 text-[13px] font-medium transition-transform duration-200 group-hover:translate-x-1"
-              style={{ color: "var(--gold-light)" }}
-            >
-              {t("learnMore")}
-            </div>
-          </Link>
-        ))}
+          );
+        })}
       </div>
 
       <div className="mt-14 text-center">

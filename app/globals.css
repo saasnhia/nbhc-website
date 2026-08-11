@@ -214,3 +214,59 @@ main {
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
+
+/* ── FLOTTEMENT : RETIRE DE LA SCENE ENTIERE ────────────────────────────────
+   IL ETAIT DOUBLEMENT FAUX, et les deux defauts sont mesures.
+
+   1. IL NE SE VOYAIT PAS. 4 px crete-a-crete sur une demi-periode de 15 s font
+      0,27 px/s en moyenne, et mon propre temoin n'a releve que 1,61 px de course
+      en 3,2 s, soit 0,50 px/s au plus vif du cycle. Le temoin prouvait que
+      l'animation TOURNAIT ; il ne prouvait pas qu'elle SE VOYAIT. Encore un
+      instrument qui repond juste a la mauvaise question.
+
+   2. IL CONTREDISAIT LA CHARTE. Le socle existe pour etablir le contact au sol
+      par un objet modelise, jamais par une ombre portee. Faire flotter le socle
+      lui-meme dement ce qu'il est la pour dire. Un plateau ne flotte pas.
+
+   CE QUI FLOTTERA A LA PLACE : l'objet qui est CENSE etre en l'air, et lui seul —
+   le combine decroche par personne, la feuille en vol vers son casier. Comme une
+   image raster ne permet pas d'animer une de ses regions, cela demande une seconde
+   passe de rendu en alpha ne contenant QUE cet objet, cadrée par la MEME camera a
+   la MEME resolution : superposee a l'identique, son recalage est exact par
+   construction, et un transform CSS ne fait alors bouger que lui. C'est la suite
+   de ce lot, pas une intention.
+
+   La reference fait de meme : elle anime ses illustrations de SOLUTION et laisse
+   statiques celles de PROBLEME. */
+
+/* ── LE FLOTTEMENT, SUR LE SEUL OBJET QUI EST CENSE ETRE EN L'AIR ───────────
+   Ce n'est pas le retour du flottement retire plus haut : celui-la portait le
+   PLATEAU, ce qui dementait le socle. Celui-ci ne porte qu'un calque contenant
+   l'ordonnance en vol, rendue seule sur fond transparent par la meme camera.
+
+   L'AMPLITUDE EST DIMENSIONNEE POUR ETRE VUE, et le chiffre vient de l'echec
+   precedent : 4 px crete-a-crete sur une demi-periode de 15 s donnaient 0,27 px/s
+   et le client n'a rien vu. Ici 3 % de la hauteur du cadre crete-a-crete, sur une
+   demi-periode de 5 s, soit environ 12 px et 2,4 px/s a la taille servie — dix fois
+   plus. Le garde-fou reste 1 % de mouvement propre a la profondeur concernee.
+
+   L'UNITE EST UN POURCENTAGE, PAS DES PIXELS. Un translate en pourcentage se
+   rapporte a la taille de l'element : le calque fait tout le cadre, donc 1,5 %
+   suivent l'image de 335 px de large sur telephone comme de 650 px sur ecran large.
+   Une valeur en pixels serait quatre fois trop grande en bas de gamme.
+
+   prefers-reduced-motion EST TRAITE EN CSS, donc avant meme que le JavaScript
+   n'ait tourne — une boucle autonome doit pouvoir s'arreter sans lui. */
+@keyframes nbhcTransit {
+  from { transform: translate3d(0, 1.5%, 0); }
+  to   { transform: translate3d(0, -1.5%, 0); }
+}
+
+[data-sect-transit] {
+  animation: nbhcTransit 5s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-sect-transit] { animation: none; transform: none; }
+}
