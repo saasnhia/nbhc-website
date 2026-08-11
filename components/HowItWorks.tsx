@@ -188,14 +188,24 @@ const X_STATIONS = [0.1278, 0.3409, 0.5541, 0.7673] as const;
  * POINTILLE dans l'image, puisque toute l'image est pointillee. Ce que le rail
  * continue de coder juste, et c'est le seul point qui portait vraiment, est le
  * DETACHEMENT : la queue est separee par 50,4 px a 1 120 quand un vide ordinaire du
- * pointille en fait 38,7, et rien ne pointe vers elle — la fleche s'arrete a la
+ * pointille en fait 22,7, et rien ne pointe vers elle — la fleche s'arrete a la
  * station 04. Un rail continu jusqu'au bout annoncerait toujours une suite acquise.
  *
+ * ── LE 22,7 ETAIT 38,7, ET C'EST LA SEULE LIGNE QUE LA PASSE SUIVANTE A CHANGEE ──
+ * Constat du client a l'oeil : les tirets SE PERDAIENT entre les stations, et l'ancien
+ * trait continu se lisait mieux comme un parcours. Ils ont donc ete EPAISSIS (section
+ * 0,038 x 0,024 -> 0,048 x 0,031, epaisseur vue 15,9 -> 20,3 px a 1 120) et SERRES
+ * (periode 0,176 -> 0,145, part pleine 0,45 -> 0,62 : 7 tirets deviennent 8, le vide
+ * tombe de 38,7 a 22,7 px). Le rapport de detachement de la queue passe donc de 1,30x
+ * a 2,22x : l'argument ci-dessus est RENFORCE par ce changement, pas affaibli.
+ *
  * LES QUATRE ABSCISSES DE X_STATIONS SONT INCHANGEES A L'IDENTIQUE — verifie sur le
- * `chaine.ancres.json` re-emis : 0,1278 / 0,3409 / 0,5541 / 0,7673, et les deux
- * ancres d'etiquette valent toujours (0,7673 ; 0,2407) et (0,9202 ; 0,3534). Le
- * rail, ses quatre tirets et la grille de colonnes ne visent donc rien qui ait
- * bouge, et ce lot ne les a pas touches.
+ * `chaine.ancres.json` re-emis APRES l'epaississement, au cadre maitre 2240x1349 :
+ * 0,1278 / 0,3409 / 0,5541 / 0,7673, et les deux ancres d'etiquette valent toujours
+ * (0,7673 ; 0,2407) et (0,9202 ; 0,3534). C'est une propriete de construction et non
+ * une chance : `resoudre()` ne lit que JOUR, JOUR_QUEUE, QUEUE, EP et la
+ * demi-profondeur du socle, et aucun parametre du pointille n'y entre. Le rail, ses
+ * quatre tirets et la grille de colonnes ne visent donc rien qui ait bouge.
  */
 const X_QUEUE = X_STATIONS[3];
 
