@@ -734,6 +734,11 @@
       "rappelsLabelVehicule": "vehicle tracked: mileage and dates",
       "rappelsLabelEcheance": "the due date is computed in advance",
       "rappelsLabelRappel": "the reminder goes out on its own — customers stop forgetting",
+      "avisSceneAlt": "A small car, an envelope standing on its plinth, and two dotted golden paths forking from the envelope: one rises to a panel bearing a glowing golden star, the other descends to a bell in the foreground",
+      "avisLabelVehicule": "vehicle returned",
+      "avisLabelDemande": "the review request goes out on its own",
+      "avisLabelNote": "good rating: the Google review is published",
+      "avisLabelAlerte": "low rating: you are alerted",
       "callBooking": {
         "callerLabel": "Incoming call",
         "callerNumber": "06 XX XX XX XX",
@@ -1500,3 +1505,4 @@
     "videoAriaStudio": "Presentation video of a studio flat, made from photographs"
   }
 }
+

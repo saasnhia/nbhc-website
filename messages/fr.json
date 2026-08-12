@@ -734,6 +734,11 @@
       "rappelsLabelVehicule": "véhicule suivi : kilométrage et dates",
       "rappelsLabelEcheance": "l'échéance calculée d'avance",
       "rappelsLabelRappel": "le rappel part seul — le client n'oublie plus",
+      "avisSceneAlt": "Une petite voiture, une enveloppe dressée sur son plot, et deux trajets en pointillé doré qui bifurquent depuis l'enveloppe : l'un monte vers un panneau portant une étoile dorée lumineuse, l'autre descend vers une cloche posée au premier plan",
+      "avisLabelVehicule": "véhicule restitué",
+      "avisLabelDemande": "la demande d'avis part seule",
+      "avisLabelNote": "bonne note : l'avis Google publié",
+      "avisLabelAlerte": "note basse : vous êtes alerté",
       "callBooking": {
         "callerLabel": "Appel entrant",
         "callerNumber": "06 XX XX XX XX",
@@ -1500,3 +1505,4 @@
     "videoAriaStudio": "Vidéo de présentation d'un studio, réalisée à partir de photos"
   }
 }
+

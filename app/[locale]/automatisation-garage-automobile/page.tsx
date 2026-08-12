@@ -297,6 +297,31 @@ export default async function Page({
           ),
         };
       }
+      if (a.code === "W-AUTO-08") {
+        /* La scene 3D remplace le diagramme AutomationFlow (N-qui-ENONCE,
+           gate en paires — classification du gate 64). Iteration 2 : la
+           BIFURCATION est dans l'image — l'iteration 1 sans la branche
+           « note basse » a echoue comprehension N 6/6 et choix N 5/6 sur ce
+           motif unique. Quatre etiquettes ; traits mesures sur le rendu
+           (mesurer_traits_sgv.py : 397,4 / 121,5 / 17,9 / 12,4 px de l'or,
+           plancher 5 px) ; l'or est au signe positif — l'etoile, vraie
+           etoile depuis le temoin de phase. Sceau fid-sgv02. */
+        return {
+          ...a,
+          customFlow: (
+            <SceneSecteur
+              fichier="secteur-garage-avis"
+              alt={t("avisSceneAlt")}
+              etiquettes={[
+                { texte: t("avisLabelVehicule"), x: 0.02, y: 0.3, cx: 0.2272, cy: 0.5753, largeurMax: 0.26 },
+                { texte: t("avisLabelDemande"), x: 0.26, y: 0.85, cx: 0.4513, cy: 0.58, sousLeSocle: true, largeurMax: 0.34 },
+                { texte: t("avisLabelNote"), x: 0.96, y: 0.22, cx: 0.733, cy: 0.3396, largeurMax: 0.36 },
+                { texte: t("avisLabelAlerte"), x: 0.68, y: 0.8, cx: 0.6668, cy: 0.6279, sousLeSocle: true, largeurMax: 0.34 },
+              ]}
+            />
+          ),
+        };
+      }
       if (a.code === "W-AUTO-03") {
         const chat = t.raw("rappelChat") as {
           contactName: string;
