@@ -726,6 +726,10 @@
         "Timelines automatically monitored",
         "Automatic follow-up if the expert is slow"
       ],
+      "assuranceSceneAlt": "A binder ajar with a stack of sheets sticking out, an hourglass in its frame, and a dotted golden path starting at the hourglass and ending at a mail-drop box with a lit slot, an envelope standing on top",
+      "assuranceLabelDossier": "insurance claim opened",
+      "assuranceLabelDelais": "timelines monitored automatically",
+      "assuranceLabelRelance": "the expert stalls: the follow-up goes out on its own",
       "callBooking": {
         "callerLabel": "Incoming call",
         "callerNumber": "06 XX XX XX XX",

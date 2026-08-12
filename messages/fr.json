@@ -726,6 +726,10 @@
         "Délais surveillés automatiquement",
         "Relance automatique si l'expert tarde"
       ],
+      "assuranceSceneAlt": "Un classeur entrouvert d'où dépasse un paquet de feuilles, un sablier dans sa monture, et un trajet en pointillé doré qui part du sablier et aboutit à une boîte d'envoi à fente allumée, une enveloppe dressée dessus",
+      "assuranceLabelDossier": "dossier assurance ouvert",
+      "assuranceLabelDelais": "délais surveillés automatiquement",
+      "assuranceLabelRelance": "l'expert tarde : la relance part seule",
       "callBooking": {
         "callerLabel": "Appel entrant",
         "callerNumber": "06 XX XX XX XX",

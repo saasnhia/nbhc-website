@@ -269,6 +269,34 @@ export default async function Page({
           ),
         };
       }
+      if (a.code === "W-AUTO-05") {
+        /* La scene 3D remplace le diagramme SVG. Ancres en fraction du cadre
+           1480x925, re-emises par la scene (secteur-garage-assurance.ancres.json).
+           L'iteration 1 sans etiquette a echoue comprehension et choix 6/6 —
+           motif : rien ne rattache la scene a l'assurance ni a l'expert. Les
+           trois etiquettes portent cette information ; leurs traits sont MESURES
+           sur le rendu par mesurer_traits_sga.py : 421,8 / 40,1 / 140,2 px de
+           l'or le plus proche, plancher 5 px, 401 points par trait. Les
+           positions hautes de la premiere pose (y 0,16 et 0,12) debordaient du
+           cadre aux largeurs servies 471 et 423 (boites mesurees au navigateur,
+           mesurer_etiquettes_sga.js) : l'etiquette des delais est passee SOUS
+           le socle — le couloir valide de la scene 1 — et celle de la relance
+           est descendue a y 0,26. */
+        return {
+          ...a,
+          customFlow: (
+            <SceneSecteur
+              fichier="secteur-garage-assurance"
+              alt={t("assuranceSceneAlt")}
+              etiquettes={[
+                { texte: t("assuranceLabelDossier"), x: 0.02, y: 0.3, cx: 0.2313, cy: 0.5386, largeurMax: 0.26 },
+                { texte: t("assuranceLabelDelais"), x: 0.36, y: 0.85, cx: 0.4299, cy: 0.6, sousLeSocle: true, largeurMax: 0.52 },
+                { texte: t("assuranceLabelRelance"), x: 0.98, y: 0.26, cx: 0.7448, cy: 0.3501, largeurMax: 0.34 },
+              ]}
+            />
+          ),
+        };
+      }
       if (a.code === "W-AUTO-03") {
         const chat = t.raw("rappelChat") as {
           contactName: string;
