@@ -570,6 +570,11 @@
         "Bonne note : lien direct vers l'avis Google",
         "Note basse : alerte pour un rappel personnel"
       ],
+      "avisSceneAlt": "Un haltère, une enveloppe dressée sur son plot, et deux trajets en pointillé doré qui bifurquent depuis l'enveloppe : l'un monte vers un panneau portant une étoile dorée lumineuse, l'autre descend vers un triangle d'avertissement dressé au premier plan",
+      "avisLabelSeance": "séance terminée",
+      "avisLabelDemande": "la demande d'avis part seule",
+      "avisLabelNote": "bonne note : l'avis Google publié",
+      "avisLabelAlerte": "note basse : vous êtes alerté",
       "w0108": [
         "Séances consommées suivies automatiquement",
         "Bon moment détecté (avant la dernière séance)",

@@ -570,6 +570,11 @@
         "Good rating: direct link to your Google listing",
         "Low rating: alert for a personal follow-up"
       ],
+      "avisSceneAlt": "A dumbbell, an envelope standing on its plinth, and two dotted golden paths forking from the envelope: one rises to a panel bearing a glowing golden star, the other descends to an upright warning triangle in the foreground",
+      "avisLabelSeance": "session finished",
+      "avisLabelDemande": "the review request goes out on its own",
+      "avisLabelNote": "good rating: the Google review is published",
+      "avisLabelAlerte": "low rating: you are alerted",
       "w0108": [
         "Sessions used automatically tracked",
         "Right timing detected (before the last session)",

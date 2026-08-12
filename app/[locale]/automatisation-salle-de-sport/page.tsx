@@ -5,6 +5,7 @@ import { serviceSchema, breadcrumbSchema, faqPageSchema } from "../../../lib/sch
 import { zipFlowSteps, type FlowStepKind } from "../../../components/AutomationFlow";
 import ChatMockup, { type ChatBubbleData } from "../../../components/ChatMockup";
 import CallBookingMockup, { type CallBookingMockupContent } from "../../../components/CallBookingMockup";
+import SceneSecteur from "../../../components/SceneSecteur";
 
 // Structural shape of each automation's mechanism diagram (trigger -> ... ->
 // validation). Not translatable — the labels come from
@@ -239,6 +240,30 @@ export default async function Page({
   const content: SectorContent = {
     ...baseContent,
     automations: baseContent.automations.map((a) => {
+      if (a.code === "W-SPORT-05") {
+        /* La scene 3D remplace le diagramme AutomationFlow (N-qui-ENONCE,
+           gate en paires). Transposition MESUREE de la scene avis du garage
+           (gate 64 : premier choix final 6/6, fidelite OUI x2) — memes
+           constructions actees, l'HALTERE en ancre de metier a la place de
+           la voiture. Ancres re-emises (secteur-sport-avis.ancres.json) ;
+           traits mesures sur le rendu (mesurer_traits_ssa.py), boites 0
+           defaut, sceau fid-ssa01. */
+        return {
+          ...a,
+          customFlow: (
+            <SceneSecteur
+              fichier="secteur-sport-avis"
+              alt={t("avisSceneAlt")}
+              etiquettes={[
+                { texte: t("avisLabelSeance"), x: 0.02, y: 0.3, cx: 0.2396, cy: 0.6046, largeurMax: 0.26 },
+                { texte: t("avisLabelDemande"), x: 0.26, y: 0.85, cx: 0.4513, cy: 0.58, sousLeSocle: true, largeurMax: 0.34 },
+                { texte: t("avisLabelNote"), x: 0.96, y: 0.22, cx: 0.733, cy: 0.3396, largeurMax: 0.36 },
+                { texte: t("avisLabelAlerte"), x: 0.68, y: 0.8, cx: 0.6668, cy: 0.6173, sousLeSocle: true, largeurMax: 0.34 },
+              ]}
+            />
+          ),
+        };
+      }
       if (a.code === "W-SPORT-02") {
         const callBooking = t.raw("callBooking") as CallBookingMockupContent;
         return {
