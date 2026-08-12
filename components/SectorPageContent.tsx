@@ -26,6 +26,11 @@ export type Automation = {
    *  flagships whose customFlow needs more room to stay legible
    *  (e.g. on-screen disclaimer text in a demo video). */
   wideFlow?: boolean;
+  /** Complement visual on a DEMONSTRATIVE customFlow (gate 64): the mockup
+   *  or video stays served in its column, the 3D scene is ADDED under the
+   *  description in the text column — structurally subordinate (narrower
+   *  row, the mockup keeps its full column). Never set without customFlow. */
+  complementFlow?: React.ReactNode;
 };
 
 export type PainPoint = {
@@ -296,7 +301,11 @@ export default function SectorPageContent({
                       className={
                         wide
                           ? "mt-4 lg:mt-6 lg:max-w-[880px] lg:mx-auto"
-                          : `${flowCol} lg:row-start-1 lg:row-span-2 mt-1 lg:mt-0`
+                          : /* avec un complement, la maquette enjambe les TROIS
+                               rangees : sans cela elle s'arrete a la rangee 2
+                               et la scene s'etale seule sous elle — mesure un
+                               vide de pleine rangee dans la carte. */
+                            `${flowCol} lg:row-start-1 ${a.complementFlow ? "lg:row-span-3" : "lg:row-span-2"} mt-1 lg:mt-0`
                       }
                     >
                       {a.customFlow ?? (
@@ -313,6 +322,19 @@ export default function SectorPageContent({
                   >
                     {a.description}
                   </p>
+                  {a.complementFlow && (
+                    /* max-w-[420px] : la subordination MESUREE du regime
+                       complement — sans plafond, la scene depassait l'aire de
+                       la maquette aux fenetres empilees 901/768/640
+                       (371k/255k/189k px2 contre 185k, mesurer_complement_
+                       sgp.js) ; a 420 px elle reste dessous partout, et le
+                       minimum servi (300 px, fenetre 390) ne bouge pas. */
+                    <div
+                      className={`${wide ? "" : `${textCol} lg:row-start-3`} mt-4 lg:self-start max-w-[420px]`}
+                    >
+                      {a.complementFlow}
+                    </div>
+                  )}
                 </div>
               );
             })}

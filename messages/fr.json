@@ -730,6 +730,10 @@
       "assuranceLabelDossier": "dossier assurance ouvert",
       "assuranceLabelDelais": "délais surveillés automatiquement",
       "assuranceLabelRelance": "l'expert tarde : la relance part seule",
+      "rappelsSceneAlt": "Une petite voiture, une horloge dressée sur son pied, et un trajet en pointillé doré qui part de l'horloge et aboutit à une boîte d'envoi à fente allumée, une enveloppe dressée dessus",
+      "rappelsLabelVehicule": "véhicule suivi : kilométrage et dates",
+      "rappelsLabelEcheance": "l'échéance calculée d'avance",
+      "rappelsLabelRappel": "le rappel part seul — le client n'oublie plus",
       "callBooking": {
         "callerLabel": "Appel entrant",
         "callerNumber": "06 XX XX XX XX",

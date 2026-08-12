@@ -306,9 +306,28 @@ export default async function Page({
           validateButtonLabel: string;
           validateCaption: string;
         };
+        /* Regime COMPLEMENT (gate 64) : la maquette de chat DEMONTRE (le SMS
+           reel, la reponse du client, la reassurance) et RESTE servie ; la
+           scene 3D — qui passe fidelite OUI x2 (lec-sgp01/02) et le choix
+           aveugle ASP — s'AJOUTE sous la description, dans la colonne texte,
+           structurellement subordonnee. Etiquettes de l'iteration 2 (le jeu
+           que la lecture de fidelite lec-sgp02 a lu) ; traits mesures sur le
+           rendu (mesurer_traits_sgp.py), boites et non-concurrence mesurees
+           au navigateur apres integration. */
         return {
           ...a,
           customFlow: <ChatMockup ariaLabel={a.title} content={chat} />,
+          complementFlow: (
+            <SceneSecteur
+              fichier="secteur-garage-rappels"
+              alt={t("rappelsSceneAlt")}
+              etiquettes={[
+                { texte: t("rappelsLabelVehicule"), x: 0.02, y: 0.3, cx: 0.2272, cy: 0.5753, largeurMax: 0.26 },
+                { texte: t("rappelsLabelEcheance"), x: 0.36, y: 0.85, cx: 0.4377, cy: 0.6, sousLeSocle: true, largeurMax: 0.52 },
+                { texte: t("rappelsLabelRappel"), x: 0.98, y: 0.3, cx: 0.7448, cy: 0.3501, largeurMax: 0.36 },
+              ]}
+            />
+          ),
         };
       }
       const kinds = FLOW_KINDS[a.code];

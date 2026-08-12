@@ -730,6 +730,10 @@
       "assuranceLabelDossier": "insurance claim opened",
       "assuranceLabelDelais": "timelines monitored automatically",
       "assuranceLabelRelance": "the expert stalls: the follow-up goes out on its own",
+      "rappelsSceneAlt": "A small car, a clock standing on its foot, and a dotted golden path starting at the clock and ending at a mail-drop box with a lit slot, an envelope standing on top",
+      "rappelsLabelVehicule": "vehicle tracked: mileage and dates",
+      "rappelsLabelEcheance": "the due date is computed in advance",
+      "rappelsLabelRappel": "the reminder goes out on its own — customers stop forgetting",
       "callBooking": {
         "callerLabel": "Incoming call",
         "callerNumber": "06 XX XX XX XX",
