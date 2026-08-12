@@ -579,7 +579,7 @@
       "avisLabelSeance": "session finished",
       "avisLabelDemande": "the review request goes out on its own",
       "avisLabelNote": "good rating: the Google review is published",
-      "avisLabelAlerte": "low rating: you are alerted",
+      "avisLabelAlerte": "low rating: you call back before the review",
       "w0108": [
         "Sessions used automatically tracked",
         "Right timing detected (before the last session)",
@@ -1519,4 +1519,3 @@
     "videoAriaStudio": "Presentation video of a studio flat, made from photographs"
   }
 }
-

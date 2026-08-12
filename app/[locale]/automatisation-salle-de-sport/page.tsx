@@ -264,6 +264,11 @@ export default async function Page({
           ),
         };
       }
+      /* W-SPORT-01 : N RESTE — gate 65, douze lectures, comprehension N
+         12/12 aux deux iterations. Cet AutomationFlow DEMONTRE (cascade
+         causale a boucle en quatre temps) et la scene statique a perdu le
+         gate ; la preuve du refus est au registre de nbhc-broll
+         (fid-ssr01/02, verbatims_ssr_gate65.md). */
       if (a.code === "W-SPORT-02") {
         const callBooking = t.raw("callBooking") as CallBookingMockupContent;
         return {

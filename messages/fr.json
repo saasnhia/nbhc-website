@@ -579,7 +579,7 @@
       "avisLabelSeance": "séance terminée",
       "avisLabelDemande": "la demande d'avis part seule",
       "avisLabelNote": "bonne note : l'avis Google publié",
-      "avisLabelAlerte": "note basse : vous êtes alerté",
+      "avisLabelAlerte": "note basse : vous rappelez avant l'avis",
       "w0108": [
         "Séances consommées suivies automatiquement",
         "Bon moment détecté (avant la dernière séance)",
@@ -1519,4 +1519,3 @@
     "videoAriaStudio": "Vidéo de présentation d'un studio, réalisée à partir de photos"
   }
 }
-
