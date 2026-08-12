@@ -739,6 +739,10 @@
       "avisLabelDemande": "the review request goes out on its own",
       "avisLabelNote": "good rating: the Google review is published",
       "avisLabelAlerte": "low rating: you are alerted",
+      "telephoneSceneAlt": "A twelve-key desk phone with its handset resting on the cradle, a dotted golden path rising to a schedule board on two feet with one glowing golden slot, and a three-line note standing on its plinth in the foreground",
+      "telephoneLabelAppel": "nobody picks up: the assistant answers",
+      "telephoneLabelCreneau": "a real slot from your schedule",
+      "telephoneLabelFiche": "the callback note — you approve",
       "callBooking": {
         "callerLabel": "Incoming call",
         "callerNumber": "06 XX XX XX XX",

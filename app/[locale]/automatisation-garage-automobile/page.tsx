@@ -238,9 +238,26 @@ export default async function Page({
     ...baseContent,
     automations: baseContent.automations.map((a) => {
       if (a.code === "W-AUTO-01") {
+        /* Regime COMPLEMENT (gate 64) : la video de demonstration DEMONTRE et
+           RESTE servie ; la scene 3D s'ajoute sous la description. Gate en
+           absolu (fidelite + ASP + non-concurrence), pas de paires. Traits
+           mesures sur le rendu (mesurer_traits_sgt.py : 137,5 / 58,9 / 29,8
+           px de l'or, plancher 5) ; l'or est au signe positif — le creneau
+           du planning. */
         return {
           ...a,
           customFlow: <DemoVideo name="garage" ariaLabel={a.title} />,
+          complementFlow: (
+            <SceneSecteur
+              fichier="secteur-garage-telephone"
+              alt={t("telephoneSceneAlt")}
+              etiquettes={[
+                { texte: t("telephoneLabelAppel"), x: 0.02, y: 0.3, cx: 0.2513, cy: 0.6038, largeurMax: 0.3 },
+                { texte: t("telephoneLabelCreneau"), x: 0.96, y: 0.22, cx: 0.733, cy: 0.3396, largeurMax: 0.36 },
+                { texte: t("telephoneLabelFiche"), x: 0.68, y: 0.8, cx: 0.6668, cy: 0.5866, sousLeSocle: true, largeurMax: 0.34 },
+              ]}
+            />
+          ),
         };
       }
       if (a.code === "W-AUTO-02") {

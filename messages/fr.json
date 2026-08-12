@@ -739,6 +739,10 @@
       "avisLabelDemande": "la demande d'avis part seule",
       "avisLabelNote": "bonne note : l'avis Google publié",
       "avisLabelAlerte": "note basse : vous êtes alerté",
+      "telephoneSceneAlt": "Un téléphone fixe à douze touches, combiné posé sur son berceau, un trajet en pointillé doré qui monte vers un planning dressé sur deux pieds dont un créneau est doré et lumineux, et une fiche à trois lignes dressée sur son plot au premier plan",
+      "telephoneLabelAppel": "personne ne décroche : l'assistant répond",
+      "telephoneLabelCreneau": "un créneau réel de votre planning",
+      "telephoneLabelFiche": "la fiche de rappel — vous validez",
       "callBooking": {
         "callerLabel": "Appel entrant",
         "callerNumber": "06 XX XX XX XX",
