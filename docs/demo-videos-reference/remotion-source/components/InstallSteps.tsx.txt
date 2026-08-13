@@ -1,0 +1,62 @@
+// Résumé "installation" en 3 pastilles numérotées — montre que la mise en
+// place est simple. Réutilisé par les 3 vidéos n8n (garage/resto/pharmacie).
+
+import React from "react";
+import { interpolate, spring, useVideoConfig } from "remotion";
+import { COLORS, FONTS, SPRINGS } from "../tokens";
+
+type InstallStepsProps = {
+  localFrame: number;
+  steps: string[];
+  revealAt?: number;
+  width?: number;
+};
+
+export const InstallSteps: React.FC<InstallStepsProps> = ({ localFrame, steps, revealAt = 0, width = 740 }) => {
+  const { fps } = useVideoConfig();
+  return (
+    <div
+      style={{
+        width,
+        borderRadius: 20,
+        background: COLORS.glassDark,
+        border: `1px solid ${COLORS.glassDarkBorder}`,
+        boxShadow: "0 16px 40px rgba(0,0,0,0.45)",
+        padding: 34,
+        display: "flex",
+        flexDirection: "column",
+        gap: 18,
+      }}
+    >
+      {steps.map((text, i) => {
+        const rowDelay = revealAt + i * 8;
+        const local = localFrame - rowDelay;
+        if (local < 0) return null;
+        const entrySpring = spring({ frame: local, fps, config: SPRINGS.enter, durationInFrames: 16 });
+        const opacity = interpolate(local, [0, 10], [0, 1], { extrapolateRight: "clamp" });
+        const x = interpolate(entrySpring, [0, 1], [12, 0]);
+        return (
+          <div key={i} style={{ opacity, transform: `translateX(${x}px)`, display: "flex", alignItems: "center", gap: 18 }}>
+            <div
+              style={{
+                width: 36,
+                height: 36,
+                borderRadius: "50%",
+                background: COLORS.accent,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                flexShrink: 0,
+              }}
+            >
+              <span style={{ fontFamily: FONTS.display, fontWeight: 500, fontSize: 17, color: COLORS.pure }}>{i + 1}</span>
+            </div>
+            <span style={{ fontFamily: FONTS.body, fontWeight: 400, fontSize: 22, letterSpacing: "0.005em", color: COLORS.text }}>
+              {text}
+            </span>
+          </div>
+        );
+      })}
+    </div>
+  );
+};

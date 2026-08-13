@@ -1,0 +1,244 @@
+// GATE 1 décision 3 — mockup smartphone générique : appel entrant, sonnerie,
+// bascule vers l'assistant vocal. Aucune marque/OS réel affiché (silhouette
+// générique) — cohérent avec l'interdit "pas de vrai logiciel tiers affiché".
+//
+// Deux phases pilotées par `ringUntil` :
+//   localFrame < ringUntil  → sonnerie (rings pulsés, boutons décrocher/refuser)
+//   localFrame >= ringUntil → non décroché, bascule affichée via PopIn (halo + pill)
+
+import React from "react";
+import { interpolate } from "remotion";
+import { COLORS, FONTS } from "../tokens";
+import { PopIn } from "./PopIn";
+import { SpinnerPulse } from "../../marketing/helpers/SpinnerPulse";
+
+type PhoneCallProps = {
+  localFrame: number;
+  /** Frame at which ringing stops and the missed-call/bascule state begins. */
+  ringUntil: number;
+  callerName?: string;
+  /** Label shown once the call bascule to the AI assistant. */
+  bascuLabel?: string;
+  width?: number;
+};
+
+export const PhoneCall: React.FC<PhoneCallProps> = ({
+  localFrame,
+  ringUntil,
+  callerName = "Client",
+  bascuLabel = "Transféré à l'assistant vocal",
+  width = 360,
+}) => {
+  const height = Math.round(width * 2.05);
+  const isRinging = localFrame < ringUntil;
+
+  // Bascule pill — independent reveal event from the phone's own entrance
+  // (PopIn below handles entrance at revealAt=0; this pill fires separately
+  // at ringUntil, so it can't reuse PopIn's single-reveal-moment timing).
+  const pillOp = interpolate(localFrame, [ringUntil, ringUntil + 14], [0, 1], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+  const pillScale = interpolate(localFrame, [ringUntil, ringUntil + 16], [0.9, 1], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+
+  // Ring pulse loop (only meaningful while ringing) — période allongée
+  // (30->45f) pour une pulsation plus calme, moins mécanique.
+  const ringLoop = localFrame % 45;
+  const ring1 = interpolate(ringLoop, [0, 45], [0, 1], { extrapolateRight: "clamp" });
+  const ring2 = interpolate((ringLoop + 22) % 45, [0, 45], [0, 1], { extrapolateRight: "clamp" });
+  const shake = isRinging ? Math.sin(localFrame / 2.2) * 1 : 0;
+
+  const body = (
+    <div
+      style={{
+        width,
+        height,
+        borderRadius: 42,
+        background: `linear-gradient(160deg, ${COLORS.bgElevated}, ${COLORS.bg})`,
+        border: `2px solid ${COLORS.glassDarkBorder}`,
+        boxShadow: "0 18px 44px rgba(0,0,0,0.4)",
+        position: "relative",
+        overflow: "hidden",
+        transform: `translateX(${shake}px)`,
+      }}
+    >
+      {/* Notch générique */}
+      <div
+        style={{
+          position: "absolute",
+          top: 14,
+          left: "50%",
+          transform: "translateX(-50%)",
+          width: width * 0.28,
+          height: 8,
+          borderRadius: 999,
+          background: "rgba(255,255,255,0.14)",
+        }}
+      />
+
+      {/* Status bar générique (points, pas de vraie heure/opérateur) */}
+      <div
+        style={{
+          position: "absolute",
+          top: 32,
+          left: 24,
+          display: "flex",
+          gap: 4,
+        }}
+      >
+        {[0, 1, 2].map((i) => (
+          <div key={i} style={{ width: 4, height: 4, borderRadius: 999, background: "rgba(255,255,255,0.35)" }} />
+        ))}
+      </div>
+
+      {/* Centre : avatar + rings */}
+      <div
+        style={{
+          position: "absolute",
+          top: height * 0.28,
+          left: "50%",
+          transform: "translateX(-50%)",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: 18,
+        }}
+      >
+        <div style={{ position: "relative", width: 108, height: 108 }}>
+          {isRinging && (
+            <>
+              <div
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                  borderRadius: "50%",
+                  border: `2px solid ${COLORS.accent}`,
+                  opacity: (1 - ring1) * 0.6,
+                  transform: `scale(${1 + ring1 * 0.7})`,
+                }}
+              />
+              <div
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                  borderRadius: "50%",
+                  border: `2px solid ${COLORS.accent}`,
+                  opacity: (1 - ring2) * 0.6,
+                  transform: `scale(${1 + ring2 * 0.7})`,
+                }}
+              />
+            </>
+          )}
+          <div
+            style={{
+              position: "absolute",
+              inset: 0,
+              borderRadius: "50%",
+              background: COLORS.accentSoft,
+              border: `1px solid ${COLORS.accentBorder}`,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <svg width={44} height={44} viewBox="0 0 24 24" fill="none">
+              <circle cx="12" cy="8" r="4" fill={COLORS.text} opacity={0.85} />
+              <path d="M4 20c0-4.4 3.6-7 8-7s8 2.6 8 7" fill={COLORS.text} opacity={0.85} />
+            </svg>
+          </div>
+        </div>
+
+        <div style={{ textAlign: "center" }}>
+          <div style={{ fontFamily: FONTS.display, fontWeight: 500, fontSize: 25, letterSpacing: "0.01em", color: COLORS.text }}>
+            {callerName}
+          </div>
+          <div style={{ fontFamily: FONTS.body, fontWeight: 400, fontSize: 16, letterSpacing: "0.01em", color: COLORS.textMuted, marginTop: 6 }}>
+            {isRinging ? "Appel entrant…" : "Appel non décroché"}
+          </div>
+        </div>
+      </div>
+
+      {/* Boutons décrocher / refuser — visibles uniquement en sonnerie, jamais actionnés (l'appel n'est pas pris) */}
+      {isRinging && (
+        <div
+          style={{
+            position: "absolute",
+            bottom: height * 0.14,
+            left: 0,
+            right: 0,
+            display: "flex",
+            justifyContent: "space-around",
+            padding: "0 36px",
+          }}
+        >
+          <div style={{ width: 54, height: 54, borderRadius: "50%", background: COLORS.negative, display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 6px 18px rgba(239,68,68,0.35)" }}>
+            <svg width={22} height={22} viewBox="0 0 24 24" fill="none"><path d="M4 15l4-2 3 2 2-2 3 2 4-2" stroke={COLORS.pure} strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" transform="rotate(135 12 12)" /></svg>
+          </div>
+          <div style={{ width: 54, height: 54, borderRadius: "50%", background: COLORS.positive, display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 6px 18px rgba(16,185,129,0.35)" }}>
+            <svg width={22} height={22} viewBox="0 0 24 24" fill="none"><path d="M4 15l4-2 3 2 2-2 3 2 4-2" stroke={COLORS.pure} strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" /></svg>
+          </div>
+        </div>
+      )}
+
+      {/* Home indicator générique */}
+      <div
+        style={{
+          position: "absolute",
+          bottom: 12,
+          left: "50%",
+          transform: "translateX(-50%)",
+          width: width * 0.3,
+          height: 4,
+          borderRadius: 999,
+          background: "rgba(255,255,255,0.2)",
+        }}
+      />
+    </div>
+  );
+
+  return (
+    <div style={{ position: "relative" }}>
+      <PopIn localFrame={localFrame} revealAt={0} borderRadius={42}>
+        {body}
+      </PopIn>
+
+      {/* Pill de bascule — apparaît indépendamment à ringUntil, sous le téléphone */}
+      {!isRinging && (
+        <div
+          style={{
+            position: "absolute",
+            left: "50%",
+            bottom: -52,
+            transform: `translateX(-50%) scale(${pillScale})`,
+            opacity: pillOp,
+            padding: "10px 20px",
+            background: "rgba(0,0,0,0.92)",
+            border: `1px solid ${COLORS.accent}`,
+            borderRadius: 999,
+            display: "flex",
+            alignItems: "center",
+            gap: 10,
+            boxShadow: `0 0 16px ${COLORS.accentGlow}`,
+            whiteSpace: "nowrap",
+          }}
+        >
+          <SpinnerPulse localFrame={localFrame} size={16} rotationSpeed={7} color={COLORS.accent} glowColor={COLORS.accentGlow} />
+          <span
+            style={{
+              fontFamily: FONTS.display,
+              fontWeight: 500,
+              fontSize: 15,
+              color: COLORS.accent,
+              letterSpacing: "0.03em",
+            }}
+          >
+            {bascuLabel}
+          </span>
+        </div>
+      )}
+    </div>
+  );
+};
