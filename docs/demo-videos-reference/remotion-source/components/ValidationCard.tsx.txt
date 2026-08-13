@@ -1,0 +1,146 @@
+// GATE 1 décision 3 — la "fiche" qui glisse avec bouton [Valider] + coche.
+// Écrit sur le même pattern d'animation que components/InfoPanel.tsx
+// (spring slide-in depuis la droite, stagger des lignes) mais dédié : ce
+// composant a un état "validé" (coche verte) qu'InfoPanel ne modélise pas.
+// InfoPanel n'est pas modifié — cf HFF_NBHC_DEMOS_GATE1_AUDIT.md §5.
+
+import React from "react";
+import { interpolate, spring, useVideoConfig } from "remotion";
+import { COLORS, FONTS, SPRINGS } from "../tokens";
+
+type ValidationCardProps = {
+  localFrame: number;
+  /** Frame at which the card starts sliding in. */
+  revealAt: number;
+  title: string;
+  /** Key/value lines, e.g. "Client : M. Dupont". */
+  lines: string[];
+  ctaLabel?: string;
+  /**
+   * Frame at which the card flips to "validated" state (coche verte).
+   * Driven externally by the parent scene (e.g. timed with a CursorClick
+   * landing on the button) — ValidationCard doesn't simulate the click itself.
+   */
+  validatedAt?: number;
+  width?: number;
+};
+
+export const ValidationCard: React.FC<ValidationCardProps> = ({
+  localFrame,
+  revealAt,
+  title,
+  lines,
+  ctaLabel = "Valider",
+  validatedAt,
+  width = 560,
+}) => {
+  const { fps } = useVideoConfig();
+  const local = localFrame - revealAt;
+  if (local < 0) return null;
+
+  const entrySpring = spring({ frame: local, fps, config: SPRINGS.enter, durationInFrames: 20 });
+  const translateX = interpolate(entrySpring, [0, 1], [width * 0.6, 0]);
+  const opacity = interpolate(local, [0, 10], [0, 1], { extrapolateRight: "clamp" });
+
+  const isValidated = validatedAt !== undefined && localFrame >= validatedAt;
+  const validatedLocal = isValidated ? localFrame - (validatedAt as number) : 0;
+  const checkScale = interpolate(validatedLocal, [0, 10], [0.6, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const checkOpacity = interpolate(validatedLocal, [0, 6], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+
+  return (
+    <div
+      style={{
+        width,
+        opacity,
+        transform: `translateX(${translateX}px)`,
+        borderRadius: 20,
+        background: COLORS.glassDark,
+        border: `1px solid ${COLORS.glassDarkBorder}`,
+        boxShadow: "0 16px 40px rgba(0,0,0,0.45)",
+        padding: 46,
+      }}
+    >
+      <div
+        style={{
+          fontFamily: FONTS.display,
+          fontWeight: 500,
+          fontSize: 25,
+          letterSpacing: "0.01em",
+          color: COLORS.text,
+          borderBottom: `1px solid ${COLORS.glassDarkBorder}`,
+          paddingBottom: 20,
+          marginBottom: 24,
+        }}
+      >
+        {title}
+      </div>
+
+      <div style={{ display: "flex", flexDirection: "column", gap: 17, marginBottom: 32 }}>
+        {lines.map((line, i) => {
+          const itemDelay = 10 + i * 6;
+          const itemOpacity = interpolate(local, [itemDelay, itemDelay + 8], [0, 1], {
+            extrapolateLeft: "clamp",
+            extrapolateRight: "clamp",
+          });
+          const itemY = interpolate(local, [itemDelay, itemDelay + 8], [10, 0], {
+            extrapolateLeft: "clamp",
+            extrapolateRight: "clamp",
+          });
+          return (
+            <div
+              key={i}
+              style={{
+                opacity: itemOpacity,
+                transform: `translateY(${itemY}px)`,
+                display: "flex",
+                alignItems: "center",
+                gap: 16,
+                fontFamily: FONTS.body,
+                fontWeight: 400,
+                fontSize: 21,
+                letterSpacing: "0.005em",
+                color: COLORS.textMuted,
+              }}
+            >
+              <span style={{ width: 7, height: 7, borderRadius: 3, background: COLORS.textDim, flexShrink: 0 }} />
+              {line}
+            </div>
+          );
+        })}
+      </div>
+
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "flex-end",
+        }}
+      >
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: 11,
+            padding: "15px 32px",
+            borderRadius: 999,
+            background: isValidated ? COLORS.accentSoft : COLORS.accent,
+            border: `1px solid ${COLORS.accent}`,
+            transform: isValidated ? `scale(${checkScale})` : "scale(1)",
+          }}
+        >
+          {isValidated ? (
+            <>
+              <span style={{ opacity: checkOpacity, color: COLORS.accent, fontSize: 19, fontWeight: 600 }}>✓</span>
+              <span style={{ fontFamily: FONTS.display, fontWeight: 500, fontSize: 18, letterSpacing: "0.01em", color: COLORS.accent }}>
+                Validé
+              </span>
+            </>
+          ) : (
+            <span style={{ fontFamily: FONTS.display, fontWeight: 500, fontSize: 18, letterSpacing: "0.01em", color: COLORS.pure }}>
+              {ctaLabel}
+            </span>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};

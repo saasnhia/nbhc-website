@@ -1,0 +1,42 @@
+// Petit badge de statut (pill accent-bordée, icône + libellé, fade+scale-in).
+// Extrait du motif répété 3x (bascule PhoneCall, DraftBadge devis, "Dossier
+// complet" Qualiopi) — un seul accent, cohérent avec le reste du moule.
+
+import React from "react";
+import { interpolate } from "remotion";
+import { COLORS, FONTS } from "../tokens";
+
+type StatusBadgeProps = {
+  localFrame: number;
+  revealAt: number;
+  label: string;
+  icon: React.ReactNode;
+};
+
+export const StatusBadge: React.FC<StatusBadgeProps> = ({ localFrame, revealAt, label, icon }) => {
+  const local = localFrame - revealAt;
+  if (local < 0) return null;
+  const opacity = interpolate(local, [0, 10], [0, 1], { extrapolateRight: "clamp" });
+  const scale = interpolate(local, [0, 10], [0.85, 1], { extrapolateRight: "clamp" });
+  return (
+    <div
+      style={{
+        opacity,
+        transform: `scale(${scale})`,
+        display: "flex",
+        alignItems: "center",
+        gap: 14,
+        padding: "17px 30px",
+        borderRadius: 999,
+        background: "rgba(0,0,0,0.92)",
+        border: `1px solid ${COLORS.accent}`,
+        boxShadow: `0 0 16px ${COLORS.accentGlow}`,
+      }}
+    >
+      {icon}
+      <span style={{ fontFamily: FONTS.display, fontWeight: 500, fontSize: 20, letterSpacing: "0.01em", color: COLORS.accent }}>
+        {label}
+      </span>
+    </div>
+  );
+};

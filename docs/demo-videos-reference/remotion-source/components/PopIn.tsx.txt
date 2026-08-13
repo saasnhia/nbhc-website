@@ -1,0 +1,205 @@
+// GATE 1 décision 1 — fork de worker/remotion/marketing/helpers/VideoPopIn.tsx.
+// Même logique d'animation (halo decay + status pill + particle accent) mais
+// couleurs passées en props au lieu d'un import figé sur la palette "cosmic
+// dark" (lavender/lime) des pubs Vlogyz. Défaut = accent nbhc.fr (#5B5BD6)
+// + vert positif pour l'état "validé". Le fichier original n'est pas modifié.
+//
+// SpinnerPulse est réutilisé tel quel (worker/remotion/marketing/helpers) —
+// il a été étendu avec des props color/glowColor optionnelles et
+// rétrocompatibles pour permettre ce repalettage sans dupliquer son code.
+
+import React from "react";
+import { interpolate } from "remotion";
+import { COLORS, FONTS } from "../tokens";
+import { SpinnerPulse } from "../../marketing/helpers/SpinnerPulse";
+
+export type PopInVariant = "analyzing" | "live" | "generated";
+
+type Props = {
+  children: React.ReactNode;
+  localFrame: number;
+  revealAt: number;
+  /** Status pill text. If null/undefined, no pill rendered. */
+  statusText?: string | null;
+  statusVariant?: PopInVariant;
+  particleAccent?: boolean;
+  /** Halo glow color as an "R,G,B" triplet (no rgba() wrapper). Default = accent. */
+  glowRgb?: string;
+  /** Accent color for "analyzing"/"live" pill border+text. Default nbhc accent. */
+  accentColor?: string;
+  /** Color for "generated" (validé) pill border+text+check. Default nbhc positive green. */
+  positiveColor?: string;
+  /** Container border-radius (default 22 to match phone-mockup inner screen) */
+  borderRadius?: number;
+};
+
+export const PopIn: React.FC<Props> = ({
+  children,
+  localFrame,
+  revealAt,
+  statusText = null,
+  statusVariant = "live",
+  particleAccent = false,
+  glowRgb = "10,132,255",
+  accentColor = COLORS.accent,
+  positiveColor = COLORS.positive,
+  borderRadius = 22,
+}) => {
+  const isDone = statusVariant === "generated";
+  const pillColor = isDone ? positiveColor : accentColor;
+
+  // Scale entry — overshoot for hero reveals, soft pop-in otherwise
+  const scale = particleAccent
+    ? interpolate(localFrame, [revealAt, revealAt + 12, revealAt + 20], [0.85, 1.05, 1.0], {
+        extrapolateLeft: "clamp",
+        extrapolateRight: "clamp",
+      })
+    : interpolate(localFrame, [revealAt, revealAt + 15], [0.92, 1.0], {
+        extrapolateLeft: "clamp",
+        extrapolateRight: "clamp",
+      });
+
+  // Glow halo decay : initial bigger + brighter → settles smaller + dimmer over 20f
+  // Halo réduit (anti "AI slop" — cf recherche design, glow néon = tell IA) :
+  // pic 48→24px, alpha 0.55→0.3, un repère discret plutôt qu'une aura.
+  const haloSize = interpolate(localFrame, [revealAt, revealAt + 6, revealAt + 20], [0, 24, 8], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+  const haloAlpha = interpolate(localFrame, [revealAt, revealAt + 6, revealAt + 20], [0, 0.3, 0.14], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+
+  // Inner content reveal — children fade-in AFTER frame established
+  const innerOp = interpolate(localFrame, [revealAt + 4, revealAt + 12], [0, 1], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+
+  // Status pill entry — delayed ~12f after card visible, opacity + scale spring
+  const pillEntryStart = revealAt + 12;
+  const pillOp = interpolate(localFrame, [pillEntryStart, pillEntryStart + 8], [0, 1], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+  const pillScale = interpolate(localFrame, [pillEntryStart, pillEntryStart + 10], [0.8, 1.0], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+  // Sustained subtle pulse 0.85→1.0 sine cycle (skipped once validé — reste stable)
+  const pillPulse = isDone ? 1 : 0.85 + 0.15 * Math.abs(Math.sin(localFrame / 8));
+
+  // Particle accent — 6 SVG circles staggered scattered around card
+  const particles = particleAccent
+    ? [
+        { angle: 0, distance: 0.55, r: 4, delay: 0 },
+        { angle: 60, distance: 0.62, r: 3, delay: 3 },
+        { angle: 120, distance: 0.48, r: 5, delay: 6 },
+        { angle: 180, distance: 0.58, r: 3, delay: 9 },
+        { angle: 240, distance: 0.65, r: 4, delay: 12 },
+        { angle: 300, distance: 0.5, r: 3, delay: 15 },
+      ]
+    : [];
+
+  return (
+    <div
+      style={{
+        position: "relative",
+        display: "inline-block",
+        transform: `scale(${scale})`,
+        transformOrigin: "center",
+      }}
+    >
+      {/* Container with halo decay glow */}
+      <div
+        style={{
+          position: "relative",
+          borderRadius,
+          overflow: "hidden",
+          boxShadow: `0 0 ${haloSize}px rgba(${glowRgb},${haloAlpha}), 0 12px 28px rgba(0,0,0,0.55)`,
+        }}
+      >
+        {/* Inner content fade-in */}
+        <div style={{ opacity: innerOp }}>{children}</div>
+
+        {/* Status pill overlay bottom-center */}
+        {statusText && (
+          <div
+            style={{
+              position: "absolute",
+              left: "50%",
+              bottom: 14,
+              transform: `translateX(-50%) scale(${pillScale})`,
+              opacity: pillOp * pillPulse,
+              padding: "6px 14px",
+              background: "rgba(0,0,0,0.92)",
+              border: `1px solid ${pillColor}`,
+              borderRadius: 999,
+              display: "flex",
+              alignItems: "center",
+              gap: 8,
+              boxShadow: `0 0 16px ${isDone ? COLORS.positiveGlow : COLORS.accentGlow}`,
+            }}
+          >
+            {(statusVariant === "live" || statusVariant === "analyzing") && (
+              <SpinnerPulse
+                localFrame={localFrame}
+                size={14}
+                rotationSpeed={10}
+                color={accentColor}
+                glowColor={COLORS.accentGlow}
+              />
+            )}
+            {isDone && (
+              <span style={{ color: positiveColor, fontSize: 12, fontWeight: 900 }}>✓</span>
+            )}
+            <span
+              style={{
+                fontFamily: FONTS.display,
+                fontWeight: 700,
+                fontSize: 12,
+                color: pillColor,
+                letterSpacing: "0.08em",
+                textTransform: "uppercase",
+                whiteSpace: "nowrap",
+              }}
+            >
+              {statusText}
+            </span>
+          </div>
+        )}
+      </div>
+
+      {/* Particle accent (hero reveals) */}
+      {particleAccent &&
+        particles.map((p, i) => {
+          const rotateDeg = (localFrame * 1.5 + p.angle) % 360;
+          const rad = (rotateDeg * Math.PI) / 180;
+          const dx = Math.cos(rad) * 50 * p.distance;
+          const dy = Math.sin(rad) * 50 * p.distance;
+          const particleOp =
+            0.4 + 0.6 * Math.abs(Math.sin((localFrame + p.delay * 2) / 8));
+          return (
+            <div
+              key={i}
+              style={{
+                position: "absolute",
+                top: "50%",
+                left: "50%",
+                width: p.r * 2,
+                height: p.r * 2,
+                borderRadius: 999,
+                background: accentColor,
+                transform: `translate(calc(-50% + ${dx}vh), calc(-50% + ${dy}vh))`,
+                opacity: particleOp * innerOp,
+                boxShadow: `0 0 ${p.r * 3}px ${accentColor}`,
+                pointerEvents: "none",
+                zIndex: 5,
+              }}
+            />
+          );
+        })}
+    </div>
+  );
+};

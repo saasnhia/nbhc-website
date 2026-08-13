@@ -1,0 +1,32 @@
+// Polish "Apple" — logo détouré partagé, utilisé sous le bénéfice final de
+// chaque famille. Extrait de families/AdNbhcPhoneFamily (garage, validé).
+// Source : worker/nbhc-assets/nbhc-logo-cutout.png (détourage validé).
+
+import React from "react";
+import { Img, interpolate, staticFile } from "remotion";
+
+const LOGO_WIDTH = 280;
+const LOGO_HEIGHT = Math.round(LOGO_WIDTH * (76 / 252)); // ratio natif 252x76
+
+type NbhcLogoProps = {
+  localFrame: number;
+  /** Frame à laquelle le logo commence à apparaître (défaut 42 — après stabilisation du texte MegaCapsFinale). */
+  revealAt?: number;
+};
+
+export const NbhcLogo: React.FC<NbhcLogoProps> = ({ localFrame, revealAt = 42 }) => {
+  const opacity = interpolate(localFrame, [revealAt, revealAt + 12], [0, 1], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+  const y = interpolate(localFrame, [revealAt, revealAt + 12], [10, 0], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+  return (
+    <Img
+      src={staticFile("nbhc-logo-cutout.png")}
+      style={{ width: LOGO_WIDTH, height: LOGO_HEIGHT, opacity, transform: `translateY(${y}px)` }}
+    />
+  );
+};

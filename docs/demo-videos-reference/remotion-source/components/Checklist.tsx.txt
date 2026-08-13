@@ -1,0 +1,134 @@
+// GATE 1 décision 3 — checklist dont les lignes se cochent une à une.
+// Écrit sur le même pattern de stagger reveal que components/ListReveal.tsx
+// mais dédié : ce composant a un état "coché" par item (case vide → remplie
+// + coche dessinée) que ListReveal ne modélise pas. ListReveal n'est pas
+// modifié — cf HFF_NBHC_DEMOS_GATE1_AUDIT.md §5.
+
+import React from "react";
+import { interpolate } from "remotion";
+import { COLORS, FONTS } from "../tokens";
+
+export type ChecklistItemSpec = {
+  label: string;
+  /** Frame at which this item's checkbox fills in. */
+  checkAt: number;
+};
+
+type ChecklistProps = {
+  localFrame: number;
+  title?: string;
+  items: ChecklistItemSpec[];
+  /** Frame at which the list itself starts appearing (rows stagger from here). */
+  revealAt?: number;
+  width?: number;
+};
+
+const CheckRow: React.FC<{ item: ChecklistItemSpec; localFrame: number; revealAt: number; index: number }> = ({
+  item,
+  localFrame,
+  revealAt,
+  index,
+}) => {
+  const rowDelay = revealAt + index * 8;
+  const rowOpacity = interpolate(localFrame, [rowDelay, rowDelay + 10], [0, 1], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+  const rowY = interpolate(localFrame, [rowDelay, rowDelay + 10], [14, 0], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+
+  const isChecked = localFrame >= item.checkAt;
+  const checkLocal = isChecked ? localFrame - item.checkAt : 0;
+  const fillScale = interpolate(checkLocal, [0, 8], [0.5, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const strokeDash = interpolate(checkLocal, [3, 11], [16, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+
+  return (
+    <div
+      style={{
+        opacity: rowOpacity,
+        transform: `translateY(${rowY}px)`,
+        display: "flex",
+        alignItems: "center",
+        gap: 14,
+        padding: "10px 0",
+      }}
+    >
+      <div
+        style={{
+          width: 34,
+          height: 34,
+          borderRadius: 10,
+          flexShrink: 0,
+          border: `2px solid ${isChecked ? COLORS.accent : COLORS.textDim}`,
+          background: isChecked ? COLORS.accent : "transparent",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          transform: isChecked ? `scale(${fillScale})` : "scale(1)",
+        }}
+      >
+        {isChecked && (
+          <svg width={20} height={20} viewBox="0 0 16 16" fill="none">
+            <path
+              d="M3 8.5L6.2 11.5L13 4.5"
+              stroke={COLORS.pure}
+              strokeWidth={2.4}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeDasharray={16}
+              strokeDashoffset={strokeDash}
+            />
+          </svg>
+        )}
+      </div>
+      <span
+        style={{
+          fontFamily: FONTS.body,
+          fontWeight: 400,
+          fontSize: 24,
+          letterSpacing: "0.005em",
+          color: isChecked ? COLORS.text : COLORS.textMuted,
+        }}
+      >
+        {item.label}
+      </span>
+    </div>
+  );
+};
+
+export const Checklist: React.FC<ChecklistProps> = ({ localFrame, title, items, revealAt = 0, width = 640 }) => {
+  return (
+    <div
+      style={{
+        width,
+        borderRadius: 20,
+        background: COLORS.glassDark,
+        border: `1px solid ${COLORS.glassDarkBorder}`,
+        boxShadow: "0 16px 40px rgba(0,0,0,0.45)",
+        padding: 42,
+      }}
+    >
+      {title && (
+        <div
+          style={{
+            fontFamily: FONTS.display,
+            fontWeight: 500,
+            fontSize: 24,
+            letterSpacing: "0.01em",
+            color: COLORS.text,
+            marginBottom: 22,
+          }}
+        >
+          {title}
+        </div>
+      )}
+      <div style={{ display: "flex", flexDirection: "column" }}>
+        {items.map((item, i) => (
+          <CheckRow key={i} item={item} localFrame={localFrame} revealAt={revealAt} index={i} />
+        ))}
+      </div>
+    </div>
+  );
+};

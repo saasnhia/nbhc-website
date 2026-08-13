@@ -1,0 +1,42 @@
+// Polish "Apple" — accroche partagée : une phrase centrée qui pose le
+// problème avant la démo, puis s'efface. Extrait de families/AdNbhcPhoneFamily
+// (garage, validé) pour être réutilisé à l'identique par toutes les familles
+// nbhc — même typo, même timing, même easing.
+
+import React from "react";
+import { AbsoluteFill, interpolate, spring, useCurrentFrame, useVideoConfig } from "remotion";
+import { COLORS, FONTS, SPRINGS } from "../tokens";
+import { edgeFade } from "../sceneFade";
+
+type HookTitleProps = {
+  text: string;
+  fontSize?: number;
+  /** Durée de la Sequence parente (pour le fondu de sortie). Défaut 60f, le standard des 5 familles. */
+  durationInFrames?: number;
+};
+
+export const HookTitle: React.FC<HookTitleProps> = ({ text, fontSize = 66, durationInFrames = 60 }) => {
+  const frame = useCurrentFrame();
+  const { fps } = useVideoConfig();
+  const opacity = edgeFade(frame, durationInFrames);
+  const entrySpring = spring({ frame, fps, config: SPRINGS.gentle, durationInFrames: 26 });
+  const scale = interpolate(entrySpring, [0, 1], [0.96, 1]);
+  return (
+    <AbsoluteFill style={{ alignItems: "center", justifyContent: "center", opacity, padding: "0 260px" }}>
+      <div
+        style={{
+          transform: `scale(${scale})`,
+          fontFamily: FONTS.display,
+          fontWeight: 500,
+          fontSize,
+          lineHeight: 1.35,
+          textAlign: "center",
+          color: COLORS.accent,
+          letterSpacing: "0.005em",
+        }}
+      >
+        {text}
+      </div>
+    </AbsoluteFill>
+  );
+};

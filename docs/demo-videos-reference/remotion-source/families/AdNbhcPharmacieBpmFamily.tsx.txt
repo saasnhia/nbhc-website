@@ -1,0 +1,291 @@
+// Vidéo 3 — PHARMACIE/MÉDICAL : détection BPM. Reprend le scénario validé
+// dans HFF_NBHC_FAMILLE4_SCENARIO.md, enrichi du workflow n8n + logiciels +
+// parcours installation, SANS jamais afficher de donnée de santé réelle.
+//
+// GARDE-FOUS (repris tels quels du scénario validé, non négociables) :
+// - initiales fictives uniquement, jamais de nom complet
+// - critères mentionnés génériquement (règle, pas donnée individuelle)
+// - "Aucun message envoyé sans votre accord" visible en permanence pendant
+//   la validation, pas juste sous-entendu
+// - validation humaine sélective : le pharmacien coche, ne coche pas tout
+//   (2 lignes sur 5 restent volontairement non cochées à l'écran)
+// - aucun logiciel tiers réel affiché à l'écran hors bandeau "compatible avec"
+// - ton sobre, pas de dramatisation (pas de rouge alarmant, pas de clignotement)
+//
+// 7 Sequences (720f/24s @30fps) :
+//   S0 (0-60)     Accroche
+//   S1 (60-210)   Votre fichier patients + critères d'éligibilité
+//   S2 (210-360)  Workflow n8n + bandeau sécurité (permanent)
+//   S3 (360-450)  Logiciels connectés
+//   S4 (450-600)  Checklist + validation sélective + bandeau consentement (permanent)
+//   S5 (600-660)  Installation en 3 étapes
+//   S6 (660-720)  MegaCapsFinale + logo
+
+import React from "react";
+import { AbsoluteFill, interpolate, Sequence, useCurrentFrame } from "remotion";
+import { COLORS, FONTS, SPRINGS } from "../tokens";
+import { Checklist } from "../components/Checklist";
+import { StatusBadge } from "../components/StatusBadge";
+import { N8nCanvas } from "../components/N8nCanvas";
+import { SoftwareBadges } from "../components/SoftwareBadges";
+import { InstallSteps } from "../components/InstallSteps";
+import { CursorClick } from "../../components/CursorClick";
+import { MegaCapsFinale } from "../../marketing/helpers/MegaCapsFinale";
+import { HookTitle } from "../components/HookTitle";
+import { NbhcLogo } from "../components/NbhcLogo";
+import { ListIcon, SparkIcon, SendIcon, ShieldIcon } from "../icons";
+import { edgeFade } from "../sceneFade";
+
+const SceneHook: React.FC = () => <HookTitle text="Combien de patients éligibles au bilan partagé, sans le savoir ?" />;
+
+// ─────────────────────────────────────────────────────────────────────
+// S1 — Liste patients (initiales uniquement) + critères d'éligibilité
+// ─────────────────────────────────────────────────────────────────────
+const PATIENT_ROWS = [
+  { label: "M. D. · 62 ans", eligible: false },
+  { label: "Mme R. · 71 ans", eligible: true },
+  { label: "J. P. · 45 ans", eligible: false },
+  { label: "A. K. · 68 ans", eligible: true },
+  { label: "Mme L. · 74 ans", eligible: true },
+  { label: "M. T. · 55 ans", eligible: false },
+  { label: "Mme B. · 69 ans", eligible: false },
+  { label: "M. F. · 80 ans", eligible: true },
+];
+
+const SceneListe: React.FC = () => {
+  const frame = useCurrentFrame();
+  const opacity = edgeFade(frame, 150);
+  const highlightOn = frame >= 90;
+  const captionOpacity = interpolate(frame, [100, 115], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const criteriaOpacity = interpolate(frame, [118, 133], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+
+  return (
+    <AbsoluteFill style={{ alignItems: "center", justifyContent: "center", opacity }}>
+      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 20 }}>
+        <div
+          style={{
+            width: 560,
+            borderRadius: 20,
+            background: COLORS.glassDark,
+            border: `1px solid ${COLORS.glassDarkBorder}`,
+            boxShadow: "0 16px 40px rgba(0,0,0,0.45)",
+            padding: 38,
+          }}
+        >
+          <div style={{ fontFamily: FONTS.display, fontWeight: 500, fontSize: 22, letterSpacing: "0.01em", color: COLORS.text, marginBottom: 18 }}>
+            Patientèle
+          </div>
+          {PATIENT_ROWS.map((row, i) => {
+            const rowDelay = i * 6;
+            const local = frame - rowDelay;
+            if (local < 0) return null;
+            const rowOpacity = interpolate(local, [0, 8], [0, 1], { extrapolateRight: "clamp" });
+            const isHighlighted = highlightOn && row.eligible;
+            const highlightT = interpolate(frame, [90, 100], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+            return (
+              <div
+                key={row.label}
+                style={{
+                  opacity: rowOpacity,
+                  padding: "11px 16px",
+                  margin: "3px 0",
+                  borderRadius: 8,
+                  border: `1px solid ${isHighlighted ? COLORS.accent : "transparent"}`,
+                  background: isHighlighted ? `rgba(10,132,255,${0.12 * highlightT})` : "transparent",
+                  fontFamily: FONTS.body,
+                  fontWeight: 400,
+                  fontSize: 20,
+                  color: isHighlighted ? COLORS.text : COLORS.textMuted,
+                }}
+              >
+                {row.label}
+              </div>
+            );
+          })}
+        </div>
+        <span
+          style={{
+            opacity: captionOpacity,
+            fontFamily: FONTS.display,
+            fontWeight: 500,
+            fontSize: 21,
+            letterSpacing: "0.01em",
+            color: COLORS.accent,
+          }}
+        >
+          Éligible au bilan partagé de médication
+        </span>
+        <span
+          style={{
+            opacity: criteriaOpacity,
+            fontFamily: FONTS.body,
+            fontWeight: 400,
+            fontSize: 18,
+            color: COLORS.textDim,
+          }}
+        >
+          Critères : 65 ans et +, 5 traitements chroniques ou plus
+        </span>
+      </div>
+    </AbsoluteFill>
+  );
+};
+
+// ─────────────────────────────────────────────────────────────────────
+// S2 — Workflow n8n + bandeau sécurité permanent
+// ─────────────────────────────────────────────────────────────────────
+const WORKFLOW_NODES = [
+  // CORRIGE AU GATE 82 : « Liste patients anonymisée » affirmait une
+  // anonymisation prealable au traitement LLM, ce que NBHC ne fait pas et ne
+  // promet pas. Le noeud dit maintenant ce qui entre reellement.
+  { label: "Votre fichier patients", icon: <ListIcon /> },
+  { label: "IA : repère les critères d'éligibilité BPM", icon: <SparkIcon /> },
+  { label: "Génère la liste d'actions", icon: <SendIcon /> },
+];
+const WORKFLOW_ACTIVATE_AT = [0, 55, 110];
+
+const SceneWorkflow: React.FC = () => {
+  const frame = useCurrentFrame();
+  const opacity = edgeFade(frame, 150);
+  return (
+    <AbsoluteFill style={{ alignItems: "center", justifyContent: "center", opacity }}>
+      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 36 }}>
+        <N8nCanvas localFrame={frame} nodes={WORKFLOW_NODES} activateAt={WORKFLOW_ACTIVATE_AT} />
+        <StatusBadge
+          localFrame={frame}
+          revealAt={10}
+          // CORRIGE AU GATE 82. L'ancien libelle etait :
+          //   « Donnees traitees de facon securisee. Aucune donnee medicale affichee. »
+          // Deux formules interdites depuis le premier gate : une allegation de
+          // securite vague, et le sous-entendu d'une anonymisation prealable.
+          // La regle NBHC est un FAIT VERIFIABLE, pas une promesse : n8n en
+          // Allemagne, Mistral en UE. C'est ce que dit desormais le bandeau.
+          label="n8n en Allemagne, Mistral en UE — les données ne quittent pas l'Union."
+          icon={<span style={{ color: COLORS.accent, display: "flex" }}><ShieldIcon /></span>}
+        />
+      </div>
+    </AbsoluteFill>
+  );
+};
+
+const SceneLogiciels: React.FC = () => {
+  const frame = useCurrentFrame();
+  const opacity = edgeFade(frame, 90);
+  return (
+    <AbsoluteFill style={{ alignItems: "center", justifyContent: "center", opacity }}>
+      <SoftwareBadges localFrame={frame} heading="Compatible avec votre logiciel officine" names={["Winpharma", "LGPI"]} />
+    </AbsoluteFill>
+  );
+};
+
+// ─────────────────────────────────────────────────────────────────────
+// S4 — Checklist + validation sélective + bandeau consentement permanent
+// ─────────────────────────────────────────────────────────────────────
+const CHECK_ITEMS = [
+  { label: "M. D.", checkAt: 40 },
+  { label: "Mme R.", checkAt: 70 },
+  { label: "A. K.", checkAt: 9999 }, // volontairement jamais coché — sélectivité humaine
+  { label: "Mme L.", checkAt: 100 },
+  { label: "M. T.", checkAt: 9999 }, // volontairement jamais coché
+];
+
+const SceneChecklist: React.FC = () => {
+  const frame = useCurrentFrame();
+  const opacity = edgeFade(frame, 150);
+  return (
+    <AbsoluteFill style={{ alignItems: "center", justifyContent: "center", opacity }}>
+      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 22 }}>
+        <Checklist
+          localFrame={frame}
+          title="12 patients à contacter pour un bilan partagé de médication"
+          revealAt={0}
+          items={CHECK_ITEMS}
+          width={700}
+        />
+        <StatusBadge
+          localFrame={frame}
+          revealAt={0}
+          label="Aucun message envoyé sans votre accord."
+          icon={<span style={{ color: COLORS.accent, fontSize: 20 }}>✓</span>}
+        />
+      </div>
+      <Sequence from={25} durationInFrames={30}>
+        <CursorClick
+          target_x={38}
+          target_y={44}
+          origin="left"
+          durationInFrames={30}
+          entry_ms={400}
+          click_at_ms={500}
+          cursor_style="arrow"
+          accent_color={COLORS.accent}
+          size_multiplier={0.9}
+          ripple_on_click={true}
+          exit_strategy="fade"
+        />
+      </Sequence>
+    </AbsoluteFill>
+  );
+};
+
+const SceneInstall: React.FC = () => {
+  const frame = useCurrentFrame();
+  const opacity = edgeFade(frame, 60);
+  return (
+    <AbsoluteFill style={{ alignItems: "center", justifyContent: "center", opacity }}>
+      <InstallSteps
+        localFrame={frame}
+        steps={["On connecte votre logiciel officine", "L'IA repère les éligibles", "Vous décidez qui contacter"]}
+      />
+    </AbsoluteFill>
+  );
+};
+
+const SceneCta: React.FC = () => {
+  const frame = useCurrentFrame();
+  const opacity = interpolate(frame, [0, 10], [0, 1], { extrapolateRight: "clamp" });
+  return (
+    <AbsoluteFill style={{ alignItems: "center", justifyContent: "center", opacity }}>
+      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 40 }}>
+        <MegaCapsFinale
+          line1="Vous ne passez plus"
+          line2="à côté d'un patient éligible."
+          localFrame={frame}
+          line1Size={82}
+          line2Size={40}
+          line1Color={COLORS.accent}
+          line2Color={COLORS.text}
+        />
+        <NbhcLogo localFrame={frame} />
+      </div>
+    </AbsoluteFill>
+  );
+};
+
+export const AdNbhcPharmacieBpmFamily: React.FC = () => {
+  return (
+    <AbsoluteFill style={{ background: `radial-gradient(ellipse at center, ${COLORS.bgElevated} 0%, ${COLORS.bg} 100%)` }}>
+      <Sequence from={0} durationInFrames={60}>
+        <SceneHook />
+      </Sequence>
+      <Sequence from={60} durationInFrames={150}>
+        <SceneListe />
+      </Sequence>
+      <Sequence from={210} durationInFrames={150}>
+        <SceneWorkflow />
+      </Sequence>
+      <Sequence from={360} durationInFrames={90}>
+        <SceneLogiciels />
+      </Sequence>
+      <Sequence from={450} durationInFrames={150}>
+        <SceneChecklist />
+      </Sequence>
+      <Sequence from={600} durationInFrames={60}>
+        <SceneInstall />
+      </Sequence>
+      <Sequence from={660} durationInFrames={60}>
+        <SceneCta />
+      </Sequence>
+    </AbsoluteFill>
+  );
+};

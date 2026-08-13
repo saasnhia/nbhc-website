@@ -1,0 +1,122 @@
+// GATE 1 décision 3 — bulle de conversation vocale IA ↔ client. Tour par
+// tour, IA à gauche (accent), client à droite (neutre). Petite icône
+// waveform pulsée pendant ~20f après l'apparition pour suggérer la voix
+// (pas de vrai son — vidéos muettes par conception).
+
+import React from "react";
+import { interpolate, spring, useVideoConfig } from "remotion";
+import { COLORS, FONTS, SPRINGS } from "../tokens";
+
+export type VoiceTurn = {
+  speaker: "ia" | "client";
+  text: string;
+  /** Frame at which this turn starts appearing. */
+  revealAt: number;
+};
+
+type VoiceBubbleProps = {
+  localFrame: number;
+  turns: VoiceTurn[];
+  width?: number;
+};
+
+const Waveform: React.FC<{ localFrame: number; active: boolean; color: string }> = ({ localFrame, active, color }) => {
+  const bars = [0, 1, 2, 3];
+  return (
+    <div style={{ display: "flex", alignItems: "center", gap: 3, height: 18 }}>
+      {bars.map((i) => {
+        const h = active ? 5 + Math.abs(Math.sin(localFrame / 3 + i * 1.3)) * 13 : 5;
+        return (
+          <div
+            key={i}
+            style={{
+              width: 4,
+              height: h,
+              borderRadius: 2,
+              background: color,
+              opacity: active ? 1 : 0.4,
+            }}
+          />
+        );
+      })}
+    </div>
+  );
+};
+
+const Bubble: React.FC<{ turn: VoiceTurn; localFrame: number; fps: number; hideAt?: number }> = ({
+  turn,
+  localFrame,
+  fps,
+  hideAt,
+}) => {
+  const isIa = turn.speaker === "ia";
+  const local = localFrame - turn.revealAt;
+  if (local < 0) return null;
+
+  const entrySpring = spring({ frame: local, fps, config: SPRINGS.enter, durationInFrames: 20 });
+  const translateX = interpolate(entrySpring, [0, 1], [isIa ? -20 : 20, 0]);
+  const entryOpacity = interpolate(local, [0, 14], [0, 1], { extrapolateRight: "clamp" });
+  // Polish "Apple" — une idée à la fois : les bulles plus anciennes que
+  // l'avant-dernière s'effacent doucement au lieu de s'empiler à l'écran.
+  const exitOpacity =
+    hideAt !== undefined
+      ? interpolate(localFrame, [hideAt, hideAt + 16], [1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" })
+      : 1;
+  const opacity = entryOpacity * exitOpacity;
+  const scale = interpolate(entrySpring, [0, 1], [0.96, 1]);
+  const waveformActive = local >= 0 && local < 22;
+
+  const accentColor = isIa ? COLORS.accent : COLORS.textMuted;
+  const bg = isIa ? COLORS.accentSoft : COLORS.glassDark;
+  const border = isIa ? COLORS.accentBorder : COLORS.glassDarkBorder;
+
+  return (
+    <div
+      style={{
+        display: "flex",
+        justifyContent: isIa ? "flex-start" : "flex-end",
+        opacity,
+        transform: `translateX(${translateX}px) scale(${scale})`,
+      }}
+    >
+      <div
+        style={{
+          maxWidth: "70%",
+          display: "flex",
+          alignItems: "center",
+          gap: 16,
+          padding: "25px 34px",
+          borderRadius: isIa ? "6px 28px 28px 28px" : "28px 6px 28px 28px",
+          background: bg,
+          border: `1px solid ${border}`,
+          boxShadow: "0 6px 20px rgba(0,0,0,0.35)",
+        }}
+      >
+        <Waveform localFrame={localFrame} active={waveformActive} color={accentColor} />
+        <span
+          style={{
+            fontFamily: FONTS.body,
+            fontWeight: 400,
+            fontSize: 28,
+            letterSpacing: "0.005em",
+            color: COLORS.text,
+            lineHeight: 1.4,
+          }}
+        >
+          {turn.text}
+        </span>
+      </div>
+    </div>
+  );
+};
+
+export const VoiceBubble: React.FC<VoiceBubbleProps> = ({ localFrame, turns, width = 1040 }) => {
+  const { fps } = useVideoConfig();
+  return (
+    <div style={{ width, display: "flex", flexDirection: "column", gap: 28 }}>
+      {turns.map((turn, i) => (
+        <Bubble key={i} turn={turn} localFrame={localFrame} fps={fps} hideAt={turns[i + 2]?.revealAt} />
+      ))}
+    </div>
+  );
+};
