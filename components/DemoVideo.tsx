@@ -2,16 +2,14 @@
 
 import { useEffect, useRef } from "react";
 
-export type DemoVideoName =
-  | "garage"
-  | "restaurant"
-  | "pharmacie"
-  | "coiffure"
-  | "opticien"
-  | "btp"
-  | "formation"
-  | "cosmetique"
-  | "sport";
+/* LE TYPE NE DECLARE QUE CE QUI EXISTE (gate 81).
+   Il listait NEUF secteurs pour TROIS fichiers : `<DemoVideo name="btp" />`
+   compilait sans erreur, affichait un poster et demandait un `.mp4` absent —
+   un 404 silencieux qu'aucun test n'aurait attrape. Un type qui autorise un
+   appel impossible ne protege rien.
+   `pharmacie` sort en plus : sa video portait la mention interdite (voir
+   INVENTAIRE_VIDEOS.md et le commentaire de W-PH-01). */
+export type DemoVideoName = "garage" | "restaurant";
 
 export default function DemoVideo({
   name,
