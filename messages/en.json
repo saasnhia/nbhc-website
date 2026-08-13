@@ -976,7 +976,7 @@
       "mutuelleLabelDossier": "insurance file tracked",
       "mutuelleLabelDelais": "documents and deadlines watched",
       "mutuelleLabelRelance": "the follow-up ready: you approve",
-      "mutuelleLabelDetecte": "missing document or delay: detected"
+      "mutuelleLabelDetecte": "missing document or delay detected"
     },
     "pharmacie": {
       "wph01": [

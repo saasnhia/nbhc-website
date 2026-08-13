@@ -976,7 +976,7 @@
       "mutuelleLabelDossier": "dossier mutuelle suivi",
       "mutuelleLabelDelais": "pièces et délais surveillés",
       "mutuelleLabelRelance": "la relance prête : vous validez",
-      "mutuelleLabelDetecte": "pièce ou délai : détecté"
+      "mutuelleLabelDetecte": "pièce manquante ou délai détecté"
     },
     "pharmacie": {
       "wph01": [
