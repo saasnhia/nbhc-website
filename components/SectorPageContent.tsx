@@ -79,11 +79,30 @@ export type SectorContent = {
 export default function SectorPageContent({
   locale,
   content,
+  mise = "classique",
 }: {
   locale: string;
   content: SectorContent;
+  /** Mise en page de la section « automatisations ».
+   *
+   *  `"classique"` — les cartes bordees, empilees, gap 20/24 px. C'est ce que
+   *  servent les SEPT pages secteur depuis leurs gates respectifs ; on n'y
+   *  touche pas.
+   *
+   *  `"asp"` — la grammaire relevee sur `audit-sequences-v3/DA DEMANDER`
+   *  (gate 80/83) : panneaux ALTERNES sans boite, colonne vertebrale a
+   *  gauche avec un noeud par panneau, colonne visuelle PLUS LARGE que la
+   *  colonne de texte, et une respiration de 72/112 px entre panneaux.
+   *
+   *  POURQUOI UN DRAPEAU ET PAS UN REMPLACEMENT : le gate 83 demande UNE
+   *  page pilote, validee par le client avant les six autres. Le drapeau
+   *  rend la non-regression des six autres VERIFIABLE et non promise —
+   *  elles ne passent pas dans la branche `asp`, leur HTML servi ne bouge
+   *  pas d'un octet. */
+  mise?: "classique" | "asp";
 }) {
   const tPricing = useTranslations("pricing");
+  const asp = mise === "asp";
   return (
     <main style={{ background: "var(--bg)" }}>
       <Nav />
@@ -224,7 +243,7 @@ export default function SectorPageContent({
         </section>
 
         {/* Automations */}
-        <section style={{ marginBottom: 64 }}>
+        <section style={{ marginBottom: asp ? 104 : 64, marginTop: asp ? 40 : 0 }}>
           <h2
             style={{
               fontFamily: "var(--font-syne)",
@@ -248,6 +267,131 @@ export default function SectorPageContent({
           >
             {content.automationsIntro}
           </p>
+          {asp ? (
+            /* ─────────────────────────────────────────────────────────────
+               MISE EN PAGE ASP — panneaux alternes sur une colonne vertebrale.
+               Aucune animation ici : le gate 83 permet de livrer la STRUCTURE
+               MESUREE sans le mouvement plutot qu'une page animee non
+               verifiee. Ce qui bouge deja (survol des cartes) n'existe pas
+               dans cette branche, il n'y a plus de carte.
+               ───────────────────────────────────────────────────────────── */
+            <div className="relative lg:pl-[68px]">
+              {/* La colonne vertebrale. Decorative : aria-hidden, aucun texte,
+                  aucun role. Elle s'eteint aux deux bouts pour ne pas donner
+                  de debut ni de fin durs a une liste qui n'en a pas. */}
+              <span
+                aria-hidden
+                className="hidden lg:block absolute left-[4px] top-[10px] bottom-[10px] w-px"
+                style={{
+                  background:
+                    "linear-gradient(to bottom, transparent, var(--gold-border) 6%, var(--gold-border) 94%, transparent)",
+                }}
+              />
+              <div className="flex flex-col gap-[72px] lg:gap-[112px]">
+                {content.automations.map((a, i) => {
+                  const hasFlow = !!(a.customFlow || (a.flowSteps && a.flowSteps.length > 0));
+                  const alternate = i % 2 === 1;
+                  /* Les deux colonnes ne sont PAS egales : 0,86 / 1,14. Le
+                     visuel prend la place, c'est la demande du gate 80. La
+                     scene de complement descend dans la MEME colonne que le
+                     flow — sinon sa largeur cesse d'egaler celle du flow, la
+                     regle des 5 % ne l'exempte plus, et son aire (290k px2
+                     contre 59k) la ferait DOMINER. Mesure de reference avant
+                     remise en page : ecart 0,0 % aux sept fenetres. */
+                  const texteCol = alternate ? "lg:col-start-2" : "lg:col-start-1";
+                  const visuelCol = alternate ? "lg:col-start-1" : "lg:col-start-2";
+                  /* L'ALTERNANCE CHANGE LE COTE, PAS LA LARGEUR. Premiere
+                     mesure de la remise en page : avec un gabarit fixe
+                     0,86/1,14 le visuel des panneaux impairs tombait dans la
+                     colonne ETROITE et sortait a 394 px — plus petit que les
+                     471 px de la mise en page qu'il devait elargir. Le
+                     gabarit se retourne donc avec le panneau, et la colonne
+                     visuelle vaut 1,14 des deux cotes. */
+                  const gabarit = alternate
+                    ? "lg:grid-cols-[minmax(0,1.14fr)_minmax(0,0.86fr)]"
+                    : "lg:grid-cols-[minmax(0,0.86fr)_minmax(0,1.14fr)]";
+                  return (
+                    <article
+                      key={a.code}
+                      className={
+                        hasFlow
+                          ? /* CENTRE quand les deux colonnes ont des hauteurs
+                               comparables ; EN HAUT quand le visuel est trois
+                               fois plus haut que le texte. Lu a l'oeil sur
+                               l'octet servi : centre, le texte de W-PH-06
+                               flottait au milieu de 680 px de scene, avec un
+                               vide de 300 px au-dessus et autant en dessous. */
+                            `relative lg:grid ${gabarit} lg:gap-x-14 ${a.complementFlow ? "lg:items-start" : "lg:items-center"}`
+                          : "relative"
+                      }
+                    >
+                      {/* Le noeud du panneau sur la vertebre. left -64 place
+                          son centre a 4,5 px du bord du bloc, la ou passe le
+                          trait. */}
+                      <span
+                        aria-hidden
+                        className="hidden lg:block absolute left-[-68px] top-[8px] w-[9px] h-[9px] rounded-full"
+                        style={{
+                          background: "var(--gold)",
+                          boxShadow: "0 0 0 4px var(--bg), 0 0 0 5px var(--gold-border)",
+                        }}
+                      />
+                      <div className={hasFlow ? texteCol : ""}>
+                        <div className="flex items-center gap-3 flex-wrap" style={{ marginBottom: 12 }}>
+                          <span
+                            style={{
+                              fontSize: 11,
+                              fontWeight: 700,
+                              letterSpacing: 1,
+                              color: "var(--gold)",
+                              background: "var(--gold-dim)",
+                              border: "1px solid var(--gold-border)",
+                              borderRadius: 999,
+                              padding: "3px 10px",
+                            }}
+                          >
+                            {a.code}
+                          </span>
+                        </div>
+                        <h3
+                          style={{
+                            fontFamily: "var(--font-syne)",
+                            fontSize: 20,
+                            fontWeight: 700,
+                            letterSpacing: "-0.4px",
+                            lineHeight: 1.25,
+                            color: "var(--text)",
+                            margin: "0 0 12px",
+                          }}
+                          className="lg:text-[24px]"
+                        >
+                          {a.title}
+                        </h3>
+                        <p
+                          style={{ color: "var(--text-muted)", fontSize: 14.5, lineHeight: 1.75, margin: 0 }}
+                          className="lg:text-[15px]"
+                        >
+                          {a.description}
+                        </p>
+                      </div>
+                      {hasFlow && (
+                        <div className={`${visuelCol} lg:row-start-1 mt-6 lg:mt-0`}>
+                          {a.customFlow ?? (
+                            <AutomationFlow steps={a.flowSteps!} ariaLabel={a.flowAriaLabel ?? a.title} />
+                          )}
+                          {a.complementFlow && (
+                            <div className="mt-5" style={{ maxWidth: a.complementMaxWidth ?? 420 }}>
+                              {a.complementFlow}
+                            </div>
+                          )}
+                        </div>
+                      )}
+                    </article>
+                  );
+                })}
+              </div>
+            </div>
+          ) : (
           <div className="flex flex-col gap-5 lg:gap-6">
             {content.automations.map((a, i) => {
               const hasFlow = !!(a.customFlow || (a.flowSteps && a.flowSteps.length > 0));
@@ -348,6 +492,7 @@ export default function SectorPageContent({
               );
             })}
           </div>
+          )}
         </section>
 
         {/* Geo */}

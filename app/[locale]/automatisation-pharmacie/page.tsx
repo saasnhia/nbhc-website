@@ -4,7 +4,6 @@ import JsonLd from "../../../components/JsonLd";
 import { serviceSchema, breadcrumbSchema, faqPageSchema } from "../../../lib/schema";
 import { zipFlowSteps, type FlowStepKind } from "../../../components/AutomationFlow";
 import DocMockup, { type DocMockupContent } from "../../../components/DocMockup";
-import DemoVideo from "../../../components/DemoVideo";
 import SceneSecteur from "../../../components/SceneSecteur";
 
 const FLOW_KINDS: Record<string, FlowStepKind[]> = {
@@ -243,13 +242,22 @@ export default async function Page({
   const content: SectorContent = {
     ...baseContent,
     automations: baseContent.automations.map((a) => {
-      if (a.code === "W-PH-01") {
-        return {
-          ...a,
-          customFlow: <DemoVideo name="pharmacie" ariaLabel={a.title} />,
-          wideFlow: true,
-        };
-      }
+      /* W-PH-01 — LA VIDEO DE DEMONSTRATION EST RETIREE (gate 81).
+         Motif : elle affichait, DANS SON IMAGE et des sa premiere frame,
+         « Liste patients anonymisée » et « Données traitées de façon
+         sécurisée » — la formulation interdite depuis le premier gate
+         (n8n en Allemagne, Mistral en UE ; jamais « on anonymise avant
+         tout traitement LLM »). Une mention incrustee dans une video
+         echappe a toute relecture de texte : c'est le point aveugle que
+         l'inventaire du gate 80 a mis au jour.
+         Le bloc retombe sur son AutomationFlow (FLOW_KINDS / wph01), qui
+         dit la meme chaine sans l'allegation. W-PH-01 est un COMPLEMENT
+         dans la carte des jumeaux : une scene-document pourra s'ajouter
+         a cote du diagramme, comme W-PH-06 — elle n'existe pas encore.
+         Fichiers retires de public/ : demo-pharmacie.mp4, son poster.
+         La source Remotion qui a produit cette video vit dans
+         docs/demo-videos-reference/ et porte TOUJOURS la formule : la
+         reencoder telle quelle la ramenerait. Voir INVENTAIRE_VIDEOS.md. */
       if (a.code === "W-PH-04") {
         const doc = t.raw("docMockup") as DocMockupContent;
         return {
@@ -272,7 +280,18 @@ export default async function Page({
         return {
           ...a,
           flowSteps: zipFlowSteps(FLOW_KINDS[a.code], t.raw(FLOW_MSG_KEY[a.code])),
-          complementMaxWidth: 771,
+          /* 1164 ET NON 771 DEPUIS LA MISE EN PAGE ASP (gate 83). Le plafond
+             « suit la colonne » : dans la mise en page classique la scene
+             vivait dans la colonne de TEXTE et 771 la maintenait a la largeur
+             de la colonne de flow. En ASP elle descend DANS la colonne du
+             flow — meme parent, donc meme largeur par construction, et
+             l'ecart mesure reste 0,0 %. Le plafond a 771 devenait alors
+             nuisible : a la fenetre 901, hors grille, le flow prenait 820 px
+             et la scene restait bridee a 771 — ecart 6 %, la regle des 5 %
+             ne l'exemptait plus, et son aire (778k px2 contre 63k) la faisait
+             DOMINER. Mesure, pas raisonnement. 1164 est le dernier palier :
+             le plafond ne mord plus nulle part, c'est la colonne qui gouverne. */
+          complementMaxWidth: 1164,
           complementFlow: (
             <SceneSecteur
               fichier="secteur-ph-rejets"
@@ -307,7 +326,11 @@ export default async function Page({
 
   return (
     <>
-      <SectorPageContent locale={locale} content={content} />
+      {/* PAGE PILOTE DU GATE 83. La pharmacie et elle seule passe en mise en
+          page ASP : elle a un trou la ou etait la video retiree au gate 81, et
+          W-PH-06 y est deja livre et acte. Les six autres pages restent en
+          `mise="classique"` par defaut — le client valide celle-ci avant. */}
+      <SectorPageContent locale={locale} content={content} mise="asp" />
       <JsonLd
         data={[
           serviceSchema(locale as "fr" | "en", [
