@@ -884,7 +884,8 @@
       "devisSceneAlt": "A quote standing on its plinth, reproduced in relief — company letterhead, job description, a framed block of caveats placed BEFORE the table, six priced lines and their totals with the gross total in gold, a legal notices panel, and an empty signature frame with two rules to fill in — with a hard hat set beside it",
       "devisLabelHypotheses": "the automation drafts, caveats included",
       "devisLabelTotal": "a proposed total, not a price",
-      "devisLabelSignature": "you adjust, then you sign"
+      "devisLabelSignature": "you adjust, then you sign",
+      "devisLabelMentions": "the legal notices, assembled"
     },
     "formation": {
       "w0107": [

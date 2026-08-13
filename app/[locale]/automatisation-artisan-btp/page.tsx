@@ -262,6 +262,16 @@ export default async function Page({
               etiquettes={[
                 { texte: t("devisLabelHypotheses"), x: 0.02, y: 0.24, cx: 0.5, cy: 0.246, largeurMax: 0.2 },
                 { texte: t("devisLabelTotal"), x: 0.96, y: 0.36, cx: 0.7199, cy: 0.4436, largeurMax: 0.18 },
+                /* QUATRIEME ETIQUETTE, dette du gate 78. L'encart des mentions
+                   EXISTE dans la geometrie — cinq bandes, assemblees par le
+                   workflow depuis la fiche entreprise et jamais generees par
+                   le modele — mais rien ne le nommait, et le juge ASP l'a dit :
+                   « la moitie de la promesse du bloc n'est pas illustree ». Le
+                   bloc publie promet « les mentions legales obligatoires
+                   (SIRET, TVA, conditions de paiement, penalites de retard) ».
+                   Couloir mesure a 228 px de l'or, entre les deux etiquettes
+                   de gauche existantes. */
+                { texte: t("devisLabelMentions"), x: 0.02, y: 0.44, cx: 0.5, cy: 0.4907, largeurMax: 0.2 },
                 { texte: t("devisLabelSignature"), x: 0.02, y: 0.66, cx: 0.627, cy: 0.6263, largeurMax: 0.2 },
               ]}
             />
