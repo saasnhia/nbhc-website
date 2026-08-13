@@ -1,4 +1,5 @@
 import { setRequestLocale, getTranslations } from "next-intl/server";
+import SceneSecteur from "../../../components/SceneSecteur";
 import SectorPageContent, { type SectorContent } from "../../../components/SectorPageContent";
 import JsonLd from "../../../components/JsonLd";
 import { serviceSchema, breadcrumbSchema, faqPageSchema } from "../../../lib/schema";
@@ -228,6 +229,29 @@ export default async function Page({
   const content: SectorContent = {
     ...baseContent,
     automations: baseContent.automations.map((a) => {
+      if (a.code === "W-OPT-04") {
+        /* La scene 3D remplace le diagramme AutomationFlow (N-qui-ENONCE,
+           carte du gate 66 — le jumeau le plus fort : mutuelle ≡ assurance,
+           scene 2 du garage ACTEE, transposee avec les LUNETTES en ancre de
+           metier muette). Ancres re-emises (secteur-opt-mutuelle.ancres.
+           json) ; l'etiquette des delais est a x 0,48 pour que son trait ne
+           croise pas les lunettes (bord droit mesure a 0,443 ecran). */
+        return {
+          ...a,
+          customFlow: (
+            <SceneSecteur
+              fichier="secteur-opt-mutuelle"
+              alt={t("mutuelleSceneAlt")}
+              etiquettes={[
+                { texte: t("mutuelleLabelDossier"), x: 0.02, y: 0.3, cx: 0.2313, cy: 0.5386, largeurMax: 0.26 },
+                { texte: t("mutuelleLabelDelais"), x: 0.5, y: 0.2, cx: 0.4299, cy: 0.4576, largeurMax: 0.26 },
+                { texte: t("mutuelleLabelDetecte"), x: 0.48, y: 0.85, cx: 0.5415, cy: 0.6539, sousLeSocle: true, largeurMax: 0.36 },
+                { texte: t("mutuelleLabelRelance"), x: 0.98, y: 0.26, cx: 0.7448, cy: 0.3501, largeurMax: 0.34 },
+              ]}
+            />
+          ),
+        };
+      }
       const kinds = FLOW_KINDS[a.code];
       const msgKey = FLOW_MSG_KEY[a.code];
       if (!kinds || !msgKey) return a;

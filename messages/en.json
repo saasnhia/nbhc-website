@@ -971,7 +971,12 @@
         "Missing document or unusual delay detected",
         "Follow-up prepared for the insurer or the client",
         "You approve and send each follow-up"
-      ]
+      ],
+      "mutuelleSceneAlt": "A pair of glasses on their stand, a half-open binder, an hourglass, an upright warning triangle in the foreground, and a dotted golden path from the hourglass to a mail box with a glowing golden slot carrying an envelope",
+      "mutuelleLabelDossier": "insurance file tracked",
+      "mutuelleLabelDelais": "documents and deadlines watched",
+      "mutuelleLabelRelance": "the follow-up ready: you approve",
+      "mutuelleLabelDetecte": "missing document or delay: detected"
     },
     "pharmacie": {
       "wph01": [

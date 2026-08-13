@@ -971,7 +971,12 @@
         "Pièce manquante ou délai anormal détecté",
         "Relance préparée pour la mutuelle ou le client",
         "Vous validez et envoyez chaque relance"
-      ]
+      ],
+      "mutuelleSceneAlt": "Une paire de lunettes posée sur son support, un classeur entrouvert, un sablier, un triangle d'avertissement dressé au premier plan, et un trajet en pointillé doré du sablier vers une boîte d'envoi à fente dorée portant une enveloppe",
+      "mutuelleLabelDossier": "dossier mutuelle suivi",
+      "mutuelleLabelDelais": "pièces et délais surveillés",
+      "mutuelleLabelRelance": "la relance prête : vous validez",
+      "mutuelleLabelDetecte": "pièce ou délai : détecté"
     },
     "pharmacie": {
       "wph01": [
