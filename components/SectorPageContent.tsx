@@ -26,11 +26,19 @@ export type Automation = {
    *  flagships whose customFlow needs more room to stay legible
    *  (e.g. on-screen disclaimer text in a demo video). */
   wideFlow?: boolean;
-  /** Complement visual on a DEMONSTRATIVE customFlow (gate 64): the mockup
-   *  or video stays served in its column, the 3D scene is ADDED under the
-   *  description in the text column — structurally subordinate (narrower
-   *  row, the mockup keeps its full column). Never set without customFlow. */
+  /** Complement visual on a DEMONSTRATIVE component (gate 64, elargi au
+   *  gate 66) : le composant N — maquette, video OU AutomationFlow dont la
+   *  description est une cascade conditionnelle — reste servi dans sa
+   *  colonne, la scene 3D est AJOUTEE sous la description, structurellement
+   *  subordonnee. */
   complementFlow?: React.ReactNode;
+  /** Plafond de largeur du complement (px CSS). 420 par defaut — la
+   *  subordination MESUREE des complements de maquettes (gate 64). Un
+   *  complement d'AutomationFlow (rangee PLATE, ~59k px2) doit au contraire
+   *  ALIGNER sa largeur sur celle du flow (471) : la regle des 5 % exempte
+   *  alors l'aire, qui degenererait en comparaison de rapports d'image
+   *  (mesurer_complement_ssr.js, gate 66). */
+  complementMaxWidth?: number;
 };
 
 export type PainPoint = {
@@ -330,7 +338,8 @@ export default function SectorPageContent({
                        sgp.js) ; a 420 px elle reste dessous partout, et le
                        minimum servi (300 px, fenetre 390) ne bouge pas. */
                     <div
-                      className={`${wide ? "" : `${textCol} lg:row-start-3`} mt-4 lg:self-start max-w-[420px]`}
+                      className={`${wide ? "" : `${textCol} lg:row-start-3`} mt-4 lg:self-start`}
+                      style={{ maxWidth: a.complementMaxWidth ?? 420 }}
                     >
                       {a.complementFlow}
                     </div>

@@ -646,7 +646,11 @@
         "inputPlaceholder": "Write a message...",
         "validateButtonLabel": "Confirm renewal",
         "validateCaption": "You approve every offer before it's sent."
-      }
+      },
+      "rappelsSceneAlt": "A dumbbell, a clock, and two dotted golden paths leaving the clock: one toward a mail box with a glowing golden slot carrying an envelope, the other toward a queue of three member cards in the foreground — the first bears a golden check, the spot is retaken",
+      "rappelsLabelCours": "class booked: reminder the day before",
+      "rappelsLabelRappel": "the reminder goes out on its own",
+      "rappelsLabelListe": "the spot refills itself"
     },
     "asso": {
       "w0106": [

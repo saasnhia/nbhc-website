@@ -264,11 +264,33 @@ export default async function Page({
           ),
         };
       }
-      /* W-SPORT-01 : N RESTE — gate 65, douze lectures, comprehension N
-         12/12 aux deux iterations. Cet AutomationFlow DEMONTRE (cascade
-         causale a boucle en quatre temps) et la scene statique a perdu le
-         gate ; la preuve du refus est au registre de nbhc-broll
-         (fid-ssr01/02, verbatims_ssr_gate65.md). */
+      if (a.code === "W-SPORT-01") {
+        /* GATE 66 : cet AutomationFlow DEMONTRE (cascade causale a boucle,
+           mesuree 12/12 au gate 65) — il RESTE SERVI, et la scene reprend en
+           COMPLEMENT sous le gate absolu (fidelite + ASP + non-concurrence).
+           Le refus du gate en paires est au registre (verbatims_ssr_gate65). */
+        return {
+          ...a,
+          flowSteps: zipFlowSteps(FLOW_KINDS[a.code], t.raw(FLOW_MSG_KEY[a.code])),
+          /* 771 : la scene SUIT LA COLONNE a toutes les fenetres (la colonne
+             borne a 471/423/770/638/550/300), donc sa largeur egale celle du
+             flow partout et la regle des 5 % exempte l'aire — un plafond fixe
+             (420 puis 471 essayes, mesures) la faisait dominer aux fenetres
+             empilees ou le flow s'etale en colonne pleine. */
+          complementMaxWidth: 771,
+          complementFlow: (
+            <SceneSecteur
+              fichier="secteur-sport-rappels"
+              alt={t("rappelsSceneAlt")}
+              etiquettes={[
+                { texte: t("rappelsLabelCours"), x: 0.05, y: 0.24, cx: 0.4377, cy: 0.4811, largeurMax: 0.3 },
+                { texte: t("rappelsLabelRappel"), x: 0.96, y: 0.22, cx: 0.7448, cy: 0.3501, largeurMax: 0.3 },
+                { texte: t("rappelsLabelListe"), x: 0.02, y: 0.84, cx: 0.533, cy: 0.6304, largeurMax: 0.36 },
+              ]}
+            />
+          ),
+        };
+      }
       if (a.code === "W-SPORT-02") {
         const callBooking = t.raw("callBooking") as CallBookingMockupContent;
         return {

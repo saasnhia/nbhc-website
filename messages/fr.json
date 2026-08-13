@@ -646,7 +646,11 @@
         "inputPlaceholder": "Écrire un message...",
         "validateButtonLabel": "Valider le renouvellement",
         "validateCaption": "Vous validez chaque offre proposée avant l'envoi."
-      }
+      },
+      "rappelsSceneAlt": "Un haltère, une horloge, et deux trajets en pointillé doré qui partent de l'horloge : l'un vers une boîte d'envoi à fente dorée portant une enveloppe, l'autre vers une file de trois fiches d'inscrits au premier plan — la première porte une coche dorée, la place est reprise",
+      "rappelsLabelCours": "cours réservé : rappel la veille",
+      "rappelsLabelRappel": "le rappel part seul",
+      "rappelsLabelListe": "la place se replace"
     },
     "asso": {
       "w0106": [
