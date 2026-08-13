@@ -1,0 +1,15 @@
+// GATE 1 étape (c2) — extrait de families/AdNbhcPhoneFamily.tsx (comportement
+// identique) pour être réutilisé tel quel par les familles suivantes.
+
+import { interpolate } from "remotion";
+
+// Polish "Apple" — transitions plus longues entre scènes (0.33s -> 0.66s).
+const FADE = 20;
+
+export function edgeFade(localFrame: number, durationInFrames: number): number {
+  const inOp = interpolate(localFrame, [0, FADE], [0, 1], { extrapolateRight: "clamp" });
+  const outOp = interpolate(localFrame, [durationInFrames - FADE, durationInFrames], [1, 0], {
+    extrapolateLeft: "clamp",
+  });
+  return Math.min(inOp, outOp);
+}

@@ -1,0 +1,176 @@
+// Vidéo 2 — RESTAURANT : IA téléphonique de réservation, version enrichie
+// (même structure que AdNbhcGarageN8nFamily, adaptée au secteur).
+// Remplace le contenu de l'ancienne AdNbhcPhoneFamily(secteur:"restaurant").
+//
+// 7 Sequences (690f/23s @30fps) — identique au garage dans la structure.
+
+import React from "react";
+import { AbsoluteFill, interpolate, Sequence, useCurrentFrame } from "remotion";
+import { COLORS, FONTS } from "../tokens";
+import { PhoneCall } from "../components/PhoneCall";
+import { VoiceBubble } from "../components/VoiceBubble";
+import { ValidationCard } from "../components/ValidationCard";
+import { N8nCanvas } from "../components/N8nCanvas";
+import { SoftwareBadges } from "../components/SoftwareBadges";
+import { InstallSteps } from "../components/InstallSteps";
+import { CursorClick } from "../../components/CursorClick";
+import { MegaCapsFinale } from "../../marketing/helpers/MegaCapsFinale";
+import { HookTitle } from "../components/HookTitle";
+import { NbhcLogo } from "../components/NbhcLogo";
+import { PhoneIcon, WaveformIcon, SparkIcon, CalendarIcon, CalendarCheckIcon, FilePlusIcon } from "../icons";
+import { edgeFade } from "../sceneFade";
+
+const SceneHook: React.FC = () => <HookTitle text="En plein service, qui répond au téléphone ?" />;
+
+const SceneDeclencheur: React.FC = () => {
+  const frame = useCurrentFrame();
+  const opacity = edgeFade(frame, 90);
+  return (
+    <AbsoluteFill style={{ alignItems: "center", justifyContent: "center", opacity }}>
+      <PhoneCall localFrame={frame} ringUntil={45} callerName="Client" bascuLabel="Votre ligne actuelle, renvoi activé." />
+    </AbsoluteFill>
+  );
+};
+
+const WORKFLOW_NODES = [
+  { label: "Appel entrant", icon: <PhoneIcon /> },
+  { label: "Transcription vocale", icon: <WaveformIcon /> },
+  { label: "IA Mistral : comprend la demande", icon: <SparkIcon /> },
+  { label: "Vérifie les tables dispo", icon: <CalendarIcon /> },
+  { label: "Propose un créneau", icon: <CalendarCheckIcon /> },
+  { label: "Crée la résa", icon: <FilePlusIcon /> },
+];
+const WORKFLOW_ACTIVATE_AT = [0, 30, 60, 95, 130, 165];
+
+const SceneWorkflow: React.FC = () => {
+  const frame = useCurrentFrame();
+  const opacity = edgeFade(frame, 210);
+  return (
+    <AbsoluteFill style={{ alignItems: "center", justifyContent: "center", opacity }}>
+      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 36 }}>
+        <N8nCanvas localFrame={frame} nodes={WORKFLOW_NODES} activateAt={WORKFLOW_ACTIVATE_AT} />
+        <VoiceBubble
+          localFrame={frame}
+          width={940}
+          turns={[
+            { speaker: "ia", text: "Le Bistrot, bonjour.", revealAt: 20 },
+            { speaker: "client", text: "Une table pour 4 ce soir.", revealAt: 55 },
+            { speaker: "ia", text: "20h30 ?", revealAt: 95 },
+            { speaker: "client", text: "Parfait.", revealAt: 135 },
+          ]}
+        />
+      </div>
+    </AbsoluteFill>
+  );
+};
+
+const SceneLogiciels: React.FC = () => {
+  const frame = useCurrentFrame();
+  const opacity = edgeFade(frame, 90);
+  return (
+    <AbsoluteFill style={{ alignItems: "center", justifyContent: "center", opacity }}>
+      <SoftwareBadges
+        localFrame={frame}
+        heading="Compatible avec votre logiciel de réservation"
+        names={["Zenchef", "TheFork"]}
+      />
+    </AbsoluteFill>
+  );
+};
+
+const SceneUsage: React.FC = () => {
+  const frame = useCurrentFrame();
+  const opacity = edgeFade(frame, 120);
+  const captionOpacity = interpolate(frame, [85, 97], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  return (
+    <AbsoluteFill style={{ alignItems: "center", justifyContent: "center", opacity }}>
+      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 24 }}>
+        <ValidationCard
+          localFrame={frame}
+          revealAt={8}
+          title="Nouvelle résa"
+          lines={["Client : M. Dupont", "4 couverts", "20h30"]}
+          validatedAt={72}
+        />
+        <span style={{ opacity: captionOpacity, fontFamily: FONTS.body, fontWeight: 400, fontSize: 19, color: COLORS.textMuted }}>
+          Vous validez d'un clic, quand vous voulez.
+        </span>
+      </div>
+      <CursorClick
+        target_x={57}
+        target_y={58}
+        origin="right"
+        durationInFrames={120}
+        entry_ms={1400}
+        click_at_ms={2400}
+        cursor_style="arrow"
+        accent_color={COLORS.accent}
+        size_multiplier={1}
+        ripple_on_click={true}
+        exit_strategy="fade"
+      />
+    </AbsoluteFill>
+  );
+};
+
+const SceneInstall: React.FC = () => {
+  const frame = useCurrentFrame();
+  const opacity = edgeFade(frame, 60);
+  return (
+    <AbsoluteFill style={{ alignItems: "center", justifyContent: "center", opacity }}>
+      <InstallSteps
+        localFrame={frame}
+        steps={["Renvoi d'appel activé", "On connecte votre logiciel de résa", "Vous validez"]}
+      />
+    </AbsoluteFill>
+  );
+};
+
+const SceneCta: React.FC = () => {
+  const frame = useCurrentFrame();
+  const opacity = interpolate(frame, [0, 10], [0, 1], { extrapolateRight: "clamp" });
+  return (
+    <AbsoluteFill style={{ alignItems: "center", justifyContent: "center", opacity }}>
+      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 40 }}>
+        <MegaCapsFinale
+          line1="Vous ne ratez plus"
+          line2="un seul couvert."
+          localFrame={frame}
+          line1Size={100}
+          line2Size={46}
+          line1Color={COLORS.accent}
+          line2Color={COLORS.text}
+        />
+        <NbhcLogo localFrame={frame} />
+      </div>
+    </AbsoluteFill>
+  );
+};
+
+export const AdNbhcRestoN8nFamily: React.FC = () => {
+  return (
+    <AbsoluteFill style={{ background: `radial-gradient(ellipse at center, ${COLORS.bgElevated} 0%, ${COLORS.bg} 100%)` }}>
+      <Sequence from={0} durationInFrames={60}>
+        <SceneHook />
+      </Sequence>
+      <Sequence from={60} durationInFrames={90}>
+        <SceneDeclencheur />
+      </Sequence>
+      <Sequence from={150} durationInFrames={210}>
+        <SceneWorkflow />
+      </Sequence>
+      <Sequence from={360} durationInFrames={90}>
+        <SceneLogiciels />
+      </Sequence>
+      <Sequence from={450} durationInFrames={120}>
+        <SceneUsage />
+      </Sequence>
+      <Sequence from={570} durationInFrames={60}>
+        <SceneInstall />
+      </Sequence>
+      <Sequence from={630} durationInFrames={60}>
+        <SceneCta />
+      </Sequence>
+    </AbsoluteFill>
+  );
+};

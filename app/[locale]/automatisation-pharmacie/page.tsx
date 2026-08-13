@@ -4,7 +4,6 @@ import JsonLd from "../../../components/JsonLd";
 import { serviceSchema, breadcrumbSchema, faqPageSchema } from "../../../lib/schema";
 import { zipFlowSteps, type FlowStepKind } from "../../../components/AutomationFlow";
 import DocMockup, { type DocMockupContent } from "../../../components/DocMockup";
-import DemoVideo from "../../../components/DemoVideo";
 
 const FLOW_KINDS: Record<string, FlowStepKind[]> = {
   "W-PH-01": ["trigger", "process", "action", "validation"],
@@ -242,13 +241,20 @@ export default async function Page({
   const content: SectorContent = {
     ...baseContent,
     automations: baseContent.automations.map((a) => {
-      if (a.code === "W-PH-01") {
-        return {
-          ...a,
-          customFlow: <DemoVideo name="pharmacie" ariaLabel={a.title} />,
-          wideFlow: true,
-        };
-      }
+      /* W-PH-01 — LA VIDEO DE DEMONSTRATION EST RETIREE (gate 81).
+         Motif : elle affichait, DANS SON IMAGE et des sa premiere frame,
+         « Liste patients anonymisée » et « Données traitées de façon
+         sécurisée » — la formulation interdite depuis le premier gate
+         (n8n en Allemagne, Mistral en UE ; jamais « on anonymise avant
+         tout traitement LLM »). Une mention incrustee dans une video
+         echappe a toute relecture de texte : c'est le point aveugle que
+         l'inventaire du gate 80 a mis au jour.
+         Le bloc retombe sur son AutomationFlow (FLOW_KINDS / wph01), qui
+         dit la meme chaine sans l'allegation.
+         Fichiers retires de public/ : demo-pharmacie.mp4, son poster.
+         La source Remotion qui a produit cette video vit desormais dans
+         docs/demo-videos-reference/, CORRIGEE : la reencoder ne ramenera
+         pas la formule. Voir docs/demo-videos-reference/stills/README.md. */
       if (a.code === "W-PH-04") {
         const doc = t.raw("docMockup") as DocMockupContent;
         return {

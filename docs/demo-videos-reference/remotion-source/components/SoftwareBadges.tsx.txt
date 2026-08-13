@@ -1,0 +1,63 @@
+// Bandeau "logiciels compatibles" — noms en texte brut (aucun logo de
+// marque tiers reconstitué, pour éviter toute question d'usage de marque),
+// formulation prudente portée par le `heading` ("Compatible avec...", jamais
+// "déjà intégré"). Réutilisé par les 3 vidéos n8n.
+
+import React from "react";
+import { interpolate } from "remotion";
+import { COLORS, FONTS } from "../tokens";
+
+type SoftwareBadgesProps = {
+  localFrame: number;
+  heading: string;
+  names: string[];
+  revealAt?: number;
+};
+
+export const SoftwareBadges: React.FC<SoftwareBadgesProps> = ({ localFrame, heading, names, revealAt = 0 }) => {
+  const local = localFrame - revealAt;
+  const headingOpacity = interpolate(local, [0, 12], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const headingY = interpolate(local, [0, 12], [10, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+
+  return (
+    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 24 }}>
+      <span
+        style={{
+          opacity: headingOpacity,
+          transform: `translateY(${headingY}px)`,
+          fontFamily: FONTS.display,
+          fontWeight: 500,
+          fontSize: 28,
+          letterSpacing: "0.01em",
+          color: COLORS.text,
+        }}
+      >
+        {heading}
+      </span>
+      <div style={{ display: "flex", gap: 22 }}>
+        {names.map((name, i) => {
+          const badgeDelay = 14 + i * 10;
+          const bLocal = local - badgeDelay;
+          const opacity = interpolate(bLocal, [0, 12], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+          const scale = interpolate(bLocal, [0, 12], [0.9, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+          return (
+            <div
+              key={name}
+              style={{
+                opacity,
+                transform: `scale(${scale})`,
+                padding: "18px 36px",
+                borderRadius: 999,
+                background: COLORS.glassDark,
+                border: `1px solid ${COLORS.glassDarkBorder}`,
+                boxShadow: "0 10px 26px rgba(0,0,0,0.35)",
+              }}
+            >
+              <span style={{ fontFamily: FONTS.body, fontWeight: 400, fontSize: 22, color: COLORS.textMuted }}>{name}</span>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+};
