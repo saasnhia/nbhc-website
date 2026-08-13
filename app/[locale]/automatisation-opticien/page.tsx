@@ -250,6 +250,17 @@ export default async function Page({
           ),
         };
       }
+      /* W-OPT-03 — LA SCENE 3D N'ENTRE PAS : VERDICT « N RESTE » (gate 71).
+         Deux iterations, douze lecteurs, CHOIX FINAL N 12/12. It.1 : deux
+         presentoirs jumeaux relies par un aller-retour — quatre objets sur
+         cinq n'etaient pas nommes. It.2 : un seul stock, flux convergents,
+         lunettes a l'echelle actee — les objets SE NOMMENT enfin, et la
+         scene perd quand meme, sur un motif neuf : le triangle place entre
+         deux paires symetriques se lit « pivot de balance », donc
+         « arbitrage entre boutiques », le contresens exact du bloc. La
+         scene et son depouillement restent dans nbhc-broll
+         (scene_secteur_opt_stock.py, fid-sos01 / fid-sos02,
+         verbatims_sos_gate71.md). Ne pas la re-integrer sans un nouveau gate. */
       /* W-OPT-01 — LA SCENE 3D N'ENTRE PAS : VERDICT « N RESTE » (gate 70).
          Deux iterations, douze lecteurs, CHOIX FINAL N 12/12. La scene
          gagnait l'esthetique et l'ASP, elle perdait le bloquant a chaque
