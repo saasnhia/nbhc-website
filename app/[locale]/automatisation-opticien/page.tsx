@@ -229,6 +229,27 @@ export default async function Page({
   const content: SectorContent = {
     ...baseContent,
     automations: baseContent.automations.map((a) => {
+      if (a.code === "W-OPT-02") {
+        /* La scene 3D remplace le diagramme AutomationFlow — le jumeau
+           SIMPLE de la carte (detecte -> SMS) : paquet a coche d'or (la
+           commande prete), boite d'envoi actee, lunettes muettes. Gate du
+           protocole gate 69 : comprehension en releve, bloquants choix +
+           fidelite + ASP. Ancres re-emises (secteur-opt-commande). */
+        return {
+          ...a,
+          customFlow: (
+            <SceneSecteur
+              fichier="secteur-opt-commande"
+              alt={t("commandeSceneAlt")}
+              etiquettes={[
+                { texte: t("commandeLabelPrete"), x: 0.02, y: 0.3, cx: 0.2084, cy: 0.5888, largeurMax: 0.3 },
+                { texte: t("commandeLabelSms"), x: 0.5, y: 0.2, cx: 0.7448, cy: 0.3501, largeurMax: 0.26 },
+                { texte: t("commandeLabelRetrait"), x: 0.98, y: 0.26, cx: 0.8539, cy: 0.408, largeurMax: 0.3 },
+              ]}
+            />
+          ),
+        };
+      }
       if (a.code === "W-OPT-04") {
         /* La scene 3D remplace le diagramme AutomationFlow (N-qui-ENONCE,
            carte du gate 66 — le jumeau le plus fort : mutuelle ≡ assurance,

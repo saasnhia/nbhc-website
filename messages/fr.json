@@ -976,7 +976,11 @@
       "mutuelleLabelDossier": "dossier mutuelle suivi",
       "mutuelleLabelDelais": "pièces et délais surveillés",
       "mutuelleLabelRelance": "la relance prête : vous validez",
-      "mutuelleLabelDetecte": "pièce manquante ou délai détecté"
+      "mutuelleLabelDetecte": "pièce manquante ou délai détecté",
+      "commandeSceneAlt": "Un paquet au couvercle débordant marqué d'une coche dorée, une paire de lunettes posée sur son support, un trajet en pointillé doré du paquet vers une boîte d'envoi à fente dorée portant une enveloppe, et un sac à anses posé à côté",
+      "commandeLabelPrete": "commande prête, détectée chez le façonnier",
+      "commandeLabelSms": "le SMS part aussitôt",
+      "commandeLabelRetrait": "le client vient la chercher"
     },
     "pharmacie": {
       "wph01": [
