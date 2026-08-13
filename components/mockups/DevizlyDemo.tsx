@@ -32,11 +32,15 @@ type EtiquetteDevis = {
 
 export default function DevizlyDemo() {
   const t = useTranslations("products");
+  /* Ancres re-emises par la scene REPRODUITE (gate 67 — produit-devizly.
+     ancres.json) : titre, total de la ligne 1, bouton accepter/signer ; le
+     point « encaisse » est sur la bande de carte a GAUCHE du bouton d'or
+     (l'ancre ne se pose jamais sur l'or, plancher 5 px des traits). */
   const etiquettes: EtiquetteDevis[] = [
-    { texte: t("devizlyLabelDevis"), x: 0.05, y: 0.055, cx: 0.4105, cy: 0.1554, largeurMax: 0.4 },
-    { texte: t("devizlyLabelLignes"), x: 0.95, y: 0.055, cx: 0.7526, cy: 0.2562, largeurMax: 0.4 },
-    { texte: t("devizlyLabelSignature"), x: 0.06, y: 0.72, cx: 0.3105, cy: 0.6071, sousLeSocle: true, largeurMax: 0.3 },
-    { texte: t("devizlyLabelEncaissement"), x: 0.28, y: 0.83, cx: 0.2526, cy: 0.6552, sousLeSocle: true, largeurMax: 0.3 },
+    { texte: t("devizlyLabelDevis"), x: 0.05, y: 0.055, cx: 0.3669, cy: 0.1845, largeurMax: 0.4 },
+    { texte: t("devizlyLabelLignes"), x: 0.95, y: 0.055, cx: 0.7266, cy: 0.324, largeurMax: 0.4 },
+    { texte: t("devizlyLabelSignature"), x: 0.28, y: 0.83, cx: 0.3687, cy: 0.6384, sousLeSocle: true, largeurMax: 0.3 },
+    { texte: t("devizlyLabelEncaissement"), x: 0.06, y: 0.72, cx: 0.2326, cy: 0.609, sousLeSocle: true, largeurMax: 0.3 },
   ];
   return (
     <div className="relative mx-auto" style={{ aspectRatio: "1164 / 1524", maxWidth: 582 }}>
