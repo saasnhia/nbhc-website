@@ -1026,7 +1026,11 @@
         "claimsValue": "Consentement écrit requis avant tout entretien facturé",
         "statusLabel": "À mener et facturer par vous",
         "validationCaption": "Vous menez l'entretien ; la facturation passe par votre propre logiciel agréé, jamais par NBHC."
-      }
+      },
+      "rejetsSceneAlt": "Un courrier de contestation dressé sur son socle, reproduit en relief — en-tête de l'officine, destinataire, objet, montant en jeu en doré, six lignes de corps, et un cadre de signature vide portant deux réglures à remplir — avec, posée à plat au pied, la fiche du rejet qui l'a déclenché",
+      "rejetsLabelFiche": "le rejet arrive du logiciel de l'officine",
+      "rejetsLabelCourrier": "la contestation, prête à relire",
+      "rejetsLabelSignature": "vous signez : rien ne part sans vous"
     },
     "restaurant": {
       "iaTel": {

@@ -37,24 +37,37 @@ export type EtiquetteScene = {
 };
 
 const PALIERS_SECTEUR = [300, 471, 638, 880, 1100, 1480];
+const CADRE_SECTEUR: [number, number] = [1480, 925];
 
+/* Les scenes PORTRAIT (un document reproduit, W-PH-06) ont leur propre famille
+   de paliers : la colonne d'un complement borne a 771 px, et le maitre fait
+   1164 de large. Voir `exporter_complements.py`. Les valeurs par defaut
+   ci-dessus restent celles du paysage — aucune scene existante ne change. */
 export default function SceneSecteur({
   fichier,
   alt,
   etiquettes,
+  paliers = PALIERS_SECTEUR,
+  cadre = CADRE_SECTEUR,
+  sizes = "(min-width: 1120px) 471px, (min-width: 1024px) calc((100vw - 178px) / 2), (min-width: 701px) calc(100vw - 130px), calc(100vw - 90px)",
 }: {
   fichier: string;
   alt: string;
   etiquettes: EtiquetteScene[];
+  paliers?: number[];
+  cadre?: [number, number];
+  sizes?: string;
 }) {
+  const [cadreL, cadreH] = cadre;
+  const defaut = paliers[Math.min(1, paliers.length - 1)];
   return (
-    <div className="relative" style={{ aspectRatio: "1480 / 925" }}>
+    <div className="relative" style={{ aspectRatio: `${cadreL} / ${cadreH}` }}>
       <img
-        src={`/${fichier}-471.webp`}
-        srcSet={PALIERS_SECTEUR.map((p) => `/${fichier}-${p}.webp ${p}w`).join(", ")}
-        sizes="(min-width: 1120px) 471px, (min-width: 1024px) calc((100vw - 178px) / 2), (min-width: 701px) calc(100vw - 130px), calc(100vw - 90px)"
-        width={1480}
-        height={925}
+        src={`/${fichier}-${defaut}.webp`}
+        srcSet={paliers.map((p) => `/${fichier}-${p}.webp ${p}w`).join(", ")}
+        sizes={sizes}
+        width={cadreL}
+        height={cadreH}
         alt={alt}
         loading="lazy"
         decoding="async"
@@ -64,23 +77,23 @@ export default function SceneSecteur({
       {etiquettes.some((e) => e.cx !== undefined) && (
         <svg
           aria-hidden
-          viewBox="0 0 1480 925"
+          viewBox={`0 0 ${cadreL} ${cadreH}`}
           className="pointer-events-none absolute inset-0 h-full w-full max-[560px]:hidden"
         >
           {etiquettes.map((e) =>
             e.cx === undefined || e.cy === undefined ? null : (
               <g key={e.texte}>
                 <line
-                  x1={e.x * 1480} y1={e.y * 925}
-                  x2={e.cx * 1480} y2={e.cy * 925}
+                  x1={e.x * cadreL} y1={e.y * cadreH}
+                  x2={e.cx * cadreL} y2={e.cy * cadreH}
                   stroke="var(--bg)" strokeWidth={7} strokeLinecap="round"
                 />
                 <line
-                  x1={e.x * 1480} y1={e.y * 925}
-                  x2={e.cx * 1480} y2={e.cy * 925}
+                  x1={e.x * cadreL} y1={e.y * cadreH}
+                  x2={e.cx * cadreL} y2={e.cy * cadreH}
                   stroke="var(--gold)" strokeWidth={2.5} strokeLinecap="round"
                 />
-                <circle cx={e.cx * 1480} cy={e.cy * 925} r={9}
+                <circle cx={e.cx * cadreL} cy={e.cy * cadreH} r={9}
                         fill="var(--gold)" stroke="var(--bg)" strokeWidth={4} />
               </g>
             ),

@@ -1026,7 +1026,11 @@
         "claimsValue": "Written consent required before any billed consultation",
         "statusLabel": "For you to lead and bill",
         "validationCaption": "You lead the consultation; billing goes through your own approved software, never NBHC."
-      }
+      },
+      "rejetsSceneAlt": "A contestation letter standing on its plinth, reproduced in relief — pharmacy letterhead, addressee, subject, amount at stake in gold, six body lines, and an empty signature frame with two rules to fill in — with the rejection slip that triggered it lying flat at its foot",
+      "rejetsLabelFiche": "the rejection arrives from the pharmacy software",
+      "rejetsLabelCourrier": "the contestation, ready to review",
+      "rejetsLabelSignature": "you sign: nothing goes out without you"
     },
     "restaurant": {
       "iaTel": {

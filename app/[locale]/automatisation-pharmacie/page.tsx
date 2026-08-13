@@ -5,6 +5,7 @@ import { serviceSchema, breadcrumbSchema, faqPageSchema } from "../../../lib/sch
 import { zipFlowSteps, type FlowStepKind } from "../../../components/AutomationFlow";
 import DocMockup, { type DocMockupContent } from "../../../components/DocMockup";
 import DemoVideo from "../../../components/DemoVideo";
+import SceneSecteur from "../../../components/SceneSecteur";
 
 const FLOW_KINDS: Record<string, FlowStepKind[]> = {
   "W-PH-01": ["trigger", "process", "action", "validation"],
@@ -254,6 +255,47 @@ export default async function Page({
         return {
           ...a,
           customFlow: <DocMockup ariaLabel={a.title} content={doc} />,
+        };
+      }
+      if (a.code === "W-PH-06") {
+        /* COMPLEMENT, gate ABSOLU (carte des jumeaux, arbitrage du gate 66 :
+           « le tri EST l'issue conditionnelle »). L'AutomationFlow RESTE
+           SERVI et la scene se pose a cote — il n'y a pas de N a battre.
+
+           C'est la premiere scene batie sur un workflow n8n REELLEMENT
+           EXECUTE : chaque bande du courrier reproduit renvoie a un champ de
+           l'artefact (RELEVE_WPH06.md §6), et le bloc de signature est vide
+           parce que le workflow rend `signe: false`. Format PORTRAIT, famille
+           de paliers propre aux complements (342/582/771/1164).
+
+           771 : le plafond SUIT LA COLONNE, l'acquis du gate 66. */
+        return {
+          ...a,
+          flowSteps: zipFlowSteps(FLOW_KINDS[a.code], t.raw(FLOW_MSG_KEY[a.code])),
+          complementMaxWidth: 771,
+          complementFlow: (
+            <SceneSecteur
+              fichier="secteur-ph-rejets"
+              alt={t("rejetsSceneAlt")}
+              paliers={[342, 582, 771, 1164]}
+              cadre={[1164, 1524]}
+              sizes="(min-width: 1120px) 582px, (min-width: 1024px) calc((100vw - 178px) / 2), (min-width: 701px) calc(100vw - 130px), calc(100vw - 90px)"
+              etiquettes={[
+                /* LES LARGEURS SONT BORNEES PAR LES BANDES DU DOCUMENT, PAS
+                   CHOISIES : les bandes d'encre occupent x 0,246..0,781 de
+                   l'image (marge de 45 px sur un canevas de 500, page a
+                   0,19..0,81). A 0,26 de large les etiquettes de gauche
+                   mordaient sur le debut des lignes et celle de droite sur
+                   leur fin — vu a l'oeil sur l'octet servi, invisible aux
+                   instruments qui mesurent le debordement du CADRE, pas le
+                   recouvrement du SUJET. 0,20 a gauche s'arrete a 0,22 et
+                   0,18 a droite commence a 0,78. */
+                { texte: t("rejetsLabelCourrier"), x: 0.02, y: 0.3, cx: 0.5, cy: 0.3836, largeurMax: 0.2 },
+                { texte: t("rejetsLabelSignature"), x: 0.96, y: 0.42, cx: 0.6203, cy: 0.5722, largeurMax: 0.18 },
+                { texte: t("rejetsLabelFiche"), x: 0.02, y: 0.72, cx: 0.342, cy: 0.7771, largeurMax: 0.2 },
+              ]}
+            />
+          ),
         };
       }
       const kinds = FLOW_KINDS[a.code];
