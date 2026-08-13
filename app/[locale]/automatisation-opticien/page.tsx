@@ -250,6 +250,15 @@ export default async function Page({
           ),
         };
       }
+      /* W-OPT-01 — LA SCENE 3D N'ENTRE PAS : VERDICT « N RESTE » (gate 70).
+         Deux iterations, douze lecteurs, CHOIX FINAL N 12/12. La scene
+         gagnait l'esthetique et l'ASP, elle perdait le bloquant a chaque
+         fois pour le meme motif : ses objets ne se nomment pas sans leurs
+         etiquettes, et une image qu'il faut legender redit le texte du bloc
+         au lieu de l'aider. Le diagramme AutomationFlow garde le slot ; la
+         scene est conservee dans nbhc-broll (scene_secteur_opt_relance.py,
+         sceaux fid-sor01 / fid-sor02) avec son depouillement complet dans
+         verbatims_sor_gate70.md. Ne pas la re-integrer sans un nouveau gate. */
       if (a.code === "W-OPT-04") {
         /* La scene 3D remplace le diagramme AutomationFlow (N-qui-ENONCE,
            carte du gate 66 — le jumeau le plus fort : mutuelle ≡ assurance,
