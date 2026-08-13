@@ -880,7 +880,11 @@
         "inputPlaceholder": "Écrire un message...",
         "validateButtonLabel": "Valider le modèle de relance",
         "validateCaption": "Vous validez le modèle une fois, les relances partent ensuite seules."
-      }
+      },
+      "devisSceneAlt": "Un devis dressé sur son socle, reproduit en relief — en-tête de l'entreprise, objet du chantier, un bloc encadré de réserves placé AVANT le tableau, six lignes chiffrées et leurs totaux dont le TTC en doré, un encart de mentions légales, et un cadre de signature vide portant deux réglures à remplir — avec un casque de chantier posé à côté",
+      "devisLabelHypotheses": "l'automatisation rédige, réserves comprises",
+      "devisLabelTotal": "un total proposé, pas un prix",
+      "devisLabelSignature": "vous ajustez, puis vous signez"
     },
     "formation": {
       "w0107": [

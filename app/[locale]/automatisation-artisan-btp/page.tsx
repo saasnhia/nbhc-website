@@ -5,6 +5,7 @@ import { serviceSchema, breadcrumbSchema, faqPageSchema } from "../../../lib/sch
 import { zipFlowSteps, type FlowStepKind } from "../../../components/AutomationFlow";
 import ChatMockup, { type ChatBubbleData } from "../../../components/ChatMockup";
 import DocMockup, { type DocMockupContent } from "../../../components/DocMockup";
+import SceneSecteur from "../../../components/SceneSecteur";
 
 const FLOW_KINDS: Record<string, FlowStepKind[]> = {
   "W-BTP-03": ["trigger", "process", "validation", "action"],
@@ -232,9 +233,39 @@ export default async function Page({
     automations: baseContent.automations.map((a) => {
       if (a.code === "W-BTP-01") {
         const doc = t.raw("docMockup") as DocMockupContent;
+        /* COMPLEMENT (carte des jumeaux : jumeau DVZ), gate ABSOLU. La
+           maquette DocMockup RESTE SERVIE et la scene se pose a cote.
+
+           Le devis reproduit vient d'un workflow n8n REELLEMENT EXECUTE
+           (RELEVE_WBTP01.md) : six lignes chiffrees, totaux verifies a la
+           main, mentions legales ASSEMBLEES depuis la fiche entreprise et
+           jamais generees par le modele. Ce que la scene montre, le workflow
+           l'a etabli : QUE LE CHIFFRE EST UNE PROPOSITION — neuf hypotheses
+           declarees pour six lignes, et une contradiction de 1 000 EUR entre
+           une ligne et sa propre hypothese. D'ou le bloc de reserves place
+           AVANT le tableau, et le cadre de signature vide.
+
+           Largeurs d'etiquettes bornees par l'emprise des bandes d'encre
+           (0,240..0,760), pas par le confort de mise en page — le
+           recouvrement du SUJET n'est pas le debordement du CADRE. */
         return {
           ...a,
           customFlow: <DocMockup ariaLabel={a.title} content={doc} />,
+          complementMaxWidth: 771,
+          complementFlow: (
+            <SceneSecteur
+              fichier="secteur-btp-devis"
+              alt={t("devisSceneAlt")}
+              paliers={[342, 582, 771, 1164]}
+              cadre={[1164, 1524]}
+              sizes="(min-width: 1120px) 582px, (min-width: 1024px) calc((100vw - 178px) / 2), (min-width: 701px) calc(100vw - 130px), calc(100vw - 90px)"
+              etiquettes={[
+                { texte: t("devisLabelHypotheses"), x: 0.02, y: 0.24, cx: 0.5, cy: 0.246, largeurMax: 0.2 },
+                { texte: t("devisLabelTotal"), x: 0.96, y: 0.36, cx: 0.7199, cy: 0.4436, largeurMax: 0.18 },
+                { texte: t("devisLabelSignature"), x: 0.02, y: 0.66, cx: 0.627, cy: 0.6263, largeurMax: 0.2 },
+              ]}
+            />
+          ),
         };
       }
       if (a.code === "W-BTP-02") {
