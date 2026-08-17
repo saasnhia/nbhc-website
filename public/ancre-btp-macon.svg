@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-hidden="true" focusable="false">
+  <!-- VOIE C — dessine a la main dans la charte NBHC.
+       Sujet : l'ancre de metier BTP. Trois objets FIGURATIFS et non des
+       primitives : une truelle de macon (forme de coeur pointu, manche coude),
+       un niveau a bulle (regle avec sa fiole et sa bulle), et un mur de
+       briques en appareil a joints decales. Le mur donne l'echelle et le
+       metier ; la truelle est la silhouette la plus specifique du macon.
+       Or #C4973A pour les outils, creme #E8E4DC pour l'acier et les briques
+       claires, fond #09090b. -->
+  <defs>
+    <linearGradient id="or" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#E0B45C"/>
+      <stop offset="0.55" stop-color="#C4973A"/>
+      <stop offset="1" stop-color="#8E6A22"/>
+    </linearGradient>
+    <linearGradient id="acier" x1="0" y1="0" x2="0.6" y2="1">
+      <stop offset="0" stop-color="#E8E4DC"/>
+      <stop offset="1" stop-color="#9A968E"/>
+    </linearGradient>
+    <linearGradient id="brique" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#D8D2C6"/>
+      <stop offset="1" stop-color="#ADA69A"/>
+    </linearGradient>
+  </defs>
+
+  <!-- ── LE MUR DE BRIQUES, en appareil : trois rangs, joints decales ── -->
+  <g>
+    <!-- rang du bas -->
+    <g fill="url(#brique)" stroke="#09090b" stroke-width="4">
+      <rect x="96"  y="404" width="104" height="40" rx="3"/>
+      <rect x="208" y="404" width="104" height="40" rx="3"/>
+      <rect x="320" y="404" width="104" height="40" rx="3"/>
+    </g>
+    <!-- rang du milieu, decale d'une demi-brique -->
+    <g fill="url(#brique)" stroke="#09090b" stroke-width="4" opacity="0.92">
+      <rect x="40"  y="356" width="104" height="40" rx="3"/>
+      <rect x="152" y="356" width="104" height="40" rx="3"/>
+      <rect x="264" y="356" width="104" height="40" rx="3"/>
+      <rect x="376" y="356" width="104" height="40" rx="3"/>
+    </g>
+    <!-- rang du haut, incomplet : le mur est EN COURS -->
+    <g fill="url(#brique)" stroke="#09090b" stroke-width="4" opacity="0.82">
+      <rect x="96"  y="308" width="104" height="40" rx="3"/>
+      <rect x="208" y="308" width="104" height="40" rx="3"/>
+    </g>
+    <!-- la brique qu'on vient de poser, seule et un peu de biais -->
+    <g transform="rotate(-7 372 328)">
+      <rect x="320" y="308" width="104" height="40" rx="3"
+            fill="url(#brique)" stroke="#09090b" stroke-width="4" opacity="0.82"/>
+    </g>
+  </g>
+
+  <!-- ── LA TRUELLE DE MACON, en diagonale ── -->
+  <g transform="translate(150 148) rotate(-32)">
+    <!-- lame : triangle a bords adoucis, pointe en bas -->
+    <path d="M -62 0 C -62 -16 -46 -26 0 -26 C 46 -26 62 -16 62 0
+             C 62 44 24 96 0 124 C -24 96 -62 44 -62 0 Z"
+          fill="url(#acier)" stroke="#3A362E" stroke-width="3"/>
+    <!-- nervure centrale -->
+    <path d="M 0 -20 L 0 108" stroke="#7E7A72" stroke-width="3" fill="none" opacity="0.8"/>
+    <!-- soie coudee -->
+    <path d="M 0 -26 L 0 -52 C 0 -66 10 -74 24 -74" fill="none"
+          stroke="url(#acier)" stroke-width="11" stroke-linecap="round"/>
+    <!-- manche -->
+    <g transform="translate(24 -74)">
+      <rect x="0" y="-15" width="104" height="30" rx="15" fill="url(#or)"/>
+      <rect x="0" y="-15" width="16" height="30" rx="8" fill="#8E6A22"/>
+      <path d="M 34 -15 L 34 15 M 56 -15 L 56 15 M 78 -15 L 78 15"
+            stroke="#09090b" stroke-width="3" opacity="0.35"/>
+    </g>
+  </g>
+
+  <!-- ── LE NIVEAU A BULLE, presque horizontal, pose sur le mur ── -->
+  <g transform="translate(256 236) rotate(-4)">
+    <rect x="-196" y="-24" width="392" height="48" rx="8" fill="url(#or)"/>
+    <rect x="-196" y="-24" width="392" height="48" rx="8" fill="none"
+          stroke="#6E5218" stroke-width="3"/>
+    <!-- poignee ajouree -->
+    <rect x="-150" y="-11" width="86" height="22" rx="11" fill="#09090b" opacity="0.55"/>
+    <!-- la fiole, avec sa bulle et ses deux reperes -->
+    <rect x="30" y="-15" width="120" height="30" rx="6" fill="#0E1512" stroke="#6E5218" stroke-width="2"/>
+    <ellipse cx="90" cy="0" rx="17" ry="10" fill="#E8E4DC" opacity="0.95"/>
+    <path d="M 70 -15 L 70 15 M 110 -15 L 110 15" stroke="#E8E4DC" stroke-width="2.5" opacity="0.85"/>
+    <!-- seconde fiole, verticale, a l'autre bout -->
+    <rect x="-58" y="-15" width="30" height="30" rx="6" fill="#0E1512" stroke="#6E5218" stroke-width="2"/>
+    <ellipse cx="-43" cy="0" rx="9" ry="9" fill="#E8E4DC" opacity="0.9"/>
+  </g>
+</svg>

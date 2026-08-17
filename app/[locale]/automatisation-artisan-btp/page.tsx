@@ -6,6 +6,7 @@ import { zipFlowSteps, type FlowStepKind } from "../../../components/AutomationF
 import ChatMockup, { type ChatBubbleData } from "../../../components/ChatMockup";
 import DocMockup, { type DocMockupContent } from "../../../components/DocMockup";
 import SceneSecteur from "../../../components/SceneSecteur";
+import AncreMetier from "../../../components/AncreMetier";
 
 const FLOW_KINDS: Record<string, FlowStepKind[]> = {
   "W-BTP-03": ["trigger", "process", "validation", "action"],
@@ -253,6 +254,15 @@ export default async function Page({
           customFlow: <DocMockup ariaLabel={a.title} content={doc} />,
           complementMaxWidth: 771,
           complementFlow: (
+            /* L'ANCRE DE METIER, A COTE DU DEVIS REPRODUIT (gate 86 §1).
+               A COTE, ET NON DEVANT : c'est la loi du gate 78, acquise sur ce
+               meme bloc quand le casque passait devant la page. Elle est posee
+               sous la scene, alignee a gauche, et n'entre PAS dans la largeur
+               de la scene — celle-ci garde donc au pixel pres les mesures de
+               non-concurrence deja actees contre le DocMockup servi.
+               Ce qui reste a mesurer est la subordination de l'ANCRE a la
+               SCENE, et c'est un rapport neuf : mesurer_ancre_metier.js. */
+            <div>
             <SceneSecteur
               fichier="secteur-btp-devis"
               alt={t("devisSceneAlt")}
@@ -275,6 +285,10 @@ export default async function Page({
                 { texte: t("devisLabelSignature"), x: 0.02, y: 0.66, cx: 0.627, cy: 0.6263, largeurMax: 0.2 },
               ]}
             />
+            <div style={{ marginTop: 14, display: "flex", justifyContent: "flex-start" }}>
+              <AncreMetier fichier="ancre-btp-macon" />
+            </div>
+            </div>
           ),
         };
       }
