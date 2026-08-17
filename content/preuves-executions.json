@@ -1,0 +1,26 @@
+{
+  "W-BTP-01": {
+    "artefacts": 1,
+    "executeLe": "2026-08-13",
+    "noeuds": 5,
+    "trace": "nbhc-broll/rendu-3d/execution-wbtp01.json"
+  },
+  "W-BTP-02": {
+    "artefacts": 3,
+    "executeLe": "2026-08-13",
+    "noeuds": 5,
+    "trace": "nbhc-broll/rendu-3d/execution-wbtp02.json"
+  },
+  "W-BTP-03": {
+    "artefacts": 3,
+    "executeLe": "2026-08-17",
+    "noeuds": 7,
+    "trace": "nbhc-broll/rendu-3d/execution-wbtp03.json"
+  },
+  "W-PH-06": {
+    "artefacts": 3,
+    "executeLe": "2026-08-13",
+    "noeuds": 7,
+    "trace": "nbhc-broll/rendu-3d/execution-wph06.json"
+  }
+}

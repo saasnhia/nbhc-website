@@ -32,6 +32,11 @@ export type Automation = {
    *  colonne, la scene 3D est AJOUTEE sous la description, structurellement
    *  subordonnee. */
   complementFlow?: React.ReactNode;
+  /** LE BLOC DE PREUVE (gate 89 §2) — reserve aux automatisations qui
+   *  EXISTENT : workflow ecrit, execute, releve. Quatre sur quarante-cinq.
+   *  Il ne se pose pas ailleurs, sans quoi il redeviendrait l'allegation
+   *  d'existence retiree au gate 89 §1. */
+  preuve?: React.ReactNode;
   /** Plafond de largeur du complement (px CSS). 420 par defaut — la
    *  subordination MESUREE des complements de maquettes (gate 64). Un
    *  complement d'AutomationFlow (rangee PLATE, ~59k px2) doit au contraire
@@ -373,6 +378,7 @@ export default function SectorPageContent({
                         >
                           {a.description}
                         </p>
+                        {a.preuve}
                       </div>
                       {hasFlow && (
                         <div className={`${visuelCol} lg:row-start-1 mt-6 lg:mt-0`}>
@@ -409,7 +415,14 @@ export default function SectorPageContent({
                   className={
                     wide
                       ? "automation-card lg:p-9"
-                      : "automation-card lg:grid lg:grid-cols-2 lg:gap-x-12 lg:gap-y-0 lg:items-center lg:p-9"
+                      : `automation-card lg:grid lg:grid-cols-2 lg:gap-x-12 lg:gap-y-0 lg:p-9 ${
+                          /* CENTRE quand les deux colonnes se repondent ; EN HAUT
+                             des qu'un bloc de preuve allonge la colonne de texte.
+                             Lu a l'oeil sur l'octet servi : centre, le diagramme
+                             de W-BTP-03 flottait au milieu de 640 px de vide.
+                             Meme correction qu'au gate 83 sur la variante ASP. */
+                          a.preuve ? "lg:items-start" : "lg:items-center"
+                        }`
                   }
                   style={{
                     padding: 24,
@@ -457,7 +470,7 @@ export default function SectorPageContent({
                                rangees : sans cela elle s'arrete a la rangee 2
                                et la scene s'etale seule sous elle — mesure un
                                vide de pleine rangee dans la carte. */
-                            `${flowCol} lg:row-start-1 ${a.complementFlow ? "lg:row-span-3" : "lg:row-span-2"} mt-1 lg:mt-0`
+                            `${flowCol} lg:row-start-1 ${a.complementFlow ? (a.preuve ? "lg:row-span-4" : "lg:row-span-3") : (a.preuve ? "lg:row-span-3" : "lg:row-span-2")} mt-1 lg:mt-0`
                       }
                     >
                       {a.customFlow ?? (
@@ -474,6 +487,9 @@ export default function SectorPageContent({
                   >
                     {a.description}
                   </p>
+                  {a.preuve && (
+                    <div className={`${wide ? "" : `${textCol} lg:row-start-3`}`}>{a.preuve}</div>
+                  )}
                   {a.complementFlow && (
                     /* max-w-[420px] : la subordination MESUREE du regime
                        complement — sans plafond, la scene depassait l'aire de
@@ -482,7 +498,7 @@ export default function SectorPageContent({
                        sgp.js) ; a 420 px elle reste dessous partout, et le
                        minimum servi (300 px, fenetre 390) ne bouge pas. */
                     <div
-                      className={`${wide ? "" : `${textCol} lg:row-start-3`} mt-4 lg:self-start`}
+                      className={`${wide ? "" : `${textCol} lg:row-start-4`} mt-4 lg:self-start`}
                       style={{ maxWidth: a.complementMaxWidth ?? 420 }}
                     >
                       {a.complementFlow}

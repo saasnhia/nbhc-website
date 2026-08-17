@@ -1,5 +1,6 @@
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import SectorPageContent, { type SectorContent } from "../../../components/SectorPageContent";
+import PreuveWorkflow from "../../../components/PreuveWorkflow";
 import JsonLd from "../../../components/JsonLd";
 import { serviceSchema, breadcrumbSchema, faqPageSchema } from "../../../lib/schema";
 import { zipFlowSteps, type FlowStepKind } from "../../../components/AutomationFlow";
@@ -316,6 +317,17 @@ export default async function Page({
       return { ...a, flowSteps: zipFlowSteps(kinds, t.raw(msgKey)) };
     }),
   };
+
+  /* LE BLOC DE PREUVE (gate 89 §2) — pose UNIQUEMENT sur les codes qui ont
+     une trace d'execution versionnee. `PreuveWorkflow` rend `null` si le
+     code n'est pas dans `content/preuves-executions.json`, si bien que le
+     bloc ne peut pas affirmer une existence qu'il ne prouve pas. */
+  const AVEC_PREUVE = new Set(["W-BTP-01", "W-BTP-02", "W-BTP-03"]);
+  content.automations = content.automations.map((a) =>
+    AVEC_PREUVE.has(a.code)
+      ? { ...a, preuve: <PreuveWorkflow code={a.code} locale={locale} /> }
+      : a
+  );
 
   return (
     <>
