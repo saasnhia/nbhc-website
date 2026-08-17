@@ -53,7 +53,7 @@ const contentFr: SectorContent = {
   ],
   automationsTitle: "Les automatisations qu'on met en place",
   automationsIntro:
-    "On ne déploie jamais les 10 briques du catalogue en même temps. On choisit 2 à 3 automatisations selon vos signaux réels — volume de cours, taille d'équipe, type d'activité — et on les construit avec vous.",
+    "On ne construit jamais l'ensemble des automatisations en même temps. On choisit 2 à 3 automatisations selon vos signaux réels — volume de cours, taille d'équipe, type d'activité — et on les construit avec vous.",
   automations: [
     {
       code: "W-SPORT-01",
@@ -91,7 +91,9 @@ const contentFr: SectorContent = {
     "NBHC a mené un travail de terrain approfondi auprès des salles, studios et instituts indépendants de Vernon et de sa périphérie proche (Saint-Marcel, Pacy-sur-Eure, Gaillon, Les Andelys). Si vous êtes dans ce secteur, on connaît déjà les problématiques concrètes du bassin — mais l'offre s'adresse à toute salle ou institut indépendant en France.",
   pricingTitle: "Tarification",
   pricingIntro:
-    "Diagnostic gratuit de 30 minutes, systématique et sans engagement. Les rappels automatiques de cours et la liste d'attente dynamique, par exemple, démarrent à 200 € HT — une automatisation standardisée, configurée pour votre salle.",
+    "Diagnostic gratuit de 30 minutes, systématique et sans engagement. Les rappels automatiques de cours et la liste d'attente dynamique, par exemple, démarrent à 200 € HT, configurée pour votre salle.",
+  pricingNote:
+    "Aucun résultat chiffré n'est promis : NBHC n'a aucune référence client salle de sport ou institut à ce jour.",
   faqTitle: "Questions fréquentes",
   faq: [
     {
@@ -155,7 +157,7 @@ const contentEn: SectorContent = {
   ],
   automationsTitle: "The automations we set up",
   automationsIntro:
-    "We never deploy all 10 catalog building blocks at once. We pick 2-3 automations based on your real signals — class volume, team size, activity type — and build them with you.",
+    "We never build every automation at once. We pick 2-3 automations based on your real signals — class volume, team size, activity type — and build them with you.",
   automations: [
     {
       code: "W-SPORT-01",
@@ -193,7 +195,9 @@ const contentEn: SectorContent = {
     "NBHC has done in-depth field work with independent gyms, studios and wellness centers in Vernon and its immediate surroundings (Saint-Marcel, Pacy-sur-Eure, Gaillon, Les Andelys). If you're in this area, we already know the concrete challenges of the local market — but this offer is open to any independent gym or wellness center in France.",
   pricingTitle: "Pricing",
   pricingIntro:
-    "Free 30-minute diagnostic, systematic and with no commitment. Automatic class reminders and the dynamic waitlist, for instance, start at €200 excl. VAT — a standardized automation, configured for your gym.",
+    "Free 30-minute diagnostic, systematic and with no commitment. Automatic class reminders and the dynamic waitlist, for instance, start at €200 excl. VAT, configured for your gym.",
+  pricingNote:
+    "No numeric result is promised: NBHC has no gym or wellness center client reference to date.",
   faqTitle: "Frequently asked questions",
   faq: [
     {
@@ -329,8 +333,8 @@ export default async function Page({
               name: "Essentiel",
               price: "200",
               description: isFr
-                ? "Automatisation standardisée pour salle de sport ou institut, configurée pour votre activité"
-                : "Standardized automation for gyms or wellness centers, configured for your business",
+                ? "Automatisation pour salle de sport ou institut, configurée pour votre activité"
+                : "Automation for gyms or wellness centers, configured for your business",
               url: pageUrl,
             },
           ]),

@@ -75,7 +75,8 @@ const contentFr: SectorContent = {
   pricingNote: (
     <>
       Offre asso/solidaire, pour une association loi 1901 avec une seule automatisation :{" "}
-      <s style={{ fontWeight: 400, opacity: 0.6 }}>2 000 € HT</s> 1 000 € HT.
+      <s style={{ fontWeight: 400, opacity: 0.6 }}>2 000 € HT</s> 1 000 € HT.{" "}
+      Aucun résultat chiffré n'est promis : NBHC n'a aucune référence client association sportive à ce jour.
     </>
   ),
   faqTitle: "Questions fréquentes",
@@ -171,7 +172,8 @@ const contentEn: SectorContent = {
   pricingNote: (
     <>
       Solidarity offer, for a non-profit sports club with a single automation:{" "}
-      <s style={{ fontWeight: 400, opacity: 0.6 }}>€2,000 excl. VAT</s> €1,000 excl. VAT.
+      <s style={{ fontWeight: 400, opacity: 0.6 }}>€2,000 excl. VAT</s> €1,000 excl. VAT.{" "}
+      No numeric result is promised: NBHC has no sports club client reference to date.
     </>
   ),
   faqTitle: "Frequently asked questions",

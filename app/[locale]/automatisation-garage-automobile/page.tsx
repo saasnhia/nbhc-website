@@ -50,7 +50,7 @@ const contentFr: SectorContent = {
   ],
   automationsTitle: "Les automatisations qu'on met en place",
   automationsIntro:
-    "On choisit 2 à 3 briques du catalogue selon votre volume d'appels, votre activité (mécanique, carrosserie, ou les deux) et vos outils déjà en place — jamais les 10 en même temps.",
+    "On choisit 2 à 3 automatisations selon votre volume d'appels, votre activité (mécanique, carrosserie, ou les deux) et vos outils déjà en place — jamais l'ensemble d'un coup.",
   automations: [
     {
       code: "W-AUTO-01",
@@ -88,7 +88,9 @@ const contentFr: SectorContent = {
     "NBHC a mené un travail de terrain approfondi auprès des garages et carrosseries indépendants de Toulouse et de sa métropole. Si vous êtes dans ce secteur, on connaît déjà les réseaux d'indépendants locaux (Motrio, AD Expert, Bosch Car Service, Axial...) — mais l'offre s'adresse à tout garage ou carrosserie indépendant en France, quel que soit le réseau d'affiliation.",
   pricingTitle: "Tarification",
   pricingIntro:
-    "Diagnostic gratuit de 30 minutes, systématique et sans engagement. L'IA téléphonique, par exemple, démarre à 200 € HT — une automatisation standardisée, configurée pour votre garage.",
+    "Diagnostic gratuit de 30 minutes, systématique et sans engagement. L'IA téléphonique, par exemple, démarre à 200 € HT, configurée pour votre garage.",
+  pricingNote:
+    "Aucun résultat chiffré n'est promis : NBHC n'a aucune référence client garage ou carrosserie à ce jour.",
   faqTitle: "Questions fréquentes",
   faq: [
     {
@@ -152,7 +154,7 @@ const contentEn: SectorContent = {
   ],
   automationsTitle: "The automations we set up",
   automationsIntro:
-    "We pick 2-3 catalog building blocks based on your call volume, your activity (mechanical, body work, or both) and the tools you already use — never all 10 at once.",
+    "We pick 2-3 automations based on your call volume, your activity (mechanical, body work, or both) and the tools you already use — never all at once.",
   automations: [
     {
       code: "W-AUTO-01",
@@ -190,7 +192,9 @@ const contentEn: SectorContent = {
     "NBHC has done in-depth field work with independent garages and body shops in Toulouse and its metro area. If you're in this area, we already know the local independent networks (Motrio, AD Expert, Bosch Car Service, Axial...) — but this offer is open to any independent garage or body shop in France, whatever its affiliation network.",
   pricingTitle: "Pricing",
   pricingIntro:
-    "Free 30-minute diagnostic, systematic and with no commitment. The AI phone agent, for instance, starts at €200 excl. VAT — a standardized automation, configured for your garage.",
+    "Free 30-minute diagnostic, systematic and with no commitment. The AI phone agent, for instance, starts at €200 excl. VAT, configured for your garage.",
+  pricingNote:
+    "No numeric result is promised: NBHC has no garage or body shop client reference to date.",
   faqTitle: "Frequently asked questions",
   faq: [
     {
@@ -389,8 +393,8 @@ export default async function Page({
               name: "Essentiel",
               price: "200",
               description: isFr
-                ? "Automatisation standardisée pour garage ou carrosserie, configurée pour votre activité"
-                : "Standardized automation for garages or body shops, configured for your business",
+                ? "Automatisation pour garage ou carrosserie, configurée pour votre activité"
+                : "Automation for garages or body shops, configured for your business",
               url: pageUrl,
             },
           ]),

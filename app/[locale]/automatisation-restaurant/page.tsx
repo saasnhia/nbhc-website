@@ -87,7 +87,7 @@ const contentFr: SectorContent = {
     "L'offre s'adresse à tout restaurant indépendant en France, quel que soit son format (bistrot, restaurant gastronomique, brasserie, restauration rapide avec service à table). Le diagnostic de 30 minutes permet d'identifier les tâches précises qui vous coûtent le plus de temps, quel que soit votre secteur géographique.",
   pricingTitle: "Tarification",
   pricingIntro:
-    "Diagnostic gratuit de 30 minutes, systématique et sans engagement. L'IA téléphonique, par exemple, démarre à 200 € HT — une automatisation standardisée, configurée pour votre restaurant.",
+    "Diagnostic gratuit de 30 minutes, systématique et sans engagement. L'IA téléphonique, par exemple, démarre à 200 € HT, configurée pour votre restaurant.",
   pricingNote: "Aucun résultat chiffré n'est promis : NBHC n'a aucune référence client restaurant à ce jour.",
   faqTitle: "Questions fréquentes",
   faq: [
@@ -188,7 +188,7 @@ const contentEn: SectorContent = {
     "The offer is open to any independent restaurant in France, whatever its format (bistro, fine dining, brasserie, table-service fast-casual). The 30-minute diagnostic identifies the specific tasks costing you the most time, whatever your region.",
   pricingTitle: "Pricing",
   pricingIntro:
-    "Free 30-minute diagnostic, systematic and with no commitment. The AI phone assistant, for instance, starts at €200 excl. VAT — a standardized automation, configured for your restaurant.",
+    "Free 30-minute diagnostic, systematic and with no commitment. The AI phone assistant, for instance, starts at €200 excl. VAT, configured for your restaurant.",
   pricingNote: "No numeric result is promised: NBHC has no restaurant client reference to date.",
   faqTitle: "Frequently asked questions",
   faq: [
@@ -273,8 +273,8 @@ export default async function Page({
               name: "Essentiel",
               price: "200",
               description: isFr
-                ? "Automatisation standardisée pour restaurant, configurée pour votre activité"
-                : "Standardized automation for restaurants, configured for your business",
+                ? "Automatisation pour restaurant, configurée pour votre activité"
+                : "Automation for restaurants, configured for your business",
               url: pageUrl,
             },
           ]),
