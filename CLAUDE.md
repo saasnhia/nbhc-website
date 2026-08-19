@@ -24,8 +24,22 @@ interprètent comme une classe de caractères. Utiliser `Glob`, `Grep`, ou
 
 ## La règle NBHC, non négociable
 
-**n8n en ALLEMAGNE, Mistral en UE.** C'est un **fait vérifiable**, pas une
-promesse.
+### L'HÉBERGEMENT EST **SUSPENDU**, PAS ACQUIS
+
+« n8n en Allemagne, Mistral en UE » est **un fait sur des fournisseurs, pas une
+règle de projet** — et **rien dans ce chantier ne l'établit.** Une version
+antérieure de ce fichier l'écrivait « fait vérifiable, pas une promesse » :
+**vérifiable n'est pas vérifié**, et cette phrase reproduisait exactement la
+faute qu'elle prétendait corriger — le fichier parent marque la même
+information **suspendue**, ce qui faisait deux statuts contradictoires sur le
+même fournisseur, dans deux fichiers qui gouvernent ce qui s'écrit sur les pages.
+
+**Tant que ce n'est pas établi sur DEUX SOURCES, dont une de l'éditeur et
+portant sur l'offre RÉELLEMENT utilisée — pas sur l'offre entreprise — la
+phrase ne s'écrit ni ici, ni sur une page.** Ce qui est déjà publié est relevé
+dans `nbhc-broll/RELEVE_HEBERGEMENT_PUBLIE.md` et traité en phase B.
+
+### Le reste de la règle, lui, est acquis
 
 **Jamais** « données en France ». **Jamais** « on anonymise avant tout traitement
 LLM ». **Jamais** « traitement sécurisé » ni aucune allégation de conformité.
