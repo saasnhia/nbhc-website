@@ -87,7 +87,7 @@ const contentFr: SectorContent = {
   ],
   geoTitle: "Marseille et sa région, et au-delà",
   geoText:
-    "NBHC a mené un travail de terrain sur les officines de Marseille et de sa région — une métropole avec une forte densité d'officines et une concurrence qui pousse chaque titulaire à chercher des services différenciants. L'offre s'adresse cependant à toute officine en France, quel que soit son profil (titulaire seul, plusieurs pharmaciens, groupement).",
+    "L'offre s'adresse à toute officine en France, quel que soit son profil (titulaire seul, plusieurs pharmaciens, groupement).",
   pricingTitle: "Tarification",
   pricingIntro:
     "Diagnostic gratuit de 30 minutes, systématique et sans engagement. La détection des patients éligibles au BPM, par exemple, démarre à 2 000 € HT — une automatisation sur mesure, connectée à votre logiciel métier.",
@@ -191,7 +191,7 @@ const contentEn: SectorContent = {
   ],
   geoTitle: "Marseille and its region, and beyond",
   geoText:
-    "NBHC has done field work with pharmacies in Marseille and its region — a metro area with a high density of pharmacies and competition that pushes every owner to look for differentiating services. The offer is open to any pharmacy in France though, whatever its profile (single pharmacist, several pharmacists, group).",
+    "The offer is open to any pharmacy in France, whatever its profile (single pharmacist, several pharmacists, group).",
   pricingTitle: "Pricing",
   pricingIntro:
     "Free 30-minute diagnostic, systematic and with no commitment. Detecting patients eligible for BPM, for instance, starts at €2,000 excl. VAT — a custom automation, connected to your pharmacy management software.",

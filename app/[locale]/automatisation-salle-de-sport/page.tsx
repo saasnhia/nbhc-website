@@ -88,7 +88,7 @@ const contentFr: SectorContent = {
   ],
   geoTitle: "Vernon et sa périphérie (Eure)",
   geoText:
-    "NBHC a mené un travail de terrain approfondi auprès des salles, studios et instituts indépendants de Vernon et de sa périphérie proche (Saint-Marcel, Pacy-sur-Eure, Gaillon, Les Andelys). Si vous êtes dans ce secteur, on connaît déjà les problématiques concrètes du bassin — mais l'offre s'adresse à toute salle ou institut indépendant en France.",
+    "L'offre s'adresse à toute salle ou institut indépendant en France.",
   pricingTitle: "Tarification",
   pricingIntro:
     "Diagnostic gratuit de 30 minutes, systématique et sans engagement. Les rappels automatiques de cours et la liste d'attente dynamique, par exemple, démarrent à 200 € HT, configurée pour votre salle.",
@@ -192,7 +192,7 @@ const contentEn: SectorContent = {
   ],
   geoTitle: "Vernon and its surrounding area (Eure, France)",
   geoText:
-    "NBHC has done in-depth field work with independent gyms, studios and wellness centers in Vernon and its immediate surroundings (Saint-Marcel, Pacy-sur-Eure, Gaillon, Les Andelys). If you're in this area, we already know the concrete challenges of the local market — but this offer is open to any independent gym or wellness center in France.",
+    "This offer is open to any independent gym or wellness center in France.",
   pricingTitle: "Pricing",
   pricingIntro:
     "Free 30-minute diagnostic, systematic and with no commitment. Automatic class reminders and the dynamic waitlist, for instance, start at €200 excl. VAT, configured for your gym.",

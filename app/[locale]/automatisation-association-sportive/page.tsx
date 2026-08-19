@@ -68,7 +68,7 @@ const contentFr: SectorContent = {
   ],
   geoTitle: "Vernon et sa périphérie (Eure)",
   geoText:
-    "NBHC a rencontré et échangé avec plusieurs clubs et associations sportives de Vernon et de sa périphérie (Pacy-sur-Eure, Gaillon, Les Andelys, Ézy-sur-Eure) — judo, tennis, natation, escalade, rugby, basket. Les problématiques de gestion bénévole y sont les mêmes que partout en France, et l'offre s'adresse à tout club loi 1901, quelle que soit sa discipline ou sa localisation.",
+    "L'offre s'adresse à tout club loi 1901, quelle que soit sa discipline ou sa localisation.",
   pricingTitle: "Tarification",
   pricingIntro:
     "Diagnostic gratuit de 30 minutes, sans engagement, quelle que soit la taille du club. La gestion des inscriptions et certificats, par exemple, démarre à 1 000 € HT (tarif solidaire) — une automatisation sur mesure, configurée pour votre club.",
@@ -165,7 +165,7 @@ const contentEn: SectorContent = {
   ],
   geoTitle: "Vernon and its surrounding area (Eure, France)",
   geoText:
-    "NBHC has met and talked with several sports clubs and associations in Vernon and its surroundings (Pacy-sur-Eure, Gaillon, Les Andelys, Ézy-sur-Eure) — judo, tennis, swimming, climbing, rugby, basketball. Volunteer management challenges are the same everywhere in France, and this offer is open to any non-profit sports club, whatever its discipline or location.",
+    "This offer is open to any non-profit sports club, whatever its discipline or location.",
   pricingTitle: "Pricing",
   pricingIntro:
     "Free 30-minute diagnostic, no commitment, whatever the size of the club. Managing registrations and certificates, for instance, starts at €1,000 excl. VAT (solidarity rate) — a custom automation, configured for your club.",

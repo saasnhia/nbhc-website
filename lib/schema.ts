@@ -128,7 +128,14 @@ export function serviceSchema(locale: "fr" | "en", offers: ServiceOffer[]) {
       priceCurrency: o.priceCurrency ?? "EUR",
       description: o.description,
       url: o.url,
-      availability: "https://schema.org/InStock",
+      // MadeToOrder, et non InStock. Le vocabulaire schema.org (ItemAvailability,
+      // V30.0 du 19/03/2026) definit InStock comme « the item is IN STOCK » et
+      // MadeToOrder comme « the item is MADE TO ORDER (CUSTOM MADE) ». Une
+      // automatisation sur mesure est le second, pas le premier.
+      // La question de savoir si un Offer a sa place sur ces pages reste entiere
+      // et va en phase C : une valeur plus exacte vaut mieux qu une valeur
+      // fausse en attendant qu on decide du schema lui-meme.
+      availability: "https://schema.org/MadeToOrder",
     })),
   };
 }
