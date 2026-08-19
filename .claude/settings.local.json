@@ -6,5 +6,18 @@
       "Bash(git push:*)",
       "Bash(npm run:*)"
     ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"C:/finpilote/finpilote/nbhc-website/.claude/hooks/verifier-js.js\""
+          }
+        ]
+      }
+    ]
   }
 }
