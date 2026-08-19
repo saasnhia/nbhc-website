@@ -13,8 +13,8 @@ export async function generateMetadata({
   return {
     title: isFr ? "Politique de confidentialité — NBHC" : "Privacy policy — NBHC",
     description: isFr
-      ? "Protection des données personnelles, RGPD, cookies — NBHC. Données hébergées en Europe, traitement IA via Mistral AI (France)."
-      : "Personal data protection, GDPR, cookies — NBHC. Data hosted in Europe, AI processing via Mistral AI (France).",
+      ? "Protection des données personnelles, RGPD, cookies — NBHC. Traitement IA via Mistral AI (France)."
+      : "Personal data protection, GDPR, cookies — NBHC. AI processing via Mistral AI (France).",
     alternates: localeCanonical(locale, "/politique-confidentialite"),
     robots: { index: true, follow: true },
   };

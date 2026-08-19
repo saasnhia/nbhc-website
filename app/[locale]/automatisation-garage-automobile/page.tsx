@@ -85,7 +85,7 @@ const contentFr: SectorContent = {
   ],
   geoTitle: "Toulouse et sa métropole",
   geoText:
-    "NBHC a mené un travail de terrain approfondi auprès des garages et carrosseries indépendants de Toulouse et de sa métropole. Si vous êtes dans ce secteur, on connaît déjà les réseaux d'indépendants locaux (Motrio, AD Expert, Bosch Car Service, Axial...) — mais l'offre s'adresse à tout garage ou carrosserie indépendant en France, quel que soit le réseau d'affiliation.",
+    "L'offre s'adresse à tout garage ou carrosserie indépendant en France, quel que soit le réseau d'affiliation.",
   pricingTitle: "Tarification",
   pricingIntro:
     "Diagnostic gratuit de 30 minutes, systématique et sans engagement. L'IA téléphonique, par exemple, démarre à 200 € HT, configurée pour votre garage.",
@@ -189,7 +189,7 @@ const contentEn: SectorContent = {
   ],
   geoTitle: "Toulouse and its metro area",
   geoText:
-    "NBHC has done in-depth field work with independent garages and body shops in Toulouse and its metro area. If you're in this area, we already know the local independent networks (Motrio, AD Expert, Bosch Car Service, Axial...) — but this offer is open to any independent garage or body shop in France, whatever its affiliation network.",
+    "This offer is open to any independent garage or body shop in France, whatever its affiliation network.",
   pricingTitle: "Pricing",
   pricingIntro:
     "Free 30-minute diagnostic, systematic and with no commitment. The AI phone agent, for instance, starts at €200 excl. VAT, configured for your garage.",
