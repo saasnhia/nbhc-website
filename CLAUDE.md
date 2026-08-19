@@ -50,6 +50,15 @@ depuis un fichier de contexte.** Voir le §7 de `nbhc-broll/PIEGES_D_INSTRUMENT.
 **Aucun chiffre non vérifiable sur une page publique.** Un chiffre porte sa
 source ou il ne s'écrit pas.
 
+**L'invitation à déposer un avis public ne dépend JAMAIS de la note recueillie
+en amont — on invite tout le monde, ou personne.** Arbitrage client du
+19/08/2026, il vise **le produit**, pas seulement la page. Reste : mesurer la
+satisfaction et **alerter sur une note basse** pour un rappel personnel. Sort :
+envoyer le lien vers la fiche publique aux uns et pas aux autres. Le tri n'est
+pas établi comme illicite ; il sort parce que le risque dépasse le gain, et
+parce que corriger la page en gardant la pratique reviendrait à **cacher une
+allégation au lieu de la retirer**. Voir `nbhc-broll/REGLE_AVIS_EN_LIGNE.md`.
+
 **Une allégation d'existence est une allégation, même discrète** : « catalogue »,
 « standardisée », « déjà construit », « clé en main » sont sorties du site au
 gate 89.
