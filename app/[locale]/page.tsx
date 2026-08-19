@@ -83,8 +83,8 @@ export default async function Home({
         acceptedAnswer: {
           "@type": "Answer",
           text: isFr
-            ? "Oui. On utilise Mistral, un modèle IA français, hébergé en UE, conformément au RGPD."
-            : "Yes. We use Mistral, a French AI model, hosted in the EU, GDPR-compliant.",
+            ? "Oui. On utilise Mistral, un modèle IA français, hébergé en UE."
+            : "Yes. We use Mistral, a French AI model, hosted in the EU.",
         },
       },
     ],

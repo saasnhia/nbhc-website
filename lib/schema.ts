@@ -75,7 +75,7 @@ export function professionalServiceSchema() {
     logo: LOGO_URL,
     priceRange: "€€€",
     description:
-      "Studio IA & automatisation : agents IA sur mesure, SaaS métiers, conformité RGPD (données hébergées en Europe).",
+      "Studio IA & automatisation : agents IA sur mesure, SaaS métiers (données hébergées en Europe).",
     address: { "@type": "PostalAddress", addressCountry: "FR" },
     areaServed: { "@type": "Country", name: "France" },
     email: "contact@nbhc.fr",
