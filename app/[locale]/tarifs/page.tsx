@@ -25,8 +25,8 @@ export default async function TarifsPage({
               name: tA("essentielName"),
               price: "200",
               description: isFr
-                ? "Automatisation standardisée, workflow pré-construit configuré pour votre activité"
-                : "Standardised automation, pre-built workflow configured for your business",
+                ? "Automatisation standardisée, configurée pour votre activité"
+                : "Standardised automation, configured for your business",
               url: pageUrl,
             },
             {
