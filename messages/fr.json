@@ -1,149 +1,47 @@
 {
   "nav": {
-    "howItWorks": "Comment ça marche",
+    "howItWorks": "Méthode",
     "sectors": "Pour qui",
     "pricing": "Tarifs",
     "faq": "FAQ",
     "blog": "Blog",
-    "cta": "Diagnostic gratuit",
-    "contact": "Contact"
+    "cta": "Réserver 30 min",
+    "contact": "Contact",
+    "products": "Produits",
+    "custom": "Sur mesure"
   },
   "hero": {
-    "eyebrow": "STUDIO IA · AUTOMATISATION SUR MESURE",
-    "titleLine1": "L'IA est partout.",
-    "titleLine2": "Sauf dans votre entreprise.",
-    "titleLine3": "On change ça.",
-    "subtitle": "Vous passez des heures sur des tâches que l'IA peut traiter en secondes. On s'en occupe — diagnostic gratuit, résultat mesurable, zéro jargon technique.",
-    "ctaPrimary": "Diagnostic gratuit — 30 min",
-    "ctaSecondary": "Voir comment ça marche",
-    "trust1": "🇫🇷 Mistral, modèle IA français",
-    "trust2": "⚡ Automatisation sur mesure",
-    "trust3": "🔓 Tout vous appartient",
-    "flow": {
-      "center": "Automatisé par NBHC",
-      "tabs": {
-        "emails": "Un email arrive → il est traité",
-        "leads": "Un client vous contacte → il est relancé",
-        "reports": "Vos données → un rapport prêt",
-        "custom": "Une tâche répétitive → elle disparaît"
+    "titleLine1": "Devis, montage vidéo, candidatures :",
+    "titleLine2": "on construit des logiciels métier.",
+    "titleLine3": "Le prochain peut être le vôtre.",
+    "subtitle": "NBHC conçoit et développe des logiciels. Devizly pour les devis et les factures, Vlogyz pour le montage vidéo, internbullet pour les candidatures. Et, pour les entreprises dont le métier ne rentre dans aucun logiciel du marché, un outil construit autour de leurs règles.",
+    "ctaPrimary": "Parler de votre outil",
+    "ctaSecondary": "Voir les produits",
+    "index": {
+      "title": "Ce qu’on construit",
+      "status": "État",
+      "devizly": {
+        "name": "Devizly",
+        "what": "Devis et factures pour indépendants",
+        "status": "En production"
       },
-      "emails": {
-        "before": {
-          "title": "200 emails/jour",
-          "sub": "Lire, trier, répondre — 2h perdues chaque matin"
-        },
-        "after": {
-          "title": "Inbox maîtrisée",
-          "sub": "Trié, classé, réponse proposée — en temps réel"
-        }
+      "vlogyz": {
+        "name": "Vlogyz",
+        "what": "Montage vidéo pour créateurs",
+        "status": "Bientôt disponible"
       },
-      "leads": {
-        "before": {
-          "title": "Prospects perdus",
-          "sub": "Pas le temps de relancer, devis sans réponse"
-        },
-        "after": {
-          "title": "Pipeline automatisé",
-          "sub": "Qualifié, devis envoyé, relancé J+3/J+7/J+14"
-        }
+      "internbullet": {
+        "name": "internbullet",
+        "what": "Candidatures de stage, d’alternance et d’emploi",
+        "status": "En préparation"
       },
-      "reports": {
-        "before": {
-          "title": "Reporting manuel",
-          "sub": "Excel, copier-coller, 4h chaque semaine"
-        },
-        "after": {
-          "title": "Rapport automatique",
-          "sub": "5 sources compilées, anomalies détectées, PDF chaque lundi"
-        }
-      },
-      "custom": {
-        "before": {
-          "title": "Process manuels",
-          "sub": "Les mêmes gestes, chaque jour, depuis des années"
-        },
-        "after": {
-          "title": "Automatisé",
-          "sub": "24/7, zéro erreur — vous pilotez, l'IA exécute"
-        }
+      "surMesure": {
+        "name": "Sur mesure",
+        "what": "L’outil construit autour de vos règles",
+        "status": "Sur devis"
       }
-    }
-  },
-  "whyNow": {
-    "eyebrow": "LE CONSTAT",
-    "title": "L'IA change tout. Et vous le voyez.",
-    "subtitle": "Vous voyez passer les actus sur l'IA tous les jours. Mais concrètement, comment en profiter quand on gère un cabinet, un chantier, une agence ? C'est exactement la question à laquelle on répond.",
-    "panel1Title": "Vous perdez du temps",
-    "panel1Text": "Devis à la main, relances oubliées, reporting copié-collé.",
-    "panel1Alt": "Un poste de travail vu de trois quarts, sur un plateau sombre bordé d'un liseré doré : une pile de feuilles, une feuille isolée posée à plat, et un sablier.",
-    "panel1LabelGroupe": "devis, relances, reporting",
-    "panel2Title": "Par où commencer ?",
-    "panel2Text": "100 outils IA sur le marché, zéro qui s'adapte à votre métier.",
-    "panel2Alt": "Un amas de blocs cubiques identiques posé sur un socle, à côté de deux dalles jumelles séparées par un jour bordé d'or de part et d'autre ; deux blocs reposent en travers du jour, plus larges que lui.",
-    "panel2LabelOutils": "outils IA",
-    "panel2LabelMetier": "votre métier",
-    "panel3Title": "Vos concurrents s'y mettent",
-    "panel3Text": "Pendant que vous hésitez, d'autres automatisent déjà.",
-    "panel3Alt": "Deux caisses identiques posées sur un socle bordé d'or : celle de gauche est fermée, celle de droite est ouverte, son couvercle déposé et appuyé au sol contre son flanc, et une masse dorée occupe le fond de son intérieur.",
-    "panel3LabelVous": "vous",
-    "panel3LabelAutres": "d'autres"
-  },
-  "sectors": {
-    "eyebrow": "POUR QUI",
-    "title": "On automatise les tâches de votre métier.",
-    "subtitle": "Chaque secteur a ses tâches répétitives. On les connaît, on les automatise.",
-    "sportName": "Salles de sport & bien-être",
-    "sportPain": "No-shows sur les cours, abonnements jamais relancés, accueil saturé pendant les soins.",
-    "sportSolution": "On automatise les rappels, les relances d'abonnement et la prise de RDV.",
-    "sportFootnote": "À partir de 200€ HT",
-    "sportHref": "/automatisation-salle-de-sport",
-    "sportAssoName": "Associations sportives",
-    "sportAssoPain": "Certificats à collecter, cotisations jamais relancées, convocations une par une.",
-    "sportAssoSolution": "On automatise les inscriptions, les relances et les convocations. Offre solidaire dès 1 000€ HT.",
-    "sportAssoFootnote": "À partir de 1 000€ HT · offre asso",
-    "sportAssoHref": "/automatisation-association-sportive",
-    "garageName": "Garages & carrosseries",
-    "garagePain": "Appels manqués à l'atelier, devis jamais relancés, révisions jamais rappelées.",
-    "garageSolution": "On automatise l'accueil téléphonique, les relances de devis et les rappels d'entretien.",
-    "garageFootnote": "À partir de 200€ HT",
-    "garageHref": "/automatisation-garage-automobile",
-    "btpName": "Artisans & BTP",
-    "btpPain": "Devis à la main, relances jamais faites, factures en retard.",
-    "btpSolution": "On automatise vos devis, relances et facturations. Résultat en 2-3 semaines.",
-    "btpFootnote": "À partir de 2 000€ HT",
-    "btpHref": "/automatisation-artisan-btp",
-    "formationName": "Organismes de formation",
-    "formationPain": "Dossiers OPCO qui bloquent, émargements à archiver, audit Qualiopi qui approche.",
-    "formationSolution": "On automatise le suivi OPCO, l'émargement et les convocations. Vous restez décideur.",
-    "formationFootnote": "À partir de 2 000€ HT",
-    "formationHref": "/automatisation-organisme-formation",
-    "pharmaName": "Officines de pharmacie",
-    "pharmaPain": "Patients éligibles au BPM non détectés, ruptures découvertes trop tard, rejets tiers-payant.",
-    "pharmaSolution": "On automatise la détection, les alertes et le tri des rejets. Vous décidez et facturez.",
-    "pharmaFootnote": "À partir de 2 000€ HT",
-    "pharmaHref": "/automatisation-pharmacie",
-    "opticienName": "Magasins d'optique",
-    "opticienPain": "Clients à renouveler jamais relancés, commandes prêtes sans notification, stock désynchronisé entre boutiques.",
-    "opticienSolution": "On automatise la relance renouvellement, le suivi fabrication et le stock multi-boutiques. Vous examinez et vendez.",
-    "opticienFootnote": "À partir de 2 000€ HT",
-    "opticienHref": "/automatisation-opticien",
-    "learnMore": "En savoir plus →",
-    "outroText": "Votre secteur n'est pas listé ? Le diagnostic gratuit permet de voir si on peut vous aider.",
-    "outroCta": "Réserver mon diagnostic →",
-    "garageLabelAccueil": "accueil téléphonique automatisé",
-    "garageLabelFiche": "la fiche se remplit",
-    "pharmaLabelTri": "le tri, automatisé",
-    "pharmaLabelDecision": "vous décidez et facturez",
-    "btpLabelDevis": "devis à la main",
-    "btpLabelRelance": "parti tout seul",
-    "formationLabelDossier": "émargement papier",
-    "formationLabelSuivi": "dossier clos",
-    "opticienLabelRelance": "relance oubliée",
-    "opticienLabelPrete": "commande prête",
-    "sportLabelNoshow": "no-show au cours",
-    "sportLabelRappel": "rappel envoyé",
-    "sportAssoLabelCertificat": "certificat manquant",
-    "sportAssoLabelDossier": "dossier bouclé"
+    },
+    "ctaNote": "30 minutes, gratuit. Si un outil n’est pas la bonne réponse, on vous le dit."
   },
   "showcase": {
     "eyebrow": "EN ACTION",
@@ -417,47 +315,112 @@
     }
   },
   "howItWorks": {
-    "eyebrow": "COMMENT ÇA MARCHE",
-    "title": "Du diagnostic au résultat. Sans jargon.",
-    "subtitle": "Quatre étapes claires, sans surprise. C'est le parcours d'une automatisation sur mesure. Vous savez ce qui sera fait, quand, et combien ça coûte.",
+    "eyebrow": "Méthode",
+    "title": "Du premier échange à l’outil livré",
+    "subtitle": "Quatre étapes. Vous savez ce qui sera construit et à quel prix avant de signer.",
     "step1Number": "01",
     "step1Title": "On comprend votre quotidien",
-    "step1Desc": "On identifie les tâches qui vous font perdre du temps, on évalue si l'IA peut aider.",
+    "step1Desc": "Vous montrez ce qui se refait à la main. On vous dit si un outil peut le prendre en charge.",
     "step1Badge": "30 min · Gratuit",
     "step2Number": "02",
-    "step2Title": "On conçoit votre solution",
-    "step2Desc": "On audite vos outils, la qualité de vos données, et on conçoit l'architecture du workflow. Vous savez exactement ce qui sera construit avant de signer.",
-    "step2Badge": "1-2 semaines",
+    "step2Title": "On conçoit votre outil",
+    "step2Desc": "On regarde vos données et vos logiciels, puis on écrit ce qui sera construit. Vous le validez avant de signer.",
+    "step2Badge": "Périmètre écrit",
     "step3Number": "03",
     "step3Title": "On construit et on teste sur vos vrais cas",
-    "step3Desc": "On construit le workflow, on calibre l'IA sur votre vocabulaire métier. Pas de prototype — un système qui tourne.",
-    "step3Badge": "2-5 semaines",
+    "step3Desc": "L’outil est réglé sur votre vocabulaire et vos règles. Pas de maquette : un outil qui tourne.",
+    "step3Badge": "Tests sur vos cas",
     "step4Number": "04",
     "step4Title": "On livre, vous décidez de la suite",
-    "step4Desc": "Le build est testé et livré. Si vous voulez qu'on continue, l'accompagnement prend le relais — ce n'est jamais imposé.",
-    "step4Badge": "Livraison + accompagnement optionnel",
+    "step4Desc": "L’outil est testé et livré. L’accompagnement ensuite est optionnel, jamais imposé.",
+    "step4Badge": "Accompagnement optionnel",
     "illustrationAlt": "Une chaîne de quatre étapes posées sur un socle bordé d'or, reliées par un trajet doré en pointillé terminé par une flèche. 01 : un dossier ouvert à trois onglets, un crayon posé en travers. 02 : une planche a dessin inclinée sur deux pieds, une feuille dessus, une équerre. 03 : un boitier ouvert, une pièce dressée dedans, un tournevis et trois vis alignées devant. 04 : un porte-dossiers avec trois dossiers rangés debout, son arête avant soulignée d'or. Entre la deuxième et la troisième étape, une feuille dressée portant une bande dorée. Après la quatrième, le pointillé s'interrompt et reprend en un segment détaché.",
     "legendeSignature": "avant de signer",
     "labelSysteme": "un système qui tourne",
     "labelOptionnel": "accompagnement optionnel"
   },
   "products": {
-    "eyebrow": "NOS PRODUITS",
-    "title": "On ne fait pas que du conseil. On construit.",
-    "subtitle": "Nos SaaS prouvent qu'on sait construire des produits complets — de la conception au déploiement.",
+    "eyebrow": "Nos produits",
+    "title": "Devizly est en production. Vlogyz et internbullet arrivent.",
+    "subtitle": "Trois logiciels qu’on conçoit et qu’on développe nous-mêmes. Chacun prend en charge un travail précis, et c’est la même façon de faire qu’on applique à un outil sur mesure.",
     "devizlyName": "Devizly",
-    "devizlyDesc": "Plateforme de devis et factures propulsée par l'IA. Conforme Factur-X, signature électronique, encaissement Stripe.",
     "devizlyBadge": "En production",
-    "devizlyLink": "devizly.fr",
-    "devizlySceneAlt": "Un devis en trois dimensions dressé sur un socle : l'en-tête, six lignes chiffrées avec quantités et montants, le total TTC doré, la ligne de signature cochée et le bouton d'encaissement doré lumineux",
-    "devizlyLabelDevis": "le devis généré par l'IA",
-    "devizlyLabelLignes": "chaque ligne chiffrée",
-    "devizlyLabelSignature": "signé électroniquement",
-    "devizlyLabelEncaissement": "encaissé en un clic",
+    "devizlyLink": "Ouvrir devizly.fr",
     "vlogyzName": "Vlogyz",
-    "vlogyzDesc": "Plateforme de montage vidéo IA. Transcription, coupes intelligentes, sous-titres, motion design, score viralité.",
     "vlogyzBadge": "Bientôt disponible",
-    "vlogyzLink": "vlogyz.com"
+    "vlogyzLink": "Rejoindre la liste d’attente",
+    "devizlyFor": "Devis et factures pour indépendants et artisans",
+    "vlogyzFor": "Montage vidéo pour créateurs de contenu",
+    "internbulletName": "internbullet",
+    "internbulletBadge": "En préparation",
+    "internbulletFor": "Candidatures directes : stage, alternance, emploi",
+    "internbulletQuote": "J’ai trouvé mon stage avec cet outil. Je le prépare maintenant pour que d’autres étudiants cherchent le leur plus simplement.",
+    "internbulletQuoteBy": "Le fondateur de NBHC",
+    "internbulletLink": "Être prévenu de l’ouverture",
+    "internbulletDemo": {
+      "company": "Atelier Morel · Lyon",
+      "offer": "Stage au bureau d’études, mars à août 2027",
+      "status": "À relire",
+      "readLabel": "Lu sur leur site",
+      "excerpt": "« Nous accueillons chaque année deux stagiaires au bureau d’études. »",
+      "excerptSource": "Page Recrutement",
+      "subjectLabel": "Objet",
+      "subject": "Candidature pour un stage au bureau d’études",
+      "body": "Madame, Monsieur, votre page Recrutement indique que vous accueillez chaque année deux stagiaires au bureau d’études. Je cherche un stage de mars à août 2027 et je vous adresse ma candidature.",
+      "checked": "Mail relu",
+      "send": "Envoyer",
+      "caption": "Exemple : entreprise fictive. Aucun mail ne part sans avoir été relu."
+    },
+    "devizlySteps": [
+      "Vous décrivez la prestation en langage courant",
+      "Devizly rédige le devis, vous l’ajustez",
+      "Le client signe en ligne et règle par Stripe"
+    ],
+    "devizlyNote": "Les factures sortent au format Factur-X, un format de facture électronique.",
+    "vlogyzSteps": [
+      "Vous déposez le rush",
+      "Vlogyz transcrit, coupe les silences et pose les sous-titres",
+      "La vidéo sort au format vertical, avec b-roll et titres animés"
+    ],
+    "vlogyzNote": "Pas encore ouvert au public : la liste d’attente est sur vlogyz.com.",
+    "internbulletSteps": [
+      "Vous apportez une entreprise ou une offre",
+      "L’outil lit son site et prépare un mail appuyé sur ce qu’il y a lu",
+      "Vous relisez, puis vous envoyez"
+    ],
+    "internbulletNote": "En France comme à l’étranger. Les stages et les alternances d’abord, les CDD et les CDI ensuite.",
+    "devizlyDemo": {
+      "promptLabel": "Ce que l’artisan écrit",
+      "prompt": "Remplacement d’un chauffe-eau 200 L, dépose de l’ancien, raccordements et mise en service.",
+      "number": "Devis D-2027-014",
+      "client": "M. et Mme Laurent",
+      "l1": {
+        "label": "Chauffe-eau électrique 200 L",
+        "qty": "1 × 689,00 €",
+        "amount": "689,00 €"
+      },
+      "l2": {
+        "label": "Dépose et pose",
+        "qty": "4 h × 55,00 €",
+        "amount": "220,00 €"
+      },
+      "l3": {
+        "label": "Raccordements et mise en service",
+        "qty": "forfait",
+        "amount": "140,00 €"
+      },
+      "htLabel": "Total HT",
+      "ht": "1 049,00 €",
+      "tvaLabel": "TVA 10 %",
+      "tva": "104,90 €",
+      "ttcLabel": "Total TTC",
+      "ttc": "1 153,90 €",
+      "signedTitle": "Signé en ligne",
+      "signedText": "par le client, depuis son téléphone",
+      "paidTitle": "Acompte réglé",
+      "paidText": "30 % · 346,17 € par Stripe",
+      "caption": "Exemple de devis, client et montants fictifs."
+    }
   },
   "pricing": {
     "eyebrow": "TARIFS",
@@ -467,82 +430,71 @@
     "footnote2": "Coûts d'infrastructure (n8n, Mistral) : 80-300€/mois, facturés par NBHC — obligatoire, contrairement à l'accompagnement.",
     "footnote3": "L'accompagnement NBHC (mises à jour, sécurité, maintenance, formation) : 90 à 800 €/mois selon votre situation, versé à NBHC. Sans lui, personne ne surveille ni ne met à jour votre automatisation après la livraison."
   },
-  "differentiators": {
-    "eyebrow": "POURQUOI NBHC",
-    "title": "Ce qui nous différencie.",
-    "block1Icon": "🇫🇷",
-    "block1Title": "Moteur IA Mistral",
-    "block1Desc": "On construit sur Mistral, le modèle IA français, hébergé en UE. Les outils tiers connectés à votre activité restent les vôtres.",
-    "block2Icon": "🎯",
-    "block2Title": "Votre prix, pas une moyenne",
-    "block2Desc": "Le tarif dépend de ce que vous demandez précisément — pas d'une grille moyenne calquée sur d'autres clients. Taille, type d'automatisation, volume : ce sont ces critères qui fixent le prix.",
-    "block3Icon": "🔓",
-    "block3Title": "Vous êtes propriétaire",
-    "block3Desc": "Le workflow, les prompts, l'architecture — tout vous appartient. Si vous partez, vous gardez tout.",
-    "block4Icon": "🔍",
-    "block4Title": "La réglementation évolue, on la suit",
-    "block4Desc": "En secteur régulé, la veille réglementaire fait partie de l'accompagnement. Mises à jour et corrections suivent tant qu'il reste actif."
-  },
   "faq": {
     "eyebrow": "FAQ",
-    "title": "Les questions qu'on nous pose.",
-    "subtitle": "Et si vous en avez d'autres, le diagnostic gratuit est fait pour ça.",
-    "q1": "Je n'y connais rien en IA, c'est grave ?",
-    "a1": "Pas du tout. C'est justement pour ça qu'on existe. On s'occupe de toute la partie technique. Vous, vous nous expliquez votre métier et ce qui vous prend du temps.",
-    "q2": "Combien de temps avant de voir les résultats ?",
-    "a2": "Entre 1 et 5 semaines selon la complexité. Une automatisation standardisée (Essentiel) est livrée en 1-2 semaines. Une automatisation sur mesure, intégrée à vos outils (Sur Mesure Léger), prend 2-5 semaines.",
-    "q3": "C'est quoi exactement un 'workflow' ?",
-    "a3": "Un enchaînement d'actions automatisées. Par exemple : un email arrive → l'IA le lit → le classe → génère une réponse → vous la soumet pour validation. Tout ça sans que vous leviez le petit doigt.",
-    "q4": "Et si ça ne marche pas ?",
-    "a4": "Le diagnostic gratuit sert justement à ça : on évalue ensemble si l'IA peut réellement aider dans votre cas. Si on pense que non, on vous le dit honnêtement.",
-    "q5": "Mes données sont en sécurité ?",
-    "a5": "Oui. On utilise Mistral, un modèle IA français, hébergé en UE.",
-    "q6": "C'est quoi la différence avec ChatGPT ?",
-    "a6": "ChatGPT est un assistant généraliste. Nous, on construit des systèmes automatisés spécifiques à votre métier, connectés à vos outils, qui tournent 24/7 sans que vous ayez à ouvrir quoi que ce soit."
-  },
-  "ctaFinal": {
-    "title": "Prêt à automatiser ce qui vous prend du temps ?",
-    "subtitle": "30 minutes. Gratuit. Sans engagement. On regarde ensemble ce que l'IA peut changer dans votre quotidien.",
-    "button": "Réserver mon diagnostic gratuit →"
+    "title": "Les questions qu’on nous pose",
+    "subtitle": "Pour les autres, le premier échange de 30 minutes est fait pour ça.",
+    "q1": "NBHC est une agence ou un éditeur de logiciels ?",
+    "a1": "Les deux. On développe nos propres produits : Devizly, déjà en production, puis Vlogyz et internbullet, qui ne sont pas encore ouverts. Et on construit des outils sur mesure pour des entreprises. Ce qu’on apprend sur les premiers sert aux seconds.",
+    "q2": "Qu’est-ce qu’un outil sur mesure, concrètement ?",
+    "a2": "Un logiciel construit autour de vos règles : vos tarifs, vos cas particuliers, votre façon de préparer un devis ou une facture. Il s’appuie sur vos données existantes et vos conseillers gardent la main sur chaque décision.",
+    "q3": "Combien ça coûte ?",
+    "a3": "Le premier échange de 30 minutes est gratuit. Ensuite, le périmètre et le prix sont écrits avant de commencer : vous savez ce qui sera construit et ce que vous paierez.",
+    "q4": "À qui appartient l’outil une fois livré ?",
+    "a4": "À vous. Ce qu’on construit pour vous vous appartient, et vous le gardez si la collaboration s’arrête.",
+    "q5": "Quand internbullet sera-t-il ouvert ?",
+    "a5": "Il est en préparation. Le fondateur de NBHC a trouvé son propre stage avec ; l’ouverture aux étudiants vient ensuite, d’abord pour les stages et les alternances, puis pour les CDD et les CDI. Écrivez à contact@nbhc.fr pour être prévenu.",
+    "q6": "Et si un outil n’est pas la bonne réponse ?",
+    "a6": "On vous le dit au premier échange. Un tableur bien tenu ou un logiciel du marché suffit parfois, et dans ce cas on ne construit rien."
   },
   "contact": {
-    "eyebrow": "Diagnostic gratuit",
-    "title": "Votre projet",
-    "titleGold": "commence ici.",
-    "description": "30 minutes en visio. On identifie ce qui vous fait perdre du temps et on vous dit honnêtement si l'IA peut vous aider — sans jargon technique.",
-    "calendlyButton": "Réserver mon créneau →",
+    "eyebrow": "Premier échange",
+    "title": "Parlons de",
+    "titleGold": "votre outil",
+    "description": "30 minutes en visio. Vous montrez ce qui se refait à la main chez vous. On vous dit si un outil peut le prendre en charge, et si ce n’est pas le cas on vous le dit aussi.",
+    "calendlyButton": "Réserver un créneau",
     "calendlyAlt": "Préférez écrire ? contact@nbhc.fr",
     "emailDirect": "Email direct",
     "siren": "SIREN",
     "headquarters": "Siège"
   },
-  "globalBanner": {
-    "text": "🎯 Diagnostic gratuit — 30 min pour voir ce que l'IA changerait chez vous →",
-    "textShort": "🎯 Diagnostic gratuit — 30 min →",
-    "close": "Fermer"
-  },
   "footer": {
-    "tagline": "Studio IA & Automatisation · France",
+    "tagline": "Logiciels métier et outils sur mesure",
     "navTitle": "Navigation",
-    "howItWorks": "Comment ça marche",
+    "howItWorks": "Méthode",
     "sectors": "Pour qui",
     "pricing": "Tarifs",
     "products": "Produits",
     "blog": "Blog",
     "faq": "FAQ",
     "contactTitle": "Contact",
-    "diagnostic": "Diagnostic gratuit",
+    "diagnostic": "Réserver 30 min",
     "email": "contact@nbhc.fr",
     "linkedin": "LinkedIn",
     "twitter": "X · @harounNbhc",
     "productsTitle": "Nos produits",
-    "devizly": "Devizly.fr",
+    "devizly": "Devizly",
     "vlogyz": "Vlogyz",
     "legal": "Mentions légales",
     "privacy": "Politique de confidentialité",
     "cgv": "CGV",
     "cgu": "CGU",
-    "copyright": "© 2026 SAS NBHC — SIREN 102 637 899 · 55 Rue Henri Clément, 71100 Saint-Rémy · Tous droits réservés"
+    "copyright": "© 2026 SAS NBHC — SIREN 102 637 899 · 55 Rue Henri Clément, 71100 Saint-Rémy · Tous droits réservés",
+    "custom": "Sur mesure",
+    "internbullet": "internbullet",
+    "sectorsTitle": "Sur mesure, par métier",
+    "sectorLinks": {
+      "automatisation-artisan-btp": "Artisans et BTP",
+      "automatisation-garage-automobile": "Garages",
+      "automatisation-restaurant": "Restaurants",
+      "automatisation-salon-de-coiffure": "Salons de coiffure",
+      "automatisation-salle-de-sport": "Salles de sport",
+      "automatisation-association-sportive": "Associations sportives",
+      "automatisation-organisme-formation": "Organismes de formation",
+      "automatisation-pharmacie": "Pharmacies",
+      "automatisation-opticien": "Opticiens",
+      "automatisation-marque-cosmetique": "Marques de cosmétique"
+    }
   },
   "common": {
     "loading": "Chargement...",
@@ -1362,7 +1314,7 @@
       "pillar1Title": "Vos automatisations ne vieillissent pas",
       "pillar1Text": "On surveille l'état de l'art des modèles et des outils. Quand une version plus performante existe pour l'un de vos workflows, on la teste — puis on la met à jour après votre validation. Quand une nouvelle automatisation devient pertinente pour votre métier, on vous la propose.",
       "pillar2Title": "Où passent vos données",
-      "pillar2Text": "Vos données transitent par n8n, hébergé en Allemagne, et par l'IA Mistral, hébergée en Union européenne. Validation humaine sur chaque action engageante.",
+      "pillar2Text": "Les fournisseurs par lesquels passent vos données se précisent avec vous, projet par projet. Validation humaine sur chaque action engageante.",
       "pillar3Title": "Maintenance",
       "pillar3Text": "Quand un outil tiers change — un éditeur modifie son export, une API évolue — on corrige pour que le workflow continue de tourner. Une petite équipe, réactive, pas un centre d'appels 24/7.",
       "pillar4Title": "Formation",
@@ -1539,5 +1491,83 @@
     "videoAriaVilla": "Vidéo de présentation d'une villa, réalisée à partir de photos",
     "typeStudio": "Studio",
     "videoAriaStudio": "Vidéo de présentation d'un studio, réalisée à partir de photos"
+  },
+  "custom": {
+    "eyebrow": "Sur mesure",
+    "title": "Quand le cas particulier est la règle, il faut un outil qui connaît vos règles",
+    "subtitle": "Un prix qui change selon qui vient, combien de temps et dans quelle chambre. Un devis qui dépend du chantier. Tant qu’aucun logiciel ne connaît vos règles, quelqu’un les réapplique à la main, dossier après dossier. On construit l’outil qui les connaît.",
+    "p1Title": "Il part de la demande du client",
+    "p1Text": "Le message arrive comme il a été écrit. L’outil en tire ce qu’il faut pour le devis : qui, quand, combien de temps, dans quelles conditions.",
+    "p2Title": "Chaque ligne cite sa source",
+    "p2Text": "Une valeur s’affiche avec la phrase du client qui la fonde. Sans phrase, pas de valeur : votre conseiller voit ce qui manque et le demande.",
+    "p3Title": "Vos prix restent les vôtres",
+    "p3Text": "L’outil établit qui paie quoi. Les montants viennent de votre grille, et le calcul se lit ligne par ligne.",
+    "p4Title": "Il s’appuie sur ce que vous avez déjà",
+    "p4Text": "Catalogue, tableur, base du site : l’outil va y chercher les étapes et les dates. Vos conseillers gardent la décision.",
+    "terms": "Premier échange de 30 minutes, gratuit. Le périmètre et le prix sont écrits avant de commencer. Ce qu’on construit pour vous vous appartient.",
+    "cta": "Décrire votre cas",
+    "demo": {
+      "messageLabel": "Le message du client",
+      "m1": "Bonjour, nous partons ",
+      "c1": "à deux, Marc et moi, du 4 au 12 mai 2027",
+      "m2": " : Hanoï, la baie d’Halong puis Hoi An. Ma sœur Claire ",
+      "c2": "nous rejoint à Hoi An le 8 mai, jusqu’au 12",
+      "m3": ", et elle prendra ",
+      "c3": "une chambre seule",
+      "m4": ". Pouvez-vous nous préparer un devis ? Julie",
+      "tableLabel": "Qui paie quoi",
+      "colWho": "Voyageur",
+      "colNights": "Nuits",
+      "colRoom": "Chambre",
+      "r1": {
+        "who": "Julie",
+        "nights": "8 nuits",
+        "dates": "du 4 au 12 mai",
+        "room": "Double, partagée",
+        "source": "« à deux, Marc et moi »"
+      },
+      "r2": {
+        "who": "Marc",
+        "nights": "8 nuits",
+        "dates": "du 4 au 12 mai",
+        "room": "Double, partagée",
+        "source": "« à deux, Marc et moi »"
+      },
+      "r3": {
+        "who": "Claire",
+        "nights": "4 nuits",
+        "dates": "du 8 au 12 mai, à Hoi An",
+        "room": "Individuelle",
+        "source": "« une chambre seule »"
+      },
+      "amounts": "Les montants viennent de votre grille tarifaire. L’outil n’en invente aucun : il établit la structure, votre conseiller valide.",
+      "caption": "Exemple fictif d’un voyage à trois. Le principe est le même pour un chantier, une formation ou un abonnement.",
+      "routeLabel": "Le parcours, étapes et dates tirées de votre catalogue",
+      "e1": {
+        "place": "Hanoï",
+        "dates": "4 au 6 mai · 2 nuits",
+        "present": "Julie, Marc"
+      },
+      "e2": {
+        "place": "Baie d’Halong",
+        "dates": "6 au 8 mai · 2 nuits",
+        "present": "Julie, Marc"
+      },
+      "e3": {
+        "place": "Hoi An",
+        "dates": "8 au 12 mai · 4 nuits",
+        "present": "Julie, Marc, Claire"
+      }
+    },
+    "signsTitle": "Quatre signes qu’il vous manque un outil",
+    "s1Title": "Le même calcul, refait à chaque dossier",
+    "s1Text": "Qui vient, combien de nuits, quelle chambre : la règle est connue, mais quelqu’un la réapplique à la main.",
+    "s2Title": "Un tableur qu’une seule personne sait lire",
+    "s2Text": "Quand elle est absente, les devis attendent son retour.",
+    "s3Title": "Des informations recopiées d’un mail vers un logiciel",
+    "s3Text": "Chaque recopie est une occasion d’erreur, et personne ne la relit.",
+    "s4Title": "Un client qui attend sa réponse",
+    "s4Text": "Tant que le devis se refait, sa demande reste sans réponse.",
+    "demoTitle": "Ce que fait l’outil, sur un exemple"
   }
 }

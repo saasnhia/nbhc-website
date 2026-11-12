@@ -1,39 +1,12 @@
 "use client";
 
-import { useCallback } from "react";
-import SmoothScroll, { useLenis } from "./SmoothScroll";
-import Cursor from "./Cursor";
-import Loader from "./Loader";
-import FounderBanner from "./FounderBanner";
+import SmoothScroll from "./SmoothScroll";
 
-function AppContent({ children }: { children: React.ReactNode }) {
-  const lenis = useLenis();
-
-  const handleLoaded = useCallback(() => {
-    lenis.start();
-    lenis.refresh();
-  }, [lenis]);
-
-  return (
-    <>
-      <Loader onComplete={handleLoaded} />
-      <Cursor />
-      {/* Content renders immediately (real LCP candidate); the opaque Loader
-          overlay covers it visually until its slide-out animation completes.
-          Do not gate this in opacity — that made the Loader's own logo text
-          the measured LCP element (5s+ render delay, see SEO_AUDIT_STRATEGIE.md). */}
-      <div>
-        <FounderBanner />
-        {children}
-      </div>
-    </>
-  );
-}
-
+/* Le préchargeur, le curseur dessiné et le bandeau doré sont sortis de la
+   coquille. Le préchargeur retardait une page déjà servie, le curseur restait
+   figé en haut à gauche tant que la souris n'avait pas bougé, et le bandeau
+   répétait le bouton de la barre de navigation. Les trois fichiers restent
+   dans components/ ; plus rien ne les monte. */
 export default function AppShell({ children }: { children: React.ReactNode }) {
-  return (
-    <SmoothScroll>
-      <AppContent>{children}</AppContent>
-    </SmoothScroll>
-  );
+  return <SmoothScroll>{children}</SmoothScroll>;
 }

@@ -1,267 +1,233 @@
-"use client";
-
-import React, { ComponentType, useRef } from "react";
+import type { ComponentType } from "react";
 import { useTranslations } from "next-intl";
-import { motion, useInView, useReducedMotion } from "framer-motion";
 import VlogyzDemo from "./mockups/VlogyzDemo";
-import DevizlyDemo from "./mockups/DevizlyDemo";
+import DevizlyApercu from "./mockups/DevizlyApercu";
+import InternbulletDemo from "./mockups/InternbulletDemo";
 
-type Product = {
-  id: string;
-  badgeKey: "live" | "soon";
-  badgeLabel: string;
-  name: string;
-  tagline: string;
-  Mockup: ComponentType;
-  link: string;
+type Produit = {
+  id: "devizly" | "vlogyz" | "internbullet";
+  Maquette: ComponentType;
   href: string;
-  accent: string;
-  textSide: "left" | "right";
+  externe: boolean;
+  enProduction?: boolean;
+  /** Largeur maximale de la maquette : le devis rendu est un portrait, on le
+      tient a la hauteur de la colonne de texte plutot que de la depasser. */
+  largeurMaquette: number;
+  /** Citation du fondateur, sous la description. */
+  avecCitation?: boolean;
+  texteAGauche: boolean;
 };
 
-// Base OPAQUE sous la teinte translucide de chaque pastille. Ces fonds a 12 %
-// laissaient passer le maillage du calque : mesure sur la page, « Bientot
-// disponible » tombait a 3,14:1 pour un seuil de 4,5 selon la maille qui
-// passait derriere. La teinte est inchangee — la pastille reposait deja sur la
-// couleur de page — mais elle ne depend plus de ce qu'il y a dessous.
-const statusBadge: Record<string, React.CSSProperties> = {
-  live: {
-    background: "linear-gradient(rgba(34,197,94,0.12), rgba(34,197,94,0.12)), #09090b",
-    color: "#4ade80",
-    border: "1px solid rgba(34,197,94,0.2)",
+const PRODUITS: Produit[] = [
+  {
+    id: "devizly",
+    Maquette: DevizlyApercu,
+    href: "https://devizly.fr",
+    externe: true,
+    enProduction: true,
+    largeurMaquette: 520,
+    texteAGauche: true,
   },
-  soon: {
-    background: "linear-gradient(rgba(99,102,241,0.12), rgba(99,102,241,0.12)), #09090b",
-    color: "#818cf8",
-    border: "1px solid rgba(99,102,241,0.2)",
+  {
+    id: "vlogyz",
+    Maquette: VlogyzDemo,
+    href: "https://vlogyz.com",
+    externe: true,
+    largeurMaquette: 320,
+    texteAGauche: false,
   },
-};
+  {
+    id: "internbullet",
+    Maquette: InternbulletDemo,
+    href: "mailto:contact@nbhc.fr?subject=internbullet",
+    externe: false,
+    avecCitation: true,
+    largeurMaquette: 520,
+    texteAGauche: true,
+  },
+];
 
-function TextColumn({ p }: { p: Product }) {
-  const isExternal = p.href !== "#";
-  // MOUVEMENT REDUIT : `useReducedMotion` de framer-motion, deja employe dans le
-  // depot (DemoStage.tsx:42).
-  //
-  // ET LE PIEGE DU LOT EXISTE ICI AUSSI, SOUS FORME FRAMER. J'avais d'abord cru
-  // que non, et n'avais neutralise que le deplacement : l'instrument a lu
-  // opacity 0 sous reduced-motion. `initial` EST applique au montage, et
-  // `whileInView` n'arrive qu'a l'entree dans le viewport — le texte restait donc
-  // invisible tant qu'on n'avait pas defile jusqu'a lui, exactement comme un
-  // `gsap.set(opacity: 0)` dont on aurait saute le tween. En mouvement reduit,
-  // `initial` vaut donc l'ETAT D'ARRIVEE.
-  const reduit = useReducedMotion();
+function Fleche() {
   return (
-    <motion.div
-      initial={
-        reduit ? { opacity: 1, x: 0 } : { opacity: 0, x: p.textSide === "left" ? -30 : 30 }
-      }
-      whileInView={{ opacity: 1, x: 0 }}
-      transition={{ duration: reduit ? 0 : 0.7, ease: [0.16, 1, 0.3, 1] }}
-      viewport={{ once: true, margin: "-80px" }}
-      /* Voile local : cette colonne de texte est posee sur le calque anime. */
-      className="voile-texte flex flex-col justify-center"
-    >
-      <div className="flex items-center gap-2 mb-5 flex-wrap">
-        <span
-          className="inline-block text-[11px] font-medium px-2.5 py-0.5 rounded-full tracking-wide"
-          style={statusBadge[p.badgeKey]}
-        >
-          {p.badgeLabel}
-        </span>
-      </div>
-      <h3
-        className="font-extrabold mb-4"
-        style={{
-          fontFamily: "var(--font-syne)",
-          fontSize: "clamp(28px,3vw,42px)",
-          lineHeight: 1.0,
-          letterSpacing: "-1.5px",
-          color: "var(--text)",
-        }}
-      >
-        {p.name}
-      </h3>
-      <p
-        className="text-[15px] font-light mb-7"
-        style={{ color: "var(--text-muted)", lineHeight: 1.7, maxWidth: 460 }}
-      >
-        {p.tagline}
-      </p>
-      <a
-        href={p.href}
-        {...(isExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-        data-cursor="link"
-        className="inline-flex items-center gap-1.5 text-[14px] no-underline w-fit group"
-        style={{ color: p.accent, fontWeight: 600 }}
-      >
-        {p.link}
-        <svg
-          width="14"
-          height="14"
-          viewBox="0 0 14 14"
-          fill="none"
-          className="transition-transform duration-200 group-hover:translate-x-1"
-        >
-          <path
-            d="M2 7h10M7 2l5 5-5 5"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      </a>
-    </motion.div>
-  );
-}
-
-function MockupColumn({ p }: { p: Product }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
-  const reduit = useReducedMotion();
-  const Mockup = p.Mockup;
-
-  return (
-    <div ref={ref} className="relative" style={{ overflow: "visible" }}>
-      <div
-        className="absolute pointer-events-none hidden lg:block"
-        aria-hidden
-        style={{
-          inset: "-8%",
-          background: `radial-gradient(circle, ${p.accent}1F 0%, transparent 70%)`,
-          filter: "blur(60px)",
-          zIndex: -1,
-        }}
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden>
+      <path
+        d="M2 7h10M7 2l5 5-5 5"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
-      <motion.div
-        // L'etat hors champ est `opacity: 0` : en mouvement reduit on le neutralise
-        // AUSSI, sinon la maquette resterait invisible tant que useInView est faux.
-        initial={reduit ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-        animate={
-          reduit ? { opacity: 1, y: 0 } : inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }
-        }
-        transition={{ duration: reduit ? 0 : 0.8, ease: [0.16, 1, 0.3, 1] }}
-      >
-        <Mockup />
-      </motion.div>
-    </div>
-  );
-}
-
-function ProductSection({ p }: { p: Product }) {
-  const textOnLeft = p.textSide === "left";
-  return (
-    <div className="py-16 lg:py-24">
-      <div className="grid gap-12 lg:gap-16 items-center lg:grid-cols-[minmax(0,40fr)_minmax(0,60fr)]">
-        <div style={{ order: textOnLeft ? 0 : 1 }} className="max-lg:order-2">
-          <TextColumn p={p} />
-        </div>
-        {/* relative z-10 : le voile de la colonne de texte deborde de 45 % et
-            depasse la gouttiere. Dans un conteneur en grille, l'ordre de
-            peinture suit l'ordre modifie par `order` — quand le texte est a
-            droite il peint APRES la maquette, et son voile l'assombrirait. */}
-        <div style={{ order: textOnLeft ? 1 : 0 }} className="max-lg:order-1 relative z-10">
-          <MockupColumn p={p} />
-        </div>
-      </div>
-    </div>
+    </svg>
   );
 }
 
 export default function Portfolio() {
   const t = useTranslations("products");
-  const reduit = useReducedMotion();
-
-  const products: Product[] = [
-    {
-      id: "devizly",
-      badgeKey: "live",
-      badgeLabel: t("devizlyBadge"),
-      name: t("devizlyName"),
-      tagline: t("devizlyDesc"),
-      Mockup: DevizlyDemo,
-      link: t("devizlyLink"),
-      href: "https://devizly.fr",
-      accent: "#5B5BD6",
-      textSide: "left",
-    },
-    {
-      id: "vlogyz",
-      badgeKey: "soon",
-      badgeLabel: t("vlogyzBadge"),
-      name: t("vlogyzName"),
-      tagline: t("vlogyzDesc"),
-      Mockup: VlogyzDemo,
-      link: t("vlogyzLink"),
-      href: "https://vlogyz.com",
-      accent: "#6366f1",
-      textSide: "right",
-    },
-  ];
 
   return (
-    <section
-      id="produits"
-      className="relative"
-      style={{
-        // Fond volontairement transparent : le calque anime de FondSections
-        // passe DERRIERE cette section. Un aplat #09090b ici le masquait
-        // entierement — c'etait la cause du calque invisible en bas de bloc.
-        background: "transparent",
-        borderTop: "1px solid var(--border)",
-        borderBottom: "1px solid var(--border)",
-      }}
-    >
-      <div className="mx-auto py-24 md:py-28 px-6" style={{ maxWidth: 1200 }}>
-        <motion.div
-          initial={reduit ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-50px" }}
-          transition={{ duration: reduit ? 0 : 0.7, ease: [0.16, 1, 0.3, 1] }}
-          /* Voile local : en-tete de section posee sur le calque anime. */
-          className="voile-texte mb-12 md:mb-16"
-        >
-          <div
-            className="text-[11px] font-medium tracking-[3px] uppercase mb-4 flex items-center gap-2"
-            style={{ color: "var(--gold)" }}
-          >
-            <span className="block w-4 h-px" style={{ background: "var(--gold)" }} />
+    <section id="produits">
+      <div
+        className="px-10 max-[900px]:px-5 pt-28 max-[900px]:pt-16"
+        style={{ maxWidth: 1200, margin: "0 auto" }}
+      >
+        <div style={{ maxWidth: 720 }}>
+          <div style={{ fontSize: 14, color: "var(--gold-light)", marginBottom: 12 }}>
             {t("eyebrow")}
           </div>
           <h2
-            className="font-bold leading-tight mb-4"
             style={{
               fontFamily: "var(--font-syne)",
-              fontSize: "clamp(32px,4vw,52px)",
-              letterSpacing: "-1.5px",
+              fontWeight: 600,
+              fontSize: "clamp(28px, 3.4vw, 44px)",
+              lineHeight: 1.12,
+              letterSpacing: "-0.02em",
               color: "var(--text)",
+              marginBottom: 16,
             }}
           >
             {t("title")}
           </h2>
-          <p
-            className="text-[16px] font-light"
-            style={{ color: "var(--text-muted)", maxWidth: 700, lineHeight: 1.7 }}
-          >
+          <p style={{ color: "var(--text-muted)", fontSize: 16, lineHeight: 1.7 }}>
             {t("subtitle")}
           </p>
-        </motion.div>
+        </div>
 
-        {products.map((p, i) => (
-          <div key={p.id}>
-            <ProductSection p={p} />
-            {i < products.length - 1 && (
-              <div
-                aria-hidden
-                style={{
-                  height: 1,
-                  background:
-                    "linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.04) 50%, transparent 100%)",
-                }}
-              />
-            )}
-          </div>
-        ))}
+        {PRODUITS.map((p) => {
+          const Maquette = p.Maquette;
+          return (
+            <article
+              key={p.id}
+              id={p.id}
+              className="grid items-center gap-12 min-[1000px]:gap-20 min-[1000px]:grid-cols-2 py-20 max-[900px]:py-12"
+              style={{
+                borderBottom: "1px solid var(--border)",
+                scrollMarginTop: 72,
+              }}
+            >
+              <div className={p.texteAGauche ? "" : "min-[1000px]:order-2"}>
+                <div
+                  className="inline-flex items-center gap-2"
+                  style={{
+                    fontSize: 13,
+                    color: p.enProduction ? "var(--text)" : "var(--text-muted)",
+                    marginBottom: 16,
+                  }}
+                >
+                  {p.enProduction && (
+                    <span
+                      aria-hidden
+                      style={{ width: 6, height: 6, borderRadius: 3, background: "#7FB58A" }}
+                    />
+                  )}
+                  {t(`${p.id}Badge`)}
+                </div>
+                <h3
+                  style={{
+                    fontFamily: "var(--font-syne)",
+                    fontWeight: 600,
+                    fontSize: "clamp(26px, 2.8vw, 36px)",
+                    lineHeight: 1.1,
+                    letterSpacing: "-0.02em",
+                    color: "var(--text)",
+                    marginBottom: 8,
+                  }}
+                >
+                  {t(`${p.id}Name`)}
+                </h3>
+                <p
+                  style={{
+                    fontSize: 17,
+                    lineHeight: 1.5,
+                    color: "var(--text)",
+                    marginBottom: 16,
+                    maxWidth: 480,
+                  }}
+                >
+                  {t(`${p.id}For`)}
+                </p>
+                {/* Trois étapes numérotées plutôt qu'un paragraphe : on lit ce que
+                    fait la personne, ce que fait l'outil, et ce qui en sort. */}
+                <ol className="list-none m-0 p-0" style={{ maxWidth: 480 }}>
+                  {(t.raw(`${p.id}Steps`) as string[]).map((etape, i) => (
+                    <li
+                      key={etape}
+                      className="grid"
+                      style={{
+                        gridTemplateColumns: "28px minmax(0, 1fr)",
+                        padding: "10px 0",
+                        borderTop: "1px solid var(--border)",
+                        fontSize: 15,
+                        lineHeight: 1.55,
+                      }}
+                    >
+                      <span
+                        style={{
+                          color: "var(--gold-light)",
+                          fontVariantNumeric: "tabular-nums",
+                        }}
+                      >
+                        {i + 1}
+                      </span>
+                      <span style={{ color: "var(--text)" }}>{etape}</span>
+                    </li>
+                  ))}
+                </ol>
+                <p
+                  style={{
+                    fontSize: 14,
+                    lineHeight: 1.6,
+                    color: "var(--text-muted)",
+                    paddingTop: 12,
+                    borderTop: "1px solid var(--border)",
+                    marginBottom: 24,
+                    maxWidth: 480,
+                  }}
+                >
+                  {t(`${p.id}Note`)}
+                </p>
+
+                {p.avecCitation && (
+                  <blockquote
+                    className="m-0"
+                    style={{
+                      borderLeft: "2px solid var(--gold)",
+                      paddingLeft: 16,
+                      marginBottom: 24,
+                      maxWidth: 480,
+                    }}
+                  >
+                    <p
+                      className="m-0"
+                      style={{ fontSize: 16, lineHeight: 1.6, color: "var(--text)" }}
+                    >
+                      {t(`${p.id}Quote`)}
+                    </p>
+                    <footer
+                      style={{ marginTop: 8, fontSize: 13, color: "var(--text-muted)" }}
+                    >
+                      {t(`${p.id}QuoteBy`)}
+                    </footer>
+                  </blockquote>
+                )}
+
+                <a
+                  href={p.href}
+                  {...(p.externe ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                  className="lien-or inline-flex items-center gap-2 text-[15px] font-medium"
+                >
+                  {t(`${p.id}Link`)}
+                  <Fleche />
+                </a>
+              </div>
+
+              <div className={p.texteAGauche ? "" : "min-[1000px]:order-1"}>
+                <div className="mx-auto" style={{ maxWidth: p.largeurMaquette }}>
+                  <Maquette />
+                </div>
+              </div>
+            </article>
+          );
+        })}
       </div>
     </section>
   );

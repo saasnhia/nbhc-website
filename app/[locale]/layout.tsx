@@ -41,18 +41,18 @@ export async function generateMetadata({
   const isFr = locale === "fr";
 
   const title = isFr
-    ? "NBHC — Studio IA & Automatisation"
-    : "NBHC — AI Studio & Automation";
+    ? "NBHC — Logiciels métier et outils sur mesure"
+    : "NBHC — Business software and custom tools";
   const description = isFr
-    ? "Studio IA français. Nous concevons des solutions SaaS et systèmes d'intelligence artificielle sur mesure pour automatiser votre entreprise."
-    : "French AI studio. We design custom SaaS solutions and AI systems to automate your business.";
+    ? "NBHC conçoit et développe des logiciels : Devizly pour les devis et factures, Vlogyz pour le montage vidéo, internbullet pour les candidatures, et des outils sur mesure pour les entreprises."
+    : "NBHC designs and develops software: Devizly for quotes and invoices, Vlogyz for video editing, internbullet for job applications, and custom tools for companies.";
 
   return {
     title,
     description,
     keywords: isFr
-      ? ["agence IA", "automatisation", "SaaS sur mesure", "intelligence artificielle", "Next.js", "France"]
-      : ["AI agency", "automation", "custom SaaS", "artificial intelligence", "Next.js", "France"],
+      ? ["logiciel sur mesure", "outil métier", "devis et factures", "Devizly", "Vlogyz", "internbullet"]
+      : ["custom software", "business tools", "quotes and invoices", "Devizly", "Vlogyz", "internbullet"],
     openGraph: {
       title,
       description,
@@ -62,7 +62,7 @@ export async function generateMetadata({
           url: "https://nbhc.fr/og-image.png",
           width: 1200,
           height: 630,
-          alt: "NBHC Studio IA",
+          alt: "NBHC",
         },
       ],
       type: "website",
@@ -130,9 +130,6 @@ export default async function LocaleLayout({
 
   return (
     <html lang={locale} className={`${syne.variable} ${dmSans.variable}`}>
-      <head>
-        <link rel="preload" as="image" href="/hero-poster.jpg" fetchPriority="high" />
-      </head>
       <body>
         <JsonLd
           data={[

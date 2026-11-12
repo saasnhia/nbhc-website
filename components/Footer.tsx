@@ -1,231 +1,136 @@
-"use client";
-
-import { useEffect, useRef } from "react";
 import { useTranslations, useLocale } from "next-intl";
-import gsap from "gsap";
 import Logo from "./Logo";
-import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 
-const marqueeText = "NBHC · STUDIO IA · FRANCE · ";
 const CALENDLY_URL = "https://calendly.com/saasnhia/30min";
 
+type Lien = { href: string; label: string; external?: boolean };
+
+/* Les dix pages par métier restent en ligne : elles sont listées ici, en bas de
+   page, pour ne pas devenir des pages sans aucun lien entrant. */
+const METIERS = [
+  "automatisation-artisan-btp",
+  "automatisation-garage-automobile",
+  "automatisation-restaurant",
+  "automatisation-salon-de-coiffure",
+  "automatisation-salle-de-sport",
+  "automatisation-association-sportive",
+  "automatisation-organisme-formation",
+  "automatisation-pharmacie",
+  "automatisation-opticien",
+  "automatisation-marque-cosmetique",
+] as const;
+
+const CLASSE_LIEN =
+  "text-[13px] no-underline transition-colors duration-150 hover:text-[var(--text)]";
+
+function Colonne({ titre, liens }: { titre: string; liens: Lien[] }) {
+  return (
+    <div className="flex flex-col gap-3">
+      <div style={{ fontSize: 13, color: "var(--text)", marginBottom: 4 }}>{titre}</div>
+      {liens.map((l) => (
+        <a
+          key={l.label}
+          href={l.href}
+          target={l.external ? "_blank" : undefined}
+          rel={l.external ? "noopener noreferrer" : undefined}
+          className={CLASSE_LIEN}
+          style={{ color: "var(--text-muted)" }}
+        >
+          {l.label}
+        </a>
+      ))}
+    </div>
+  );
+}
+
 export default function Footer() {
-  const marqueeTrackRef = useRef<HTMLDivElement>(null);
-  const reduit = usePrefersReducedMotion();
   const t = useTranslations("footer");
   const locale = useLocale();
 
-  useEffect(() => {
-    const track = marqueeTrackRef.current;
-    if (!track) return;
-
-    // MOUVEMENT REDUIT : LE BANDEAU S'ARRETE, IL NE DISPARAIT PAS.
-    // C'est un defilement perpetuel purement decoratif — le seul mouvement de la
-    // page qui ne s'arrete jamais de lui-meme. On le laisse a sa position de
-    // depart : le texte reste lisible, ecrete par le `overflow-hidden` de son
-    // parent comme il l'est deja a tout instant de son cycle.
-    if (reduit) return;
-
-    const tween = gsap.to(track, {
-      x: "-50%",
-      duration: 20,
-      ease: "none",
-      repeat: -1,
-    });
-
-    return () => {
-      tween.kill();
-    };
-  }, [reduit]);
-
-  const navLinks = [
-    { href: `/${locale}#comment-ca-marche`, label: t("howItWorks") },
-    { href: `/${locale}#secteurs`, label: t("sectors") },
-    { href: `/${locale}/tarifs`, label: t("pricing") },
+  const navLinks: Lien[] = [
     { href: `/${locale}#produits`, label: t("products") },
+    { href: `/${locale}#sur-mesure`, label: t("custom") },
+    { href: `/${locale}#comment-ca-marche`, label: t("howItWorks") },
     { href: `/${locale}#faq`, label: t("faq") },
+    { href: `/${locale}/tarifs`, label: t("pricing") },
     { href: `/${locale}/blog`, label: t("blog") },
   ];
 
-  const productLinks = [
+  const productLinks: Lien[] = [
     { href: "https://devizly.fr", label: t("devizly"), external: true },
     { href: "https://vlogyz.com", label: t("vlogyz"), external: true },
+    { href: `/${locale}#internbullet`, label: t("internbullet") },
   ];
 
-  const contactLinks = [
+  const contactLinks: Lien[] = [
     { href: CALENDLY_URL, label: t("diagnostic"), external: true },
-    { href: "mailto:contact@nbhc.fr", label: t("email"), external: false },
-    {
-      href: "https://www.linkedin.com/company/nbhc",
-      label: t("linkedin"),
-      external: true,
-    },
+    { href: "mailto:contact@nbhc.fr", label: t("email") },
+    { href: "https://www.linkedin.com/company/nbhc", label: t("linkedin"), external: true },
     { href: "https://x.com/harounNbhc", label: t("twitter"), external: true },
   ];
 
+  const legalLinks: Lien[] = [
+    { href: `/${locale}/mentions-legales`, label: t("legal") },
+    { href: `/${locale}/politique-confidentialite`, label: t("privacy") },
+    { href: `/${locale}/cgv`, label: t("cgv") },
+    { href: `/${locale}/cgu`, label: t("cgu") },
+  ];
+
   return (
-    <>
-      {/* Giant marquee above footer */}
+    <footer style={{ borderTop: "1px solid var(--border)", background: "var(--surface)" }}>
       <div
-        className="overflow-hidden"
-        style={{
-          pointerEvents: "none",
-          borderTop: "1px solid var(--border)",
-          background: "var(--surface)",
-          padding: "24px 0",
-        }}
+        className="grid gap-10 py-14 px-10 max-[900px]:px-5 max-[900px]:py-10 max-[900px]:gap-8 grid-cols-[1.5fr_1fr_1fr_1fr] max-[900px]:grid-cols-2 max-[520px]:grid-cols-1"
+        style={{ maxWidth: 1200, margin: "0 auto" }}
       >
-        <div ref={marqueeTrackRef} style={{ display: "flex", width: "max-content" }}>
-          {Array.from({ length: 8 }).map((_, i) => (
-            <span
-              key={i}
-              className="whitespace-nowrap"
-              style={{
-                fontFamily: "var(--font-syne)",
-                fontWeight: 800,
-                fontSize: "clamp(48px, 6vw, 80px)",
-                color: "rgba(196, 151, 58, 0.08)",
-                letterSpacing: "-2px",
-                paddingRight: 32,
-              }}
-            >
-              {marqueeText}
-            </span>
-          ))}
+        <div className="flex flex-col gap-3 max-[900px]:col-span-full">
+          <Logo variant="footer" />
+          <div className="text-[13px]" style={{ color: "var(--text-muted)", lineHeight: 1.5 }}>
+            {t("tagline")}
+          </div>
         </div>
+        <Colonne titre={t("navTitle")} liens={navLinks} />
+        <Colonne titre={t("productsTitle")} liens={productLinks} />
+        <Colonne titre={t("contactTitle")} liens={contactLinks} />
       </div>
 
-      <footer
-        style={{
-          borderTop: "1px solid var(--border)",
-          background: "var(--surface)",
-        }}
-      >
+      <div className="px-10 max-[900px]:px-5" style={{ maxWidth: 1200, margin: "0 auto" }}>
+        <div style={{ padding: "20px 0", borderTop: "1px solid var(--border)" }}>
+          <div style={{ fontSize: 13, color: "var(--text)", marginBottom: 12 }}>
+            {t("sectorsTitle")}
+          </div>
+          <div className="flex flex-wrap gap-x-5 gap-y-2">
+            {METIERS.map((slug) => (
+              <a
+                key={slug}
+                href={`/${locale}/${slug}`}
+                className={CLASSE_LIEN}
+                style={{ color: "var(--text-muted)" }}
+              >
+                {t(`sectorLinks.${slug}`)}
+              </a>
+            ))}
+          </div>
+        </div>
+
         <div
-          className="grid gap-10 py-14 px-10 max-[900px]:px-5 max-[900px]:py-10 max-[900px]:gap-8"
-          style={{
-            maxWidth: 1200,
-            margin: "0 auto",
-            gridTemplateColumns: "1.5fr 1fr 1fr 1fr",
-          }}
+          className="flex flex-wrap items-center gap-x-4 gap-y-2"
+          style={{ paddingTop: 16, borderTop: "1px solid var(--border)", fontSize: 12 }}
         >
-          {/* Brand */}
-          <div className="flex flex-col gap-3 max-[900px]:col-span-full">
-            <Logo variant="footer" />
-            <div
-              className="text-[13px]"
-              style={{ color: "var(--text-dim)", lineHeight: 1.5 }}
+          {legalLinks.map((l) => (
+            <a
+              key={l.label}
+              href={l.href}
+              className="no-underline transition-colors duration-150 hover:text-[var(--text)]"
+              style={{ color: "var(--text-muted)" }}
             >
-              {t("tagline")}
-            </div>
-          </div>
-
-          {/* Navigation */}
-          <div className="flex flex-col gap-3 max-[900px]:col-span-2 max-[600px]:col-span-full">
-            <div
-              className="text-[11px] tracking-widest uppercase mb-1"
-              style={{ color: "var(--gold)" }}
-            >
-              {t("navTitle")}
-            </div>
-            {navLinks.map((l) => (
-              <a
-                key={l.label}
-                href={l.href}
-                data-cursor="link"
-                className="text-[13px] no-underline hover:opacity-80 transition-opacity"
-                style={{ color: "var(--text-muted)" }}
-              >
-                {l.label}
-              </a>
-            ))}
-          </div>
-
-          {/* Products */}
-          <div className="flex flex-col gap-3">
-            <div
-              className="text-[11px] tracking-widest uppercase mb-1"
-              style={{ color: "var(--gold)" }}
-            >
-              {t("productsTitle")}
-            </div>
-            {productLinks.map((l) => (
-              <a
-                key={l.label}
-                href={l.href}
-                target={l.external ? "_blank" : undefined}
-                rel={l.external ? "noopener noreferrer" : undefined}
-                data-cursor="link"
-                className="text-[13px] no-underline hover:opacity-80 transition-opacity"
-                style={{ color: "var(--text-muted)" }}
-              >
-                {l.label}
-              </a>
-            ))}
-          </div>
-
-          {/* Contact */}
-          <div className="flex flex-col gap-3">
-            <div
-              className="text-[11px] tracking-widest uppercase mb-1"
-              style={{ color: "var(--gold)" }}
-            >
-              {t("contactTitle")}
-            </div>
-            {contactLinks.map((l) => (
-              <a
-                key={l.label}
-                href={l.href}
-                target={l.external ? "_blank" : undefined}
-                rel={l.external ? "noopener noreferrer" : undefined}
-                data-cursor="link"
-                className="text-[13px] no-underline hover:opacity-80 transition-opacity"
-                style={{ color: "var(--text-muted)" }}
-              >
-                {l.label}
-              </a>
-            ))}
-          </div>
+              {l.label}
+            </a>
+          ))}
         </div>
-
-        <div className="px-10 max-[900px]:px-5" style={{ maxWidth: 1200, margin: "0 auto" }}>
-          <div
-            style={{
-              paddingTop: 12,
-              marginBottom: 0,
-              borderTop: "1px solid var(--border)",
-              display: "flex",
-              flexWrap: "wrap",
-              gap: 4,
-              alignItems: "center",
-              fontSize: 12,
-            }}
-          >
-            {[
-              { href: `/${locale}/mentions-legales`, label: t("legal") },
-              { href: `/${locale}/politique-confidentialite`, label: t("privacy") },
-              { href: `/${locale}/cgv`, label: t("cgv") },
-              { href: `/${locale}/cgu`, label: t("cgu") },
-            ].map((l, i, arr) => (
-              <span key={l.label}>
-                <a
-                  href={l.href}
-                  className="no-underline hover:opacity-80"
-                  style={{ color: "var(--text-dim)" }}
-                >
-                  {l.label}
-                </a>
-                {i < arr.length - 1 && (
-                  <span style={{ color: "var(--text-dim)", margin: "0 6px" }}>·</span>
-                )}
-              </span>
-            ))}
-          </div>
-          <div className="text-xs py-5" style={{ color: "var(--text-dim)" }}>
-            {t("copyright")}
-          </div>
+        <div className="text-xs py-5" style={{ color: "var(--text-muted)" }}>
+          {t("copyright")}
         </div>
-      </footer>
-    </>
+      </div>
+    </footer>
   );
 }

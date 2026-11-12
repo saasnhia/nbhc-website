@@ -75,30 +75,6 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Grid texture overlay */
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background-image:
-    linear-gradient(rgba(196, 151, 58, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(196, 151, 58, 0.03) 1px, transparent 1px);
-  background-size: 60px 60px;
-  pointer-events: none;
-  z-index: 0;
-}
-
-/* Noise overlay */
-body::after {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
-  opacity: 0.4;
-  pointer-events: none;
-  z-index: 0;
-}
-
 /* Ensure content above overlays */
 section, nav, footer, main {
   position: relative;
@@ -198,10 +174,6 @@ main {
   background: var(--text-muted);
 }
 
-@media (pointer: fine) {
-  * { cursor: none !important; }
-}
-
 @media (prefers-reduced-motion: reduce) {
   .hero-video, .demo-video { display: none; }
 }
@@ -269,4 +241,65 @@ main {
 
 @media (prefers-reduced-motion: reduce) {
   [data-sect-transit] { animation: none; transform: none; }
+}
+
+/* ── REFONTE PRODUITS ET SUR MESURE ─────────────────────────────────────────
+   Une seule entree au chargement : le bloc principal monte de 12 px en 500 ms.
+   L'etat de depart vit dans l'animation, pas dans le style : sans JavaScript ou
+   en mouvement reduit, le contenu est simplement la. */
+@keyframes nbhcEntree {
+  from { opacity: 0; transform: translate3d(0, 12px, 0); }
+  to   { opacity: 1; transform: none; }
+}
+
+.entree {
+  animation: nbhcEntree 500ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+.entree-2 { animation-delay: 90ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  .entree { animation: none; }
+}
+
+/* La barre de navigation est fixe : une ancre s'arrete sous elle. */
+section[id] {
+  scroll-margin-top: 72px;
+}
+
+/* Liens et boutons : un changement de couleur, rien qui bouge. */
+.lien-or {
+  color: var(--gold-light);
+  text-decoration: none;
+  transition: color 150ms ease-out;
+}
+.lien-or:hover { color: var(--text); }
+
+.bouton-or {
+  background: var(--gold);
+  color: #0a0a0b;
+  transition: background-color 150ms ease-out;
+}
+.bouton-or:hover { background: var(--gold-light); }
+
+.bouton-discret {
+  color: var(--text);
+  border: 1px solid var(--border-accent);
+  transition: border-color 150ms ease-out, background-color 150ms ease-out;
+}
+.bouton-discret:hover {
+  border-color: rgba(255, 255, 255, 0.24);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.rangee-sommaire {
+  transition: background-color 150ms ease-out;
+}
+.rangee-sommaire:hover { background: rgba(255, 255, 255, 0.03); }
+
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--gold-light);
+  outline-offset: 3px;
+  border-radius: 4px;
 }

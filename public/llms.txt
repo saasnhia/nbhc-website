@@ -1,63 +1,57 @@
-# NBHC — Studio IA & Automatisation
+# NBHC — Logiciels métier et outils sur mesure
 
-> NBHC est un studio IA français (SAS, SIREN 102 637 899) basé à
-Saint-Rémy, France. NBHC conçoit, déploie et opère des automatisations
-IA sur mesure pour les TPE, PME et indépendants, et édite ses propres
-produits SaaS. Le moteur d'automatisation repose sur n8n (hébergé en
-Allemagne) et l'IA Mistral (hébergée dans l'Union européenne). NBHC
-est une société française ; l'hébergement des données dépend des outils
-retenus avec chaque client.
+> NBHC (SAS, SIREN 102 637 899, Saint-Rémy, France) conçoit et développe
+des logiciels. Trois produits lui appartiennent : Devizly, Vlogyz et
+internbullet. NBHC construit aussi des outils sur mesure pour les
+entreprises dont le métier ne rentre dans aucun logiciel du marché.
 
-## Produits SaaS
+## Produits
 
-NBHC édite des produits SaaS autonomes, distincts de son offre
-d'automatisation. La création d'un SaaS sur mesure pour un client est
-également possible, sur devis.
+- [Devizly](https://devizly.fr) — en production. Devis et factures pour
+indépendants et artisans : la prestation est décrite en langage courant,
+Devizly rédige le devis, le client le signe en ligne et règle par Stripe.
+Les factures sortent au format Factur-X.
+- [Vlogyz](https://vlogyz.com) — bientôt disponible. Montage vidéo pour
+créateurs de contenu : transcription, coupe des silences, sous-titres
+synchronisés, b-roll et titres animés, au format vertical.
+- internbullet — en préparation. Candidatures directes pour un stage, une
+alternance ou un emploi, en France comme à l'étranger. La personne apporte
+une entreprise ou une offre ; l'outil lit le site de l'entreprise, prépare
+un mail appuyé sur ce qu'il y a lu, et aucun mail ne part sans avoir été
+relu. Les stages et les alternances d'abord, les CDD et les CDI ensuite.
 
-- [Vlogyz](https://vlogyz.com) : montage vidéo IA. Transcription
-Whisper, coupes intelligentes, sous-titres, score de viralité. Stack :
-Next.js, Groq Whisper, Mistral, Remotion, FFmpeg.
-- [Devizly](https://devizly.fr) : devis et factures IA pour artisans et
-freelances français. Conforme Factur-X, signature électronique,
-encaissement Stripe, intégration Pennylane. Stack : Next.js, Mistral,
-Supabase, Stripe.
+## Outils sur mesure
 
-## Services — automatisation sur mesure (n8n + agents IA)
+Un outil sur mesure est un logiciel construit autour des règles d'une
+entreprise : ses tarifs, ses cas particuliers, sa façon de préparer un
+devis ou une facture.
 
-NBHC conçoit, teste et opère des automatisations pour l'activité du
-client. Diagnostic de 30 minutes gratuit et sans engagement avant tout
-projet. Le client reste propriétaire de ce qui lui revient : le
-workflow, les prompts, l'architecture.
+- Il part de la demande du client, telle qu'elle a été écrite.
+- Chaque valeur s'affiche avec la phrase du client qui la fonde.
+- L'outil établit qui paie quoi ; les montants viennent de la grille de
+l'entreprise, jamais de l'outil.
+- Il s'appuie sur les données existantes ; les conseillers gardent la
+décision.
 
-Grille de prix (build, paiement unique) :
-- Essentiel : de 200 € à 2 000 € HT — automatisation standardisée,
-déjà construite par NBHC et configurée pour l'activité du client.
-- Sur Mesure Léger : de 2 000 € à 4 000 € HT — automatisation sur
-mesure, intégrée aux logiciels métier du client, testée sur ses données.
-- Sur Devis : périmètres qui ne se chiffrent pas depuis un formulaire
-(multi-sites, ERP, projets complexes) ; une performance fee peut
-s'appliquer sur ces périmètres sur-mesure uniquement (30 % du gain
-mesuré, plafonnée à 2× le build).
+Premier échange de 30 minutes, gratuit. Le périmètre et le prix sont
+écrits avant de commencer. Ce qui est construit pour un client lui
+appartient.
 
-Deux lignes récurrentes, jamais confondues :
-- Infrastructure (n8n, Mistral) : 80 à 300 €/mois, facturée par NBHC,
-obligatoire.
-- Accompagnement NBHC (mises à jour, sécurité, maintenance, formation,
-veille réglementaire en secteur régulé) : 90 à 800 €/mois, optionnel.
+## Automatisations par métier
 
-## Secteurs
+Des pages décrivent des automatisations par secteur d'activité, avec une
+grille de prix et un simulateur sur /tarifs :
 
-Automatisations documentées, avec une page dédiée par secteur :
-- Salles de sport, studios et instituts bien-être
-- Associations sportives (loi 1901) : inscriptions, certificats,
-cotisations, convocations — tarif solidaire disponible
-- Garages et carrosseries automobiles
-- Artisans et TPE du bâtiment (BTP) : devis, relances, facturation
-- Organismes de formation : preuves Qualiopi, suivi OPCO
-- Pharmacies : bilans partagés de médication
-- Salons de coiffure
-- Marques de cosmétique et parfumerie : dossier réglementaire CPNP/DIP
-- Restaurants
+- https://nbhc.fr/fr/automatisation-salle-de-sport
+- https://nbhc.fr/fr/automatisation-association-sportive
+- https://nbhc.fr/fr/automatisation-garage-automobile
+- https://nbhc.fr/fr/automatisation-artisan-btp
+- https://nbhc.fr/fr/automatisation-organisme-formation
+- https://nbhc.fr/fr/automatisation-pharmacie
+- https://nbhc.fr/fr/automatisation-salon-de-coiffure
+- https://nbhc.fr/fr/automatisation-marque-cosmetique
+- https://nbhc.fr/fr/automatisation-restaurant
+- https://nbhc.fr/fr/automatisation-opticien
 
 ## Contact
 
@@ -68,16 +62,8 @@ cotisations, convocations — tarif solidaire disponible
 
 ## Pages principales
 
-- https://nbhc.fr/fr — Accueil
+- https://nbhc.fr/fr — Accueil : produits, sur mesure, méthode
 - https://nbhc.fr/fr/tarifs — Grille de prix et simulateur
-- https://nbhc.fr/fr/automatisation-salle-de-sport
-- https://nbhc.fr/fr/automatisation-association-sportive
-- https://nbhc.fr/fr/automatisation-garage-automobile
-- https://nbhc.fr/fr/automatisation-artisan-btp
-- https://nbhc.fr/fr/automatisation-organisme-formation
-- https://nbhc.fr/fr/automatisation-pharmacie
-- https://nbhc.fr/fr/automatisation-salon-de-coiffure
-- https://nbhc.fr/fr/automatisation-marque-cosmetique
-- https://nbhc.fr/fr/automatisation-restaurant
-- https://nbhc.fr/fr/contact — Diagnostic gratuit
+- https://nbhc.fr/fr/contact — Premier échange de 30 minutes
 - https://nbhc.fr/fr/faq
+- https://nbhc.fr/fr/blog

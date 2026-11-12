@@ -12,7 +12,6 @@ export function organizationSchema() {
     "@id": `${SITE_URL}/#organization`,
     name: SITE_NAME,
     legalName: LEGAL_NAME,
-    alternateName: "NBHC Studio IA",
     url: SITE_URL,
     logo: {
       "@type": "ImageObject",
@@ -22,7 +21,7 @@ export function organizationSchema() {
     },
     image: OG_IMAGE,
     description:
-      "Studio IA français. Conception et opération d'agents IA et de systèmes d'automatisation sur mesure pour TPE, PME et indépendants.",
+      "NBHC conçoit et développe des logiciels : Devizly, Vlogyz, internbullet, et des outils sur mesure pour les entreprises.",
     foundingDate: "2025",
     taxID: "102637899",
     vatID: "FR102637899",
@@ -57,8 +56,8 @@ export function websiteSchema(locale: "fr" | "en") {
     name: SITE_NAME,
     description:
       locale === "fr"
-        ? "Studio IA français — agents IA et automatisation sur mesure."
-        : "French AI studio — custom AI agents and automation.",
+        ? "Logiciels métier et outils sur mesure."
+        : "Business software and custom tools.",
     publisher: { "@id": `${SITE_URL}/#organization` },
     inLanguage: locale === "fr" ? "fr-FR" : "en-US",
   };
@@ -75,7 +74,7 @@ export function professionalServiceSchema() {
     logo: LOGO_URL,
     priceRange: "€€€",
     description:
-      "Studio IA & automatisation : agents IA sur mesure, SaaS métiers (données hébergées en Europe).",
+      "Logiciels métier (Devizly, Vlogyz, internbullet) et outils sur mesure pour les entreprises.",
     address: { "@type": "PostalAddress", addressCountry: "FR" },
     areaServed: { "@type": "Country", name: "France" },
     email: "contact@nbhc.fr",

@@ -9,19 +9,16 @@ type Props = {
   size?: "sm" | "md";
 };
 
-export default function LanguageSwitcher({ onSwitch, size = "md" }: Props) {
+/* Deux segments, la langue active sur une surface un cran plus claire. Plus de
+   pastille en dégradé doré, plus d'ombre colorée, plus d'agrandissement au
+   survol ; le libellé ne descend plus sous 12 px. */
+export default function LanguageSwitcher({ onSwitch }: Props) {
   const locale = useLocale() as "fr" | "en";
   const pathname = usePathname();
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
 
   const isFr = locale === "fr";
-
-  // Dimensions per size
-  const dims =
-    size === "sm"
-      ? { width: 56, height: 26, ballW: 26, ballH: 22, font: 10 }
-      : { width: 64, height: 28, ballW: 30, ballH: 24, font: 11 };
 
   const toggle = () => {
     if (isPending) return;
@@ -32,89 +29,43 @@ export default function LanguageSwitcher({ onSwitch, size = "md" }: Props) {
     onSwitch?.();
   };
 
-  // Ball position: 2px from left when FR, or width - ballW - 2px when EN
-  const ballLeft = isFr ? 2 : dims.width - dims.ballW - 2;
-
-  const ariaLabel = isFr ? "Switch to English" : "Passer en français";
+  const segment = (actif: boolean): React.CSSProperties => ({
+    width: 32,
+    height: 26,
+    borderRadius: 6,
+    display: "inline-flex",
+    alignItems: "center",
+    justifyContent: "center",
+    fontSize: 12,
+    fontWeight: 500,
+    color: actif ? "var(--text)" : "var(--text-muted)",
+    background: actif ? "var(--card-hover)" : "transparent",
+    transition: "background-color 150ms ease-out, color 150ms ease-out",
+  });
 
   return (
     <button
       type="button"
       onClick={toggle}
-      aria-label={ariaLabel}
-      aria-pressed={!isFr}
+      aria-label={isFr ? "Switch to English" : "Passer en français"}
       data-lang-switcher
-      className="lang-toggle group relative block"
+      className="inline-flex items-center"
       style={{
-        width: dims.width,
-        height: dims.height,
-        background: "rgba(255,255,255,0.06)",
-        border: "1px solid rgba(255,255,255,0.1)",
-        borderRadius: 999,
-        padding: 0,
+        gap: 2,
+        padding: 2,
+        background: "transparent",
+        border: "1px solid var(--border-accent)",
+        borderRadius: 8,
         cursor: isPending ? "wait" : "pointer",
-        transition: "transform 0.2s, background 0.2s",
         flexShrink: 0,
       }}
     >
-      {/* Sliding ball */}
-      <span
-        aria-hidden
-        style={{
-          position: "absolute",
-          top: "50%",
-          left: ballLeft,
-          width: dims.ballW,
-          height: dims.ballH,
-          transform: "translateY(-50%)",
-          background: "linear-gradient(135deg, #C4973A 0%, #B8862E 100%)",
-          borderRadius: 999,
-          boxShadow: "0 2px 8px rgba(196,151,58,0.4)",
-          transition: "left 0.3s cubic-bezier(0.16, 1, 0.3, 1)",
-          pointerEvents: "none",
-        }}
-      />
-
-      {/* Labels */}
-      <span
-        aria-hidden
-        className="absolute inset-0 flex items-center justify-between pointer-events-none"
-        style={{ padding: "0 8px" }}
-      >
-        <span
-          style={{
-            fontSize: dims.font,
-            fontWeight: 700,
-            fontFamily: "var(--font-dm-sans)",
-            letterSpacing: "0.05em",
-            color: isFr ? "#ffffff" : "#8C8880",
-            transition: "color 0.3s",
-            zIndex: 1,
-          }}
-        >
-          FR
-        </span>
-        <span
-          style={{
-            fontSize: dims.font,
-            fontWeight: 700,
-            fontFamily: "var(--font-dm-sans)",
-            letterSpacing: "0.05em",
-            color: !isFr ? "#ffffff" : "#8C8880",
-            transition: "color 0.3s",
-            zIndex: 1,
-          }}
-        >
-          EN
-        </span>
+      <span aria-hidden style={segment(isFr)}>
+        FR
       </span>
-
-      <style jsx>{`
-        .lang-toggle:hover {
-          transform: scale(1.05);
-          background: rgba(255, 255, 255, 0.08) !important;
-        }
-      `}</style>
+      <span aria-hidden style={segment(!isFr)}>
+        EN
+      </span>
     </button>
   );
 }

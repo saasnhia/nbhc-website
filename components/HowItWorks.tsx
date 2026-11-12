@@ -431,19 +431,17 @@ export default function HowItWorks() {
           donc sur fond de page pur. Il ne nuit pas et ne sert plus — contrairement
           a celui des quatre colonnes. Voir l'en-tete du fichier. */}
       <div className="voile-texte mb-12">
-        <div
-          className="text-[11px] font-medium tracking-[3px] uppercase mb-4 flex items-center gap-2"
-          style={{ color: "var(--gold)" }}
-        >
-          <span className="block w-4 h-px" style={{ background: "var(--gold)" }} />
+        <div style={{ fontSize: 14, color: "var(--gold-light)", marginBottom: 12 }}>
           {t("eyebrow")}
         </div>
         <h2
-          className="font-bold leading-tight mb-4"
+          className="mb-4"
           style={{
             fontFamily: "var(--font-syne)",
-            fontSize: "clamp(28px, 4vw, 52px)",
-            letterSpacing: "-1.5px",
+            fontWeight: 600,
+            fontSize: "clamp(28px, 3.4vw, 44px)",
+            lineHeight: 1.12,
+            letterSpacing: "-0.02em",
             color: "var(--text)",
             maxWidth: 900,
           }}
@@ -743,9 +741,10 @@ export default function HowItWorks() {
                 {s.n}
               </div>
               <div
-                className="font-bold mb-2"
+                className="mb-2"
                 style={{
                   fontFamily: "var(--font-syne)",
+                  fontWeight: 600,
                   fontSize: "clamp(16px, 1.5vw, 19px)",
                   letterSpacing: "-0.3px",
                   color: "var(--text)",
@@ -759,12 +758,8 @@ export default function HowItWorks() {
                 {s.title}
               </div>
               <span
-                className="inline-block text-[11px] font-medium tracking-wide uppercase px-3 py-1 rounded-full mb-3"
-                style={{
-                  background: "var(--gold-dim)",
-                  color: "var(--gold-light)",
-                  border: "1px solid var(--gold-border)",
-                }}
+                className="block text-[13px] mb-3"
+                style={{ color: "var(--gold-light)" }}
               >
                 {s.badge}
               </span>

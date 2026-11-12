@@ -5,7 +5,6 @@ import Footer from "./Footer";
 import PricingPlanCard from "./PricingPlanCard";
 import PricingSimulator from "./PricingSimulator";
 
-const PILLAR_ICONS = ["🔍", "🔐", "🛠️", "🎓"] as const;
 
 export default async function TarifsPageContent({ locale }: { locale: string }) {
   const t = await getTranslations({ locale, namespace: "tarifs" });
@@ -221,8 +220,8 @@ export default async function TarifsPageContent({ locale }: { locale: string }) 
                   padding: "24px 24px 22px",
                 }}
               >
-                <span style={{ fontSize: 20, marginBottom: 12, display: "block" }}>
-                  {PILLAR_ICONS[i]}
+                <span style={{ fontSize: 14, marginBottom: 12, display: "block", color: "var(--gold-light)", fontVariantNumeric: "tabular-nums" }}>
+                  {i + 1}
                 </span>
                 <h3 style={{ fontSize: 16, fontWeight: 700, color: "var(--text)", marginBottom: 8, fontFamily: "var(--font-syne)" }}>
                   {p.title}

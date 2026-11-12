@@ -5,13 +5,9 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useTranslations, useLocale } from "next-intl";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Logo from "./Logo";
-import MagneticButton from "./MagneticButton";
 import LanguageSwitcher from "./LanguageSwitcher";
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
-
-gsap.registerPlugin(ScrollTrigger);
 
 type ScrollLink = { kind: "scroll"; id: string; label: string };
 type PageLink = { kind: "page"; href: string; label: string };
@@ -32,9 +28,9 @@ export default function Nav() {
   const isOnHome = pathname === homePath || pathname === `${homePath}/`;
 
   const links: NavLink[] = [
+    { kind: "scroll", id: "produits", label: t("products") },
+    { kind: "scroll", id: "sur-mesure", label: t("custom") },
     { kind: "scroll", id: "comment-ca-marche", label: t("howItWorks") },
-    { kind: "scroll", id: "secteurs", label: t("sectors") },
-    { kind: "page", href: `/${locale}/tarifs`, label: t("pricing") },
     { kind: "scroll", id: "faq", label: t("faq") },
     { kind: "page", href: `/${locale}/blog`, label: t("blog") },
   ];
@@ -54,43 +50,9 @@ export default function Nav() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  useEffect(() => {
-    const nav = navRef.current;
-    if (!nav) return;
-
-    // L'ENTREE DE LA BARRE PORTE LE MEME PIEGE QUE LES REVELATIONS. Le `gsap.set`
-    // la place hors ecran a opacity 0 : sauter le tween laisserait la NAVIGATION
-    // ENTIERE invisible. On pose donc directement l'etat d'arrivee.
-    if (reduit) {
-      gsap.set(nav, { y: 0, opacity: 1 });
-    } else {
-      gsap.set(nav, { y: -64, opacity: 0 });
-      gsap.to(nav, { y: 0, opacity: 1, duration: 0.5, delay: 0.2 });
-    }
-
-    const st = ScrollTrigger.create({
-      start: "80px top",
-      onUpdate: (self) => {
-        const scrolled = self.progress > 0;
-        // Changement d'ETAT, pas decoration : la barre doit toujours rapetisser.
-        // En mouvement reduit elle le fait d'un coup, sans transition.
-        gsap.to(nav, {
-          height: scrolled ? 52 : 64,
-          duration: reduit ? 0 : 0.3,
-          ease: "power2.out",
-        });
-        nav.style.background = scrolled
-          ? "rgba(9,9,11,0.95)"
-          : "rgba(9,9,11,0.85)";
-        nav.style.backdropFilter = scrolled ? "blur(30px)" : "blur(20px)";
-        nav.style.borderBottomColor = scrolled
-          ? "var(--border-accent)"
-          : "var(--border)";
-      },
-    });
-
-    return () => st.kill();
-  }, [reduit]);
+  // La barre est fixe et ne bouge plus : ni entree animee, ni hauteur qui
+  // change au defilement (une animation de `height` refaisait la mise en page
+  // a chaque image), ni flou d'arriere-plan qui varie.
 
   // Mobile overlay animation
   useEffect(() => {
@@ -230,11 +192,11 @@ export default function Nav() {
   const renderMobileLink = (l: NavLink) => {
     const style = {
       fontFamily: "var(--font-syne)",
-      fontWeight: 700,
-      fontSize: 48,
+      fontWeight: 600,
+      fontSize: 32,
       color: "var(--text)",
-      letterSpacing: "-2px",
-      lineHeight: 1.1,
+      letterSpacing: "-0.02em",
+      lineHeight: 1.15,
     };
 
     if (l.kind === "scroll") {
@@ -277,10 +239,9 @@ export default function Nav() {
           top: "var(--banner-h, 0px)",
           height: 64,
           zIndex: 100,
-          background: "rgba(9,9,11,0.85)",
-          backdropFilter: "blur(20px)",
+          background: "rgba(9,9,11,0.92)",
+          backdropFilter: "blur(12px)",
           borderBottom: "1px solid var(--border)",
-          transition: "top 0.2s, background 0.3s, border-color 0.3s, backdrop-filter 0.3s",
           isolation: "isolate",
           pointerEvents: "auto",
         }}
@@ -315,20 +276,15 @@ export default function Nav() {
         {/* Desktop: LanguageSwitcher + CTA */}
         <div className="hidden min-[900px]:flex items-center gap-4">
           <LanguageSwitcher size="md" />
-          <MagneticButton
+          <a
             href="https://calendly.com/saasnhia/30min"
             target="_blank"
             rel="noopener noreferrer"
-            data-cursor="link"
-            className="inline-flex text-sm font-medium px-5 py-2 rounded-md no-underline transition-all duration-200 whitespace-nowrap hover:opacity-90"
-            style={{
-              background: "var(--gold-dim)",
-              color: "var(--gold-light)",
-              border: "1px solid var(--gold-border)",
-            }}
+            className="bouton-discret inline-flex items-center text-sm font-medium no-underline whitespace-nowrap"
+            style={{ height: 36, padding: "0 16px", borderRadius: 8 }}
           >
-            {t("cta")} →
-          </MagneticButton>
+            {t("cta")}
+          </a>
         </div>
       </nav>
 
@@ -383,11 +339,11 @@ export default function Nav() {
               className="no-underline block"
               style={{
                 fontFamily: "var(--font-syne)",
-                fontWeight: 700,
-                fontSize: 48,
-                color: "var(--gold)",
-                letterSpacing: "-2px",
-                lineHeight: 1.1,
+                fontWeight: 600,
+                fontSize: 32,
+                color: "var(--gold-light)",
+                letterSpacing: "-0.02em",
+                lineHeight: 1.15,
               }}
             >
               {t("cta")}

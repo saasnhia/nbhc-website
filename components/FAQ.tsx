@@ -1,158 +1,106 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { useTranslations } from "next-intl";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 
-gsap.registerPlugin(ScrollTrigger);
+const QUESTIONS = [1, 2, 3, 4, 5, 6] as const;
 
+/* Les rangées ne sont plus masquées au chargement puis révélées au défilement :
+   la section est lisible telle qu'elle est servie. Une réponse s'ouvre et se
+   ferme sans animer de hauteur. */
 export default function FAQ() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const reduit = usePrefersReducedMotion();
   const [openIndex, setOpenIndex] = useState<number | null>(0);
   const t = useTranslations("faq");
-
-  const items = [
-    { q: t("q1"), a: t("a1") },
-    { q: t("q2"), a: t("a2") },
-    { q: t("q3"), a: t("a3") },
-    { q: t("q4"), a: t("a4") },
-    { q: t("q5"), a: t("a5") },
-    { q: t("q6"), a: t("a6") },
-  ];
-
-  useEffect(() => {
-    const el = sectionRef.current;
-    if (!el) return;
-    const rows = el.querySelectorAll("[data-faq-item]");
-    // MOUVEMENT REDUIT : L'ETAT FINAL, PAS L'ABSENCE DE TWEEN.
-    // Le `gsap.set` ci-dessous pose opacity 0 ; se contenter de ne pas creer le
-    // declencheur laisserait la section INVISIBLE. On pose donc l'arrivee.
-    if (reduit) {
-      gsap.set(rows, { opacity: 1, y: 0, clearProps: "transform" });
-      return;
-    }
-    gsap.set(rows, { opacity: 0, y: 20 });
-    const st = ScrollTrigger.create({
-      trigger: el,
-      start: "top 80%",
-      once: true,
-      onEnter: () => {
-        gsap.to(rows, {
-          opacity: 1,
-          y: 0,
-          duration: 0.6,
-          ease: "power3.out",
-          stagger: 0.06,
-        });
-      },
-    });
-    return () => st.kill();
-  }, [reduit]);
 
   return (
     <section
       id="faq"
-      ref={sectionRef}
-      className="py-24 px-10 max-[900px]:px-5 max-[900px]:py-16"
-      style={{ maxWidth: 1000, margin: "0 auto" }}
+      className="py-28 px-10 max-[900px]:px-5 max-[900px]:py-16"
+      style={{ maxWidth: 880, margin: "0 auto" }}
     >
-      <div
-        className="text-[11px] font-medium tracking-[3px] uppercase mb-4 flex items-center gap-2"
-        style={{ color: "var(--gold)" }}
-      >
-        <span className="block w-4 h-px" style={{ background: "var(--gold)" }} />
+      <div style={{ fontSize: 14, color: "var(--gold-light)", marginBottom: 12 }}>
         {t("eyebrow")}
       </div>
       <h2
-        className="font-bold leading-tight mb-4"
         style={{
           fontFamily: "var(--font-syne)",
-          fontSize: "clamp(28px, 4vw, 52px)",
-          letterSpacing: "-1.5px",
+          fontWeight: 600,
+          fontSize: "clamp(28px, 3.4vw, 44px)",
+          lineHeight: 1.12,
+          letterSpacing: "-0.02em",
           color: "var(--text)",
+          marginBottom: 16,
         }}
       >
         {t("title")}
       </h2>
       <p
-        className="text-[16px] font-light mb-12"
-        style={{ color: "var(--text-muted)", maxWidth: 600, lineHeight: 1.7 }}
+        style={{
+          color: "var(--text-muted)",
+          fontSize: 16,
+          lineHeight: 1.7,
+          marginBottom: 40,
+        }}
       >
         {t("subtitle")}
       </p>
 
-      <div className="flex flex-col gap-3">
-        {items.map((it, i) => {
+      <div style={{ borderTop: "1px solid var(--border)" }}>
+        {QUESTIONS.map((n, i) => {
           const isOpen = openIndex === i;
           return (
-            <div
-              key={i}
-              data-faq-item
-              style={{
-                background: "rgba(255,255,255,0.02)",
-                border: isOpen
-                  ? "1px solid var(--gold-border)"
-                  : "1px solid var(--border)",
-                borderRadius: "var(--radius)",
-                overflow: "hidden",
-                transition: "border-color 0.2s",
-              }}
-            >
+            <div key={n} style={{ borderBottom: "1px solid var(--border)" }}>
               <button
+                type="button"
                 onClick={() => setOpenIndex(isOpen ? null : i)}
-                data-cursor="link"
-                className="w-full flex items-center justify-between gap-4 p-5 max-[700px]:p-4 text-left bg-transparent border-0 cursor-pointer"
+                className="w-full flex items-center justify-between gap-4 text-left bg-transparent border-0 cursor-pointer"
+                style={{ padding: "20px 0" }}
                 aria-expanded={isOpen}
+                aria-controls={`faq-reponse-${n}`}
               >
                 <span
-                  className="text-[15px] font-semibold"
                   style={{
-                    fontFamily: "var(--font-syne)",
-                    color: isOpen ? "var(--gold-light)" : "var(--text)",
-                    letterSpacing: "-0.3px",
+                    fontSize: 17,
+                    lineHeight: 1.4,
+                    fontWeight: 500,
+                    color: "var(--text)",
                   }}
                 >
-                  {it.q}
+                  {t(`q${n}`)}
                 </span>
-                <span
-                  className="flex-shrink-0 flex items-center justify-center"
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  aria-hidden
+                  className="flex-shrink-0"
                   style={{
-                    width: 28,
-                    height: 28,
-                    borderRadius: 8,
-                    background: isOpen ? "var(--gold)" : "var(--gold-dim)",
-                    color: isOpen ? "#0a0a0b" : "var(--gold)",
-                    transition: "all 0.2s",
-                    transform: isOpen ? "rotate(45deg)" : "rotate(0deg)",
+                    color: isOpen ? "var(--gold-light)" : "var(--text-muted)",
+                    transform: isOpen ? "rotate(45deg)" : "none",
+                    transition: "transform 150ms ease-out, color 150ms ease-out",
                   }}
                 >
-                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                    <path
-                      d="M7 2v10M2 7h10"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                    />
-                  </svg>
-                </span>
+                  <path
+                    d="M8 2.5v11M2.5 8h11"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                  />
+                </svg>
               </button>
               <div
+                id={`faq-reponse-${n}`}
+                hidden={!isOpen}
                 style={{
-                  maxHeight: isOpen ? 400 : 0,
-                  opacity: isOpen ? 1 : 0,
-                  transition: "max-height 0.4s ease, opacity 0.3s ease",
-                  overflow: "hidden",
+                  paddingBottom: 24,
+                  maxWidth: 720,
+                  fontSize: 15,
+                  lineHeight: 1.7,
+                  color: "var(--text-muted)",
                 }}
               >
-                <div
-                  className="px-5 pb-5 max-[700px]:px-4 max-[700px]:pb-4 text-[14px] font-light"
-                  style={{ color: "var(--text-muted)", lineHeight: 1.75 }}
-                >
-                  {it.a}
-                </div>
+                {t(`a${n}`)}
               </div>
             </div>
           );

@@ -1,149 +1,47 @@
 {
   "nav": {
-    "howItWorks": "How it works",
+    "howItWorks": "Method",
     "sectors": "Who it's for",
     "pricing": "Pricing",
     "faq": "FAQ",
     "blog": "Blog",
-    "cta": "Free diagnostic",
-    "contact": "Contact"
+    "cta": "Book 30 min",
+    "contact": "Contact",
+    "products": "Products",
+    "custom": "Custom tools"
   },
   "hero": {
-    "eyebrow": "AI STUDIO · CUSTOM AUTOMATION",
-    "titleLine1": "AI is everywhere.",
-    "titleLine2": "Except in your business.",
-    "titleLine3": "We fix that.",
-    "subtitle": "You spend hours on tasks AI handles in seconds. We take care of it — free diagnostic, measurable results, zero tech jargon.",
-    "ctaPrimary": "Free diagnostic — 30 min",
-    "ctaSecondary": "See how it works",
-    "trust1": "🇫🇷 Mistral, French AI model",
-    "trust2": "⚡ Custom automation",
-    "trust3": "🔓 You own everything",
-    "flow": {
-      "center": "Automated by NBHC",
-      "tabs": {
-        "emails": "Email comes in → it's handled",
-        "leads": "Lead comes in → they're followed up",
-        "reports": "Your data → a report ready",
-        "custom": "A repetitive task → it's gone"
+    "titleLine1": "Quotes, video editing, job applications:",
+    "titleLine2": "we build business software.",
+    "titleLine3": "The next one can be yours.",
+    "subtitle": "NBHC designs and develops software. Devizly for quotes and invoices, Vlogyz for video editing, internbullet for job applications. And, for companies whose trade fits no off-the-shelf software, a tool built around their rules.",
+    "ctaPrimary": "Talk about your tool",
+    "ctaSecondary": "See the products",
+    "index": {
+      "title": "What we build",
+      "status": "Status",
+      "devizly": {
+        "name": "Devizly",
+        "what": "Quotes and invoices for freelancers",
+        "status": "Live"
       },
-      "emails": {
-        "before": {
-          "title": "200 emails/day",
-          "sub": "Read, sort, reply — 2h wasted every morning"
-        },
-        "after": {
-          "title": "Inbox under control",
-          "sub": "Sorted, filed, draft reply — in real time"
-        }
+      "vlogyz": {
+        "name": "Vlogyz",
+        "what": "Video editing for creators",
+        "status": "Coming soon"
       },
-      "leads": {
-        "before": {
-          "title": "Lost prospects",
-          "sub": "No time to follow up, unanswered quotes"
-        },
-        "after": {
-          "title": "Automated pipeline",
-          "sub": "Qualified, quote sent, follow-up D+3/D+7/D+14"
-        }
+      "internbullet": {
+        "name": "internbullet",
+        "what": "Internship, work-study and job applications",
+        "status": "In preparation"
       },
-      "reports": {
-        "before": {
-          "title": "Manual reporting",
-          "sub": "Spreadsheets, copy-paste, 4h every week"
-        },
-        "after": {
-          "title": "Automatic report",
-          "sub": "5 sources compiled, anomalies flagged, PDF every Monday"
-        }
-      },
-      "custom": {
-        "before": {
-          "title": "Manual processes",
-          "sub": "The same steps, every day, for years"
-        },
-        "after": {
-          "title": "Automated",
-          "sub": "24/7, zero errors — you steer, AI executes"
-        }
+      "surMesure": {
+        "name": "Custom tools",
+        "what": "The tool built around your rules",
+        "status": "On quote"
       }
-    }
-  },
-  "whyNow": {
-    "eyebrow": "THE TRUTH",
-    "title": "AI changes everything. And you see it.",
-    "subtitle": "You see AI news every day. But concretely, how do you take advantage of it when running a firm, a job site, an agency? That's exactly what we answer.",
-    "panel1Title": "You're losing time",
-    "panel1Text": "Manual quotes, forgotten follow-ups, copy-paste reporting.",
-    "panel1Alt": "A workstation seen from three quarters, on a dark platform edged with gold: a stack of sheets, a single sheet lying flat, and an hourglass.",
-    "panel1LabelGroupe": "quotes, follow-ups, reporting",
-    "panel2Title": "Where to start?",
-    "panel2Text": "100 AI tools on the market, none tailored to your trade.",
-    "panel2Alt": "A heap of identical cubic blocks on a plinth, next to two twin slabs separated by a gap edged with gold on either side; two blocks rest across the gap, wider than it is.",
-    "panel2LabelOutils": "AI tools",
-    "panel2LabelMetier": "your trade",
-    "panel3Title": "Your competitors are getting started",
-    "panel3Text": "While you hesitate, others are already automating.",
-    "panel3Alt": "Two identical crates on a gold-edged plinth: the left one is closed, the right one is open with its lid taken off and leaning against its side on the ground, and a golden mass fills the bottom of its interior.",
-    "panel3LabelVous": "you",
-    "panel3LabelAutres": "others"
-  },
-  "sectors": {
-    "eyebrow": "WHO IT'S FOR",
-    "title": "We automate the tasks of your trade.",
-    "subtitle": "Every sector has its repetitive tasks. We know them, we automate them.",
-    "sportName": "Gyms & wellness centers",
-    "sportPain": "No-shows on classes, memberships never followed up, front desk overwhelmed during treatments.",
-    "sportSolution": "We automate reminders, membership follow-ups and appointment booking.",
-    "sportFootnote": "From €200 excl. VAT",
-    "sportHref": "/automatisation-salle-de-sport",
-    "sportAssoName": "Sports associations",
-    "sportAssoPain": "Certificates to collect, dues never followed up, notices sent one by one.",
-    "sportAssoSolution": "We automate sign-ups, follow-ups and notices. Solidarity offer from €1,000 excl. VAT.",
-    "sportAssoFootnote": "From €1,000 excl. VAT · non-profit offer",
-    "sportAssoHref": "/automatisation-association-sportive",
-    "garageName": "Garages & body shops",
-    "garagePain": "Missed calls in the shop, quotes never followed up, service reminders never sent.",
-    "garageSolution": "We automate phone reception, quote follow-ups and service reminders.",
-    "garageFootnote": "From €200 excl. VAT",
-    "garageHref": "/automatisation-garage-automobile",
-    "btpName": "Trades & Construction",
-    "btpPain": "Manual quotes, follow-ups never sent, late invoicing.",
-    "btpSolution": "We automate your quotes, follow-ups and billing. Live in 2-3 weeks.",
-    "btpFootnote": "From €2,000 excl. VAT",
-    "btpHref": "/automatisation-artisan-btp",
-    "formationName": "Training organizations",
-    "formationPain": "OPCO files stuck, attendance sheets to archive, a Qualiopi audit coming up.",
-    "formationSolution": "We automate OPCO tracking, attendance and notices. You stay the decision-maker.",
-    "formationFootnote": "From €2,000 excl. VAT",
-    "formationHref": "/automatisation-organisme-formation",
-    "pharmaName": "Pharmacies",
-    "pharmaPain": "BPM-eligible patients undetected, shortages found too late, payer rejections piling up.",
-    "pharmaSolution": "We automate detection, alerts and rejection sorting. You decide and bill.",
-    "pharmaFootnote": "From €2,000 excl. VAT",
-    "pharmaHref": "/automatisation-pharmacie",
-    "opticienName": "Optical stores",
-    "opticienPain": "Clients due for renewal never followed up, ready orders with no notification, stock out of sync between stores.",
-    "opticienSolution": "We automate renewal follow-up, order tracking and multi-store stock. You examine and sell.",
-    "opticienFootnote": "From €2,000 excl. VAT",
-    "opticienHref": "/automatisation-opticien",
-    "learnMore": "Learn more →",
-    "outroText": "Your sector not listed? The free diagnostic lets us see if we can help.",
-    "outroCta": "Book my diagnostic →",
-    "garageLabelAccueil": "automated phone reception",
-    "garageLabelFiche": "the form fills itself",
-    "pharmaLabelTri": "sorting, automated",
-    "pharmaLabelDecision": "you decide and bill",
-    "btpLabelDevis": "quotes by hand",
-    "btpLabelRelance": "sent on its own",
-    "formationLabelDossier": "paper sign-in",
-    "formationLabelSuivi": "file closed",
-    "opticienLabelRelance": "follow-up missed",
-    "opticienLabelPrete": "order ready",
-    "sportLabelNoshow": "class no-show",
-    "sportLabelRappel": "reminder sent",
-    "sportAssoLabelCertificat": "certificate missing",
-    "sportAssoLabelDossier": "file completed"
+    },
+    "ctaNote": "30 minutes, free. If a tool is not the right answer, we tell you."
   },
   "showcase": {
     "eyebrow": "IN ACTION",
@@ -417,47 +315,112 @@
     }
   },
   "howItWorks": {
-    "eyebrow": "HOW IT WORKS",
-    "title": "From diagnostic to result. No jargon.",
-    "subtitle": "Four clear steps, no surprises. This is the path of a custom automation. You know what will be done, when, and how much it costs.",
+    "eyebrow": "Method",
+    "title": "From the first call to the delivered tool",
+    "subtitle": "Four steps. You know what will be built and at what price before signing.",
     "step1Number": "01",
-    "step1Title": "We understand your daily life",
-    "step1Desc": "We identify the tasks wasting your time, evaluate whether AI can help.",
+    "step1Title": "We understand your day-to-day",
+    "step1Desc": "You show what gets redone by hand. We tell you whether a tool can take it over.",
     "step1Badge": "30 min · Free",
     "step2Number": "02",
-    "step2Title": "We design your solution",
-    "step2Desc": "We audit your tools, the quality of your data, and design the workflow architecture. You know exactly what will be built before you sign.",
-    "step2Badge": "1-2 weeks",
+    "step2Title": "We design your tool",
+    "step2Desc": "We look at your data and your software, then write down what will be built. You approve it before signing.",
+    "step2Badge": "Written scope",
     "step3Number": "03",
     "step3Title": "We build and test on your real cases",
-    "step3Desc": "We build the workflow, calibrate the AI on your business vocabulary. Not a prototype — a system that runs.",
-    "step3Badge": "2-5 weeks",
+    "step3Desc": "The tool is tuned to your vocabulary and your rules. Not a mock-up: a tool that runs.",
+    "step3Badge": "Tested on your cases",
     "step4Number": "04",
-    "step4Title": "We deliver, you decide what's next",
-    "step4Desc": "The build is tested and delivered. If you want us to keep going, the support plan takes over — it's never forced.",
-    "step4Badge": "Delivery + optional support",
+    "step4Title": "We deliver, you decide what’s next",
+    "step4Desc": "The tool is tested and delivered. Ongoing support is optional, never imposed.",
+    "step4Badge": "Optional support",
     "illustrationAlt": "A chain of four steps on a gold-edged plinth, linked by a dotted golden path ending in an arrow. 01: an open folder with three tabs and a pencil laid across it. 02: a drawing board tilted on two legs, a sheet on it, a set square. 03: an open casing with a part standing inside, a screwdriver and three screws lined up in front. 04: a file holder with three folders filed upright, its front edge underlined in gold. Between the second and third step, an upright sheet bearing a golden band. After the fourth, the dotted path breaks and resumes as a detached segment.",
     "legendeSignature": "before you sign",
     "labelSysteme": "a system that runs",
     "labelOptionnel": "optional support"
   },
   "products": {
-    "eyebrow": "OUR PRODUCTS",
-    "title": "We don't just consult. We build.",
-    "subtitle": "Our SaaS prove we know how to build complete products — from concept to deployment.",
+    "eyebrow": "Our products",
+    "title": "Devizly is live. Vlogyz and internbullet are on their way.",
+    "subtitle": "Three pieces of software we design and develop ourselves. Each one takes care of a specific job, and we apply the same way of working to a custom tool.",
     "devizlyName": "Devizly",
-    "devizlyDesc": "AI-powered quote and invoice platform. Factur-X compliant, electronic signature, Stripe payment.",
-    "devizlyBadge": "In production",
-    "devizlyLink": "devizly.fr",
-    "devizlySceneAlt": "A three-dimensional quote standing on a plinth: the header, six priced lines with quantities and amounts, the golden total, the ticked signature line and the glowing golden payment button",
-    "devizlyLabelDevis": "the AI-generated quote",
-    "devizlyLabelLignes": "every line priced",
-    "devizlyLabelSignature": "signed electronically",
-    "devizlyLabelEncaissement": "collected in one click",
+    "devizlyBadge": "Live",
+    "devizlyLink": "Open devizly.fr",
     "vlogyzName": "Vlogyz",
-    "vlogyzDesc": "AI video editing platform. Transcription, smart cuts, subtitles, motion design, virality score.",
     "vlogyzBadge": "Coming soon",
-    "vlogyzLink": "vlogyz.com"
+    "vlogyzLink": "Join the waiting list",
+    "devizlyFor": "Quotes and invoices for freelancers and tradespeople",
+    "vlogyzFor": "Video editing for content creators",
+    "internbulletName": "internbullet",
+    "internbulletBadge": "In preparation",
+    "internbulletFor": "Direct applications: internship, work-study, job",
+    "internbulletQuote": "I found my internship with this tool. I am now preparing it so other students can look for theirs more simply.",
+    "internbulletQuoteBy": "The founder of NBHC",
+    "internbulletLink": "Get notified at opening",
+    "internbulletDemo": {
+      "company": "Atelier Morel · Lyon",
+      "offer": "Design office internship, March to August 2027",
+      "status": "To review",
+      "readLabel": "Read on their website",
+      "excerpt": "“We welcome two interns to the design office every year.”",
+      "excerptSource": "Careers page",
+      "subjectLabel": "Subject",
+      "subject": "Application for a design office internship",
+      "body": "Dear Sir or Madam, your Careers page says you welcome two interns to the design office every year. I am looking for an internship from March to August 2027 and would like to apply.",
+      "checked": "Email reviewed",
+      "send": "Send",
+      "caption": "Example: fictional company. No email is sent before it has been reviewed."
+    },
+    "devizlySteps": [
+      "You describe the job in plain language",
+      "Devizly drafts the quote, you adjust it",
+      "The client signs online and pays through Stripe"
+    ],
+    "devizlyNote": "Invoices come out in Factur-X, an electronic invoice format.",
+    "vlogyzSteps": [
+      "You upload the raw footage",
+      "Vlogyz transcribes, cuts silences and adds subtitles",
+      "The video comes out in vertical format, with b-roll and animated titles"
+    ],
+    "vlogyzNote": "Not open to the public yet: the waiting list is on vlogyz.com.",
+    "internbulletSteps": [
+      "You bring a company or a job posting",
+      "The tool reads its website and drafts an email grounded in what it read there",
+      "You review, then you send"
+    ],
+    "internbulletNote": "In France or abroad. Internships and work-study first, fixed-term and permanent jobs next.",
+    "devizlyDemo": {
+      "promptLabel": "What the tradesperson writes",
+      "prompt": "Replacement of a 200 L water heater, removal of the old one, connections and commissioning.",
+      "number": "Quote D-2027-014",
+      "client": "Mr and Mrs Laurent",
+      "l1": {
+        "label": "200 L electric water heater",
+        "qty": "1 × €689.00",
+        "amount": "€689.00"
+      },
+      "l2": {
+        "label": "Removal and installation",
+        "qty": "4 h × €55.00",
+        "amount": "€220.00"
+      },
+      "l3": {
+        "label": "Connections and commissioning",
+        "qty": "flat fee",
+        "amount": "€140.00"
+      },
+      "htLabel": "Total excl. VAT",
+      "ht": "€1,049.00",
+      "tvaLabel": "VAT 10%",
+      "tva": "€104.90",
+      "ttcLabel": "Total incl. VAT",
+      "ttc": "€1,153.90",
+      "signedTitle": "Signed online",
+      "signedText": "by the client, from their phone",
+      "paidTitle": "Deposit paid",
+      "paidText": "30% · €346.17 through Stripe",
+      "caption": "Example quote, fictional client and amounts."
+    }
   },
   "pricing": {
     "eyebrow": "PRICING",
@@ -467,82 +430,71 @@
     "footnote2": "Infrastructure costs (n8n, Mistral): €80-300/month, billed by NBHC — mandatory, unlike the support plan.",
     "footnote3": "NBHC support (updates, security, maintenance, training): €90 to €800/month depending on your situation, paid to NBHC. Without it, nobody monitors or updates your automation after delivery."
   },
-  "differentiators": {
-    "eyebrow": "WHY NBHC",
-    "title": "What sets us apart.",
-    "block1Icon": "🇫🇷",
-    "block1Title": "Mistral AI engine",
-    "block1Desc": "We build on Mistral, the French AI model, hosted in the EU. Third-party tools connected to your business stay yours.",
-    "block2Icon": "🎯",
-    "block2Title": "Your price, not an average",
-    "block2Desc": "The price depends on exactly what you ask for — not a blended average grid copied across other clients. Size, automation type, volume: those are the criteria that set the price.",
-    "block3Icon": "🔓",
-    "block3Title": "You're the owner",
-    "block3Desc": "The workflow, prompts, architecture — it all belongs to you. If you leave, you keep everything.",
-    "block4Icon": "🔍",
-    "block4Title": "Regulation changes, we track it",
-    "block4Desc": "In regulated sectors, regulatory monitoring is part of the support plan. Updates and fixes continue as long as it stays active."
-  },
   "faq": {
     "eyebrow": "FAQ",
-    "title": "Questions we're asked.",
-    "subtitle": "And if you have more, the free diagnostic is exactly for that.",
-    "q1": "I don't know anything about AI, is that a problem?",
-    "a1": "Not at all. That's exactly why we exist. We handle the entire technical side. You just explain your trade and what's taking up your time.",
-    "q2": "How long before I see results?",
-    "a2": "Between 1 and 5 weeks depending on complexity. A standardized automation (Essentiel) is delivered in 1-2 weeks. A custom automation integrated with your tools (Sur Mesure Léger) takes 2-5 weeks.",
-    "q3": "What exactly is a 'workflow'?",
-    "a3": "A chain of automated actions. For example: an email arrives → AI reads it → classifies it → generates a reply → submits it for your validation. All without you lifting a finger.",
-    "q4": "What if it doesn't work?",
-    "a4": "The free diagnostic exists exactly for that: we assess together whether AI can really help in your case. If we think not, we tell you honestly.",
-    "q5": "Is my data safe?",
-    "a5": "Yes. We use Mistral, a French AI model, hosted in the EU.",
-    "q6": "What's the difference with ChatGPT?",
-    "a6": "ChatGPT is a generalist assistant. We build automated systems specific to your trade, connected to your tools, running 24/7 without you having to open anything."
-  },
-  "ctaFinal": {
-    "title": "Ready to automate what's taking your time?",
-    "subtitle": "30 minutes. Free. No commitment. Together we look at what AI can change in your day-to-day.",
-    "button": "Book my free diagnostic →"
+    "title": "The questions we get asked",
+    "subtitle": "For the others, the first 30-minute call is made for that.",
+    "q1": "Is NBHC an agency or a software publisher?",
+    "a1": "Both. We develop our own products: Devizly, already live, then Vlogyz and internbullet, which are not open yet. And we build custom tools for companies. What we learn on the former serves the latter.",
+    "q2": "What is a custom tool, concretely?",
+    "a2": "Software built around your rules: your prices, your special cases, your way of preparing a quote or an invoice. It builds on your existing data and your advisors keep control of every decision.",
+    "q3": "How much does it cost?",
+    "a3": "The first 30-minute call is free. After that, scope and price are written down before we start: you know what will be built and what you will pay.",
+    "q4": "Who owns the tool once delivered?",
+    "a4": "You do. What we build for you belongs to you, and you keep it if the collaboration ends.",
+    "q5": "When will internbullet open?",
+    "a5": "It is in preparation. The founder of NBHC found their own internship with it; opening to students comes next, first for internships and work-study, then for fixed-term and permanent jobs. Write to contact@nbhc.fr to be notified.",
+    "q6": "What if a tool is not the right answer?",
+    "a6": "We tell you during the first call. A well-kept spreadsheet or off-the-shelf software is sometimes enough, and in that case we build nothing."
   },
   "contact": {
-    "eyebrow": "Free diagnostic",
-    "title": "Your project",
-    "titleGold": "starts here.",
-    "description": "30 minutes via video call. We identify what's wasting your time and tell you honestly whether AI can help — no technical jargon.",
-    "calendlyButton": "Book my slot →",
+    "eyebrow": "First call",
+    "title": "Let’s talk about",
+    "titleGold": "your tool",
+    "description": "30 minutes on video. You show what gets redone by hand at your company. We tell you whether a tool can take it over, and if it can’t we tell you that too.",
+    "calendlyButton": "Book a slot",
     "calendlyAlt": "Prefer to write? contact@nbhc.fr",
     "emailDirect": "Direct email",
     "siren": "SIREN",
     "headquarters": "Headquarters"
   },
-  "globalBanner": {
-    "text": "🎯 Free diagnostic — 30 min to see what AI would change for you →",
-    "textShort": "🎯 Free diagnostic — 30 min →",
-    "close": "Close"
-  },
   "footer": {
-    "tagline": "AI Studio & Automation · France",
+    "tagline": "Business software and custom tools",
     "navTitle": "Navigation",
-    "howItWorks": "How it works",
+    "howItWorks": "Method",
     "sectors": "Who it's for",
     "pricing": "Pricing",
     "products": "Products",
     "blog": "Blog",
     "faq": "FAQ",
     "contactTitle": "Contact",
-    "diagnostic": "Free diagnostic",
+    "diagnostic": "Book 30 min",
     "email": "contact@nbhc.fr",
     "linkedin": "LinkedIn",
     "twitter": "X · @harounNbhc",
     "productsTitle": "Our products",
-    "devizly": "Devizly.fr",
+    "devizly": "Devizly",
     "vlogyz": "Vlogyz",
     "legal": "Legal notice",
     "privacy": "Privacy policy",
     "cgv": "Terms of sale",
     "cgu": "Terms of use",
-    "copyright": "© 2026 SAS NBHC — SIREN 102 637 899 · 55 Rue Henri Clément, 71100 Saint-Rémy · All rights reserved"
+    "copyright": "© 2026 SAS NBHC — SIREN 102 637 899 · 55 Rue Henri Clément, 71100 Saint-Rémy · All rights reserved",
+    "custom": "Custom tools",
+    "internbullet": "internbullet",
+    "sectorsTitle": "Custom work, by trade",
+    "sectorLinks": {
+      "automatisation-artisan-btp": "Tradespeople and construction",
+      "automatisation-garage-automobile": "Garages",
+      "automatisation-restaurant": "Restaurants",
+      "automatisation-salon-de-coiffure": "Hair salons",
+      "automatisation-salle-de-sport": "Gyms",
+      "automatisation-association-sportive": "Sports clubs",
+      "automatisation-organisme-formation": "Training providers",
+      "automatisation-pharmacie": "Pharmacies",
+      "automatisation-opticien": "Opticians",
+      "automatisation-marque-cosmetique": "Cosmetics brands"
+    }
   },
   "common": {
     "loading": "Loading...",
@@ -1362,7 +1314,7 @@
       "pillar1Title": "Your automations don't age",
       "pillar1Text": "We monitor the state of the art in models and tools. When a more capable version exists for one of your workflows, we test it — then update it after your approval. When a new automation becomes relevant to your business, we suggest it to you.",
       "pillar2Title": "Where your data goes",
-      "pillar2Text": "Your data flows through n8n, hosted in Germany, and through Mistral AI, hosted in the European Union. Human validation on every committing action.",
+      "pillar2Text": "The providers your data goes through are settled with you, project by project. Human validation on every binding action.",
       "pillar3Title": "Maintenance",
       "pillar3Text": "When a third-party tool changes — a vendor changes its export, an API evolves — we fix it so the workflow keeps running. A small, responsive team, not a 24/7 call center.",
       "pillar4Title": "Training",
@@ -1539,5 +1491,83 @@
     "videoAriaVilla": "Presentation video of a villa, made from photographs",
     "typeStudio": "Studio",
     "videoAriaStudio": "Presentation video of a studio flat, made from photographs"
+  },
+  "custom": {
+    "eyebrow": "Custom tools",
+    "title": "When the special case is the rule, you need a tool that knows your rules",
+    "subtitle": "A price that changes with who comes, for how long and in which room. A quote that depends on the job site. As long as no software knows your rules, someone reapplies them by hand, file after file. We build the tool that knows them.",
+    "p1Title": "It starts from the client’s request",
+    "p1Text": "The message comes in as it was written. The tool pulls out what the quote needs: who, when, for how long, under which conditions.",
+    "p2Title": "Every line cites its source",
+    "p2Text": "A value is shown with the client’s sentence that supports it. No sentence, no value: your advisor sees what is missing and asks for it.",
+    "p3Title": "Your prices stay yours",
+    "p3Text": "The tool works out who pays for what. Amounts come from your price list, and the calculation reads line by line.",
+    "p4Title": "It builds on what you already have",
+    "p4Text": "Catalogue, spreadsheet, website database: the tool fetches the stops and dates from there. Your advisors keep the decision.",
+    "terms": "First 30-minute call, free. Scope and price are written down before we start. What we build for you belongs to you.",
+    "cta": "Describe your case",
+    "demo": {
+      "messageLabel": "The client’s message",
+      "m1": "Hello, there will be ",
+      "c1": "two of us, Marc and me, from 4 to 12 May 2027",
+      "m2": ": Hanoi, Ha Long Bay then Hoi An. My sister Claire ",
+      "c2": "joins us in Hoi An on 8 May, until the 12th",
+      "m3": ", and she will take ",
+      "c3": "a room of her own",
+      "m4": ". Could you prepare a quote? Julie",
+      "tableLabel": "Who pays for what",
+      "colWho": "Traveller",
+      "colNights": "Nights",
+      "colRoom": "Room",
+      "r1": {
+        "who": "Julie",
+        "nights": "8 nights",
+        "dates": "4 to 12 May",
+        "room": "Double, shared",
+        "source": "“two of us, Marc and me”"
+      },
+      "r2": {
+        "who": "Marc",
+        "nights": "8 nights",
+        "dates": "4 to 12 May",
+        "room": "Double, shared",
+        "source": "“two of us, Marc and me”"
+      },
+      "r3": {
+        "who": "Claire",
+        "nights": "4 nights",
+        "dates": "8 to 12 May, in Hoi An",
+        "room": "Single",
+        "source": "“a room of her own”"
+      },
+      "amounts": "Amounts come from your price list. The tool invents none: it works out the structure, your advisor approves.",
+      "caption": "Fictional example of a trip for three. The same principle applies to a job site, a training course or a subscription.",
+      "routeLabel": "The route, stops and dates taken from your catalogue",
+      "e1": {
+        "place": "Hanoi",
+        "dates": "4 to 6 May · 2 nights",
+        "present": "Julie, Marc"
+      },
+      "e2": {
+        "place": "Ha Long Bay",
+        "dates": "6 to 8 May · 2 nights",
+        "present": "Julie, Marc"
+      },
+      "e3": {
+        "place": "Hoi An",
+        "dates": "8 to 12 May · 4 nights",
+        "present": "Julie, Marc, Claire"
+      }
+    },
+    "signsTitle": "Four signs you are missing a tool",
+    "s1Title": "The same calculation, redone for every file",
+    "s1Text": "Who comes, how many nights, which room: the rule is known, but someone reapplies it by hand.",
+    "s2Title": "A spreadsheet only one person can read",
+    "s2Text": "When that person is away, quotes wait for them to come back.",
+    "s3Title": "Information copied from an email into software",
+    "s3Text": "Every copy is a chance for an error, and nobody rereads it.",
+    "s4Title": "A client waiting for an answer",
+    "s4Text": "While the quote is being redone, their request stays unanswered.",
+    "demoTitle": "What the tool does, on an example"
   }
 }
