@@ -1,6 +1,6 @@
 import type { ComponentType } from "react";
 import { useTranslations } from "next-intl";
-import VlogyzDemo from "./mockups/VlogyzDemo";
+import VlogyzApercu from "./mockups/VlogyzApercu";
 import DevizlyApercu from "./mockups/DevizlyApercu";
 import InternbulletDemo from "./mockups/InternbulletDemo";
 
@@ -30,10 +30,10 @@ const PRODUITS: Produit[] = [
   },
   {
     id: "vlogyz",
-    Maquette: VlogyzDemo,
+    Maquette: VlogyzApercu,
     href: "https://vlogyz.com",
     externe: true,
-    largeurMaquette: 320,
+    largeurMaquette: 520,
     texteAGauche: false,
   },
   {

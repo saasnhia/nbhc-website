@@ -50,14 +50,17 @@ function Miniature({ id }: { id: IdLigne }) {
   if (id === "vlogyz") {
     return (
       <span aria-hidden className="block" style={CADRE}>
-        <img
-          src="/produit-vlogyz-320.webp"
-          alt=""
-          width={56}
-          height={56}
-          className="block h-full w-full"
-          style={{ objectFit: "cover", objectPosition: "50% 22%" }}
-        />
+        {/* Une ligne de temps : trois plans gardés, deux coupes en pointillé, et
+            le sous-titre dont un mot est en or. */}
+        <svg viewBox="0 0 56 56" width="56" height="56" fill="none">
+          <rect x="10" y="16" width="12" height="9" rx="2" fill="#3A3936" />
+          <rect x="24" y="16.5" width="5" height="8" rx="2" stroke="#8C8880" strokeOpacity="0.6" strokeDasharray="2 2" />
+          <rect x="31" y="16" width="9" height="9" rx="2" fill="#3A3936" />
+          <rect x="42" y="16.5" width="4" height="8" rx="2" stroke="#8C8880" strokeOpacity="0.6" strokeDasharray="2 2" />
+          <rect x="12" y="35" width="10" height="3" rx="1.5" fill="#F0EDE6" opacity="0.85" />
+          <rect x="24" y="35" width="12" height="3" rx="1.5" fill="#C4973A" />
+          <rect x="38" y="35" width="6" height="3" rx="1.5" fill="#F0EDE6" opacity="0.85" />
+        </svg>
       </span>
     );
   }

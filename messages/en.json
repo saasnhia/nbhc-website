@@ -354,7 +354,7 @@
     "internbulletName": "internbullet",
     "internbulletBadge": "In preparation",
     "internbulletFor": "Direct applications: internship, work-study, job",
-    "internbulletQuote": "I found my internship with this tool. I am now preparing it so other students can look for theirs more simply.",
+    "internbulletQuote": "I found my internship with the first version of this tool. I am now preparing it to open it to other students.",
     "internbulletQuoteBy": "The founder of NBHC",
     "internbulletLink": "Get notified at opening",
     "internbulletDemo": {
@@ -392,7 +392,7 @@
     "devizlyDemo": {
       "promptLabel": "What the tradesperson writes",
       "prompt": "Replacement of a 200 L water heater, removal of the old one, connections and commissioning.",
-      "number": "Quote D-2027-014",
+      "number": "Quote D-2026-114",
       "client": "Mr and Mrs Laurent",
       "l1": {
         "label": "200 L electric water heater",
@@ -420,6 +420,36 @@
       "paidTitle": "Deposit paid",
       "paidText": "30% · €346.17 through Stripe",
       "caption": "Example quote, fictional client and amounts."
+    },
+    "vlogyzDemo": {
+      "transcriptLabel": "The footage transcript, what is struck through is cut",
+      "t1": {
+        "time": "00:00",
+        "before": "So today, ",
+        "cut": "um, ",
+        "after": "we are trying three places in Lyon."
+      },
+      "t2": {
+        "time": "00:06",
+        "before": "",
+        "cut": "silence · 1.4 s",
+        "after": ""
+      },
+      "t3": {
+        "time": "00:08",
+        "before": "The first one, ",
+        "cut": "like, ",
+        "after": "is a neighbourhood bakery."
+      },
+      "timelineLabel": "The timeline",
+      "durations": "4 min 12 → 3 min 27",
+      "kept": "kept",
+      "cut": "cut",
+      "subtitleLabel": "The subtitle, placed on the video",
+      "subBefore": "we are trying ",
+      "subWord": "three places",
+      "subAfter": " in Lyon",
+      "caption": "Fictional example of vlog footage."
     }
   },
   "pricing": {
@@ -443,7 +473,7 @@
     "q4": "Who owns the tool once delivered?",
     "a4": "You do. What we build for you belongs to you, and you keep it if the collaboration ends.",
     "q5": "When will internbullet open?",
-    "a5": "It is in preparation. The founder of NBHC found their own internship with it; opening to students comes next, first for internships and work-study, then for fixed-term and permanent jobs. Write to contact@nbhc.fr to be notified.",
+    "a5": "It is in preparation. The founder of NBHC found their own internship with the first version; opening to students comes next, first for internships and work-study, then for fixed-term and permanent jobs. Write to contact@nbhc.fr to be notified.",
     "q6": "What if a tool is not the right answer?",
     "a6": "We tell you during the first call. A well-kept spreadsheet or off-the-shelf software is sometimes enough, and in that case we build nothing."
   },

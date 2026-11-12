@@ -11,7 +11,7 @@
     "custom": "Sur mesure"
   },
   "hero": {
-    "titleLine1": "Devis, montage vidéo, candidatures :",
+    "titleLine1": "Devis, montage vidéo, candidatures :",
     "titleLine2": "on construit des logiciels métier.",
     "titleLine3": "Le prochain peut être le vôtre.",
     "subtitle": "NBHC conçoit et développe des logiciels. Devizly pour les devis et les factures, Vlogyz pour le montage vidéo, internbullet pour les candidatures. Et, pour les entreprises dont le métier ne rentre dans aucun logiciel du marché, un outil construit autour de leurs règles.",
@@ -328,13 +328,13 @@
     "step2Badge": "Périmètre écrit",
     "step3Number": "03",
     "step3Title": "On construit et on teste sur vos vrais cas",
-    "step3Desc": "L’outil est réglé sur votre vocabulaire et vos règles. Pas de maquette : un outil qui tourne.",
+    "step3Desc": "L’outil est réglé sur votre vocabulaire et vos règles. Pas de maquette : un outil qui tourne.",
     "step3Badge": "Tests sur vos cas",
     "step4Number": "04",
     "step4Title": "On livre, vous décidez de la suite",
     "step4Desc": "L’outil est testé et livré. L’accompagnement ensuite est optionnel, jamais imposé.",
     "step4Badge": "Accompagnement optionnel",
-    "illustrationAlt": "Une chaîne de quatre étapes posées sur un socle bordé d'or, reliées par un trajet doré en pointillé terminé par une flèche. 01 : un dossier ouvert à trois onglets, un crayon posé en travers. 02 : une planche a dessin inclinée sur deux pieds, une feuille dessus, une équerre. 03 : un boitier ouvert, une pièce dressée dedans, un tournevis et trois vis alignées devant. 04 : un porte-dossiers avec trois dossiers rangés debout, son arête avant soulignée d'or. Entre la deuxième et la troisième étape, une feuille dressée portant une bande dorée. Après la quatrième, le pointillé s'interrompt et reprend en un segment détaché.",
+    "illustrationAlt": "Une chaîne de quatre étapes posées sur un socle bordé d'or, reliées par un trajet doré en pointillé terminé par une flèche. 01 : un dossier ouvert à trois onglets, un crayon posé en travers. 02 : une planche a dessin inclinée sur deux pieds, une feuille dessus, une équerre. 03 : un boitier ouvert, une pièce dressée dedans, un tournevis et trois vis alignées devant. 04 : un porte-dossiers avec trois dossiers rangés debout, son arête avant soulignée d'or. Entre la deuxième et la troisième étape, une feuille dressée portant une bande dorée. Après la quatrième, le pointillé s'interrompt et reprend en un segment détaché.",
     "legendeSignature": "avant de signer",
     "labelSysteme": "un système qui tourne",
     "labelOptionnel": "accompagnement optionnel"
@@ -353,8 +353,8 @@
     "vlogyzFor": "Montage vidéo pour créateurs de contenu",
     "internbulletName": "internbullet",
     "internbulletBadge": "En préparation",
-    "internbulletFor": "Candidatures directes : stage, alternance, emploi",
-    "internbulletQuote": "J’ai trouvé mon stage avec cet outil. Je le prépare maintenant pour que d’autres étudiants cherchent le leur plus simplement.",
+    "internbulletFor": "Candidatures directes : stage, alternance, emploi",
+    "internbulletQuote": "J’ai trouvé mon stage avec la première version de cet outil. Je la prépare maintenant pour l’ouvrir à d’autres étudiants.",
     "internbulletQuoteBy": "Le fondateur de NBHC",
     "internbulletLink": "Être prévenu de l’ouverture",
     "internbulletDemo": {
@@ -369,7 +369,7 @@
       "body": "Madame, Monsieur, votre page Recrutement indique que vous accueillez chaque année deux stagiaires au bureau d’études. Je cherche un stage de mars à août 2027 et je vous adresse ma candidature.",
       "checked": "Mail relu",
       "send": "Envoyer",
-      "caption": "Exemple : entreprise fictive. Aucun mail ne part sans avoir été relu."
+      "caption": "Exemple : entreprise fictive. Aucun mail ne part sans avoir été relu."
     },
     "devizlySteps": [
       "Vous décrivez la prestation en langage courant",
@@ -382,7 +382,7 @@
       "Vlogyz transcrit, coupe les silences et pose les sous-titres",
       "La vidéo sort au format vertical, avec b-roll et titres animés"
     ],
-    "vlogyzNote": "Pas encore ouvert au public : la liste d’attente est sur vlogyz.com.",
+    "vlogyzNote": "Pas encore ouvert au public : la liste d’attente est sur vlogyz.com.",
     "internbulletSteps": [
       "Vous apportez une entreprise ou une offre",
       "L’outil lit son site et prépare un mail appuyé sur ce qu’il y a lu",
@@ -392,7 +392,7 @@
     "devizlyDemo": {
       "promptLabel": "Ce que l’artisan écrit",
       "prompt": "Remplacement d’un chauffe-eau 200 L, dépose de l’ancien, raccordements et mise en service.",
-      "number": "Devis D-2027-014",
+      "number": "Devis D-2026-114",
       "client": "M. et Mme Laurent",
       "l1": {
         "label": "Chauffe-eau électrique 200 L",
@@ -420,6 +420,36 @@
       "paidTitle": "Acompte réglé",
       "paidText": "30 % · 346,17 € par Stripe",
       "caption": "Exemple de devis, client et montants fictifs."
+    },
+    "vlogyzDemo": {
+      "transcriptLabel": "La transcription du rush, ce qui est barré est coupé",
+      "t1": {
+        "time": "00:00",
+        "before": "Alors aujourd’hui, ",
+        "cut": "euh, ",
+        "after": "on teste trois adresses à Lyon."
+      },
+      "t2": {
+        "time": "00:06",
+        "before": "",
+        "cut": "silence · 1,4 s",
+        "after": ""
+      },
+      "t3": {
+        "time": "00:08",
+        "before": "La première, ",
+        "cut": "du coup, ",
+        "after": "c’est une boulangerie de quartier."
+      },
+      "timelineLabel": "La ligne de temps",
+      "durations": "4 min 12 → 3 min 27",
+      "kept": "gardé",
+      "cut": "coupé",
+      "subtitleLabel": "Le sous-titre, posé sur la vidéo",
+      "subBefore": "on teste ",
+      "subWord": "trois adresses",
+      "subAfter": " à Lyon",
+      "caption": "Exemple fictif d’un rush de vlog."
     }
   },
   "pricing": {
@@ -434,17 +464,17 @@
     "eyebrow": "FAQ",
     "title": "Les questions qu’on nous pose",
     "subtitle": "Pour les autres, le premier échange de 30 minutes est fait pour ça.",
-    "q1": "NBHC est une agence ou un éditeur de logiciels ?",
-    "a1": "Les deux. On développe nos propres produits : Devizly, déjà en production, puis Vlogyz et internbullet, qui ne sont pas encore ouverts. Et on construit des outils sur mesure pour des entreprises. Ce qu’on apprend sur les premiers sert aux seconds.",
-    "q2": "Qu’est-ce qu’un outil sur mesure, concrètement ?",
-    "a2": "Un logiciel construit autour de vos règles : vos tarifs, vos cas particuliers, votre façon de préparer un devis ou une facture. Il s’appuie sur vos données existantes et vos conseillers gardent la main sur chaque décision.",
-    "q3": "Combien ça coûte ?",
-    "a3": "Le premier échange de 30 minutes est gratuit. Ensuite, le périmètre et le prix sont écrits avant de commencer : vous savez ce qui sera construit et ce que vous paierez.",
-    "q4": "À qui appartient l’outil une fois livré ?",
+    "q1": "NBHC est une agence ou un éditeur de logiciels ?",
+    "a1": "Les deux. On développe nos propres produits : Devizly, déjà en production, puis Vlogyz et internbullet, qui ne sont pas encore ouverts. Et on construit des outils sur mesure pour des entreprises. Ce qu’on apprend sur les premiers sert aux seconds.",
+    "q2": "Qu’est-ce qu’un outil sur mesure, concrètement ?",
+    "a2": "Un logiciel construit autour de vos règles : vos tarifs, vos cas particuliers, votre façon de préparer un devis ou une facture. Il s’appuie sur vos données existantes et vos conseillers gardent la main sur chaque décision.",
+    "q3": "Combien ça coûte ?",
+    "a3": "Le premier échange de 30 minutes est gratuit. Ensuite, le périmètre et le prix sont écrits avant de commencer : vous savez ce qui sera construit et ce que vous paierez.",
+    "q4": "À qui appartient l’outil une fois livré ?",
     "a4": "À vous. Ce qu’on construit pour vous vous appartient, et vous le gardez si la collaboration s’arrête.",
-    "q5": "Quand internbullet sera-t-il ouvert ?",
-    "a5": "Il est en préparation. Le fondateur de NBHC a trouvé son propre stage avec ; l’ouverture aux étudiants vient ensuite, d’abord pour les stages et les alternances, puis pour les CDD et les CDI. Écrivez à contact@nbhc.fr pour être prévenu.",
-    "q6": "Et si un outil n’est pas la bonne réponse ?",
+    "q5": "Quand internbullet sera-t-il ouvert ?",
+    "a5": "Il est en préparation. Le fondateur de NBHC a trouvé son propre stage avec la première version ; l’ouverture aux étudiants vient ensuite, d’abord pour les stages et les alternances, puis pour les CDD et les CDI. Écrivez à contact@nbhc.fr pour être prévenu.",
+    "q6": "Et si un outil n’est pas la bonne réponse ?",
     "a6": "On vous le dit au premier échange. Un tableur bien tenu ou un logiciel du marché suffit parfois, et dans ce cas on ne construit rien."
   },
   "contact": {
@@ -453,7 +483,7 @@
     "titleGold": "votre outil",
     "description": "30 minutes en visio. Vous montrez ce qui se refait à la main chez vous. On vous dit si un outil peut le prendre en charge, et si ce n’est pas le cas on vous le dit aussi.",
     "calendlyButton": "Réserver un créneau",
-    "calendlyAlt": "Préférez écrire ? contact@nbhc.fr",
+    "calendlyAlt": "Préférez écrire ? contact@nbhc.fr",
     "emailDirect": "Email direct",
     "siren": "SIREN",
     "headquarters": "Siège"
@@ -1497,24 +1527,24 @@
     "title": "Quand le cas particulier est la règle, il faut un outil qui connaît vos règles",
     "subtitle": "Un prix qui change selon qui vient, combien de temps et dans quelle chambre. Un devis qui dépend du chantier. Tant qu’aucun logiciel ne connaît vos règles, quelqu’un les réapplique à la main, dossier après dossier. On construit l’outil qui les connaît.",
     "p1Title": "Il part de la demande du client",
-    "p1Text": "Le message arrive comme il a été écrit. L’outil en tire ce qu’il faut pour le devis : qui, quand, combien de temps, dans quelles conditions.",
+    "p1Text": "Le message arrive comme il a été écrit. L’outil en tire ce qu’il faut pour le devis : qui, quand, combien de temps, dans quelles conditions.",
     "p2Title": "Chaque ligne cite sa source",
-    "p2Text": "Une valeur s’affiche avec la phrase du client qui la fonde. Sans phrase, pas de valeur : votre conseiller voit ce qui manque et le demande.",
+    "p2Text": "Une valeur s’affiche avec la phrase du client qui la fonde. Sans phrase, pas de valeur : votre conseiller voit ce qui manque et le demande.",
     "p3Title": "Vos prix restent les vôtres",
     "p3Text": "L’outil établit qui paie quoi. Les montants viennent de votre grille, et le calcul se lit ligne par ligne.",
     "p4Title": "Il s’appuie sur ce que vous avez déjà",
-    "p4Text": "Catalogue, tableur, base du site : l’outil va y chercher les étapes et les dates. Vos conseillers gardent la décision.",
+    "p4Text": "Catalogue, tableur, base du site : l’outil va y chercher les étapes et les dates. Vos conseillers gardent la décision.",
     "terms": "Premier échange de 30 minutes, gratuit. Le périmètre et le prix sont écrits avant de commencer. Ce qu’on construit pour vous vous appartient.",
     "cta": "Décrire votre cas",
     "demo": {
       "messageLabel": "Le message du client",
       "m1": "Bonjour, nous partons ",
       "c1": "à deux, Marc et moi, du 4 au 12 mai 2027",
-      "m2": " : Hanoï, la baie d’Halong puis Hoi An. Ma sœur Claire ",
+      "m2": " : Hanoï, la baie d’Halong puis Hoi An. Ma sœur Claire ",
       "c2": "nous rejoint à Hoi An le 8 mai, jusqu’au 12",
       "m3": ", et elle prendra ",
       "c3": "une chambre seule",
-      "m4": ". Pouvez-vous nous préparer un devis ? Julie",
+      "m4": ". Pouvez-vous nous préparer un devis ? Julie",
       "tableLabel": "Qui paie quoi",
       "colWho": "Voyageur",
       "colNights": "Nuits",
@@ -1540,7 +1570,7 @@
         "room": "Individuelle",
         "source": "« une chambre seule »"
       },
-      "amounts": "Les montants viennent de votre grille tarifaire. L’outil n’en invente aucun : il établit la structure, votre conseiller valide.",
+      "amounts": "Les montants viennent de votre grille tarifaire. L’outil n’en invente aucun : il établit la structure, votre conseiller valide.",
       "caption": "Exemple fictif d’un voyage à trois. Le principe est le même pour un chantier, une formation ou un abonnement.",
       "routeLabel": "Le parcours, étapes et dates tirées de votre catalogue",
       "e1": {
@@ -1561,7 +1591,7 @@
     },
     "signsTitle": "Quatre signes qu’il vous manque un outil",
     "s1Title": "Le même calcul, refait à chaque dossier",
-    "s1Text": "Qui vient, combien de nuits, quelle chambre : la règle est connue, mais quelqu’un la réapplique à la main.",
+    "s1Text": "Qui vient, combien de nuits, quelle chambre : la règle est connue, mais quelqu’un la réapplique à la main.",
     "s2Title": "Un tableur qu’une seule personne sait lire",
     "s2Text": "Quand elle est absente, les devis attendent son retour.",
     "s3Title": "Des informations recopiées d’un mail vers un logiciel",

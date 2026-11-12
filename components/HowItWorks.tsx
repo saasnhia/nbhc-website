@@ -430,7 +430,7 @@ export default function HowItWorks() {
       {/* Voile local : ce bloc-ci est au-dessus du recouvrement de l'enveloppe,
           donc sur fond de page pur. Il ne nuit pas et ne sert plus — contrairement
           a celui des quatre colonnes. Voir l'en-tete du fichier. */}
-      <div className="voile-texte mb-12">
+      <div className="mb-12">
         <div style={{ fontSize: 14, color: "var(--gold-light)", marginBottom: 12 }}>
           {t("eyebrow")}
         </div>
@@ -545,13 +545,13 @@ export default function HowItWorks() {
           spans, chacun visible de son cote du point de rupture. */}
       <div className="relative h-7 mt-2" data-hiw-item aria-hidden="false">
         <span
-          className="voile-texte absolute text-[11px] font-medium tracking-[2px] uppercase whitespace-nowrap max-[768px]:hidden"
+          className="absolute text-[11px] font-medium tracking-[2px] uppercase whitespace-nowrap max-[768px]:hidden"
           style={{ left: "44.75%", transform: "translateX(-50%)", color: "var(--gold)" }}
         >
           {t("legendeSignature")}
         </span>
         <span
-          className="voile-texte absolute text-[11px] font-medium tracking-[2px] uppercase whitespace-nowrap hidden max-[768px]:inline"
+          className="absolute text-[11px] font-medium tracking-[2px] uppercase whitespace-nowrap hidden max-[768px]:inline"
           style={{ left: "50.1%", transform: "translateX(-50%)", color: "var(--gold)" }}
         >
           {t("legendeSignature")}
@@ -733,7 +733,7 @@ export default function HowItWorks() {
             entre colonnes est rendu par une marge interne, qui ne touche pas au pas. */}
         <div className="grid grid-cols-4 gap-0 max-[768px]:grid-cols-1 max-[768px]:gap-8">
           {steps.map((s) => (
-            <div key={s.n} data-hiw-item className="voile-texte pr-6 max-[768px]:pr-0">
+            <div key={s.n} data-hiw-item className="pr-6 max-[768px]:pr-0">
               <div
                 className="text-[11px] font-bold tracking-[2px] mb-2 max-[768px]:hidden"
                 style={{ fontFamily: "var(--font-syne)", color: "var(--gold)" }}
