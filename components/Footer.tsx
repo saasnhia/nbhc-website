@@ -52,7 +52,6 @@ export default function Footer() {
     { href: `/${locale}#sur-mesure`, label: t("custom") },
     { href: `/${locale}#comment-ca-marche`, label: t("howItWorks") },
     { href: `/${locale}#faq`, label: t("faq") },
-    { href: `/${locale}/tarifs`, label: t("pricing") },
     { href: `/${locale}/blog`, label: t("blog") },
   ];
 
@@ -109,6 +108,13 @@ export default function Footer() {
                 {t(`sectorLinks.${slug}`)}
               </a>
             ))}
+            <a
+              href={`/${locale}/tarifs`}
+              className={CLASSE_LIEN}
+              style={{ color: "var(--text)" }}
+            >
+              {t("pricing")}
+            </a>
           </div>
         </div>
 

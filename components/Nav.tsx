@@ -265,7 +265,7 @@ export default function Nav() {
             onClick={() => setMenuOpen(true)}
             data-cursor="link"
             className="flex flex-col gap-1.5 p-2 bg-transparent border-none cursor-pointer"
-            aria-label="Menu"
+            aria-label={locale === "en" ? "Open menu" : "Ouvrir le menu"}
           >
             <span className="block w-5 h-0.5" style={{ background: "var(--gold)" }} />
             <span className="block w-5 h-0.5" style={{ background: "var(--gold)" }} />
@@ -295,6 +295,7 @@ export default function Nav() {
           className="fixed inset-0 flex flex-col justify-center items-start px-10 max-[900px]:px-8"
           style={{
             background: "#09090b",
+            overscrollBehavior: "contain",
             zIndex: 200,
             clipPath: "inset(0 0 100% 0)",
           }}
@@ -303,7 +304,7 @@ export default function Nav() {
             onClick={closeMenu}
             data-cursor="link"
             className="absolute top-5 right-6 p-2 bg-transparent border-none cursor-pointer"
-            aria-label="Fermer"
+            aria-label={locale === "en" ? "Close menu" : "Fermer le menu"}
           >
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
               <path

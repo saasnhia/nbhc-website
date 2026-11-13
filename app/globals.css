@@ -303,3 +303,29 @@ button:focus-visible {
   outline-offset: 3px;
   border-radius: 4px;
 }
+
+/* ── REGLES D'INTERFACE ─────────────────────────────────────────────────────
+   Le navigateur sait que la page est sombre ; les titres s'equilibrent au lieu
+   de laisser un mot seul ; un appui ne declenche pas le delai du double-tap. */
+html { color-scheme: dark; }
+
+h1, h2, h3 { text-wrap: balance; }
+
+a, button { touch-action: manipulation; }
+
+/* Lien d'evitement : hors ecran tant qu'il n'a pas le focus clavier. */
+.lien-evitement {
+  position: fixed;
+  top: 8px;
+  left: 8px;
+  z-index: 300;
+  padding: 10px 16px;
+  border-radius: 8px;
+  background: var(--gold);
+  color: #0a0a0b;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  transform: translateY(-200%);
+}
+.lien-evitement:focus-visible { transform: none; }

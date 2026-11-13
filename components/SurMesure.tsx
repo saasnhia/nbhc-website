@@ -1,4 +1,5 @@
 import { useTranslations } from "next-intl";
+import ProjetEnCours from "./ProjetEnCours";
 
 const CALENDLY_URL = "https://calendly.com/saasnhia/30min";
 
@@ -425,6 +426,8 @@ export default function SurMesure() {
 
           <Tableau />
         </div>
+
+        <ProjetEnCours />
       </div>
     </section>
   );

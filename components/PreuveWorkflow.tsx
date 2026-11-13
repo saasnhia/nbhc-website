@@ -66,17 +66,8 @@ function jourLisible(iso: string, locale: string) {
 
 type Textes = Record<string, Record<string, PreuveContenu>>;
 
-export default function PreuveWorkflow({ code, locale }: { code: string; locale: string }) {
-  const f = (faits as Faits)[code];
-  const contenu = (textes as Textes)[code]?.[locale === "en" ? "en" : "fr"];
-  if (!contenu) return null;
-  /* Pas de trace, pas de bloc. C'est la règle entière du composant : il ne
-     peut pas affirmer l'existence d'une automatisation dont il n'a pas la
-     preuve sous la main. */
-  if (!f) return null;
-  const L = locale === "en" ? LIBELLES.en : LIBELLES.fr;
-
-  const Temps = ({ titre, children }: { titre: string; children: React.ReactNode }) => (
+function Temps({ titre, children }: { titre: string; children: React.ReactNode }) {
+  return (
     <div style={{ marginTop: 14 }}>
       <div
         style={{
@@ -95,6 +86,17 @@ export default function PreuveWorkflow({ code, locale }: { code: string; locale:
       </p>
     </div>
   );
+}
+
+export default function PreuveWorkflow({ code, locale }: { code: string; locale: string }) {
+  const f = (faits as Faits)[code];
+  const contenu = (textes as Textes)[code]?.[locale === "en" ? "en" : "fr"];
+  if (!contenu) return null;
+  /* Pas de trace, pas de bloc. C'est la règle entière du composant : il ne
+     peut pas affirmer l'existence d'une automatisation dont il n'a pas la
+     preuve sous la main. */
+  if (!f) return null;
+  const L = locale === "en" ? LIBELLES.en : LIBELLES.fr;
 
   return (
     <section

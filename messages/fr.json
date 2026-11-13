@@ -38,7 +38,7 @@
       "surMesure": {
         "name": "Sur mesure",
         "what": "L’outil construit autour de vos règles",
-        "status": "Sur devis"
+        "status": "Un projet en cours"
       }
     },
     "ctaNote": "30 minutes, gratuit. Si un outil n’est pas la bonne réponse, on vous le dit."
@@ -493,7 +493,7 @@
     "navTitle": "Navigation",
     "howItWorks": "Méthode",
     "sectors": "Pour qui",
-    "pricing": "Tarifs",
+    "pricing": "Grille de prix et simulateur",
     "products": "Produits",
     "blog": "Blog",
     "faq": "FAQ",
@@ -527,7 +527,7 @@
     }
   },
   "common": {
-    "loading": "Chargement...",
+    "loading": "Chargement…",
     "readMore": "Lire plus",
     "back": "Retour",
     "bookDiagnostic": "Réserver mon diagnostic"
@@ -570,7 +570,7 @@
       "callBooking": {
         "callerLabel": "Appel entrant",
         "callerNumber": "06 XX XX XX XX",
-        "processingLabel": "L'IA vérifie les disponibilités du cours...",
+        "processingLabel": "L'IA vérifie les disponibilités du cours…",
         "cardAvailable": {
           "statusLabel": "Confirmé",
           "fields": [
@@ -625,7 +625,7 @@
             "text": "Parfait, renouvellement pris en compte pour le mois prochain."
           }
         ],
-        "inputPlaceholder": "Écrire un message...",
+        "inputPlaceholder": "Écrire un message…",
         "validateButtonLabel": "Valider le renouvellement",
         "validateCaption": "Vous validez chaque offre proposée avant l'envoi."
       },
@@ -670,7 +670,7 @@
             "text": "Merci, on vous confirme dès réception du règlement."
           }
         ],
-        "inputPlaceholder": "Écrire un message...",
+        "inputPlaceholder": "Écrire un message…",
         "validateButtonLabel": "Valider l'envoi",
         "validateCaption": "Le trésorier valide chaque message avant envoi."
       },
@@ -742,7 +742,7 @@
       "callBooking": {
         "callerLabel": "Appel entrant",
         "callerNumber": "06 XX XX XX XX",
-        "processingLabel": "L'IA vérifie le planning de l'atelier...",
+        "processingLabel": "L'IA vérifie le planning de l'atelier…",
         "cardAvailable": {
           "statusLabel": "RDV confirmé",
           "fields": [
@@ -797,7 +797,7 @@
             "text": "Parfait, un créneau vous sera proposé sous 48h."
           }
         ],
-        "inputPlaceholder": "Écrire un message...",
+        "inputPlaceholder": "Écrire un message…",
         "validateButtonLabel": "Valider le rappel",
         "validateCaption": "Vous gardez la main sur chaque rappel envoyé."
       }
@@ -859,7 +859,7 @@
             "text": "Pas de souci, on reste disponible."
           }
         ],
-        "inputPlaceholder": "Écrire un message...",
+        "inputPlaceholder": "Écrire un message…",
         "validateButtonLabel": "Valider le modèle de relance",
         "validateCaption": "Vous validez le modèle une fois, les relances partent ensuite seules."
       },
@@ -1053,14 +1053,14 @@
             "text": "-15% appliqué, votre commande sera prête à 19h45"
           }
         ],
-        "inputPlaceholder": "Écrire un message...",
+        "inputPlaceholder": "Écrire un message…",
         "validateButtonLabel": "Valider la commande",
         "validateCaption": "Vous gardez la main sur chaque commande avant préparation."
       },
       "callBooking": {
         "callerLabel": "Appel entrant",
         "callerNumber": "06 XX XX XX XX",
-        "processingLabel": "L'IA vérifie les disponibilités...",
+        "processingLabel": "L'IA vérifie les disponibilités…",
         "cardAvailable": {
           "statusLabel": "Confirmé",
           "fields": [
@@ -1128,7 +1128,7 @@
       "callBooking": {
         "callerLabel": "Appel entrant",
         "callerNumber": "06 XX XX XX XX",
-        "processingLabel": "L'IA vérifie l'agenda...",
+        "processingLabel": "L'IA vérifie l'agenda…",
         "cardAvailable": {
           "statusLabel": "Confirmé",
           "fields": [
@@ -1190,7 +1190,7 @@
             "text": "Jeudi 15h, c'est disponible ! -10% fidélité sur votre prochaine coloration"
           }
         ],
-        "inputPlaceholder": "Écrire un message...",
+        "inputPlaceholder": "Écrire un message…",
         "validateButtonLabel": "Valider le RDV",
         "validateCaption": "Le salon valide chaque RDV avant de le confirmer."
       },
@@ -1598,6 +1598,32 @@
     "s3Text": "Chaque recopie est une occasion d’erreur, et personne ne la relit.",
     "s4Title": "Un client qui attend sa réponse",
     "s4Text": "Tant que le devis se refait, sa demande reste sans réponse.",
-    "demoTitle": "Ce que fait l’outil, sur un exemple"
+    "demoTitle": "Ce que fait l’outil, sur un exemple",
+    "project": {
+      "eyebrow": "Projet en cours",
+      "title": "Un outil de devis sur mesure, pour une agence de voyage",
+      "text": "L’agence prépare des voyages à la carte : dans une même réservation, chacun ne paie pas la même chose. L’outil lira la demande du voyageur, établira qui paie quoi sur chaque étape du parcours, et laissera les prix à l’agence. L’exemple ci-dessus en montre le principe, avec des données fictives.",
+      "note": "L’outil n’est pas livré et l’agence n’est pas nommée : le projet est en cours. On dit ici où il en est, pas plus.",
+      "e1": {
+        "title": "Démonstration présentée à la direction",
+        "when": "Octobre 2026",
+        "text": "Construite sur des demandes fictives, pour montrer le principe avant tout engagement."
+      },
+      "e2": {
+        "title": "Cadrage",
+        "when": "En cours",
+        "text": "Les règles de prix de l’agence, ses données existantes, les cas qui lui coûtent le plus de temps."
+      },
+      "e3": {
+        "title": "Construction avec l’équipe de l’agence",
+        "when": "À partir de février 2027",
+        "text": "Sur ses vrais dossiers, avec ses conseillers."
+      },
+      "e4": {
+        "title": "Mise en service",
+        "when": "À venir",
+        "text": "Aucune date n’est annoncée tant que la construction n’a pas commencé."
+      }
+    }
   }
 }

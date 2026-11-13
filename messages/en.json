@@ -38,7 +38,7 @@
       "surMesure": {
         "name": "Custom tools",
         "what": "The tool built around your rules",
-        "status": "On quote"
+        "status": "One project under way"
       }
     },
     "ctaNote": "30 minutes, free. If a tool is not the right answer, we tell you."
@@ -493,7 +493,7 @@
     "navTitle": "Navigation",
     "howItWorks": "Method",
     "sectors": "Who it's for",
-    "pricing": "Pricing",
+    "pricing": "Price grid and simulator",
     "products": "Products",
     "blog": "Blog",
     "faq": "FAQ",
@@ -527,7 +527,7 @@
     }
   },
   "common": {
-    "loading": "Loading...",
+    "loading": "Loading…",
     "readMore": "Read more",
     "back": "Back",
     "bookDiagnostic": "Book my diagnostic"
@@ -570,7 +570,7 @@
       "callBooking": {
         "callerLabel": "Incoming call",
         "callerNumber": "06 XX XX XX XX",
-        "processingLabel": "The AI checks class availability...",
+        "processingLabel": "The AI checks class availability…",
         "cardAvailable": {
           "statusLabel": "Confirmed",
           "fields": [
@@ -625,7 +625,7 @@
             "text": "Great, renewal recorded for next month."
           }
         ],
-        "inputPlaceholder": "Write a message...",
+        "inputPlaceholder": "Write a message…",
         "validateButtonLabel": "Confirm renewal",
         "validateCaption": "You approve every offer before it's sent."
       },
@@ -670,7 +670,7 @@
             "text": "Thanks, we'll confirm as soon as payment is received."
           }
         ],
-        "inputPlaceholder": "Write a message...",
+        "inputPlaceholder": "Write a message…",
         "validateButtonLabel": "Confirm sending",
         "validateCaption": "The treasurer approves every message before it's sent."
       },
@@ -742,7 +742,7 @@
       "callBooking": {
         "callerLabel": "Incoming call",
         "callerNumber": "06 XX XX XX XX",
-        "processingLabel": "The AI checks the shop's schedule...",
+        "processingLabel": "The AI checks the shop's schedule…",
         "cardAvailable": {
           "statusLabel": "Booking confirmed",
           "fields": [
@@ -797,7 +797,7 @@
             "text": "Sure, a slot will be proposed within 48h."
           }
         ],
-        "inputPlaceholder": "Write a message...",
+        "inputPlaceholder": "Write a message…",
         "validateButtonLabel": "Confirm reminder",
         "validateCaption": "You stay in control of every reminder sent."
       }
@@ -859,7 +859,7 @@
             "text": "No worries, we're here whenever you're ready."
           }
         ],
-        "inputPlaceholder": "Write a message...",
+        "inputPlaceholder": "Write a message…",
         "validateButtonLabel": "Approve follow-up template",
         "validateCaption": "You approve the template once, then follow-ups go out on their own."
       },
@@ -1053,14 +1053,14 @@
             "text": "-15% applied, your order will be ready at 7:45pm"
           }
         ],
-        "inputPlaceholder": "Type a message...",
+        "inputPlaceholder": "Type a message…",
         "validateButtonLabel": "Approve the order",
         "validateCaption": "You stay in control of every order before it's prepared."
       },
       "callBooking": {
         "callerLabel": "Incoming call",
         "callerNumber": "06 XX XX XX XX",
-        "processingLabel": "The AI checks availability...",
+        "processingLabel": "The AI checks availability…",
         "cardAvailable": {
           "statusLabel": "Confirmed",
           "fields": [
@@ -1128,7 +1128,7 @@
       "callBooking": {
         "callerLabel": "Incoming call",
         "callerNumber": "06 XX XX XX XX",
-        "processingLabel": "The AI checks the schedule...",
+        "processingLabel": "The AI checks the schedule…",
         "cardAvailable": {
           "statusLabel": "Confirmed",
           "fields": [
@@ -1190,7 +1190,7 @@
             "text": "Thursday 3pm works! -10% loyalty discount on your next color"
           }
         ],
-        "inputPlaceholder": "Type a message...",
+        "inputPlaceholder": "Type a message…",
         "validateButtonLabel": "Approve the appointment",
         "validateCaption": "The salon approves every appointment before confirming it."
       },
@@ -1598,6 +1598,32 @@
     "s3Text": "Every copy is a chance for an error, and nobody rereads it.",
     "s4Title": "A client waiting for an answer",
     "s4Text": "While the quote is being redone, their request stays unanswered.",
-    "demoTitle": "What the tool does, on an example"
+    "demoTitle": "What the tool does, on an example",
+    "project": {
+      "eyebrow": "Project under way",
+      "title": "A custom quoting tool, for a travel agency",
+      "text": "The agency designs tailor-made trips: within a single booking, not everyone pays the same. The tool will read the traveller’s request, work out who pays for what on each stop of the route, and leave prices to the agency. The example above shows the principle, with fictional data.",
+      "note": "The tool is not delivered and the agency is not named: the project is under way. We say here where it stands, nothing more.",
+      "e1": {
+        "title": "Demonstration shown to the management",
+        "when": "October 2026",
+        "text": "Built on fictional requests, to show the principle before any commitment."
+      },
+      "e2": {
+        "title": "Scoping",
+        "when": "Under way",
+        "text": "The agency’s pricing rules, its existing data, the cases that cost it the most time."
+      },
+      "e3": {
+        "title": "Build with the agency’s team",
+        "when": "From February 2027",
+        "text": "On its real files, with its advisors."
+      },
+      "e4": {
+        "title": "Go-live",
+        "when": "To come",
+        "text": "No date is announced until the build has started."
+      }
+    }
   }
 }

@@ -220,6 +220,18 @@ export default function Hero() {
                     >
                       {t(`index.${l.id}.what`)}
                     </span>
+                    {/* Sous 420 px la colonne d'état n'a plus la place : l'état
+                        passe sous la description au lieu de disparaître. */}
+                    <span
+                      className="hidden max-[420px]:block"
+                      style={{
+                        marginTop: 4,
+                        fontSize: 13,
+                        color: l.enProduction ? "#7FB58A" : "var(--gold-light)",
+                      }}
+                    >
+                      {t(`index.${l.id}.status`)}
+                    </span>
                   </span>
                   <span
                     className="inline-flex items-center gap-2 whitespace-nowrap max-[420px]:hidden"

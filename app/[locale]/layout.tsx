@@ -1,5 +1,5 @@
 // cache-bust v2 — force Vercel rebuild + CDN invalidation
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Syne, DM_Sans } from "next/font/google";
 import { notFound } from "next/navigation";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
@@ -27,6 +27,11 @@ const dmSans = DM_Sans({
   weight: ["300", "400", "500"],
   display: "swap",
 });
+
+export const viewport: Viewport = {
+  themeColor: "#09090b",
+  colorScheme: "dark",
+};
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));

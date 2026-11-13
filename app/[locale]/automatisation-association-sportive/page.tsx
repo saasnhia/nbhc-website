@@ -76,7 +76,7 @@ const contentFr: SectorContent = {
     <>
       Offre asso/solidaire, pour une association loi 1901 avec une seule automatisation :{" "}
       <s style={{ fontWeight: 400, opacity: 0.6 }}>2 000 € HT</s> 1 000 € HT.{" "}
-      Aucun résultat chiffré n'est promis : NBHC n'a aucune référence client association sportive à ce jour.
+      Aucun résultat chiffré n’est promis : NBHC n’a aucune référence client association sportive à ce jour.
     </>
   ),
   faqTitle: "Questions fréquentes",

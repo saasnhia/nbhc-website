@@ -187,7 +187,7 @@ export default function LogementPage() {
           target="_blank"
           rel="noopener noreferrer"
           data-cursor="link"
-          className="inline-flex items-center gap-2 text-[16px] font-medium px-9 py-4 rounded-md no-underline transition-all duration-200 hover:opacity-90"
+          className="inline-flex items-center gap-2 text-[16px] font-medium px-9 py-4 rounded-md no-underline transition-colors duration-200 hover:opacity-90"
           style={{ background: "var(--gold)", color: "#0a0a0b" }}
         >
           {t("ctaButton")}

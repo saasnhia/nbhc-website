@@ -48,7 +48,7 @@ export default function LogementSelecteur({ valeur, onChange, libelles, listeLab
             onClick={() => onChange(v)}
             onKeyDown={(e) => auClavier(e, i)}
             data-cursor="link"
-            className="relative flex items-center text-[13px] font-medium px-5 py-3 rounded-xl transition-all duration-300 cursor-pointer shrink-0 whitespace-nowrap"
+            className="relative flex items-center text-[13px] font-medium px-5 py-3 rounded-xl transition-colors duration-300 cursor-pointer shrink-0 whitespace-nowrap"
             style={{
               background: actif ? "var(--gold-dim)" : "rgba(255,255,255,0.02)",
               border: actif ? "1px solid var(--gold-border)" : "1px solid var(--border)",

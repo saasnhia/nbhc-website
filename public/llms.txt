@@ -37,6 +37,13 @@ Premier échange de 30 minutes, gratuit. Le périmètre et le prix sont
 écrits avant de commencer. Ce qui est construit pour un client lui
 appartient.
 
+## Projet sur mesure en cours
+
+Un outil de devis sur mesure est en cours pour une agence de voyage, non
+nommée tant que le projet n'est pas terminé. Démonstration présentée à sa
+direction en octobre 2026 ; construction à partir de février 2027. L'outil
+n'est pas livré.
+
 ## Automatisations par métier
 
 Des pages décrivent des automatisations par secteur d'activité, avec une
@@ -58,7 +65,7 @@ grille de prix et un simulateur sur /tarifs :
 - Site : https://nbhc.fr
 - Email : contact@nbhc.fr
 - Fondateur : Nhia (Haroun CHIKH)
-- LinkedIn : https://www.linkedin.com/company/nbhc-fr
+- LinkedIn : https://www.linkedin.com/company/nbhc
 
 ## Pages principales
 
