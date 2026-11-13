@@ -316,28 +316,26 @@
   },
   "howItWorks": {
     "eyebrow": "Method",
-    "title": "From the first call to the delivered tool",
+    "title": "From the first call to delivery",
     "subtitle": "Four steps. You know what will be built and at what price before signing.",
-    "step1Number": "01",
     "step1Title": "We understand your day-to-day",
     "step1Desc": "You show what gets redone by hand. We tell you whether a tool can take it over.",
-    "step1Badge": "30 min · Free",
-    "step2Number": "02",
+    "step1Badge": "30 min, free",
     "step2Title": "We design your tool",
     "step2Desc": "We look at your data and your software, then write down what will be built. You approve it before signing.",
-    "step2Badge": "Written scope",
-    "step3Number": "03",
+    "step2Badge": "before signing",
     "step3Title": "We build and test on your real cases",
     "step3Desc": "The tool is tuned to your vocabulary and your rules. Not a mock-up: a tool that runs.",
-    "step3Badge": "Tested on your cases",
-    "step4Number": "04",
+    "step3Badge": "on your real cases",
     "step4Title": "We deliver, you decide what’s next",
     "step4Desc": "The tool is tested and delivered. Ongoing support is optional, never imposed.",
-    "step4Badge": "Optional support",
-    "illustrationAlt": "A chain of four steps on a gold-edged plinth, linked by a dotted golden path ending in an arrow. 01: an open folder with three tabs and a pencil laid across it. 02: a drawing board tilted on two legs, a sheet on it, a set square. 03: an open casing with a part standing inside, a screwdriver and three screws lined up in front. 04: a file holder with three folders filed upright, its front edge underlined in gold. Between the second and third step, an upright sheet bearing a golden band. After the fourth, the dotted path breaks and resumes as a detached segment.",
-    "legendeSignature": "before you sign",
-    "labelSysteme": "a system that runs",
-    "labelOptionnel": "optional support"
+    "step4Badge": "then you decide",
+    "stepLabel": "Step {n}",
+    "outLabel": "What you walk away with",
+    "step1Out": "A clear answer: a tool can help, or not",
+    "step2Out": "A document: what will be built, and at what price",
+    "step3Out": "The tool, tried on your own files",
+    "step4Out": "The tool in service, and everything built for you"
   },
   "products": {
     "eyebrow": "Our products",
@@ -355,7 +353,7 @@
     "internbulletBadge": "In preparation",
     "internbulletFor": "Direct applications: internship, work-study, job",
     "internbulletQuote": "I found my internship with the first version of this tool. I am now preparing it to open it to other students.",
-    "internbulletQuoteBy": "The founder of NBHC",
+    "internbulletQuoteBy": "Haroun Chikh, founder of NBHC",
     "internbulletLink": "Get notified at opening",
     "internbulletDemo": {
       "company": "Atelier Morel · Lyon",
@@ -512,7 +510,7 @@
     "copyright": "© 2026 SAS NBHC — SIREN 102 637 899 · 55 Rue Henri Clément, 71100 Saint-Rémy · All rights reserved",
     "custom": "Custom tools",
     "internbullet": "internbullet",
-    "sectorsTitle": "Custom work, by trade",
+    "sectorsTitle": "Other pages: automations by trade",
     "sectorLinks": {
       "automatisation-artisan-btp": "Tradespeople and construction",
       "automatisation-garage-automobile": "Garages",
@@ -1571,7 +1569,7 @@
         "source": "“a room of her own”"
       },
       "amounts": "Amounts come from your price list. The tool invents none: it works out the structure, your advisor approves.",
-      "caption": "Fictional example of a trip for three. The same principle applies to a job site, a training course or a subscription.",
+      "caption": "Built demonstration, on a fictional example of a trip for three. The same principle applies to a job site, a training course or a subscription.",
       "routeLabel": "The route, stops and dates taken from your catalogue",
       "e1": {
         "place": "Hanoi",
@@ -1598,7 +1596,7 @@
     "s3Text": "Every copy is a chance for an error, and nobody rereads it.",
     "s4Title": "A client waiting for an answer",
     "s4Text": "While the quote is being redone, their request stays unanswered.",
-    "demoTitle": "What the tool does, on an example",
+    "demoTitle": "What the demonstration does, on an example",
     "project": {
       "eyebrow": "Project under way",
       "title": "A custom quoting tool, for a travel agency",
@@ -1616,8 +1614,8 @@
       },
       "e3": {
         "title": "Build with the agency’s team",
-        "when": "From February 2027",
-        "text": "On its real files, with its advisors."
+        "when": "Planned from February 2027",
+        "text": "On site, with its advisors and on its real files."
       },
       "e4": {
         "title": "Go-live",

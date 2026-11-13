@@ -111,7 +111,7 @@ export default function Footer() {
             <a
               href={`/${locale}/tarifs`}
               className={CLASSE_LIEN}
-              style={{ color: "var(--text)" }}
+              style={{ color: "var(--text-muted)" }}
             >
               {t("pricing")}
             </a>

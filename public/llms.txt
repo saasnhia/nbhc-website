@@ -41,7 +41,7 @@ appartient.
 
 Un outil de devis sur mesure est en cours pour une agence de voyage, non
 nommée tant que le projet n'est pas terminé. Démonstration présentée à sa
-direction en octobre 2026 ; construction à partir de février 2027. L'outil
+direction en octobre 2026 ; construction prévue à partir de février 2027. L'outil
 n'est pas livré.
 
 ## Automatisations par métier
