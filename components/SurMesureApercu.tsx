@@ -96,9 +96,15 @@ export default function SurMesureApercu() {
   return (
     <>
       {/* 1. Le chemin d'une demande, en trois cartes */}
+      <h3
+        className="mt-14 max-[900px]:mt-10"
+        style={{ fontSize: 17, fontWeight: 500, color: "var(--text)", marginBottom: 16 }}
+      >
+        {t("flow.label")}
+      </h3>
       <Apparition
         enfants
-        className="grid items-stretch mt-14 max-[900px]:mt-10 min-[1000px]:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)_auto_minmax(0,1fr)]"
+        className="grid items-stretch min-[1000px]:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)_auto_minmax(0,1fr)]"
       >
         <div data-etape style={{ ["--i" as string]: 0 }}>
           <div style={CARTE}>

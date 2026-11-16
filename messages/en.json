@@ -1553,7 +1553,8 @@
       "s3Title": "The quote is ready to approve",
       "s3Text": "Who pays for what, line by line.",
       "validate": "Approve",
-      "caption": "Fictional example of a trip for three. The same path applies to a job site, a training course or a subscription."
+      "caption": "Fictional example. The same path applies to a job site, a training course or a subscription.",
+      "label": "An example: a request from three travellers"
     },
     "beforeTitle": "Today, by hand",
     "afterTitle": "With the tool",

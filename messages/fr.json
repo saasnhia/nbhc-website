@@ -1553,7 +1553,8 @@
       "s3Title": "Le devis est prêt à valider",
       "s3Text": "Qui paie quoi, ligne par ligne.",
       "validate": "Valider",
-      "caption": "Exemple fictif d’un voyage à trois. Le même chemin vaut pour un chantier, une formation ou un abonnement."
+      "caption": "Exemple fictif. Le même chemin vaut pour un chantier, une formation ou un abonnement.",
+      "label": "Un exemple : la demande de trois voyageurs"
     },
     "beforeTitle": "Aujourd’hui, à la main",
     "afterTitle": "Avec l’outil",
