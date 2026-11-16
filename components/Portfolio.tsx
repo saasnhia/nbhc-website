@@ -23,8 +23,6 @@ const PRODUITS: Produit[] = [
   },
 ];
 
-const OMBRE = "0 24px 48px rgba(0, 0, 0, 0.45)";
-
 /* Les écrans de chaque produit. Sur grand écran l'application s'affiche en
    pleine largeur, lisible, avec un second écran posé dessus ; sur téléphone on
    ne garde que l'écran en hauteur, le seul qui reste lisible à 350 px. */
@@ -33,27 +31,27 @@ function Ecrans({ id }: { id: IdProduit }) {
 
   if (id === "devizly") {
     return (
-      <div className="relative min-[900px]:pb-16">
+      <div className="grid items-start gap-6 min-[900px]:grid-cols-[minmax(0,58fr)_minmax(0,42fr)]">
         <EcranReel
           className="max-[899px]:hidden"
           nom="devizly-nouveau-devis"
-          largeurs={[900, 1600]}
-          width={1600}
-          height={662}
+          largeurs={[830]}
+          width={830}
+          height={787}
           alt={t("devizlyAlt1")}
           barre="devizly.fr · Nouveau devis"
-          sizes="(max-width: 1200px) calc(100vw - 80px), 1120px"
+          sizes="640px"
         />
         <EcranReel
-          className="min-[900px]:absolute min-[900px]:right-8 min-[900px]:bottom-0 min-[900px]:w-[30%] max-[899px]:mx-auto"
-          style={{ boxShadow: OMBRE, maxWidth: 420 }}
+          className="min-[900px]:mt-16 max-[899px]:mx-auto"
+          style={{ maxWidth: 460 }}
           nom="devizly-devis-client"
           largeurs={[667]}
           width={667}
           height={898}
           alt={t("devizlyAlt2")}
           barre={t("devizlyBar2")}
-          sizes="(max-width: 899px) calc(100vw - 40px), 340px"
+          sizes="(max-width: 899px) calc(100vw - 40px), 460px"
         />
       </div>
     );
@@ -90,9 +88,9 @@ function Ecrans({ id }: { id: IdProduit }) {
       className="mx-auto"
       style={{ maxWidth: 960 }}
       nom="vlogyz-broll"
-      largeurs={[900, 960]}
-      width={960}
-      height={540}
+      largeurs={[800, 1360]}
+      width={1360}
+      height={800}
       alt={t("vlogyzAlt1")}
       barre={t("vlogyzBar1")}
       sizes="(max-width: 1040px) calc(100vw - 80px), 960px"

@@ -25,9 +25,9 @@ const TUILES: Tuile[] = [
   },
   {
     id: "vlogyz",
-    src: "/ecrans/vlogyz-broll-900.webp",
-    width: 900,
-    height: 506,
+    src: "/ecrans/vlogyz-broll-800.webp",
+    width: 800,
+    height: 471,
     position: "50% 50%",
   },
   {

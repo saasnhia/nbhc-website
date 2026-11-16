@@ -13,7 +13,7 @@
   "hero": {
     "titleLine1": "We build business software.",
     "titleLine2": "The next one can be yours.",
-    "subtitle": "One product live, two in preparation, and a custom tool under way for a travel agency. Here are their real screens.",
+    "subtitle": "Devizly is live, Vlogyz has a waiting list, internbullet is in preparation. And a custom tool is under way for a travel agency.",
     "ctaPrimary": "Talk about your tool",
     "ctaSecondary": "See the products",
     "ctaNote": "30 minutes, free",
@@ -340,7 +340,7 @@
   "products": {
     "eyebrow": "Our products",
     "title": "Devizly is live. Vlogyz and internbullet are on their way.",
-    "subtitle": "Three pieces of software we design and develop ourselves. Each one takes care of a specific job, and we apply the same way of working to a custom tool.",
+    "subtitle": "Three pieces of software we design and develop ourselves. What you see below comes from the products themselves, not from a mock-up.",
     "devizlyName": "Devizly",
     "devizlyBadge": "Live",
     "devizlyLink": "Open devizly.fr",
@@ -444,20 +444,7 @@
     "cgu": "Terms of use",
     "copyright": "© 2026 SAS NBHC — SIREN 102 637 899 · 55 Rue Henri Clément, 71100 Saint-Rémy · All rights reserved",
     "custom": "Custom tools",
-    "internbullet": "internbullet",
-    "sectorsTitle": "Other pages: automations by trade",
-    "sectorLinks": {
-      "automatisation-artisan-btp": "Tradespeople and construction",
-      "automatisation-garage-automobile": "Garages",
-      "automatisation-restaurant": "Restaurants",
-      "automatisation-salon-de-coiffure": "Hair salons",
-      "automatisation-salle-de-sport": "Gyms",
-      "automatisation-association-sportive": "Sports clubs",
-      "automatisation-organisme-formation": "Training providers",
-      "automatisation-pharmacie": "Pharmacies",
-      "automatisation-opticien": "Opticians",
-      "automatisation-marque-cosmetique": "Cosmetics brands"
-    }
+    "internbullet": "internbullet"
   },
   "common": {
     "loading": "Loading…",
@@ -1466,7 +1453,7 @@
     "p3Title": "Your prices stay yours",
     "p3Text": "The tool works out who pays for what. Amounts come from your price list, and the calculation reads line by line.",
     "p4Title": "It builds on what you already have",
-    "p4Text": "Catalogue, spreadsheet, website database: the tool fetches the stops and dates from there. Your advisors keep the decision.",
+    "p4Text": "The demonstration builds on the tours the agency publishes on its website. The advisors keep the decision.",
     "terms": "First 30-minute call, free. Scope and price are written down before we start. What we build for you belongs to you.",
     "cta": "Describe your case",
     "demo": {
@@ -1568,7 +1555,7 @@
     "f1Text": "Devizly is open: you can try it before you even talk to us.",
     "f1Link": "Try Devizly",
     "f1Href": "https://devizly.fr",
-    "f2Title": "A tool its founder uses",
+    "f2Title": "A tool its founder has used",
     "f2Text": "internbullet helped the founder find their own internship, before being prepared for others.",
     "f2Link": "See its screens",
     "f2Href": "#internbullet",
@@ -1580,7 +1567,7 @@
     "g1Title": "You talk to the person who builds",
     "g1Text": "No intermediary between you and the person writing the code.",
     "g2Title": "You see before you commit",
-    "g2Text": "A demonstration on one of your cases, before any signature. That is what we did for the agency.",
+    "g2Text": "A demonstration on a case close to yours, before any signature. That is what we did for the agency.",
     "g3Title": "Scope and price are written down",
     "g3Text": "Before we start: what will be built, and what you will pay.",
     "g4Title": "What is built belongs to you",

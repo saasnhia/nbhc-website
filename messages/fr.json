@@ -13,7 +13,7 @@
   "hero": {
     "titleLine1": "On construit des logiciels métier.",
     "titleLine2": "Le prochain peut être le vôtre.",
-    "subtitle": "Un produit en production, deux en préparation, et un outil sur mesure en cours pour une agence de voyage. Voici leurs vrais écrans.",
+    "subtitle": "Devizly est en production, Vlogyz en liste d’attente, internbullet en préparation. Et un outil sur mesure est en cours pour une agence de voyage.",
     "ctaPrimary": "Parler de votre outil",
     "ctaSecondary": "Voir les produits",
     "ctaNote": "30 minutes, gratuit",
@@ -340,7 +340,7 @@
   "products": {
     "eyebrow": "Nos produits",
     "title": "Devizly est en production. Vlogyz et internbullet arrivent.",
-    "subtitle": "Trois logiciels qu’on conçoit et qu’on développe nous-mêmes. Chacun prend en charge un travail précis, et c’est la même façon de faire qu’on applique à un outil sur mesure.",
+    "subtitle": "Trois logiciels qu’on conçoit et qu’on développe nous-mêmes. Ce que vous voyez ci-dessous vient des produits eux-mêmes, pas d’une maquette.",
     "devizlyName": "Devizly",
     "devizlyBadge": "En production",
     "devizlyLink": "Ouvrir devizly.fr",
@@ -444,20 +444,7 @@
     "cgu": "CGU",
     "copyright": "© 2026 SAS NBHC — SIREN 102 637 899 · 55 Rue Henri Clément, 71100 Saint-Rémy · Tous droits réservés",
     "custom": "Sur mesure",
-    "internbullet": "internbullet",
-    "sectorsTitle": "Autres pages : automatisations par métier",
-    "sectorLinks": {
-      "automatisation-artisan-btp": "Artisans et BTP",
-      "automatisation-garage-automobile": "Garages",
-      "automatisation-restaurant": "Restaurants",
-      "automatisation-salon-de-coiffure": "Salons de coiffure",
-      "automatisation-salle-de-sport": "Salles de sport",
-      "automatisation-association-sportive": "Associations sportives",
-      "automatisation-organisme-formation": "Organismes de formation",
-      "automatisation-pharmacie": "Pharmacies",
-      "automatisation-opticien": "Opticiens",
-      "automatisation-marque-cosmetique": "Marques de cosmétique"
-    }
+    "internbullet": "internbullet"
   },
   "common": {
     "loading": "Chargement…",
@@ -1466,7 +1453,7 @@
     "p3Title": "Vos prix restent les vôtres",
     "p3Text": "L’outil établit qui paie quoi. Les montants viennent de votre grille, et le calcul se lit ligne par ligne.",
     "p4Title": "Il s’appuie sur ce que vous avez déjà",
-    "p4Text": "Catalogue, tableur, base du site : l’outil va y chercher les étapes et les dates. Vos conseillers gardent la décision.",
+    "p4Text": "La démonstration s’appuie sur les circuits que l’agence publie sur son site. Les conseillers gardent la décision.",
     "terms": "Premier échange de 30 minutes, gratuit. Le périmètre et le prix sont écrits avant de commencer. Ce qu’on construit pour vous vous appartient.",
     "cta": "Décrire votre cas",
     "demo": {
@@ -1568,7 +1555,7 @@
     "f1Text": "Devizly est ouvert : vous pouvez l’essayer avant même de nous parler.",
     "f1Link": "Essayer Devizly",
     "f1Href": "https://devizly.fr",
-    "f2Title": "Un outil que son fondateur utilise",
+    "f2Title": "Un outil que son fondateur a utilisé",
     "f2Text": "internbullet lui a servi à trouver son propre stage, avant d’être préparé pour d’autres.",
     "f2Link": "Voir ses écrans",
     "f2Href": "#internbullet",
@@ -1580,7 +1567,7 @@
     "g1Title": "Vous parlez à celui qui construit",
     "g1Text": "Pas d’intermédiaire entre vous et la personne qui écrit le code.",
     "g2Title": "Vous voyez avant de vous engager",
-    "g2Text": "Une démonstration sur l’un de vos cas, avant toute signature. C’est ce qu’on a fait pour l’agence.",
+    "g2Text": "Une démonstration sur un cas proche du vôtre, avant toute signature. C’est ce qu’on a fait pour l’agence.",
     "g3Title": "Le périmètre et le prix sont écrits",
     "g3Text": "Avant de commencer : ce qui sera construit, et ce que vous paierez.",
     "g4Title": "Ce qui est construit vous appartient",

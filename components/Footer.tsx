@@ -5,21 +5,6 @@ const CALENDLY_URL = "https://calendly.com/saasnhia/30min";
 
 type Lien = { href: string; label: string; external?: boolean };
 
-/* Les dix pages par métier restent en ligne : elles sont listées ici, en bas de
-   page, pour ne pas devenir des pages sans aucun lien entrant. */
-const METIERS = [
-  "automatisation-artisan-btp",
-  "automatisation-garage-automobile",
-  "automatisation-restaurant",
-  "automatisation-salon-de-coiffure",
-  "automatisation-salle-de-sport",
-  "automatisation-association-sportive",
-  "automatisation-organisme-formation",
-  "automatisation-pharmacie",
-  "automatisation-opticien",
-  "automatisation-marque-cosmetique",
-] as const;
-
 const CLASSE_LIEN =
   "text-[13px] no-underline transition-colors duration-150 hover:text-[var(--text)]";
 
@@ -93,24 +78,6 @@ export default function Footer() {
       </div>
 
       <div className="px-10 max-[900px]:px-5" style={{ maxWidth: 1200, margin: "0 auto" }}>
-        <div style={{ padding: "20px 0", borderTop: "1px solid var(--border)" }}>
-          <div style={{ fontSize: 13, color: "var(--text)", marginBottom: 12 }}>
-            {t("sectorsTitle")}
-          </div>
-          <div className="flex flex-wrap gap-x-5 gap-y-2">
-            {METIERS.map((slug) => (
-              <a
-                key={slug}
-                href={`/${locale}/${slug}`}
-                className={CLASSE_LIEN}
-                style={{ color: "var(--text-muted)" }}
-              >
-                {t(`sectorLinks.${slug}`)}
-              </a>
-            ))}
-          </div>
-        </div>
-
         <div
           className="flex flex-wrap items-center gap-x-4 gap-y-2"
           style={{ paddingTop: 16, borderTop: "1px solid var(--border)", fontSize: 12 }}
