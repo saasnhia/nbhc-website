@@ -32,7 +32,7 @@
       },
       "internbullet": {
         "name": "internbullet",
-        "what": "Candidatures de stage, d’alternance et d’emploi",
+        "what": "L’IA cherche les entreprises, prépare le mail et le CV",
         "status": "En préparation",
         "alt": "Écran réel d’internbullet : la fiche d’une candidature prête"
       }
@@ -351,7 +351,7 @@
     "vlogyzFor": "Montage vidéo pour créateurs de contenu",
     "internbulletName": "internbullet",
     "internbulletBadge": "En préparation",
-    "internbulletFor": "Candidatures directes : stage, alternance, emploi",
+    "internbulletFor": "L’IA cherche votre stage ou votre alternance avec vous",
     "internbulletQuote": "J’ai trouvé mon stage avec la première version de cet outil. Je la prépare maintenant pour l’ouvrir à d’autres étudiants.",
     "internbulletQuoteBy": "Haroun Chikh, fondateur de NBHC",
     "internbulletLink": "Être prévenu de l’ouverture",
@@ -368,11 +368,11 @@
     ],
     "vlogyzNote": "Pas encore ouvert au public : la liste d’attente est sur vlogyz.com.",
     "internbulletSteps": [
-      "Vous apportez une entreprise ou une offre",
-      "L’outil lit son site et prépare un mail appuyé sur ce qu’il y a lu",
-      "Vous relisez, puis vous envoyez"
+      "Vous donnez votre CV, vos expériences et ce que vous cherchez",
+      "L’IA cherche elle-même les entreprises qui correspondent à votre profil",
+      "Pour chacune : un mail personnalisé et un CV adapté, à joindre et à relire avant l’envoi"
     ],
-    "internbulletNote": "En France comme à l’étranger. Les stages et les alternances d’abord, les CDD et les CDI ensuite.",
+    "internbulletNote": "Stage, alternance, puis CDD et CDI, en France comme à l’étranger. Rien ne part sans que vous l’ayez relu.",
     "devizlyAlt1": "Écran « Nouveau devis » de Devizly : la prestation décrite en langage courant à gauche, les lignes du devis à droite",
     "devizlyAlt2": "Le devis tel que le client le reçoit : lignes, total, boutons pour payer, accepter et signer",
     "devizlyBar2": "Le devis, côté client",
@@ -380,11 +380,11 @@
     "vlogyzAlt1": "Image d’une vidéo de présentation de Vlogyz : quatre mots-clés détectés dans la voix, et le plan d’illustration choisi pour chacun",
     "vlogyzBar1": "Vidéo de présentation · b-roll",
     "vlogyzCaption": "Image extraite d’une vidéo de présentation de Vlogyz. L’application n’est pas encore ouverte au public.",
-    "internbulletAlt1": "Fiche d’une candidature dans internbullet : le mail rédigé, l’adresse et les faits relevés sur le site de l’entreprise, chacun avec sa page d’origine",
-    "internbulletBar1": "internbullet · une candidature prête",
+    "internbulletAlt1": "Fiche d’une candidature dans internbullet : le mail préparé par l’IA à partir des faits relevés sur le site de l’entreprise, chacun avec sa page d’origine",
+    "internbulletBar1": "internbullet · le mail préparé par l’IA",
     "internbulletAlt2": "Liste des candidatures dans internbullet : l’état de chacune et ce qu’il reste à faire",
     "internbulletBar2": "internbullet · le suivi",
-    "internbulletCaption": "Écrans réels d’internbullet, avec des entreprises et un candidat fictifs."
+    "internbulletCaption": "Écrans réels d’internbullet, avec des entreprises et un candidat fictifs. La recherche d’entreprises par l’IA et le CV adapté sont en préparation : ils ne sont pas montrés ici."
   },
   "pricing": {
     "eyebrow": "TARIFS",
@@ -407,7 +407,7 @@
     "q4": "À qui appartient l’outil une fois livré ?",
     "a4": "À vous. Ce qu’on construit pour vous vous appartient, et vous le gardez si la collaboration s’arrête.",
     "q5": "Quand internbullet sera-t-il ouvert ?",
-    "a5": "Il est en préparation. Le fondateur de NBHC a trouvé son propre stage avec la première version ; l’ouverture aux étudiants vient ensuite, d’abord pour les stages et les alternances, puis pour les CDD et les CDI. Écrivez à contact@nbhc.fr pour être prévenu.",
+    "a5": "Il est en préparation. L’IA y cherche les entreprises qui correspondent à votre profil, puis prépare pour chacune un mail et un CV adapté. Le fondateur de NBHC a trouvé son propre stage avec la première version ; l’ouverture aux étudiants vient ensuite, d’abord pour les stages et les alternances, puis pour les CDD et les CDI. Écrivez à contact@nbhc.fr pour être prévenu.",
     "q6": "Et si un outil n’est pas la bonne réponse ?",
     "a6": "On vous le dit au premier échange. Un tableur bien tenu ou un logiciel du marché suffit parfois, et dans ce cas on ne construit rien."
   },
@@ -1444,8 +1444,8 @@
   },
   "custom": {
     "eyebrow": "Sur mesure",
-    "title": "Quand le cas particulier est la règle, il faut un outil qui connaît vos règles",
-    "subtitle": "Un prix qui change selon qui vient, combien de temps et dans quelle chambre. Un devis qui dépend du chantier. Tant qu’aucun logiciel ne connaît vos règles, quelqu’un les réapplique à la main, dossier après dossier. On construit l’outil qui les connaît.",
+    "title": "Une demande arrive. L’outil prépare le devis. Vous validez.",
+    "subtitle": "On construit un logiciel autour de vos règles : vos tarifs, vos cas particuliers, votre façon de chiffrer. Il refait pour vous le calcul que quelqu’un refait à la main à chaque dossier.",
     "p1Title": "Il part de la demande du client",
     "p1Text": "Le message arrive comme il a été écrit. L’outil en tire ce qu’il faut pour le devis : qui, quand, combien de temps, dans quelles conditions.",
     "p2Title": "Chaque ligne cite sa source",
@@ -1509,16 +1509,7 @@
         "present": "Julie, Marc, Claire"
       }
     },
-    "signsTitle": "Quatre signes qu’il vous manque un outil",
-    "s1Title": "Le même calcul, refait à chaque dossier",
-    "s1Text": "Qui vient, combien de nuits, quelle chambre : la règle est connue, mais quelqu’un la réapplique à la main.",
-    "s2Title": "Un tableur qu’une seule personne sait lire",
-    "s2Text": "Quand elle est absente, les devis attendent son retour.",
-    "s3Title": "Des informations recopiées d’un mail vers un logiciel",
-    "s3Text": "Chaque recopie est une occasion d’erreur, et personne ne la relit.",
-    "s4Title": "Un client qui attend sa réponse",
-    "s4Text": "Tant que le devis se refait, sa demande reste sans réponse.",
-    "demoTitle": "Ce que fait la démonstration, sur un exemple",
+    "demoTitle": "Le même exemple, en détail",
     "project": {
       "eyebrow": "Projet en cours",
       "title": "Un outil de devis sur mesure, pour une agence de voyage",
@@ -1544,7 +1535,36 @@
         "when": "À venir",
         "text": "Aucune date n’est annoncée tant que la construction n’a pas commencé."
       }
-    }
+    },
+    "flow": {
+      "s1Title": "La demande arrive",
+      "s1From": "De : Julie",
+      "s1When": "Reçu ce matin",
+      "s1Mid": ". Ma sœur ",
+      "s1Text": "Un mail, écrit comme le client parle.",
+      "s2Title": "L’outil applique vos règles",
+      "rule1If": "Séjour partiel",
+      "rule1Then": "seules les nuits passées comptent",
+      "rule2If": "Chambre seule",
+      "rule2Then": "comptée à part des autres",
+      "rule3If": "Les prix",
+      "rule3Then": "ceux de votre grille, jamais inventés",
+      "s2Text": "Vos règles, écrites une fois dans l’outil.",
+      "s3Title": "Le devis est prêt à valider",
+      "s3Text": "Qui paie quoi, ligne par ligne.",
+      "validate": "Valider",
+      "caption": "Exemple fictif d’un voyage à trois. Le même chemin vaut pour un chantier, une formation ou un abonnement."
+    },
+    "beforeTitle": "Aujourd’hui, à la main",
+    "afterTitle": "Avec l’outil",
+    "b1": "Le même calcul, refait à chaque dossier",
+    "b2": "Un tableur qu’une seule personne sait lire",
+    "b3": "Des informations recopiées du mail vers le logiciel",
+    "b4": "Un client qui attend pendant que le devis se refait",
+    "a1": "Le calcul est fait, vous le vérifiez",
+    "a2": "Les règles sont dans l’outil, lisibles par toute l’équipe",
+    "a3": "L’outil lit la demande telle qu’elle arrive",
+    "a4": "La réponse est prête à relire dès que la demande est lue"
   },
   "trust": {
     "eyebrow": "Pourquoi nous",
@@ -1556,7 +1576,7 @@
     "f1Link": "Essayer Devizly",
     "f1Href": "https://devizly.fr",
     "f2Title": "Un outil que son fondateur a utilisé",
-    "f2Text": "internbullet lui a servi à trouver son propre stage, avant d’être préparé pour d’autres.",
+    "f2Text": "Avec internbullet, il a trouvé son propre stage : l’IA cherche les entreprises, prépare les mails et les CV.",
     "f2Link": "Voir ses écrans",
     "f2Href": "#internbullet",
     "f3Title": "Un projet sur mesure en cours",

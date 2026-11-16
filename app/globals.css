@@ -333,3 +333,41 @@ a, button { touch-action: manipulation; }
 /* Tuiles d'ecran du hero : au survol, le filet s'eclaircit. Rien ne bouge. */
 .tuile-ecran { transition: border-color 150ms ease-out; }
 .tuile-ecran:hover { border-color: rgba(255, 255, 255, 0.24) !important; }
+
+/* ── APPARITIONS AU DEFILEMENT ──────────────────────────────────────────────
+   Voir components/Apparition.tsx. L'etat de depart n'existe que sous « pret »,
+   classe posee par le JavaScript sur un bloc encore hors ecran : le HTML servi
+   est toujours visible. Une seule courbe, deux durees, rien qui boucle. */
+.apparition.pret:not([data-enfants]),
+.apparition.pret [data-etape] {
+  opacity: 0;
+  transform: translate3d(0, 20px, 0);
+}
+.apparition.pret [data-trait] {
+  transform: scaleX(0);
+}
+.apparition.pret.vu:not([data-enfants]),
+.apparition.pret.vu [data-etape] {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 700ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: calc(var(--i, 0) * 110ms);
+}
+.apparition.pret.vu [data-trait] {
+  transform: scaleX(1);
+  transition: transform 900ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: calc(var(--i, 0) * 110ms + 150ms);
+}
+[data-trait] { transform-origin: left center; }
+
+@media (prefers-reduced-motion: reduce) {
+  .apparition.pret,
+  .apparition.pret [data-etape],
+  .apparition.pret [data-trait] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}

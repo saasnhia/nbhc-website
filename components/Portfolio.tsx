@@ -1,5 +1,6 @@
 import { useTranslations } from "next-intl";
 import EcranReel from "./EcranReel";
+import Apparition from "./Apparition";
 
 type IdProduit = "devizly" | "vlogyz" | "internbullet";
 
@@ -263,7 +264,9 @@ export default function Portfolio() {
             </div>
 
             <figure className="m-0">
-              <Ecrans id={p.id} />
+              <Apparition>
+                <Ecrans id={p.id} />
+              </Apparition>
               <figcaption style={{ marginTop: 16, fontSize: 13, color: "var(--text-muted)" }}>
                 {t(`${p.id}Caption`)}
               </figcaption>

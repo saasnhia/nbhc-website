@@ -14,11 +14,12 @@ Les factures sortent au format Factur-X.
 - [Vlogyz](https://vlogyz.com) — bientôt disponible. Montage vidéo pour
 créateurs de contenu : transcription, coupe des silences, sous-titres
 synchronisés, b-roll et titres animés, au format vertical.
-- internbullet — en préparation. Candidatures directes pour un stage, une
-alternance ou un emploi, en France comme à l'étranger. La personne apporte
-une entreprise ou une offre ; l'outil lit le site de l'entreprise, prépare
-un mail appuyé sur ce qu'il y a lu, et aucun mail ne part sans avoir été
-relu. Les stages et les alternances d'abord, les CDD et les CDI ensuite.
+- internbullet — en préparation. L'IA cherche un stage, une alternance ou
+un emploi avec la personne : à partir de son CV et de ce qu'elle cherche,
+elle cherche les entreprises qui correspondent à son profil, puis prépare
+pour chacune un mail personnalisé et un CV adapté. Aucun mail ne part sans
+avoir été relu. Stages et alternances d'abord, CDD et CDI ensuite, en
+France comme à l'étranger.
 
 ## Outils sur mesure
 

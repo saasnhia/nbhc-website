@@ -32,7 +32,7 @@
       },
       "internbullet": {
         "name": "internbullet",
-        "what": "Internship, work-study and job applications",
+        "what": "The AI finds companies, drafts the email and the CV",
         "status": "In preparation",
         "alt": "Real internbullet screen: a ready application"
       }
@@ -351,7 +351,7 @@
     "vlogyzFor": "Video editing for content creators",
     "internbulletName": "internbullet",
     "internbulletBadge": "In preparation",
-    "internbulletFor": "Direct applications: internship, work-study, job",
+    "internbulletFor": "The AI looks for your internship or work-study with you",
     "internbulletQuote": "I found my internship with the first version of this tool. I am now preparing it to open it to other students.",
     "internbulletQuoteBy": "Haroun Chikh, founder of NBHC",
     "internbulletLink": "Get notified at opening",
@@ -368,11 +368,11 @@
     ],
     "vlogyzNote": "Not open to the public yet: the waiting list is on vlogyz.com.",
     "internbulletSteps": [
-      "You bring a company or a job posting",
-      "The tool reads its website and drafts an email grounded in what it read there",
-      "You review, then you send"
+      "You provide your CV, your experience and what you are looking for",
+      "The AI itself searches for the companies that match your profile",
+      "For each one: a personalised email and a tailored CV, to attach and review before sending"
     ],
-    "internbulletNote": "In France or abroad. Internships and work-study first, fixed-term and permanent jobs next.",
+    "internbulletNote": "Internships, work-study, then fixed-term and permanent jobs, in France or abroad. Nothing is sent before you have reviewed it.",
     "devizlyAlt1": "Devizly “New quote” screen: the job described in plain language on the left, the quote lines on the right",
     "devizlyAlt2": "The quote as the client receives it: lines, total, buttons to pay, accept and sign",
     "devizlyBar2": "The quote, client side",
@@ -380,11 +380,11 @@
     "vlogyzAlt1": "Frame from a Vlogyz presentation video: four keywords detected in the voice, and the illustration shot chosen for each",
     "vlogyzBar1": "Presentation video · b-roll",
     "vlogyzCaption": "Frame taken from a Vlogyz presentation video. The application is not open to the public yet.",
-    "internbulletAlt1": "An application in internbullet: the drafted email, the address and the facts found on the company’s website, each with its source page",
-    "internbulletBar1": "internbullet · a ready application",
+    "internbulletAlt1": "An application in internbullet: the email drafted by the AI from the facts found on the company’s website, each with its source page",
+    "internbulletBar1": "internbullet · the email drafted by the AI",
     "internbulletAlt2": "The list of applications in internbullet: the status of each and what remains to be done",
     "internbulletBar2": "internbullet · tracking",
-    "internbulletCaption": "Real internbullet screens, with fictional companies and applicant. The interface is in French."
+    "internbulletCaption": "Real internbullet screens, with fictional companies and applicant. The interface is in French. The AI company search and the tailored CV are in preparation: they are not shown here."
   },
   "pricing": {
     "eyebrow": "PRICING",
@@ -407,7 +407,7 @@
     "q4": "Who owns the tool once delivered?",
     "a4": "You do. What we build for you belongs to you, and you keep it if the collaboration ends.",
     "q5": "When will internbullet open?",
-    "a5": "It is in preparation. The founder of NBHC found their own internship with the first version; opening to students comes next, first for internships and work-study, then for fixed-term and permanent jobs. Write to contact@nbhc.fr to be notified.",
+    "a5": "It is in preparation. The AI searches for the companies that match your profile, then drafts an email and a tailored CV for each. The founder of NBHC found their own internship with the first version; opening to students comes next, first for internships and work-study, then for fixed-term and permanent jobs. Write to contact@nbhc.fr to be notified.",
     "q6": "What if a tool is not the right answer?",
     "a6": "We tell you during the first call. A well-kept spreadsheet or off-the-shelf software is sometimes enough, and in that case we build nothing."
   },
@@ -1444,8 +1444,8 @@
   },
   "custom": {
     "eyebrow": "Custom tools",
-    "title": "When the special case is the rule, you need a tool that knows your rules",
-    "subtitle": "A price that changes with who comes, for how long and in which room. A quote that depends on the job site. As long as no software knows your rules, someone reapplies them by hand, file after file. We build the tool that knows them.",
+    "title": "A request comes in. The tool prepares the quote. You approve.",
+    "subtitle": "We build software around your rules: your prices, your special cases, your way of quoting. It redoes for you the calculation someone redoes by hand for every file.",
     "p1Title": "It starts from the client’s request",
     "p1Text": "The message comes in as it was written. The tool pulls out what the quote needs: who, when, for how long, under which conditions.",
     "p2Title": "Every line cites its source",
@@ -1509,16 +1509,7 @@
         "present": "Julie, Marc, Claire"
       }
     },
-    "signsTitle": "Four signs you are missing a tool",
-    "s1Title": "The same calculation, redone for every file",
-    "s1Text": "Who comes, how many nights, which room: the rule is known, but someone reapplies it by hand.",
-    "s2Title": "A spreadsheet only one person can read",
-    "s2Text": "When that person is away, quotes wait for them to come back.",
-    "s3Title": "Information copied from an email into software",
-    "s3Text": "Every copy is a chance for an error, and nobody rereads it.",
-    "s4Title": "A client waiting for an answer",
-    "s4Text": "While the quote is being redone, their request stays unanswered.",
-    "demoTitle": "What the demonstration does, on an example",
+    "demoTitle": "The same example, in detail",
     "project": {
       "eyebrow": "Project under way",
       "title": "A custom quoting tool, for a travel agency",
@@ -1544,7 +1535,36 @@
         "when": "To come",
         "text": "No date is announced until the build has started."
       }
-    }
+    },
+    "flow": {
+      "s1Title": "The request comes in",
+      "s1From": "From: Julie",
+      "s1When": "Received this morning",
+      "s1Mid": ". My sister ",
+      "s1Text": "An email, written the way the client talks.",
+      "s2Title": "The tool applies your rules",
+      "rule1If": "Partial stay",
+      "rule1Then": "only the nights spent count",
+      "rule2If": "Own room",
+      "rule2Then": "counted separately from the others",
+      "rule3If": "Prices",
+      "rule3Then": "from your price list, never invented",
+      "s2Text": "Your rules, written once in the tool.",
+      "s3Title": "The quote is ready to approve",
+      "s3Text": "Who pays for what, line by line.",
+      "validate": "Approve",
+      "caption": "Fictional example of a trip for three. The same path applies to a job site, a training course or a subscription."
+    },
+    "beforeTitle": "Today, by hand",
+    "afterTitle": "With the tool",
+    "b1": "The same calculation, redone for every file",
+    "b2": "A spreadsheet only one person can read",
+    "b3": "Information copied from the email into the software",
+    "b4": "A client waiting while the quote is redone",
+    "a1": "The calculation is done, you check it",
+    "a2": "The rules are in the tool, readable by the whole team",
+    "a3": "The tool reads the request as it arrives",
+    "a4": "The answer is ready to review as soon as the request is read"
   },
   "trust": {
     "eyebrow": "Why us",
@@ -1556,7 +1576,7 @@
     "f1Link": "Try Devizly",
     "f1Href": "https://devizly.fr",
     "f2Title": "A tool its founder has used",
-    "f2Text": "internbullet helped the founder find their own internship, before being prepared for others.",
+    "f2Text": "With internbullet, the founder found their own internship: the AI searches for companies, drafts the emails and the CVs.",
     "f2Link": "See its screens",
     "f2Href": "#internbullet",
     "f3Title": "One custom project under way",

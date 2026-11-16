@@ -1,4 +1,5 @@
 import { useTranslations } from "next-intl";
+import Apparition from "./Apparition";
 
 /* Une jeune entreprise sans client livré en sur-mesure ne gagne rien à le
    cacher : elle le dit, montre ce qu'elle a réellement, et retire le risque à
@@ -58,8 +59,11 @@ export default function Confiance() {
           </p>
         </div>
 
-        <div className="grid gap-12 min-[1000px]:gap-20 min-[1000px]:grid-cols-2 mt-16 max-[900px]:mt-10">
-          <div>
+        <Apparition
+          enfants
+          className="grid gap-12 min-[1000px]:gap-20 min-[1000px]:grid-cols-2 mt-16 max-[900px]:mt-10"
+        >
+          <div data-etape style={{ ["--i" as string]: 0 }}>
             <h3 style={{ fontSize: 17, fontWeight: 500, color: "var(--text)", marginBottom: 8 }}>
               {t("factsTitle")}
             </h3>
@@ -110,7 +114,9 @@ export default function Confiance() {
           </div>
 
           <div
+            data-etape
             style={{
+              ["--i" as string]: 1,
               padding: 28,
               background: "var(--surface)",
               border: "1px solid var(--border)",
@@ -147,7 +153,7 @@ export default function Confiance() {
               ))}
             </ul>
           </div>
-        </div>
+        </Apparition>
       </div>
     </section>
   );

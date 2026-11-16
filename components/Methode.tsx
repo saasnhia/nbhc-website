@@ -1,4 +1,5 @@
 import { useTranslations } from "next-intl";
+import Apparition from "./Apparition";
 
 /* La méthode en quatre étapes, dessinée en code. Elle remplace une scène 3D que
    trois lecteurs successifs ont trouvée décorative : numéros masqués par les
@@ -84,9 +85,13 @@ export default function Methode() {
           </p>
         </div>
 
-        <ol className="list-none m-0 p-0 grid min-[700px]:grid-cols-2 min-[1100px]:grid-cols-4 gap-x-8 gap-y-10 mt-16 max-[900px]:mt-10">
+        <Apparition
+          as="ol"
+          enfants
+          className="list-none m-0 p-0 grid min-[700px]:grid-cols-2 min-[1100px]:grid-cols-4 gap-x-8 gap-y-10 mt-16 max-[900px]:mt-10"
+        >
           {ETAPES.map((n) => (
-            <li key={n} className="flex flex-col">
+            <li key={n} className="flex flex-col" data-etape style={{ ["--i" as string]: n - 1 }}>
               {/* Le jalon et le trait : la chaîne se lit d'un coup d'œil sur
                   grand écran, et chaque étape reste lisible seule en pile. */}
               <div className="flex items-center" style={{ marginBottom: 20 }}>
@@ -174,7 +179,7 @@ export default function Methode() {
               </div>
             </li>
           ))}
-        </ol>
+        </Apparition>
       </div>
     </section>
   );
