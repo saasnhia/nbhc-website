@@ -11,6 +11,8 @@ type Tuile = {
   width: number;
   height: number;
   position: string;
+  /** Agrandissement de l'image dans la tuile ; 1 = l'écran entier en largeur. */
+  zoom: number;
   enProduction?: boolean;
 };
 
@@ -21,6 +23,7 @@ const TUILES: Tuile[] = [
     width: 667,
     height: 898,
     position: "50% 0%",
+    zoom: 1.5,
     enProduction: true,
   },
   {
@@ -29,6 +32,7 @@ const TUILES: Tuile[] = [
     width: 800,
     height: 471,
     position: "50% 50%",
+    zoom: 1,
   },
   {
     id: "internbullet",
@@ -36,6 +40,7 @@ const TUILES: Tuile[] = [
     width: 640,
     height: 576,
     position: "0% 0%",
+    zoom: 1.7,
   },
 ];
 
@@ -129,8 +134,17 @@ export default function Hero() {
                     loading={i === 0 ? "eager" : "lazy"}
                     fetchPriority={i === 0 ? "high" : undefined}
                     decoding="async"
-                    className="block h-full w-full"
-                    style={{ objectFit: "cover", objectPosition: tu.position }}
+                    className="block"
+                    style={
+                      tu.zoom === 1
+                        ? {
+                            width: "100%",
+                            height: "100%",
+                            objectFit: "cover",
+                            objectPosition: tu.position,
+                          }
+                        : { width: `${tu.zoom * 100}%`, maxWidth: "none", height: "auto" }
+                    }
                   />
                 </span>
                 <span
