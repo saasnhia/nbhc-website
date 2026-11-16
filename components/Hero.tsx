@@ -2,95 +2,42 @@ import { useTranslations } from "next-intl";
 
 const CALENDLY_URL = "https://calendly.com/saasnhia/30min";
 
-type IdLigne = "devizly" | "vlogyz" | "internbullet" | "surMesure";
-
-type Ligne = {
-  id: IdLigne;
-  href: string;
+/* Trois tuiles, trois écrans réels : le premier écran montre ce que NBHC a
+   construit avant d'en parler. Chaque tuile renvoie à sa section ; l'état de
+   chaque produit est écrit dessous, sans rien arrondir. */
+type Tuile = {
+  id: "devizly" | "vlogyz" | "internbullet";
+  src: string;
+  width: number;
+  height: number;
+  position: string;
   enProduction?: boolean;
 };
 
-/* Le sommaire tient lieu de visuel : quatre lignes, ce que NBHC construit et où
-   chaque chose en est. Il renvoie aux sections de la page, il ne décore pas. */
-const LIGNES: Ligne[] = [
-  { id: "devizly", href: "#devizly", enProduction: true },
-  { id: "vlogyz", href: "#vlogyz" },
-  { id: "internbullet", href: "#internbullet" },
-  { id: "surMesure", href: "#sur-mesure" },
+const TUILES: Tuile[] = [
+  {
+    id: "devizly",
+    src: "/ecrans/devizly-devis-client-667.webp",
+    width: 667,
+    height: 898,
+    position: "50% 0%",
+    enProduction: true,
+  },
+  {
+    id: "vlogyz",
+    src: "/ecrans/vlogyz-broll-900.webp",
+    width: 900,
+    height: 506,
+    position: "50% 50%",
+  },
+  {
+    id: "internbullet",
+    src: "/ecrans/internbullet-fiche-640.webp",
+    width: 640,
+    height: 576,
+    position: "0% 0%",
+  },
 ];
-
-const CADRE: React.CSSProperties = {
-  width: 56,
-  height: 56,
-  borderRadius: 10,
-  border: "1px solid var(--border)",
-  background: "var(--card)",
-  overflow: "hidden",
-  flex: "none",
-};
-
-/* Chaque ligne montre ce dont elle parle : le devis rendu, la vidéo montée, une
-   fiche de candidature, un tableau dont une valeur est soulignée par sa source.
-   Les deux dernières sont dessinées en code, à l'échelle de la miniature. */
-function Miniature({ id }: { id: IdLigne }) {
-  if (id === "devizly") {
-    return (
-      <span aria-hidden className="block" style={CADRE}>
-        <img
-          src="/produit-devizly-342.webp"
-          alt=""
-          width={56}
-          height={56}
-          className="block h-full w-full"
-          style={{ objectFit: "cover", objectPosition: "50% 38%" }}
-        />
-      </span>
-    );
-  }
-  if (id === "vlogyz") {
-    return (
-      <span aria-hidden className="block" style={CADRE}>
-        {/* Une ligne de temps : trois plans gardés, deux coupes en pointillé, et
-            le sous-titre dont un mot est en or. */}
-        <svg viewBox="0 0 56 56" width="56" height="56" fill="none">
-          <rect x="10" y="16" width="12" height="9" rx="2" fill="#3A3936" />
-          <rect x="24" y="16.5" width="5" height="8" rx="2" stroke="#8C8880" strokeOpacity="0.6" strokeDasharray="2 2" />
-          <rect x="31" y="16" width="9" height="9" rx="2" fill="#3A3936" />
-          <rect x="42" y="16.5" width="4" height="8" rx="2" stroke="#8C8880" strokeOpacity="0.6" strokeDasharray="2 2" />
-          <rect x="12" y="35" width="10" height="3" rx="1.5" fill="#F0EDE6" opacity="0.85" />
-          <rect x="24" y="35" width="12" height="3" rx="1.5" fill="#C4973A" />
-          <rect x="38" y="35" width="6" height="3" rx="1.5" fill="#F0EDE6" opacity="0.85" />
-        </svg>
-      </span>
-    );
-  }
-  if (id === "internbullet") {
-    return (
-      <span aria-hidden className="block" style={CADRE}>
-        <svg viewBox="0 0 56 56" width="56" height="56" fill="none">
-          <rect x="12" y="13" width="2" height="12" rx="1" fill="#C4973A" />
-          <rect x="18" y="14" width="26" height="3" rx="1.5" fill="#F0EDE6" opacity="0.85" />
-          <rect x="18" y="21" width="18" height="3" rx="1.5" fill="#8C8880" opacity="0.7" />
-          <rect x="12" y="32" width="32" height="3" rx="1.5" fill="#8C8880" opacity="0.45" />
-          <rect x="12" y="39" width="24" height="3" rx="1.5" fill="#8C8880" opacity="0.45" />
-        </svg>
-      </span>
-    );
-  }
-  return (
-    <span aria-hidden className="block" style={CADRE}>
-      <svg viewBox="0 0 56 56" width="56" height="56" fill="none">
-        <rect x="11" y="14" width="12" height="3" rx="1.5" fill="#F0EDE6" opacity="0.85" />
-        <rect x="29" y="14" width="16" height="3" rx="1.5" fill="#8C8880" opacity="0.7" />
-        <rect x="11" y="26" width="12" height="3" rx="1.5" fill="#F0EDE6" opacity="0.85" />
-        <rect x="29" y="26" width="16" height="3" rx="1.5" fill="#8C8880" opacity="0.7" />
-        <rect x="11" y="38" width="12" height="3" rx="1.5" fill="#F0EDE6" opacity="0.85" />
-        <rect x="29" y="38" width="12" height="3" rx="1.5" fill="#F0EDE6" opacity="0.85" />
-        <rect x="29" y="43" width="12" height="1.5" rx="0.75" fill="#C4973A" />
-      </svg>
-    </span>
-  );
-}
 
 export default function Hero() {
   const t = useTranslations("hero");
@@ -98,36 +45,33 @@ export default function Hero() {
   return (
     <section style={{ borderBottom: "1px solid var(--border)" }}>
       <div
-        className="grid items-center gap-16 max-[1000px]:gap-12 min-[1000px]:grid-cols-[minmax(0,11fr)_minmax(0,9fr)] px-10 max-[900px]:px-5 pt-40 pb-28 max-[900px]:pt-28 max-[900px]:pb-16"
+        className="px-10 max-[900px]:px-5 pt-40 pb-24 max-[900px]:pt-28 max-[900px]:pb-14"
         style={{ maxWidth: 1200, margin: "0 auto" }}
       >
-        <div className="entree">
+        <div className="entree" style={{ maxWidth: 920 }}>
           <h1
             style={{
               fontFamily: "var(--font-syne)",
-              fontWeight: 600,
-              fontSize: "clamp(30px, 2.85vw, 40px)",
-              lineHeight: 1.14,
-              textWrap: "balance",
-              letterSpacing: "-0.02em",
+              fontWeight: 500,
+              fontSize: "clamp(34px, 5vw, 64px)",
+              lineHeight: 1.04,
+              letterSpacing: "-0.03em",
               color: "var(--text)",
               marginBottom: 24,
             }}
           >
-            <span className="block">
-              {t("titleLine1")} {t("titleLine2")}
-            </span>
+            <span className="block">{t("titleLine1")}</span>
             <span className="block" style={{ color: "var(--gold-light)" }}>
-              {t("titleLine3")}
+              {t("titleLine2")}
             </span>
           </h1>
 
           <p
             style={{
               color: "var(--text-muted)",
-              fontSize: 17,
-              lineHeight: 1.65,
-              maxWidth: 540,
+              fontSize: 18,
+              lineHeight: 1.6,
+              maxWidth: 620,
               marginBottom: 32,
             }}
           >
@@ -151,113 +95,131 @@ export default function Hero() {
             >
               {t("ctaSecondary")}
             </a>
+            <span
+              className="max-[700px]:basis-full"
+              style={{ fontSize: 14, color: "var(--text-muted)", marginLeft: 4 }}
+            >
+              {t("ctaNote")}
+            </span>
           </div>
-
-          <p
-            style={{
-              marginTop: 16,
-              fontSize: 14,
-              lineHeight: 1.6,
-              color: "var(--text-muted)",
-              maxWidth: 540,
-            }}
-          >
-            {t("ctaNote")}
-          </p>
         </div>
 
-        <div
-          className="entree entree-2"
-          style={{
-            background: "var(--surface)",
-            border: "1px solid var(--border)",
-            borderRadius: 16,
-            padding: 8,
-          }}
-        >
-          <div
-            className="flex items-center justify-between"
-            style={{ padding: "12px 16px", fontSize: 13, color: "var(--text-muted)" }}
-          >
-            <span>{t("index.title")}</span>
-            <span>{t("index.status")}</span>
-          </div>
-          <ul className="list-none m-0 p-0">
-            {LIGNES.map((l) => (
-              <li key={l.id} style={{ borderTop: "1px solid var(--border)" }}>
-                <a
-                  href={l.href}
-                  className="rangee-sommaire grid items-center no-underline gap-4"
-                  style={{
-                    gridTemplateColumns: "56px minmax(0, 1fr) auto",
-                    padding: 16,
-                    borderRadius: 8,
-                  }}
+        <ul className="entree entree-2 list-none m-0 p-0 grid gap-5 min-[760px]:grid-cols-3 mt-16 max-[900px]:mt-10">
+          {TUILES.map((tu, i) => (
+            <li key={tu.id}>
+              <a
+                href={`#${tu.id}`}
+                className="tuile-ecran block no-underline"
+                style={{
+                  background: "var(--surface)",
+                  border: "1px solid var(--border)",
+                  borderRadius: 14,
+                  overflow: "hidden",
+                }}
+              >
+                <span
+                  className="block"
+                  style={{ aspectRatio: "4 / 3", overflow: "hidden", background: "#17171a" }}
                 >
-                  <Miniature id={l.id} />
-                  <span className="min-w-0">
-                    <span
-                      className="block"
-                      style={{
-                        fontFamily: "var(--font-syne)",
-                        fontWeight: 600,
-                        fontSize: 19,
-                        lineHeight: 1.2,
-                        letterSpacing: "-0.01em",
-                        color: "var(--text)",
-                      }}
-                    >
-                      {t(`index.${l.id}.name`)}
-                    </span>
-                    <span
-                      className="block"
-                      style={{
-                        marginTop: 4,
-                        fontSize: 14,
-                        lineHeight: 1.45,
-                        color: "var(--text-muted)",
-                      }}
-                    >
-                      {t(`index.${l.id}.what`)}
-                    </span>
-                    {/* Sous 420 px la colonne d'état n'a plus la place : l'état
-                        passe sous la description au lieu de disparaître. */}
-                    <span
-                      className="hidden max-[420px]:block"
-                      style={{
-                        marginTop: 4,
-                        fontSize: 13,
-                        color: l.enProduction ? "#7FB58A" : "var(--gold-light)",
-                      }}
-                    >
-                      {t(`index.${l.id}.status`)}
-                    </span>
-                  </span>
+                  <img
+                    src={tu.src}
+                    alt={t(`tiles.${tu.id}.alt`)}
+                    width={tu.width}
+                    height={tu.height}
+                    loading={i === 0 ? "eager" : "lazy"}
+                    fetchPriority={i === 0 ? "high" : undefined}
+                    decoding="async"
+                    className="block h-full w-full"
+                    style={{ objectFit: "cover", objectPosition: tu.position }}
+                  />
+                </span>
+                <span
+                  className="flex items-baseline justify-between gap-4"
+                  style={{ padding: "14px 16px 4px" }}
+                >
                   <span
-                    className="inline-flex items-center gap-2 whitespace-nowrap max-[420px]:hidden"
+                    translate="no"
                     style={{
-                      fontSize: 13,
-                      color: l.enProduction ? "var(--text)" : "var(--text-muted)",
+                      fontFamily: "var(--font-syne)",
+                      fontWeight: 600,
+                      fontSize: 19,
+                      letterSpacing: "-0.01em",
+                      color: "var(--text)",
                     }}
                   >
-                    {l.enProduction && (
+                    {t(`tiles.${tu.id}.name`)}
+                  </span>
+                  <span
+                    className="inline-flex items-center gap-2 whitespace-nowrap"
+                    style={{
+                      fontSize: 13,
+                      color: tu.enProduction ? "var(--text)" : "var(--text-muted)",
+                    }}
+                  >
+                    {tu.enProduction && (
                       <span
-                        aria-hidden
-                        style={{
-                          width: 6,
-                          height: 6,
-                          borderRadius: 3,
-                          background: "#7FB58A",
-                        }}
+                        aria-hidden="true"
+                        style={{ width: 6, height: 6, borderRadius: 3, background: "#7FB58A" }}
                       />
                     )}
-                    {t(`index.${l.id}.status`)}
+                    {t(`tiles.${tu.id}.status`)}
                   </span>
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
+                </span>
+                <span
+                  className="block"
+                  style={{
+                    padding: "0 16px 16px",
+                    fontSize: 14,
+                    lineHeight: 1.5,
+                    color: "var(--text-muted)",
+                  }}
+                >
+                  {t(`tiles.${tu.id}.what`)}
+                </span>
+              </a>
+            </li>
+          ))}
+        </ul>
+
+        {/* Le sur-mesure n'a pas d'écran à montrer : il a un projet en cours,
+            dit en une ligne, qui renvoie à sa section. */}
+        <a
+          href="#sur-mesure"
+          className="rangee-sommaire flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 no-underline"
+          style={{
+            marginTop: 20,
+            padding: "16px 20px",
+            border: "1px solid var(--border)",
+            borderRadius: 14,
+          }}
+        >
+          <span>
+            <span
+              style={{
+                fontFamily: "var(--font-syne)",
+                fontWeight: 600,
+                fontSize: 19,
+                letterSpacing: "-0.01em",
+                color: "var(--text)",
+              }}
+            >
+              {t("custom.name")}
+            </span>
+            <span style={{ marginLeft: 12, fontSize: 14, color: "var(--text-muted)" }}>
+              {t("custom.what")}
+            </span>
+          </span>
+          <span
+            className="inline-flex items-center gap-2"
+            style={{ fontSize: 13, color: "var(--gold-light)" }}
+          >
+            <span
+              aria-hidden="true"
+              style={{ width: 6, height: 6, borderRadius: 3, background: "var(--gold)" }}
+            />
+            {t("custom.status")}
+          </span>
+        </a>
       </div>
     </section>
   );

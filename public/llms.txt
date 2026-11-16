@@ -46,8 +46,7 @@ n'est pas livré.
 
 ## Automatisations par métier
 
-Des pages décrivent des automatisations par secteur d'activité, avec une
-grille de prix et un simulateur sur /tarifs :
+Des pages décrivent des automatisations par secteur d'activité :
 
 - https://nbhc.fr/fr/automatisation-salle-de-sport
 - https://nbhc.fr/fr/automatisation-association-sportive
@@ -70,7 +69,6 @@ grille de prix et un simulateur sur /tarifs :
 ## Pages principales
 
 - https://nbhc.fr/fr — Accueil : produits, sur mesure, méthode
-- https://nbhc.fr/fr/tarifs — Grille de prix et simulateur
 - https://nbhc.fr/fr/contact — Premier échange de 30 minutes
 - https://nbhc.fr/fr/faq
 - https://nbhc.fr/fr/blog

@@ -1,55 +1,108 @@
-import type { ComponentType } from "react";
 import { useTranslations } from "next-intl";
-import VlogyzApercu from "./mockups/VlogyzApercu";
-import DevizlyApercu from "./mockups/DevizlyApercu";
-import InternbulletDemo from "./mockups/InternbulletDemo";
+import EcranReel from "./EcranReel";
+
+type IdProduit = "devizly" | "vlogyz" | "internbullet";
 
 type Produit = {
-  id: "devizly" | "vlogyz" | "internbullet";
-  Maquette: ComponentType;
+  id: IdProduit;
   href: string;
   externe: boolean;
   enProduction?: boolean;
-  /** Largeur maximale de la maquette : le devis rendu est un portrait, on le
-      tient a la hauteur de la colonne de texte plutot que de la depasser. */
-  largeurMaquette: number;
-  /** Citation du fondateur, sous la description. */
+  /** Citation du fondateur, sous les étapes. */
   avecCitation?: boolean;
-  texteAGauche: boolean;
 };
 
 const PRODUITS: Produit[] = [
-  {
-    id: "devizly",
-    Maquette: DevizlyApercu,
-    href: "https://devizly.fr",
-    externe: true,
-    enProduction: true,
-    largeurMaquette: 520,
-    texteAGauche: true,
-  },
-  {
-    id: "vlogyz",
-    Maquette: VlogyzApercu,
-    href: "https://vlogyz.com",
-    externe: true,
-    largeurMaquette: 520,
-    texteAGauche: false,
-  },
+  { id: "devizly", href: "https://devizly.fr", externe: true, enProduction: true },
+  { id: "vlogyz", href: "https://vlogyz.com", externe: true },
   {
     id: "internbullet",
-    Maquette: InternbulletDemo,
     href: "mailto:contact@nbhc.fr?subject=internbullet",
     externe: false,
     avecCitation: true,
-    largeurMaquette: 520,
-    texteAGauche: true,
   },
 ];
 
+const OMBRE = "0 24px 48px rgba(0, 0, 0, 0.45)";
+
+/* Les écrans de chaque produit. Sur grand écran l'application s'affiche en
+   pleine largeur, lisible, avec un second écran posé dessus ; sur téléphone on
+   ne garde que l'écran en hauteur, le seul qui reste lisible à 350 px. */
+function Ecrans({ id }: { id: IdProduit }) {
+  const t = useTranslations("products");
+
+  if (id === "devizly") {
+    return (
+      <div className="relative min-[900px]:pb-16">
+        <EcranReel
+          className="max-[899px]:hidden"
+          nom="devizly-nouveau-devis"
+          largeurs={[900, 1600]}
+          width={1600}
+          height={662}
+          alt={t("devizlyAlt1")}
+          barre="devizly.fr · Nouveau devis"
+          sizes="(max-width: 1200px) calc(100vw - 80px), 1120px"
+        />
+        <EcranReel
+          className="min-[900px]:absolute min-[900px]:right-8 min-[900px]:bottom-0 min-[900px]:w-[30%] max-[899px]:mx-auto"
+          style={{ boxShadow: OMBRE, maxWidth: 420 }}
+          nom="devizly-devis-client"
+          largeurs={[667]}
+          width={667}
+          height={898}
+          alt={t("devizlyAlt2")}
+          barre={t("devizlyBar2")}
+          sizes="(max-width: 899px) calc(100vw - 40px), 340px"
+        />
+      </div>
+    );
+  }
+
+  if (id === "internbullet") {
+    return (
+      <div className="grid items-start gap-6 min-[900px]:grid-cols-[minmax(0,58fr)_minmax(0,42fr)]">
+        <EcranReel
+          nom="internbullet-fiche"
+          largeurs={[640, 1200]}
+          width={1200}
+          height={1080}
+          alt={t("internbulletAlt1")}
+          barre={t("internbulletBar1")}
+          sizes="(max-width: 899px) calc(100vw - 40px), 640px"
+        />
+        <EcranReel
+          className="max-[899px]:hidden min-[900px]:mt-16"
+          nom="internbullet-liste"
+          largeurs={[640, 1200]}
+          width={1200}
+          height={900}
+          alt={t("internbulletAlt2")}
+          barre={t("internbulletBar2")}
+          sizes="460px"
+        />
+      </div>
+    );
+  }
+
+  return (
+    <EcranReel
+      className="mx-auto"
+      style={{ maxWidth: 960 }}
+      nom="vlogyz-broll"
+      largeurs={[900, 960]}
+      width={960}
+      height={540}
+      alt={t("vlogyzAlt1")}
+      barre={t("vlogyzBar1")}
+      sizes="(max-width: 1040px) calc(100vw - 80px), 960px"
+    />
+  );
+}
+
 function Fleche() {
   return (
-    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden>
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
       <path
         d="M2 7h10M7 2l5 5-5 5"
         stroke="currentColor"
@@ -70,7 +123,7 @@ export default function Portfolio() {
         className="px-10 max-[900px]:px-5 pt-28 max-[900px]:pt-16"
         style={{ maxWidth: 1200, margin: "0 auto" }}
       >
-        <div style={{ maxWidth: 720 }}>
+        <div style={{ maxWidth: 760 }}>
           <div style={{ fontSize: 14, color: "var(--gold-light)", marginBottom: 12 }}>
             {t("eyebrow")}
           </div>
@@ -92,19 +145,16 @@ export default function Portfolio() {
           </p>
         </div>
 
-        {PRODUITS.map((p) => {
-          const Maquette = p.Maquette;
-          return (
-            <article
-              key={p.id}
-              id={p.id}
-              className="grid items-center gap-12 min-[1000px]:gap-20 min-[1000px]:grid-cols-2 py-20 max-[900px]:py-12"
-              style={{
-                borderBottom: "1px solid var(--border)",
-                scrollMarginTop: 72,
-              }}
-            >
-              <div className={p.texteAGauche ? "" : "min-[1000px]:order-2"}>
+        {PRODUITS.map((p) => (
+          <article
+            key={p.id}
+            id={p.id}
+            className="py-20 max-[900px]:py-12"
+            style={{ borderBottom: "1px solid var(--border)", scrollMarginTop: 72 }}
+          >
+            {/* En-tête : à gauche ce que c'est, à droite ce qui se passe. */}
+            <div className="grid gap-10 min-[900px]:gap-20 min-[900px]:grid-cols-2 mb-12 max-[900px]:mb-8">
+              <div>
                 <div
                   className="inline-flex items-center gap-2"
                   style={{
@@ -115,39 +165,49 @@ export default function Portfolio() {
                 >
                   {p.enProduction && (
                     <span
-                      aria-hidden
+                      aria-hidden="true"
                       style={{ width: 6, height: 6, borderRadius: 3, background: "#7FB58A" }}
                     />
                   )}
                   {t(`${p.id}Badge`)}
                 </div>
                 <h3
+                  translate="no"
                   style={{
                     fontFamily: "var(--font-syne)",
                     fontWeight: 600,
-                    fontSize: "clamp(26px, 2.8vw, 36px)",
-                    lineHeight: 1.1,
+                    fontSize: "clamp(30px, 3.4vw, 44px)",
+                    lineHeight: 1.05,
                     letterSpacing: "-0.02em",
                     color: "var(--text)",
-                    marginBottom: 8,
+                    marginBottom: 12,
                   }}
                 >
                   {t(`${p.id}Name`)}
                 </h3>
                 <p
                   style={{
-                    fontSize: 17,
+                    fontSize: 18,
                     lineHeight: 1.5,
                     color: "var(--text)",
-                    marginBottom: 16,
-                    maxWidth: 480,
+                    marginBottom: 20,
+                    maxWidth: 460,
                   }}
                 >
                   {t(`${p.id}For`)}
                 </p>
-                {/* Trois étapes numérotées plutôt qu'un paragraphe : on lit ce que
-                    fait la personne, ce que fait l'outil, et ce qui en sort. */}
-                <ol className="list-none m-0 p-0" style={{ maxWidth: 480 }}>
+                <a
+                  href={p.href}
+                  {...(p.externe ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                  className="lien-or inline-flex items-center gap-2 text-[15px] font-medium"
+                >
+                  {t(`${p.id}Link`)}
+                  <Fleche />
+                </a>
+              </div>
+
+              <div>
+                <ol className="list-none m-0 p-0">
                   {(t.raw(`${p.id}Steps`) as string[]).map((etape, i) => (
                     <li
                       key={etape}
@@ -155,16 +215,13 @@ export default function Portfolio() {
                       style={{
                         gridTemplateColumns: "28px minmax(0, 1fr)",
                         padding: "10px 0",
-                        borderTop: "1px solid var(--border)",
+                        borderTop: i === 0 ? "none" : "1px solid var(--border)",
                         fontSize: 15,
                         lineHeight: 1.55,
                       }}
                     >
                       <span
-                        style={{
-                          color: "var(--gold-light)",
-                          fontVariantNumeric: "tabular-nums",
-                        }}
+                        style={{ color: "var(--gold-light)", fontVariantNumeric: "tabular-nums" }}
                       >
                         {i + 1}
                       </span>
@@ -179,8 +236,6 @@ export default function Portfolio() {
                     color: "var(--text-muted)",
                     paddingTop: 12,
                     borderTop: "1px solid var(--border)",
-                    marginBottom: 24,
-                    maxWidth: 480,
                   }}
                 >
                   {t(`${p.id}Note`)}
@@ -192,8 +247,7 @@ export default function Portfolio() {
                     style={{
                       borderLeft: "2px solid var(--gold)",
                       paddingLeft: 16,
-                      marginBottom: 24,
-                      maxWidth: 480,
+                      marginTop: 20,
                     }}
                   >
                     <p
@@ -202,32 +256,22 @@ export default function Portfolio() {
                     >
                       {t(`${p.id}Quote`)}
                     </p>
-                    <footer
-                      style={{ marginTop: 8, fontSize: 13, color: "var(--text-muted)" }}
-                    >
+                    <footer style={{ marginTop: 8, fontSize: 13, color: "var(--text-muted)" }}>
                       {t(`${p.id}QuoteBy`)}
                     </footer>
                   </blockquote>
                 )}
-
-                <a
-                  href={p.href}
-                  {...(p.externe ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-                  className="lien-or inline-flex items-center gap-2 text-[15px] font-medium"
-                >
-                  {t(`${p.id}Link`)}
-                  <Fleche />
-                </a>
               </div>
+            </div>
 
-              <div className={p.texteAGauche ? "" : "min-[1000px]:order-1"}>
-                <div className="mx-auto" style={{ maxWidth: p.largeurMaquette }}>
-                  <Maquette />
-                </div>
-              </div>
-            </article>
-          );
-        })}
+            <figure className="m-0">
+              <Ecrans id={p.id} />
+              <figcaption style={{ marginTop: 16, fontSize: 13, color: "var(--text-muted)" }}>
+                {t(`${p.id}Caption`)}
+              </figcaption>
+            </figure>
+          </article>
+        ))}
       </div>
     </section>
   );

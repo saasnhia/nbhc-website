@@ -108,13 +108,6 @@ export default function Footer() {
                 {t(`sectorLinks.${slug}`)}
               </a>
             ))}
-            <a
-              href={`/${locale}/tarifs`}
-              className={CLASSE_LIEN}
-              style={{ color: "var(--text-muted)" }}
-            >
-              {t("pricing")}
-            </a>
           </div>
         </div>
 

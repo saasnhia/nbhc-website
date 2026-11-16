@@ -11,37 +11,37 @@
     "custom": "Custom tools"
   },
   "hero": {
-    "titleLine1": "Quotes, video editing, job applications:",
-    "titleLine2": "we build business software.",
-    "titleLine3": "The next one can be yours.",
-    "subtitle": "NBHC designs and develops software. Devizly for quotes and invoices, Vlogyz for video editing, internbullet for job applications. And, for companies whose trade fits no off-the-shelf software, a tool built around their rules.",
+    "titleLine1": "We build business software.",
+    "titleLine2": "The next one can be yours.",
+    "subtitle": "One product live, two in preparation, and a custom tool under way for a travel agency. Here are their real screens.",
     "ctaPrimary": "Talk about your tool",
     "ctaSecondary": "See the products",
-    "index": {
-      "title": "What we build",
-      "status": "Status",
+    "ctaNote": "30 minutes, free",
+    "tiles": {
       "devizly": {
         "name": "Devizly",
         "what": "Quotes and invoices for freelancers",
-        "status": "Live"
+        "status": "Live",
+        "alt": "Real Devizly screen: a quote as the client receives it"
       },
       "vlogyz": {
         "name": "Vlogyz",
         "what": "Video editing for creators",
-        "status": "Coming soon"
+        "status": "Waiting list",
+        "alt": "Frame from a Vlogyz presentation video: four detected keywords and their illustration shots"
       },
       "internbullet": {
         "name": "internbullet",
         "what": "Internship, work-study and job applications",
-        "status": "In preparation"
-      },
-      "surMesure": {
-        "name": "Custom tools",
-        "what": "The tool built around your rules",
-        "status": "One project under way"
+        "status": "In preparation",
+        "alt": "Real internbullet screen: a ready application"
       }
     },
-    "ctaNote": "30 minutes, free. If a tool is not the right answer, we tell you."
+    "custom": {
+      "name": "Custom tools",
+      "what": "The tool built around your rules",
+      "status": "One project under way"
+    }
   },
   "showcase": {
     "eyebrow": "IN ACTION",
@@ -355,20 +355,6 @@
     "internbulletQuote": "I found my internship with the first version of this tool. I am now preparing it to open it to other students.",
     "internbulletQuoteBy": "Haroun Chikh, founder of NBHC",
     "internbulletLink": "Get notified at opening",
-    "internbulletDemo": {
-      "company": "Atelier Morel · Lyon",
-      "offer": "Design office internship, March to August 2027",
-      "status": "To review",
-      "readLabel": "Read on their website",
-      "excerpt": "“We welcome two interns to the design office every year.”",
-      "excerptSource": "Careers page",
-      "subjectLabel": "Subject",
-      "subject": "Application for a design office internship",
-      "body": "Dear Sir or Madam, your Careers page says you welcome two interns to the design office every year. I am looking for an internship from March to August 2027 and would like to apply.",
-      "checked": "Email reviewed",
-      "send": "Send",
-      "caption": "Example: fictional company. No email is sent before it has been reviewed."
-    },
     "devizlySteps": [
       "You describe the job in plain language",
       "Devizly drafts the quote, you adjust it",
@@ -387,68 +373,18 @@
       "You review, then you send"
     ],
     "internbulletNote": "In France or abroad. Internships and work-study first, fixed-term and permanent jobs next.",
-    "devizlyDemo": {
-      "promptLabel": "What the tradesperson writes",
-      "prompt": "Replacement of a 200 L water heater, removal of the old one, connections and commissioning.",
-      "number": "Quote D-2026-114",
-      "client": "Mr and Mrs Laurent",
-      "l1": {
-        "label": "200 L electric water heater",
-        "qty": "1 × €689.00",
-        "amount": "€689.00"
-      },
-      "l2": {
-        "label": "Removal and installation",
-        "qty": "4 h × €55.00",
-        "amount": "€220.00"
-      },
-      "l3": {
-        "label": "Connections and commissioning",
-        "qty": "flat fee",
-        "amount": "€140.00"
-      },
-      "htLabel": "Total excl. VAT",
-      "ht": "€1,049.00",
-      "tvaLabel": "VAT 10%",
-      "tva": "€104.90",
-      "ttcLabel": "Total incl. VAT",
-      "ttc": "€1,153.90",
-      "signedTitle": "Signed online",
-      "signedText": "by the client, from their phone",
-      "paidTitle": "Deposit paid",
-      "paidText": "30% · €346.17 through Stripe",
-      "caption": "Example quote, fictional client and amounts."
-    },
-    "vlogyzDemo": {
-      "transcriptLabel": "The footage transcript, what is struck through is cut",
-      "t1": {
-        "time": "00:00",
-        "before": "So today, ",
-        "cut": "um, ",
-        "after": "we are trying three places in Lyon."
-      },
-      "t2": {
-        "time": "00:06",
-        "before": "",
-        "cut": "silence · 1.4 s",
-        "after": ""
-      },
-      "t3": {
-        "time": "00:08",
-        "before": "The first one, ",
-        "cut": "like, ",
-        "after": "is a neighbourhood bakery."
-      },
-      "timelineLabel": "The timeline",
-      "durations": "4 min 12 → 3 min 27",
-      "kept": "kept",
-      "cut": "cut",
-      "subtitleLabel": "The subtitle, placed on the video",
-      "subBefore": "we are trying ",
-      "subWord": "three places",
-      "subAfter": " in Lyon",
-      "caption": "Fictional example of vlog footage."
-    }
+    "devizlyAlt1": "Devizly “New quote” screen: the job described in plain language on the left, the quote lines on the right",
+    "devizlyAlt2": "The quote as the client receives it: lines, total, buttons to pay, accept and sign",
+    "devizlyBar2": "The quote, client side",
+    "devizlyCaption": "Real Devizly screens, with a demonstration account and clients. The interface is in French.",
+    "vlogyzAlt1": "Frame from a Vlogyz presentation video: four keywords detected in the voice, and the illustration shot chosen for each",
+    "vlogyzBar1": "Presentation video · b-roll",
+    "vlogyzCaption": "Frame taken from a Vlogyz presentation video. The application is not open to the public yet.",
+    "internbulletAlt1": "An application in internbullet: the drafted email, the address and the facts found on the company’s website, each with its source page",
+    "internbulletBar1": "internbullet · a ready application",
+    "internbulletAlt2": "The list of applications in internbullet: the status of each and what remains to be done",
+    "internbulletBar2": "internbullet · tracking",
+    "internbulletCaption": "Real internbullet screens, with fictional companies and applicant. The interface is in French."
   },
   "pricing": {
     "eyebrow": "PRICING",
@@ -491,7 +427,6 @@
     "navTitle": "Navigation",
     "howItWorks": "Method",
     "sectors": "Who it's for",
-    "pricing": "Price grid and simulator",
     "products": "Products",
     "blog": "Blog",
     "faq": "FAQ",
@@ -1623,5 +1558,32 @@
         "text": "No date is announced until the build has started."
       }
     }
+  },
+  "trust": {
+    "eyebrow": "Why us",
+    "title": "We are starting out, and we say so",
+    "subtitle": "NBHC has not delivered a custom tool to a client yet. Rather than dress that up, here is what exists today, and what protects you if you are among the first.",
+    "factsTitle": "What exists today",
+    "f1Title": "One product live",
+    "f1Text": "Devizly is open: you can try it before you even talk to us.",
+    "f1Link": "Try Devizly",
+    "f1Href": "https://devizly.fr",
+    "f2Title": "A tool its founder uses",
+    "f2Text": "internbullet helped the founder find their own internship, before being prepared for others.",
+    "f2Link": "See its screens",
+    "f2Href": "#internbullet",
+    "f3Title": "One custom project under way",
+    "f3Text": "A quoting tool for a travel agency: demonstration shown, build planned from February 2027.",
+    "f3Link": "See where it stands",
+    "f3Href": "#sur-mesure",
+    "guaranteesTitle": "What protects you",
+    "g1Title": "You talk to the person who builds",
+    "g1Text": "No intermediary between you and the person writing the code.",
+    "g2Title": "You see before you commit",
+    "g2Text": "A demonstration on one of your cases, before any signature. That is what we did for the agency.",
+    "g3Title": "Scope and price are written down",
+    "g3Text": "Before we start: what will be built, and what you will pay.",
+    "g4Title": "What is built belongs to you",
+    "g4Text": "You keep it if the collaboration ends."
   }
 }

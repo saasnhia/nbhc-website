@@ -11,37 +11,37 @@
     "custom": "Sur mesure"
   },
   "hero": {
-    "titleLine1": "Devis, montage vidéo, candidatures :",
-    "titleLine2": "on construit des logiciels métier.",
-    "titleLine3": "Le prochain peut être le vôtre.",
-    "subtitle": "NBHC conçoit et développe des logiciels. Devizly pour les devis et les factures, Vlogyz pour le montage vidéo, internbullet pour les candidatures. Et, pour les entreprises dont le métier ne rentre dans aucun logiciel du marché, un outil construit autour de leurs règles.",
+    "titleLine1": "On construit des logiciels métier.",
+    "titleLine2": "Le prochain peut être le vôtre.",
+    "subtitle": "Un produit en production, deux en préparation, et un outil sur mesure en cours pour une agence de voyage. Voici leurs vrais écrans.",
     "ctaPrimary": "Parler de votre outil",
     "ctaSecondary": "Voir les produits",
-    "index": {
-      "title": "Ce qu’on construit",
-      "status": "État",
+    "ctaNote": "30 minutes, gratuit",
+    "tiles": {
       "devizly": {
         "name": "Devizly",
         "what": "Devis et factures pour indépendants",
-        "status": "En production"
+        "status": "En production",
+        "alt": "Écran réel de Devizly : un devis tel que le client le reçoit"
       },
       "vlogyz": {
         "name": "Vlogyz",
         "what": "Montage vidéo pour créateurs",
-        "status": "Bientôt disponible"
+        "status": "Liste d’attente",
+        "alt": "Image d’une vidéo de présentation de Vlogyz : quatre mots-clés détectés et leurs plans d’illustration"
       },
       "internbullet": {
         "name": "internbullet",
         "what": "Candidatures de stage, d’alternance et d’emploi",
-        "status": "En préparation"
-      },
-      "surMesure": {
-        "name": "Sur mesure",
-        "what": "L’outil construit autour de vos règles",
-        "status": "Un projet en cours"
+        "status": "En préparation",
+        "alt": "Écran réel d’internbullet : la fiche d’une candidature prête"
       }
     },
-    "ctaNote": "30 minutes, gratuit. Si un outil n’est pas la bonne réponse, on vous le dit."
+    "custom": {
+      "name": "Sur mesure",
+      "what": "L’outil construit autour de vos règles",
+      "status": "Un projet en cours"
+    }
   },
   "showcase": {
     "eyebrow": "EN ACTION",
@@ -355,20 +355,6 @@
     "internbulletQuote": "J’ai trouvé mon stage avec la première version de cet outil. Je la prépare maintenant pour l’ouvrir à d’autres étudiants.",
     "internbulletQuoteBy": "Haroun Chikh, fondateur de NBHC",
     "internbulletLink": "Être prévenu de l’ouverture",
-    "internbulletDemo": {
-      "company": "Atelier Morel · Lyon",
-      "offer": "Stage au bureau d’études, mars à août 2027",
-      "status": "À relire",
-      "readLabel": "Lu sur leur site",
-      "excerpt": "« Nous accueillons chaque année deux stagiaires au bureau d’études. »",
-      "excerptSource": "Page Recrutement",
-      "subjectLabel": "Objet",
-      "subject": "Candidature pour un stage au bureau d’études",
-      "body": "Madame, Monsieur, votre page Recrutement indique que vous accueillez chaque année deux stagiaires au bureau d’études. Je cherche un stage de mars à août 2027 et je vous adresse ma candidature.",
-      "checked": "Mail relu",
-      "send": "Envoyer",
-      "caption": "Exemple : entreprise fictive. Aucun mail ne part sans avoir été relu."
-    },
     "devizlySteps": [
       "Vous décrivez la prestation en langage courant",
       "Devizly rédige le devis, vous l’ajustez",
@@ -387,68 +373,18 @@
       "Vous relisez, puis vous envoyez"
     ],
     "internbulletNote": "En France comme à l’étranger. Les stages et les alternances d’abord, les CDD et les CDI ensuite.",
-    "devizlyDemo": {
-      "promptLabel": "Ce que l’artisan écrit",
-      "prompt": "Remplacement d’un chauffe-eau 200 L, dépose de l’ancien, raccordements et mise en service.",
-      "number": "Devis D-2026-114",
-      "client": "M. et Mme Laurent",
-      "l1": {
-        "label": "Chauffe-eau électrique 200 L",
-        "qty": "1 × 689,00 €",
-        "amount": "689,00 €"
-      },
-      "l2": {
-        "label": "Dépose et pose",
-        "qty": "4 h × 55,00 €",
-        "amount": "220,00 €"
-      },
-      "l3": {
-        "label": "Raccordements et mise en service",
-        "qty": "forfait",
-        "amount": "140,00 €"
-      },
-      "htLabel": "Total HT",
-      "ht": "1 049,00 €",
-      "tvaLabel": "TVA 10 %",
-      "tva": "104,90 €",
-      "ttcLabel": "Total TTC",
-      "ttc": "1 153,90 €",
-      "signedTitle": "Signé en ligne",
-      "signedText": "par le client, depuis son téléphone",
-      "paidTitle": "Acompte réglé",
-      "paidText": "30 % · 346,17 € par Stripe",
-      "caption": "Exemple de devis, client et montants fictifs."
-    },
-    "vlogyzDemo": {
-      "transcriptLabel": "La transcription du rush, ce qui est barré est coupé",
-      "t1": {
-        "time": "00:00",
-        "before": "Alors aujourd’hui, ",
-        "cut": "euh, ",
-        "after": "on teste trois adresses à Lyon."
-      },
-      "t2": {
-        "time": "00:06",
-        "before": "",
-        "cut": "silence · 1,4 s",
-        "after": ""
-      },
-      "t3": {
-        "time": "00:08",
-        "before": "La première, ",
-        "cut": "du coup, ",
-        "after": "c’est une boulangerie de quartier."
-      },
-      "timelineLabel": "La ligne de temps",
-      "durations": "4 min 12 → 3 min 27",
-      "kept": "gardé",
-      "cut": "coupé",
-      "subtitleLabel": "Le sous-titre, posé sur la vidéo",
-      "subBefore": "on teste ",
-      "subWord": "trois adresses",
-      "subAfter": " à Lyon",
-      "caption": "Exemple fictif d’un rush de vlog."
-    }
+    "devizlyAlt1": "Écran « Nouveau devis » de Devizly : la prestation décrite en langage courant à gauche, les lignes du devis à droite",
+    "devizlyAlt2": "Le devis tel que le client le reçoit : lignes, total, boutons pour payer, accepter et signer",
+    "devizlyBar2": "Le devis, côté client",
+    "devizlyCaption": "Écrans réels de Devizly, avec un compte et des clients de démonstration.",
+    "vlogyzAlt1": "Image d’une vidéo de présentation de Vlogyz : quatre mots-clés détectés dans la voix, et le plan d’illustration choisi pour chacun",
+    "vlogyzBar1": "Vidéo de présentation · b-roll",
+    "vlogyzCaption": "Image extraite d’une vidéo de présentation de Vlogyz. L’application n’est pas encore ouverte au public.",
+    "internbulletAlt1": "Fiche d’une candidature dans internbullet : le mail rédigé, l’adresse et les faits relevés sur le site de l’entreprise, chacun avec sa page d’origine",
+    "internbulletBar1": "internbullet · une candidature prête",
+    "internbulletAlt2": "Liste des candidatures dans internbullet : l’état de chacune et ce qu’il reste à faire",
+    "internbulletBar2": "internbullet · le suivi",
+    "internbulletCaption": "Écrans réels d’internbullet, avec des entreprises et un candidat fictifs."
   },
   "pricing": {
     "eyebrow": "TARIFS",
@@ -491,7 +427,6 @@
     "navTitle": "Navigation",
     "howItWorks": "Méthode",
     "sectors": "Pour qui",
-    "pricing": "Grille de prix et simulateur",
     "products": "Produits",
     "blog": "Blog",
     "faq": "FAQ",
@@ -1623,5 +1558,32 @@
         "text": "Aucune date n’est annoncée tant que la construction n’a pas commencé."
       }
     }
+  },
+  "trust": {
+    "eyebrow": "Pourquoi nous",
+    "title": "On démarre, et on vous le dit",
+    "subtitle": "NBHC n’a pas encore de client livré en sur-mesure. Plutôt que de l’habiller, voici ce qui existe aujourd’hui, et ce qui vous protège si vous êtes parmi les premiers.",
+    "factsTitle": "Ce qui existe aujourd’hui",
+    "f1Title": "Un produit en production",
+    "f1Text": "Devizly est ouvert : vous pouvez l’essayer avant même de nous parler.",
+    "f1Link": "Essayer Devizly",
+    "f1Href": "https://devizly.fr",
+    "f2Title": "Un outil que son fondateur utilise",
+    "f2Text": "internbullet lui a servi à trouver son propre stage, avant d’être préparé pour d’autres.",
+    "f2Link": "Voir ses écrans",
+    "f2Href": "#internbullet",
+    "f3Title": "Un projet sur mesure en cours",
+    "f3Text": "Un outil de devis pour une agence de voyage : démonstration présentée, construction prévue à partir de février 2027.",
+    "f3Link": "Voir où il en est",
+    "f3Href": "#sur-mesure",
+    "guaranteesTitle": "Ce qui vous protège",
+    "g1Title": "Vous parlez à celui qui construit",
+    "g1Text": "Pas d’intermédiaire entre vous et la personne qui écrit le code.",
+    "g2Title": "Vous voyez avant de vous engager",
+    "g2Text": "Une démonstration sur l’un de vos cas, avant toute signature. C’est ce qu’on a fait pour l’agence.",
+    "g3Title": "Le périmètre et le prix sont écrits",
+    "g3Text": "Avant de commencer : ce qui sera construit, et ce que vous paierez.",
+    "g4Title": "Ce qui est construit vous appartient",
+    "g4Text": "Vous le gardez si la collaboration s’arrête."
   }
 }
