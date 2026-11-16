@@ -106,7 +106,6 @@ export default function SectorPageContent({
    *  pas d'un octet. */
   mise?: "classique" | "asp";
 }) {
-  const tPricing = useTranslations("pricing");
   const asp = mise === "asp";
   return (
     <main style={{ background: "var(--bg)" }}>
@@ -535,52 +534,6 @@ export default function SectorPageContent({
           <p style={{ color: "var(--text-muted)", fontSize: 14, lineHeight: 1.7, margin: 0 }}>
             {content.geoText}
           </p>
-        </section>
-
-        {/* Pricing */}
-        <section style={{ marginBottom: 64 }}>
-          <h2
-            style={{
-              fontFamily: "var(--font-syne)",
-              fontSize: "clamp(22px, 3vw, 32px)",
-              fontWeight: 700,
-              color: "var(--text)",
-              marginBottom: 16,
-              letterSpacing: "-0.5px",
-            }}
-          >
-            {content.pricingTitle}
-          </h2>
-          <p style={{ color: "var(--text-muted)", fontSize: 15, lineHeight: 1.7, maxWidth: 680, marginBottom: content.pricingNote ? 16 : 0 }}>
-            {content.pricingIntro}
-          </p>
-          {content.pricingNote && (
-            <p
-              style={{
-                color: "var(--gold-light)",
-                fontSize: 14,
-                lineHeight: 1.7,
-                maxWidth: 680,
-                margin: 0,
-              }}
-            >
-              {content.pricingNote}
-            </p>
-          )}
-          <div style={{ marginTop: 20, maxWidth: 680 }}>
-            <p style={{ color: "var(--text-muted)", fontSize: 13, lineHeight: 1.7, margin: "0 0 6px" }}>
-              {tPricing("footnote2")}
-            </p>
-            <p style={{ color: "var(--text-muted)", fontSize: 13, lineHeight: 1.7, margin: "0 0 14px" }}>
-              {tPricing("footnote3")}
-            </p>
-            <Link
-              href={`/${locale}/tarifs`}
-              style={{ color: "var(--gold-light)", textDecoration: "none", fontSize: 14, fontWeight: 600 }}
-            >
-              {tPricing("ctaButton")}
-            </Link>
-          </div>
         </section>
 
         {/* FAQ */}

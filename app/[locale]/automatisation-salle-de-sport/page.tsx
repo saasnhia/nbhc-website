@@ -109,7 +109,7 @@ const contentFr: SectorContent = {
     {
       question: "On est une petite structure, est-ce que c'est fait pour nous ?",
       answer:
-        "Oui — le format Essentiel à partir de 200 € HT est justement pensé pour tester une première automatisation sans engager un gros budget. Le diagnostic de 30 minutes permet de voir concrètement ce qui vaut le coup pour votre taille de structure.",
+        "Oui. On commence par une seule automatisation, pour la tester sans engager un gros budget. Le diagnostic de 30 minutes permet de voir concrètement ce qui vaut le coup pour votre taille de structure.",
     },
   ],
   ctaText:
@@ -213,7 +213,7 @@ const contentEn: SectorContent = {
     {
       question: "We're a small structure, is this for us?",
       answer:
-        "Yes — the Essentiel format from €200 excl. VAT is designed precisely to test a first automation without committing a large budget. The 30-minute diagnostic shows concretely what's worth it for your size of structure.",
+        "Yes. We start with a single automation, so you can test it without committing a large budget. The 30-minute diagnostic shows concretely what's worth it for your size of structure.",
     },
   ],
   ctaText:

@@ -104,7 +104,9 @@ type ServiceOffer = {
   url: string;
 };
 
-export function serviceSchema(locale: "fr" | "en", offers: ServiceOffer[]) {
+/* Les pages passent encore leurs offres ; elles ne sont plus publiees : pas de
+   prix sur le site pour l'instant, donc pas de prix dans le balisage non plus. */
+export function serviceSchema(locale: "fr" | "en", _offers: ServiceOffer[]) {
   const isFr = locale === "fr";
   return {
     "@context": "https://schema.org",
@@ -120,22 +122,6 @@ export function serviceSchema(locale: "fr" | "en", offers: ServiceOffer[]) {
     provider: { "@id": `${SITE_URL}/#organization` },
     areaServed: { "@type": "Country", name: "France" },
     url: `${SITE_URL}/${locale}/agentic-ai`,
-    offers: offers.map((o) => ({
-      "@type": "Offer",
-      name: o.name,
-      price: o.price,
-      priceCurrency: o.priceCurrency ?? "EUR",
-      description: o.description,
-      url: o.url,
-      // MadeToOrder, et non InStock. Le vocabulaire schema.org (ItemAvailability,
-      // V30.0 du 19/03/2026) definit InStock comme « the item is IN STOCK » et
-      // MadeToOrder comme « the item is MADE TO ORDER (CUSTOM MADE) ». Une
-      // automatisation sur mesure est le second, pas le premier.
-      // La question de savoir si un Offer a sa place sur ces pages reste entiere
-      // et va en phase C : une valeur plus exacte vaut mieux qu une valeur
-      // fausse en attendant qu on decide du schema lui-meme.
-      availability: "https://schema.org/MadeToOrder",
-    })),
   };
 }
 

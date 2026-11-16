@@ -84,7 +84,7 @@ const contentFr: SectorContent = {
     {
       question: "On est un petit club, on n'a clairement pas de budget pour ça.",
       answer:
-        "C'est justement pour ça qu'existe l'offre asso/solidaire à partir de 1 000 € HT. Le diagnostic de 30 minutes est gratuit dans tous les cas — on regarde ensemble ce qui est réaliste pour votre budget avant de s'engager sur quoi que ce soit.",
+        "C'est justement pour ça qu'existe une offre solidaire pour les associations. Le diagnostic de 30 minutes est gratuit dans tous les cas : on regarde ensemble ce qui est réaliste pour votre budget avant de s'engager sur quoi que ce soit.",
     },
     {
       question: "Notre trésorier n'est pas du tout technique, il va s'y retrouver ?",
@@ -181,7 +181,7 @@ const contentEn: SectorContent = {
     {
       question: "We're a small club, we clearly don't have the budget for this.",
       answer:
-        "That's exactly why the solidarity offer from €1,000 excl. VAT exists. The 30-minute diagnostic is free either way — we look together at what's realistic for your budget before committing to anything.",
+        "That's exactly why a solidarity offer exists for clubs. The 30-minute diagnostic is free either way: we look together at what's realistic for your budget before committing to anything.",
     },
     {
       question: "Our treasurer isn't technical at all, will they manage?",
