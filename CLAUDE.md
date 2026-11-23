@@ -95,11 +95,11 @@ Instruments dans `C:\finpilote\nbhc-broll\airbnb-demo\`. Le comptage des blocs
 passe par `inventaire_blocs_ast.js`, qui **calcule** son total depuis
 `journal-verdicts.json` — **aucun chiffre ne s'écrit à la main**.
 
-## Navigation du code
+## Skills
 
-Avant de grep-er pour comprendre la structure : `graphify-out/GRAPH_REPORT.md`
-(god nodes, communautés) et `graphify-out/graph.json` (`graphify query "<question>"`).
-Généré en local par AST, sans appel LLM. Régénérer avec `graphify update nbhc-website`.
+Skills : ce fichier passe avant tout skill. En cas de conflit, applique ce fichier
+et signale-le. Un skill s'installe au niveau du projet, après lecture de tous ses
+fichiers, jamais au niveau global.
 
 ## Ce qui ne bouge pas sans GO
 
