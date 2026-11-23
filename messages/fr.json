@@ -32,9 +32,9 @@
       },
       "internbullet": {
         "name": "internbullet",
-        "what": "L’IA cherche les entreprises, prépare le mail et le CV",
+        "what": "Candidatures de stage, d’alternance et d’emploi",
         "status": "En préparation",
-        "alt": "Écran réel d’internbullet : la fiche d’une candidature prête"
+        "alt": "Écran d’internbullet : la fiche d’une candidature prête, avec un jeu de données fictif"
       }
     },
     "custom": {
@@ -80,9 +80,8 @@
     "vlogyzFor": "Montage vidéo pour créateurs de contenu",
     "internbulletName": "internbullet",
     "internbulletBadge": "En préparation",
-    "internbulletFor": "L’IA cherche votre stage ou votre alternance avec vous",
-    "internbulletQuote": "J’ai trouvé mon stage avec la première version de cet outil. Je la prépare maintenant pour l’ouvrir à d’autres étudiants.",
-    "internbulletQuoteBy": "Haroun Chikh, fondateur de NBHC",
+    "internbulletFor": "Candidatures directes : stage, alternance, emploi",
+    "internbulletQuote": "Le fondateur de NBHC a trouvé son stage avec sa propre méthode et Claude Code. internbullet veut en faire un outil pour d’autres étudiants.",
     "internbulletLink": "Être prévenu de l’ouverture",
     "devizlySteps": [
       "Vous décrivez la prestation en langage courant",
@@ -97,9 +96,9 @@
     ],
     "vlogyzNote": "Pas encore ouvert au public : la liste d’attente est sur vlogyz.com.",
     "internbulletSteps": [
-      "Vous donnez votre CV, vos expériences et ce que vous cherchez",
-      "L’IA cherche elle-même les entreprises qui correspondent à votre profil",
-      "Pour chacune : un mail personnalisé et un CV adapté, à joindre et à relire avant l’envoi"
+      "Vous donnerez votre CV, vos expériences et ce que vous cherchez",
+      "L’IA cherchera les entreprises qui correspondent à votre profil",
+      "Pour chacune, elle préparera un mail personnalisé et un CV adapté, à relire avant l’envoi"
     ],
     "internbulletNote": "Stage, alternance, puis CDD et CDI, en France comme à l’étranger. Rien ne part sans que vous l’ayez relu.",
     "devizlyAlt1": "Écran « Nouveau devis » de Devizly : la prestation décrite en langage courant à gauche, les lignes du devis à droite",
@@ -109,11 +108,14 @@
     "vlogyzAlt1": "Image d’une vidéo de présentation de Vlogyz : quatre mots-clés détectés dans la voix, et le plan d’illustration choisi pour chacun",
     "vlogyzBar1": "Vidéo de présentation · b-roll",
     "vlogyzCaption": "Image extraite d’une vidéo de présentation de Vlogyz. L’application n’est pas encore ouverte au public.",
-    "internbulletAlt1": "Fiche d’une candidature dans internbullet : le mail préparé par l’IA à partir des faits relevés sur le site de l’entreprise, chacun avec sa page d’origine",
-    "internbulletBar1": "internbullet · le mail préparé par l’IA",
+    "internbulletAlt1": "Fiche d’une candidature dans internbullet : l’adresse trouvée sur le site de l’entreprise, deux faits relevés avec leur page d’origine, le mail, et les boutons pour l’ouvrir dans sa messagerie",
+    "internbulletBar1": "internbullet · la fiche d’une candidature",
     "internbulletAlt2": "Liste des candidatures dans internbullet : l’état de chacune et ce qu’il reste à faire",
     "internbulletBar2": "internbullet · le suivi",
-    "internbulletCaption": "Écrans réels d’internbullet, avec des entreprises et un candidat fictifs. La recherche d’entreprises par l’IA et le CV adapté sont en préparation : ils ne sont pas montrés ici."
+    "internbulletCaption": "Écrans d’internbullet tel qu’il est aujourd’hui, avec un jeu de données fictif. Le mail fait partie de ce jeu : l’outil ne l’écrit pas. La recherche par l’IA et le CV adapté sont en construction et ne sont pas montrés.",
+    "internbulletStepsTitle": "En construction",
+    "internbulletTodayTitle": "Aujourd’hui, dans la version de test, pas encore ouverte",
+    "internbulletToday": "Vous apportez une entreprise ou une offre. L’outil vérifie son site et cherche son adresse publiée. Puis vous écrivez et envoyez vous-même."
   },
   "faq": {
     "eyebrow": "FAQ",
@@ -128,7 +130,7 @@
     "q4": "À qui appartient l’outil une fois livré ?",
     "a4": "À vous. Ce qu’on construit pour vous vous appartient, et vous le gardez si la collaboration s’arrête.",
     "q5": "Quand internbullet sera-t-il ouvert ?",
-    "a5": "Il est en préparation. L’IA y cherche les entreprises qui correspondent à votre profil, puis prépare pour chacune un mail et un CV adapté. Le fondateur de NBHC a trouvé son propre stage avec la première version ; l’ouverture aux étudiants vient ensuite, d’abord pour les stages et les alternances, puis pour les CDD et les CDI. Écrivez à contact@nbhc.fr pour être prévenu.",
+    "a5": "Il est en préparation. Dans la version actuelle, pas encore ouverte, vous apportez une entreprise ou une offre ; l’outil vérifie son site et cherche son adresse publiée, puis vous écrivez et envoyez vous-même. En construction : l’IA cherchera les entreprises qui correspondent à votre profil, puis préparera pour chacune un mail et un CV adapté, à relire avant l’envoi. Écrivez à contact@nbhc.fr pour être prévenu de l’ouverture.",
     "q6": "Et si un outil n’est pas la bonne réponse ?",
     "a6": "On vous le dit au premier échange. Un tableur bien tenu ou un logiciel du marché suffit parfois, et dans ce cas on ne construit rien."
   },
@@ -1089,8 +1091,8 @@
     "f1Text": "Devizly est ouvert : vous pouvez l’essayer avant même de nous parler.",
     "f1Link": "Essayer Devizly",
     "f1Href": "https://devizly.fr",
-    "f2Title": "Un outil que son fondateur a utilisé",
-    "f2Text": "Avec internbullet, il a trouvé son propre stage : l’IA cherche les entreprises, prépare les mails et les CV.",
+    "f2Title": "Une méthode testée par son fondateur",
+    "f2Text": "Il a trouvé son stage avec sa propre méthode et Claude Code. internbullet veut en faire un outil, en préparation.",
     "f2Link": "Voir ses écrans",
     "f2Href": "#internbullet",
     "f3Title": "Un projet sur mesure en cours",

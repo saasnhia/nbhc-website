@@ -32,9 +32,9 @@
       },
       "internbullet": {
         "name": "internbullet",
-        "what": "The AI finds companies, drafts the email and the CV",
+        "what": "Internship, work-study and job applications",
         "status": "In preparation",
-        "alt": "Real internbullet screen: a ready application"
+        "alt": "internbullet screen: a ready application, with a fictional data set"
       }
     },
     "custom": {
@@ -80,9 +80,8 @@
     "vlogyzFor": "Video editing for content creators",
     "internbulletName": "internbullet",
     "internbulletBadge": "In preparation",
-    "internbulletFor": "The AI looks for your internship or work-study with you",
-    "internbulletQuote": "I found my internship with the first version of this tool. I am now preparing it to open it to other students.",
-    "internbulletQuoteBy": "Haroun Chikh, founder of NBHC",
+    "internbulletFor": "Direct applications: internship, work-study, job",
+    "internbulletQuote": "The founder of NBHC found their internship with their own method and Claude Code. internbullet aims to turn it into a tool for other students.",
     "internbulletLink": "Get notified at opening",
     "devizlySteps": [
       "You describe the job in plain language",
@@ -97,9 +96,9 @@
     ],
     "vlogyzNote": "Not open to the public yet: the waiting list is on vlogyz.com.",
     "internbulletSteps": [
-      "You provide your CV, your experience and what you are looking for",
-      "The AI itself searches for the companies that match your profile",
-      "For each one: a personalised email and a tailored CV, to attach and review before sending"
+      "You will provide your CV, your experience and what you are looking for",
+      "The AI will search for the companies that match your profile",
+      "For each one, it will draft a personalised email and a tailored CV, to review before sending"
     ],
     "internbulletNote": "Internships, work-study, then fixed-term and permanent jobs, in France or abroad. Nothing is sent before you have reviewed it.",
     "devizlyAlt1": "Devizly “New quote” screen: the job described in plain language on the left, the quote lines on the right",
@@ -109,11 +108,14 @@
     "vlogyzAlt1": "Frame from a Vlogyz presentation video: four keywords detected in the voice, and the illustration shot chosen for each",
     "vlogyzBar1": "Presentation video · b-roll",
     "vlogyzCaption": "Frame taken from a Vlogyz presentation video. The application is not open to the public yet.",
-    "internbulletAlt1": "An application in internbullet: the email drafted by the AI from the facts found on the company’s website, each with its source page",
-    "internbulletBar1": "internbullet · the email drafted by the AI",
+    "internbulletAlt1": "An application in internbullet: the address found on the company’s website, two facts with their source page, the email, and the buttons to open it in one’s own mail app",
+    "internbulletBar1": "internbullet · an application page",
     "internbulletAlt2": "The list of applications in internbullet: the status of each and what remains to be done",
     "internbulletBar2": "internbullet · tracking",
-    "internbulletCaption": "Real internbullet screens, with fictional companies and applicant. The interface is in French. The AI company search and the tailored CV are in preparation: they are not shown here."
+    "internbulletCaption": "internbullet screens as it is today, with a fictional data set. The interface is in French. The email is part of that data set: the tool does not write it. The AI search and the tailored CV are under construction and are not shown.",
+    "internbulletStepsTitle": "Under construction",
+    "internbulletTodayTitle": "Today, in the test version, not yet open",
+    "internbulletToday": "You bring a company or a job posting. The tool checks its website and looks for its published address. Then you write and send the email yourself."
   },
   "faq": {
     "eyebrow": "FAQ",
@@ -128,7 +130,7 @@
     "q4": "Who owns the tool once delivered?",
     "a4": "You do. What we build for you belongs to you, and you keep it if the collaboration ends.",
     "q5": "When will internbullet open?",
-    "a5": "It is in preparation. The AI searches for the companies that match your profile, then drafts an email and a tailored CV for each. The founder of NBHC found their own internship with the first version; opening to students comes next, first for internships and work-study, then for fixed-term and permanent jobs. Write to contact@nbhc.fr to be notified.",
+    "a5": "It is in preparation. In the current version, not yet open, you bring a company or a job posting; the tool checks its website and looks for its published address, then you write and send the email yourself. Under construction: the AI will search for the companies that match your profile, then draft for each an email and a tailored CV, to review before sending. Write to contact@nbhc.fr to be notified at opening.",
     "q6": "What if a tool is not the right answer?",
     "a6": "We tell you during the first call. A well-kept spreadsheet or off-the-shelf software is sometimes enough, and in that case we build nothing."
   },
@@ -1089,8 +1091,8 @@
     "f1Text": "Devizly is open: you can try it before you even talk to us.",
     "f1Link": "Try Devizly",
     "f1Href": "https://devizly.fr",
-    "f2Title": "A tool its founder has used",
-    "f2Text": "With internbullet, the founder found their own internship: the AI searches for companies, drafts the emails and the CVs.",
+    "f2Title": "A method tested by its founder",
+    "f2Text": "The founder found their internship with their own method and Claude Code. internbullet aims to turn it into a tool, in preparation.",
     "f2Link": "See its screens",
     "f2Href": "#internbullet",
     "f3Title": "One custom project under way",

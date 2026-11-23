@@ -206,6 +206,31 @@ export default function Portfolio() {
               </div>
 
               <div>
+                {t.has(`${p.id}Today`) && (
+                  <div style={{ marginBottom: 24 }}>
+                    <div style={{ fontSize: 13, color: "var(--text)", marginBottom: 6 }}>
+                      {t(`${p.id}TodayTitle`)}
+                    </div>
+                    <p
+                      className="m-0"
+                      style={{ fontSize: 15, lineHeight: 1.6, color: "var(--text)" }}
+                    >
+                      {t(`${p.id}Today`)}
+                    </p>
+                  </div>
+                )}
+                {t.has(`${p.id}StepsTitle`) && (
+                  <div
+                    className="inline-flex items-center gap-2"
+                    style={{ fontSize: 13, color: "var(--gold-light)", marginBottom: 8 }}
+                  >
+                    <span
+                      aria-hidden="true"
+                      style={{ width: 6, height: 6, borderRadius: 3, background: "var(--gold)" }}
+                    />
+                    {t(`${p.id}StepsTitle`)}
+                  </div>
+                )}
                 <ol className="list-none m-0 p-0">
                   {(t.raw(`${p.id}Steps`) as string[]).map((etape, i) => (
                     <li
@@ -255,9 +280,11 @@ export default function Portfolio() {
                     >
                       {t(`${p.id}Quote`)}
                     </p>
-                    <footer style={{ marginTop: 8, fontSize: 13, color: "var(--text-muted)" }}>
-                      {t(`${p.id}QuoteBy`)}
-                    </footer>
+                    {t.has(`${p.id}QuoteBy`) && (
+                      <footer style={{ marginTop: 8, fontSize: 13, color: "var(--text-muted)" }}>
+                        {t(`${p.id}QuoteBy`)}
+                      </footer>
+                    )}
                   </blockquote>
                 )}
               </div>
