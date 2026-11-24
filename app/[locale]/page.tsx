@@ -11,7 +11,7 @@ import Footer from "@/components/Footer";
 import JsonLd from "@/components/JsonLd";
 import { breadcrumbSchema, faqPageSchema } from "@/lib/schema";
 
-const QUESTIONS = [1, 2, 3, 4, 5, 6] as const;
+const QUESTIONS = [1, 2, 3, 4, 5] as const;
 
 export default async function Home({
   params,
@@ -34,8 +34,8 @@ export default async function Home({
       ? "NBHC — Logiciels métier et outils sur mesure"
       : "NBHC — Business software and custom tools",
     description: isFr
-      ? "NBHC conçoit et développe des logiciels : Devizly, Vlogyz, internbullet, et des outils sur mesure pour les entreprises."
-      : "NBHC designs and develops software: Devizly, Vlogyz, internbullet, and custom tools for companies.",
+      ? "NBHC conçoit et développe des logiciels, Devizly et Vlogyz, et des outils sur mesure pour les entreprises."
+      : "NBHC designs and develops software, Devizly and Vlogyz, and custom tools for companies.",
     inLanguage: isFr ? "fr-FR" : "en-US",
     isPartOf: { "@id": "https://nbhc.fr/#website" },
     about: { "@id": "https://nbhc.fr/#organization" },

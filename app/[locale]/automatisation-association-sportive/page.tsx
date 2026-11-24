@@ -69,22 +69,12 @@ const contentFr: SectorContent = {
   geoTitle: "Vernon et sa périphérie (Eure)",
   geoText:
     "L'offre s'adresse à tout club loi 1901, quelle que soit sa discipline ou sa localisation.",
-  pricingTitle: "Tarification",
-  pricingIntro:
-    "Diagnostic gratuit de 30 minutes, sans engagement, quelle que soit la taille du club. La gestion des inscriptions et certificats, par exemple, démarre à 1 000 € HT (tarif solidaire) — une automatisation sur mesure, configurée pour votre club.",
-  pricingNote: (
-    <>
-      Offre asso/solidaire, pour une association loi 1901 avec une seule automatisation :{" "}
-      <s style={{ fontWeight: 400, opacity: 0.6 }}>2 000 € HT</s> 1 000 € HT.{" "}
-      Aucun résultat chiffré n’est promis : NBHC n’a aucune référence client association sportive à ce jour.
-    </>
-  ),
   faqTitle: "Questions fréquentes",
   faq: [
     {
       question: "On est un petit club, on n'a clairement pas de budget pour ça.",
       answer:
-        "C'est justement pour ça qu'existe une offre solidaire pour les associations. Le diagnostic de 30 minutes est gratuit dans tous les cas : on regarde ensemble ce qui est réaliste pour votre budget avant de s'engager sur quoi que ce soit.",
+        "Le diagnostic de 30 minutes est gratuit : on regarde ensemble ce qui est réaliste pour votre budget avant de s'engager sur quoi que ce soit. Et si un tableur bien tenu suffit, on vous le dit.",
     },
     {
       question: "Notre trésorier n'est pas du tout technique, il va s'y retrouver ?",
@@ -98,7 +88,7 @@ const contentFr: SectorContent = {
     },
   ],
   ctaText:
-    "30 minutes pour voir ce qu'on peut automatiser dans la gestion de votre club, et si l'offre asso/solidaire est adaptée à votre budget.",
+    "30 minutes pour voir ce qu'on peut automatiser dans la gestion de votre club, et ce qui est réaliste pour votre budget.",
   ctaButton: "Réserver mon diagnostic gratuit →",
   diagnosticNote: "30 minutes, gratuit, sans engagement.",
   relatedSectorsTitle: "Autres secteurs accompagnés",
@@ -166,22 +156,12 @@ const contentEn: SectorContent = {
   geoTitle: "Vernon and its surrounding area (Eure, France)",
   geoText:
     "This offer is open to any non-profit sports club, whatever its discipline or location.",
-  pricingTitle: "Pricing",
-  pricingIntro:
-    "Free 30-minute diagnostic, no commitment, whatever the size of the club. Managing registrations and certificates, for instance, starts at €1,000 excl. VAT (solidarity rate) — a custom automation, configured for your club.",
-  pricingNote: (
-    <>
-      Solidarity offer, for a non-profit sports club with a single automation:{" "}
-      <s style={{ fontWeight: 400, opacity: 0.6 }}>€2,000 excl. VAT</s> €1,000 excl. VAT.{" "}
-      No numeric result is promised: NBHC has no sports club client reference to date.
-    </>
-  ),
   faqTitle: "Frequently asked questions",
   faq: [
     {
       question: "We're a small club, we clearly don't have the budget for this.",
       answer:
-        "That's exactly why a solidarity offer exists for clubs. The 30-minute diagnostic is free either way: we look together at what's realistic for your budget before committing to anything.",
+        "The 30-minute diagnostic is free: we look together at what's realistic for your budget before committing to anything. And if a well-kept spreadsheet is enough, we tell you.",
     },
     {
       question: "Our treasurer isn't technical at all, will they manage?",
@@ -195,7 +175,7 @@ const contentEn: SectorContent = {
     },
   ],
   ctaText:
-    "30 minutes to see what can be automated in your club's management, and whether the solidarity offer fits your budget.",
+    "30 minutes to see what can be automated in your club's management, and what is realistic for your budget.",
   ctaButton: "Book my free diagnostic →",
   diagnosticNote: "30 minutes, free, no commitment.",
   relatedSectorsTitle: "Other sectors we support",
@@ -255,16 +235,7 @@ export default async function Page({
       <SectorPageContent locale={locale} content={content} />
       <JsonLd
         data={[
-          serviceSchema(locale as "fr" | "en", [
-            {
-              name: isFr ? "Sur Mesure Léger (tarif solidaire)" : "Sur Mesure Léger (solidarity rate)",
-              price: "1000",
-              description: isFr
-                ? "Automatisation sur mesure (inscriptions et certificats) pour association loi 1901, tarif solidaire à une automatisation"
-                : "Custom automation (registrations and certificates) for non-profit sports clubs, solidarity rate for a single automation",
-              url: pageUrl,
-            },
-          ]),
+          serviceSchema(locale as "fr" | "en"),
           breadcrumbSchema([
             { name: isFr ? "Accueil" : "Home", url: `https://nbhc.fr/${locale}` },
             {

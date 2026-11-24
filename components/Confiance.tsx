@@ -4,7 +4,7 @@ import Apparition from "./Apparition";
 /* Une jeune entreprise sans client livré en sur-mesure ne gagne rien à le
    cacher : elle le dit, montre ce qu'elle a réellement, et retire le risque à
    celui qui hésite. Deux colonnes : ce qui existe, ce qui vous protège. */
-const FAITS = ["f1", "f2", "f3"] as const;
+const FAITS = ["f1", "f2"] as const;
 const GARANTIES = ["g1", "g2", "g3", "g4"] as const;
 
 function Coche() {

@@ -77,11 +77,6 @@ const contentFr: SectorContent = {
   geoTitle: "Une offre nationale, adaptée à votre profil",
   geoText:
     "L'offre s'adresse aux organismes de formation partout en France, quel que soit le profil : formateur indépendant, organisme généraliste ou centre de formation d'apprentis (CFA). On se connecte à l'outil métier que vous utilisez déjà (Digiforma, Dendreo, Ypareo ou autre) plutôt que d'en proposer un nouveau — l'automatisation complète votre organisation actuelle, elle ne la remplace pas. Le diagnostic de 30 minutes permet d'identifier les tâches précises qui vous coûtent le plus de temps.",
-  pricingTitle: "Tarification",
-  pricingIntro:
-    "Diagnostic gratuit de 30 minutes, systématique et sans engagement. La centralisation des preuves pour l'audit Qualiopi, par exemple, démarre à 2 000 € HT — une automatisation sur mesure, avec intégration à votre outil métier existant quand une API ou un export est disponible.",
-  pricingNote:
-    "Point d'attention : le bilan pédagogique et financier (BPF) est une échéance annuelle obligatoire pour tout organisme avec un numéro de déclaration d'activité — deux BPF manquants consécutifs entraînent la caducité automatique de ce numéro. Ce n'est pas une automatisation à part sur cette page, mais un rappel d'échéance que nous pouvons intégrer selon votre diagnostic. Aucun résultat chiffré n'est promis : NBHC n'a aucune référence client organisme de formation à ce jour.",
   faqTitle: "Questions fréquentes",
   faq: [
     {
@@ -175,11 +170,6 @@ const contentEn: SectorContent = {
   geoTitle: "A nationwide offer, adapted to your profile",
   geoText:
     "This offer is open to training organizations anywhere in France, whatever the profile: independent trainer, general training organization or apprenticeship center (CFA). We connect to the tool you already use (Digiforma, Dendreo, Ypareo or other) rather than proposing a new one — automation completes your current setup, it doesn't replace it. The 30-minute diagnostic identifies the specific tasks costing you the most time.",
-  pricingTitle: "Pricing",
-  pricingIntro:
-    "Free 30-minute diagnostic, systematic and with no commitment. Centralizing evidence for the Qualiopi audit, for instance, starts at €2,000 excl. VAT — a custom automation, with integration to your existing tool when an API or export is available.",
-  pricingNote:
-    "Worth noting: the annual pedagogical and financial report (BPF) is a mandatory yearly deadline for any organization with an activity declaration number — two consecutive missing BPFs cause automatic lapse of that number. It's not a standalone automation on this page, but a deadline reminder we can include based on your diagnostic. No numeric result is promised: NBHC has no training organization client reference to date.",
   faqTitle: "Frequently asked questions",
   faq: [
     {
@@ -252,16 +242,7 @@ export default async function Page({
       <SectorPageContent locale={locale} content={content} />
       <JsonLd
         data={[
-          serviceSchema(locale as "fr" | "en", [
-            {
-              name: "Sur Mesure Léger",
-              price: "2000",
-              description: isFr
-                ? "Automatisation sur mesure (centralisation des preuves pour l'audit Qualiopi) pour organisme de formation"
-                : "Custom automation (centralizing evidence for the Qualiopi audit) for training organizations",
-              url: pageUrl,
-            },
-          ]),
+          serviceSchema(locale as "fr" | "en"),
           breadcrumbSchema([
             { name: isFr ? "Accueil" : "Home", url: `https://nbhc.fr/${locale}` },
             {

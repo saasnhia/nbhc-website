@@ -80,11 +80,6 @@ const contentFr: SectorContent = {
   geoTitle: "Une offre nationale, pensée pour les réseaux multi-boutiques",
   geoText:
     "L'offre s'adresse à tout magasin d'optique en France, qu'il soit indépendant ou intégré à un réseau de plusieurs boutiques — la synchronisation de stock et la relance client prennent tout leur sens à partir de 2 points de vente. Le diagnostic de 30 minutes permet d'identifier les tâches précises qui vous coûtent le plus de temps.",
-  pricingTitle: "Tarification",
-  pricingIntro:
-    "Diagnostic gratuit de 30 minutes, systématique et sans engagement. La détection des clients à renouveler, par exemple, démarre à 2 000 € HT — une automatisation sur mesure, connectée à votre logiciel de gestion.",
-  pricingNote:
-    "Aucun résultat chiffré n'est promis : NBHC n'a aucune référence client dans le secteur de l'optique à ce jour.",
   faqTitle: "Questions fréquentes",
   faq: [
     {
@@ -178,11 +173,6 @@ const contentEn: SectorContent = {
   geoTitle: "A national offer, built for multi-store networks",
   geoText:
     "The offer is open to any optical store in France, independent or part of a multi-store network — stock sync and client follow-up matter most from 2 locations on. The 30-minute diagnostic identifies the specific tasks costing you the most time.",
-  pricingTitle: "Pricing",
-  pricingIntro:
-    "Free 30-minute diagnostic, systematic and with no commitment. Detecting clients due for renewal, for instance, starts at €2,000 excl. VAT — a custom automation, connected to your management software.",
-  pricingNote:
-    "No numeric result is promised: NBHC has no optical-sector client reference to date.",
   faqTitle: "Frequently asked questions",
   faq: [
     {
@@ -305,16 +295,7 @@ export default async function Page({
       <SectorPageContent locale={locale} content={content} />
       <JsonLd
         data={[
-          serviceSchema(locale as "fr" | "en", [
-            {
-              name: "Sur Mesure Léger",
-              price: "2000",
-              description: isFr
-                ? "Automatisation sur mesure pour magasin d'optique, connectée à votre logiciel de gestion"
-                : "Custom automation for optical stores, connected to your management software",
-              url: pageUrl,
-            },
-          ]),
+          serviceSchema(locale as "fr" | "en"),
           breadcrumbSchema([
             { name: isFr ? "Accueil" : "Home", url: `https://nbhc.fr/${locale}` },
             {

@@ -43,7 +43,6 @@ export default function Footer() {
   const productLinks: Lien[] = [
     { href: "https://devizly.fr", label: t("devizly"), external: true },
     { href: "https://vlogyz.com", label: t("vlogyz"), external: true },
-    { href: `/${locale}#internbullet`, label: t("internbullet") },
   ];
 
   const contactLinks: Lien[] = [

@@ -80,11 +80,6 @@ const contentFr: SectorContent = {
   geoTitle: "Une offre nationale",
   geoText:
     "L'offre BTP s'adresse aux artisans et TPE du bâtiment partout en France — plomberie, électricité, peinture, menuiserie, maçonnerie et métiers connexes. Le diagnostic de 30 minutes permet d'identifier les tâches précises qui vous coûtent le plus de temps, quel que soit votre secteur géographique.",
-  pricingTitle: "Tarification",
-  pricingIntro:
-    "Diagnostic gratuit de 30 minutes, systématique et sans engagement. Les devis, par exemple, démarrent à 2 000 € HT — une automatisation sur mesure, configurée pour votre activité.",
-  pricingNote:
-    "Aucun résultat chiffré n'est promis : NBHC n'a aucune référence client artisan ou TPE du bâtiment à ce jour.",
   faqTitle: "Questions fréquentes",
   faq: [
     {
@@ -182,11 +177,6 @@ const contentEn: SectorContent = {
   geoTitle: "A nationwide offer",
   geoText:
     "The construction offer is open to tradespeople and construction SMEs anywhere in France — plumbing, electrical, painting, carpentry, masonry and related trades. The 30-minute diagnostic identifies the specific tasks costing you the most time, whatever your region.",
-  pricingTitle: "Pricing",
-  pricingIntro:
-    "Free 30-minute diagnostic, systematic and with no commitment. Quotes, for instance, start at €2,000 excl. VAT — a custom automation, configured for your business.",
-  pricingNote:
-    "No numeric result is promised: NBHC has no trade or construction SME client reference to date.",
   faqTitle: "Frequently asked questions",
   faq: [
     {
@@ -334,16 +324,7 @@ export default async function Page({
       <SectorPageContent locale={locale} content={content} />
       <JsonLd
         data={[
-          serviceSchema(locale as "fr" | "en", [
-            {
-              name: "Sur Mesure Léger",
-              price: "2000",
-              description: isFr
-                ? "Automatisation sur mesure pour artisan ou TPE du bâtiment, configurée pour votre activité"
-                : "Custom automation for tradespeople or construction SMEs, configured for your business",
-              url: pageUrl,
-            },
-          ]),
+          serviceSchema(locale as "fr" | "en"),
           breadcrumbSchema([
             { name: isFr ? "Accueil" : "Home", url: `https://nbhc.fr/${locale}` },
             {

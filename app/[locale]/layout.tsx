@@ -49,15 +49,15 @@ export async function generateMetadata({
     ? "NBHC — Logiciels métier et outils sur mesure"
     : "NBHC — Business software and custom tools";
   const description = isFr
-    ? "NBHC conçoit et développe des logiciels : Devizly pour les devis et factures, Vlogyz pour le montage vidéo, internbullet pour les candidatures, et des outils sur mesure pour les entreprises."
-    : "NBHC designs and develops software: Devizly for quotes and invoices, Vlogyz for video editing, internbullet for job applications, and custom tools for companies.";
+    ? "NBHC conçoit et développe des logiciels : Devizly pour les devis et factures, Vlogyz pour le montage vidéo, et des outils sur mesure pour les entreprises."
+    : "NBHC designs and develops software: Devizly for quotes and invoices, Vlogyz for video editing, and custom tools for companies.";
 
   return {
     title,
     description,
     keywords: isFr
-      ? ["logiciel sur mesure", "outil métier", "devis et factures", "Devizly", "Vlogyz", "internbullet"]
-      : ["custom software", "business tools", "quotes and invoices", "Devizly", "Vlogyz", "internbullet"],
+      ? ["logiciel sur mesure", "outil métier", "devis et factures", "Devizly", "Vlogyz"]
+      : ["custom software", "business tools", "quotes and invoices", "Devizly", "Vlogyz"],
     openGraph: {
       title,
       description,

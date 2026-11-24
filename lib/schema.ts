@@ -21,7 +21,7 @@ export function organizationSchema() {
     },
     image: OG_IMAGE,
     description:
-      "NBHC conçoit et développe des logiciels : Devizly, Vlogyz, internbullet, et des outils sur mesure pour les entreprises.",
+      "NBHC conçoit et développe des logiciels, Devizly et Vlogyz, et des outils sur mesure pour les entreprises.",
     foundingDate: "2025",
     taxID: "102637899",
     vatID: "FR102637899",
@@ -72,9 +72,8 @@ export function professionalServiceSchema() {
     url: SITE_URL,
     image: OG_IMAGE,
     logo: LOGO_URL,
-    priceRange: "€€€",
     description:
-      "Logiciels métier (Devizly, Vlogyz, internbullet) et outils sur mesure pour les entreprises.",
+      "Logiciels métier (Devizly, Vlogyz) et outils sur mesure pour les entreprises.",
     address: { "@type": "PostalAddress", addressCountry: "FR" },
     areaServed: { "@type": "Country", name: "France" },
     email: "contact@nbhc.fr",
@@ -96,17 +95,8 @@ export function breadcrumbSchema(items: BreadcrumbItem[]) {
   };
 }
 
-type ServiceOffer = {
-  name: string;
-  price: string;
-  priceCurrency?: string;
-  description: string;
-  url: string;
-};
-
-/* Les pages passent encore leurs offres ; elles ne sont plus publiees : pas de
-   prix sur le site pour l'instant, donc pas de prix dans le balisage non plus. */
-export function serviceSchema(locale: "fr" | "en", _offers: ServiceOffer[]) {
+/* Pas de prix sur le site pour l'instant, donc aucune offre dans le balisage. */
+export function serviceSchema(locale: "fr" | "en") {
   const isFr = locale === "fr";
   return {
     "@context": "https://schema.org",

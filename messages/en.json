@@ -2,7 +2,6 @@
   "nav": {
     "howItWorks": "Method",
     "sectors": "Who it's for",
-    "pricing": "Pricing",
     "faq": "FAQ",
     "blog": "Blog",
     "cta": "Book 30 min",
@@ -13,7 +12,7 @@
   "hero": {
     "titleLine1": "We build business software.",
     "titleLine2": "The next one can be yours.",
-    "subtitle": "Devizly is live, Vlogyz has a waiting list, internbullet is in preparation. And a custom tool is under way for a travel agency.",
+    "subtitle": "Devizly is live, Vlogyz has a waiting list. And a custom tool is under way for a travel agency.",
     "ctaPrimary": "Talk about your tool",
     "ctaSecondary": "See the products",
     "ctaNote": "30 minutes, free",
@@ -29,12 +28,6 @@
         "what": "Video editing for creators",
         "status": "Waiting list",
         "alt": "Frame from a Vlogyz presentation video: four detected keywords and their illustration shots"
-      },
-      "internbullet": {
-        "name": "internbullet",
-        "what": "Internship, work-study and job applications",
-        "status": "In preparation",
-        "alt": "internbullet screen: a ready application, with a fictional data set"
       }
     },
     "custom": {
@@ -68,8 +61,8 @@
   },
   "products": {
     "eyebrow": "Our products",
-    "title": "Devizly is live. Vlogyz and internbullet are on their way.",
-    "subtitle": "Three pieces of software we design and develop ourselves. The images below come from the products, not from a mock-up: each caption says what it shows.",
+    "title": "Devizly is live. Vlogyz is on its way.",
+    "subtitle": "Two pieces of software we design and develop ourselves. The images below come from the products, not from a mock-up: each caption says what it shows.",
     "devizlyName": "Devizly",
     "devizlyBadge": "Live",
     "devizlyLink": "Open devizly.fr",
@@ -78,11 +71,6 @@
     "vlogyzLink": "Join the waiting list",
     "devizlyFor": "Quotes and invoices for freelancers and tradespeople",
     "vlogyzFor": "Video editing for content creators",
-    "internbulletName": "internbullet",
-    "internbulletBadge": "In preparation",
-    "internbulletFor": "Direct applications: internship, work-study, job",
-    "internbulletQuote": "The founder of NBHC found their internship with their own method and Claude Code. internbullet aims to turn it into a tool for other students.",
-    "internbulletLink": "Get notified at opening",
     "devizlySteps": [
       "You describe the job in plain language",
       "Devizly drafts the quote, you adjust it",
@@ -95,44 +83,28 @@
       "The video comes out in vertical format, with b-roll and animated titles"
     ],
     "vlogyzNote": "Not open to the public yet: the waiting list is on vlogyz.com.",
-    "internbulletSteps": [
-      "You will provide your CV, your experience and what you are looking for",
-      "The AI will search for the companies that match your profile",
-      "For each one, it will draft a personalised email and a tailored CV, to review before sending"
-    ],
-    "internbulletNote": "Internships, work-study, then fixed-term and permanent jobs, in France or abroad. Nothing is sent before you have reviewed it.",
     "devizlyAlt1": "Devizly “New quote” screen: the job described in plain language on the left, the quote lines on the right",
     "devizlyAlt2": "The quote as the client receives it: lines, total, buttons to pay, accept and sign",
     "devizlyBar2": "The quote, client side",
     "devizlyCaption": "Real Devizly screens, with a demonstration account and clients. The interface is in French.",
     "vlogyzAlt1": "Frame from a Vlogyz presentation video: four keywords detected in the voice, and the illustration shot chosen for each",
     "vlogyzBar1": "Presentation video · b-roll",
-    "vlogyzCaption": "Frame taken from a Vlogyz presentation video. The application is not open to the public yet.",
-    "internbulletAlt1": "An application in internbullet: the address found on the company’s website, two facts with their source page, the email, and the buttons to open it in one’s own mail app",
-    "internbulletBar1": "internbullet · an application page",
-    "internbulletAlt2": "The list of applications in internbullet: the status of each and what remains to be done",
-    "internbulletBar2": "internbullet · tracking",
-    "internbulletCaption": "internbullet screens as it is today, with a fictional data set. The interface is in French. The email is part of that data set: the tool does not write it. The AI search and the tailored CV are under construction and are not shown.",
-    "internbulletStepsTitle": "Under construction",
-    "internbulletTodayTitle": "Today, in the test version, not yet open",
-    "internbulletToday": "You bring a company or a job posting. The tool checks its website and looks for its published address. Then you write and send the email yourself."
+    "vlogyzCaption": "Frame taken from a Vlogyz presentation video. The application is not open to the public yet."
   },
   "faq": {
     "eyebrow": "FAQ",
     "title": "The questions we get asked",
     "subtitle": "For the others, the first 30-minute call is made for that.",
     "q1": "Is NBHC an agency or a software publisher?",
-    "a1": "Both. We develop our own products: Devizly, already live, then Vlogyz and internbullet, which are not open yet. And we build custom tools for companies. What we learn on the former serves the latter.",
+    "a1": "Both. We develop our own products: Devizly, already live, and Vlogyz, not open yet. And we build custom tools for companies. What we learn on the former serves the latter.",
     "q2": "What is a custom tool, concretely?",
     "a2": "Software built around your rules: your prices, your special cases, your way of preparing a quote or an invoice. It builds on your existing data and your advisors keep control of every decision.",
     "q3": "How much does it cost?",
     "a3": "The first 30-minute call is free. After that, scope and price are written down before we start: you know what will be built and what you will pay.",
     "q4": "Who owns the tool once delivered?",
     "a4": "You do. What we build for you belongs to you, and you keep it if the collaboration ends.",
-    "q5": "When will internbullet open?",
-    "a5": "It is in preparation. In the current version, not yet open, you bring a company or a job posting; the tool checks its website and looks for its published address, then you write and send the email yourself. Under construction: the AI will search for the companies that match your profile, then draft for each an email and a tailored CV, to review before sending. Write to contact@nbhc.fr to be notified at opening.",
-    "q6": "What if a tool is not the right answer?",
-    "a6": "We tell you during the first call. A well-kept spreadsheet or off-the-shelf software is sometimes enough, and in that case we build nothing."
+    "q5": "What if a tool is not the right answer?",
+    "a5": "We tell you during the first call. A well-kept spreadsheet or off-the-shelf software is sometimes enough, and in that case we build nothing."
   },
   "contact": {
     "eyebrow": "First call",
@@ -166,8 +138,7 @@
     "cgv": "Terms of sale",
     "cgu": "Terms of use",
     "copyright": "© 2026 SAS NBHC — SIREN 102 637 899 · 55 Rue Henri Clément, 71100 Saint-Rémy · All rights reserved",
-    "custom": "Custom tools",
-    "internbullet": "internbullet"
+    "custom": "Custom tools"
   },
   "automationFlows": {
     "sport": {
@@ -1091,14 +1062,10 @@
     "f1Text": "Devizly is open: you can try it before you even talk to us.",
     "f1Link": "Try Devizly",
     "f1Href": "https://devizly.fr",
-    "f2Title": "A method tested by its founder",
-    "f2Text": "The founder found their internship with their own method and Claude Code. internbullet aims to turn it into a tool, in preparation.",
-    "f2Link": "See its screens",
-    "f2Href": "#internbullet",
-    "f3Title": "One custom project under way",
-    "f3Text": "A quoting tool for a travel agency: demonstration shown, build planned from February 2027.",
-    "f3Link": "See where it stands",
-    "f3Href": "#sur-mesure",
+    "f2Title": "One custom project under way",
+    "f2Text": "A quoting tool for a travel agency: demonstration shown, build planned from February 2027.",
+    "f2Link": "See where it stands",
+    "f2Href": "#sur-mesure",
     "guaranteesTitle": "What protects you",
     "g1Title": "You talk to the person who builds",
     "g1Text": "No intermediary between you and the person writing the code.",

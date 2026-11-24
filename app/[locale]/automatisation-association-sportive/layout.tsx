@@ -13,8 +13,8 @@ export async function generateMetadata({
     ? "Automatisation IA pour associations sportives (loi 1901) | NBHC"
     : "AI automation for sports associations (non-profit) | NBHC";
   const description = isFr
-    ? "Automatisez les inscriptions, certificats, licences, cotisations et convocations de votre club sportif. Offre solidaire dès 1 000 € HT. Diagnostic gratuit 30 min."
-    : "Automate sign-ups, medical certificates, licenses, dues and match notices for your sports club. Solidarity offer from €1,000 excl. VAT. Free 30-min diagnostic.";
+    ? "Automatisez les inscriptions, certificats, licences, cotisations et convocations de votre club sportif. Diagnostic gratuit 30 min."
+    : "Automate sign-ups, medical certificates, licenses, dues and match notices for your sports club. Free 30-min diagnostic.";
 
   return {
     title,

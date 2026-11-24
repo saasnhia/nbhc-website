@@ -86,11 +86,6 @@ const contentFr: SectorContent = {
   geoTitle: "Toulouse et sa métropole",
   geoText:
     "L'offre s'adresse à tout garage ou carrosserie indépendant en France, quel que soit le réseau d'affiliation.",
-  pricingTitle: "Tarification",
-  pricingIntro:
-    "Diagnostic gratuit de 30 minutes, systématique et sans engagement. L'IA téléphonique, par exemple, démarre à 200 € HT, configurée pour votre garage.",
-  pricingNote:
-    "Aucun résultat chiffré n'est promis : NBHC n'a aucune référence client garage ou carrosserie à ce jour.",
   faqTitle: "Questions fréquentes",
   faq: [
     {
@@ -190,11 +185,6 @@ const contentEn: SectorContent = {
   geoTitle: "Toulouse and its metro area",
   geoText:
     "This offer is open to any independent garage or body shop in France, whatever its affiliation network.",
-  pricingTitle: "Pricing",
-  pricingIntro:
-    "Free 30-minute diagnostic, systematic and with no commitment. The AI phone agent, for instance, starts at €200 excl. VAT, configured for your garage.",
-  pricingNote:
-    "No numeric result is promised: NBHC has no garage or body shop client reference to date.",
   faqTitle: "Frequently asked questions",
   faq: [
     {
@@ -388,16 +378,7 @@ export default async function Page({
       <SectorPageContent locale={locale} content={content} />
       <JsonLd
         data={[
-          serviceSchema(locale as "fr" | "en", [
-            {
-              name: "Essentiel",
-              price: "200",
-              description: isFr
-                ? "Automatisation pour garage ou carrosserie, configurée pour votre activité"
-                : "Automation for garages or body shops, configured for your business",
-              url: pageUrl,
-            },
-          ]),
+          serviceSchema(locale as "fr" | "en"),
           breadcrumbSchema([
             { name: isFr ? "Accueil" : "Home", url: `https://nbhc.fr/${locale}` },
             {

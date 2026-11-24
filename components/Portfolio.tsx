@@ -2,26 +2,18 @@ import { useTranslations } from "next-intl";
 import EcranReel from "./EcranReel";
 import Apparition from "./Apparition";
 
-type IdProduit = "devizly" | "vlogyz" | "internbullet";
+type IdProduit = "devizly" | "vlogyz";
 
 type Produit = {
   id: IdProduit;
   href: string;
   externe: boolean;
   enProduction?: boolean;
-  /** Citation du fondateur, sous les étapes. */
-  avecCitation?: boolean;
 };
 
 const PRODUITS: Produit[] = [
   { id: "devizly", href: "https://devizly.fr", externe: true, enProduction: true },
   { id: "vlogyz", href: "https://vlogyz.com", externe: true },
-  {
-    id: "internbullet",
-    href: "mailto:contact@nbhc.fr?subject=internbullet",
-    externe: false,
-    avecCitation: true,
-  },
 ];
 
 /* Les écrans de chaque produit. Sur grand écran l'application s'affiche en
@@ -53,32 +45,6 @@ function Ecrans({ id }: { id: IdProduit }) {
           alt={t("devizlyAlt2")}
           barre={t("devizlyBar2")}
           sizes="(max-width: 899px) calc(100vw - 40px), 460px"
-        />
-      </div>
-    );
-  }
-
-  if (id === "internbullet") {
-    return (
-      <div className="grid items-start gap-6 min-[900px]:grid-cols-[minmax(0,58fr)_minmax(0,42fr)]">
-        <EcranReel
-          nom="internbullet-fiche"
-          largeurs={[640, 1200]}
-          width={1200}
-          height={1080}
-          alt={t("internbulletAlt1")}
-          barre={t("internbulletBar1")}
-          sizes="(max-width: 899px) calc(100vw - 40px), 640px"
-        />
-        <EcranReel
-          className="max-[899px]:hidden min-[900px]:mt-16"
-          nom="internbullet-liste"
-          largeurs={[640, 1200]}
-          width={1200}
-          height={900}
-          alt={t("internbulletAlt2")}
-          barre={t("internbulletBar2")}
-          sizes="460px"
         />
       </div>
     );
@@ -206,31 +172,6 @@ export default function Portfolio() {
               </div>
 
               <div>
-                {t.has(`${p.id}Today`) && (
-                  <div style={{ marginBottom: 24 }}>
-                    <div style={{ fontSize: 13, color: "var(--text)", marginBottom: 6 }}>
-                      {t(`${p.id}TodayTitle`)}
-                    </div>
-                    <p
-                      className="m-0"
-                      style={{ fontSize: 15, lineHeight: 1.6, color: "var(--text)" }}
-                    >
-                      {t(`${p.id}Today`)}
-                    </p>
-                  </div>
-                )}
-                {t.has(`${p.id}StepsTitle`) && (
-                  <div
-                    className="inline-flex items-center gap-2"
-                    style={{ fontSize: 13, color: "var(--gold-light)", marginBottom: 8 }}
-                  >
-                    <span
-                      aria-hidden="true"
-                      style={{ width: 6, height: 6, borderRadius: 3, background: "var(--gold)" }}
-                    />
-                    {t(`${p.id}StepsTitle`)}
-                  </div>
-                )}
                 <ol className="list-none m-0 p-0">
                   {(t.raw(`${p.id}Steps`) as string[]).map((etape, i) => (
                     <li
@@ -264,29 +205,6 @@ export default function Portfolio() {
                 >
                   {t(`${p.id}Note`)}
                 </p>
-
-                {p.avecCitation && (
-                  <blockquote
-                    className="m-0"
-                    style={{
-                      borderLeft: "2px solid var(--gold)",
-                      paddingLeft: 16,
-                      marginTop: 20,
-                    }}
-                  >
-                    <p
-                      className="m-0"
-                      style={{ fontSize: 16, lineHeight: 1.6, color: "var(--text)" }}
-                    >
-                      {t(`${p.id}Quote`)}
-                    </p>
-                    {t.has(`${p.id}QuoteBy`) && (
-                      <footer style={{ marginTop: 8, fontSize: 13, color: "var(--text-muted)" }}>
-                        {t(`${p.id}QuoteBy`)}
-                      </footer>
-                    )}
-                  </blockquote>
-                )}
               </div>
             </div>
 

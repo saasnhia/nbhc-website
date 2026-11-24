@@ -89,11 +89,6 @@ const contentFr: SectorContent = {
   geoTitle: "Vernon et sa périphérie (Eure)",
   geoText:
     "L'offre s'adresse à toute salle ou institut indépendant en France.",
-  pricingTitle: "Tarification",
-  pricingIntro:
-    "Diagnostic gratuit de 30 minutes, systématique et sans engagement. Les rappels automatiques de cours et la liste d'attente dynamique, par exemple, démarrent à 200 € HT, configurée pour votre salle.",
-  pricingNote:
-    "Aucun résultat chiffré n'est promis : NBHC n'a aucune référence client salle de sport ou institut à ce jour.",
   faqTitle: "Questions fréquentes",
   faq: [
     {
@@ -193,11 +188,6 @@ const contentEn: SectorContent = {
   geoTitle: "Vernon and its surrounding area (Eure, France)",
   geoText:
     "This offer is open to any independent gym or wellness center in France.",
-  pricingTitle: "Pricing",
-  pricingIntro:
-    "Free 30-minute diagnostic, systematic and with no commitment. Automatic class reminders and the dynamic waitlist, for instance, start at €200 excl. VAT, configured for your gym.",
-  pricingNote:
-    "No numeric result is promised: NBHC has no gym or wellness center client reference to date.",
   faqTitle: "Frequently asked questions",
   faq: [
     {
@@ -328,16 +318,7 @@ export default async function Page({
       <SectorPageContent locale={locale} content={content} />
       <JsonLd
         data={[
-          serviceSchema(locale as "fr" | "en", [
-            {
-              name: "Essentiel",
-              price: "200",
-              description: isFr
-                ? "Automatisation pour salle de sport ou institut, configurée pour votre activité"
-                : "Automation for gyms or wellness centers, configured for your business",
-              url: pageUrl,
-            },
-          ]),
+          serviceSchema(locale as "fr" | "en"),
           breadcrumbSchema([
             { name: isFr ? "Accueil" : "Home", url: `https://nbhc.fr/${locale}` },
             {

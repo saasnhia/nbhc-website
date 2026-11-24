@@ -81,10 +81,6 @@ const contentFr: SectorContent = {
   geoTitle: "Partout en France",
   geoText:
     "L'offre s'adresse à toute marque de cosmétique ou de parfumerie en France, quel que soit son canal de distribution (boutiques en propre, e-shop, réseau de revendeurs, ou une combinaison des trois). Le diagnostic de 30 minutes permet d'identifier les tâches précises qui vous coûtent le plus de temps.",
-  pricingTitle: "Tarification",
-  pricingIntro:
-    "Diagnostic gratuit de 30 minutes, systématique et sans engagement. Le dossier réglementaire, par exemple, démarre à 2 000 € HT — une automatisation sur mesure, connectée à vos outils de conformité.",
-  pricingNote: "Aucun résultat chiffré n'est promis : NBHC n'a aucune référence client dans le secteur cosmétique/parfumerie à ce jour.",
   faqTitle: "Questions fréquentes",
   faq: [
     {
@@ -179,10 +175,6 @@ const contentEn: SectorContent = {
   geoTitle: "Anywhere in France",
   geoText:
     "The offer is open to any cosmetics or fragrance brand in France, whatever its distribution channel (own stores, e-shop, reseller network, or a mix of the three). The 30-minute diagnostic identifies the specific tasks costing you the most time.",
-  pricingTitle: "Pricing",
-  pricingIntro:
-    "Free 30-minute diagnostic, systematic and with no commitment. The regulatory file, for instance, starts at €2,000 excl. VAT — a custom automation, connected to your compliance tools.",
-  pricingNote: "No numeric result is promised: NBHC has no client reference in the cosmetics/fragrance sector to date.",
   faqTitle: "Frequently asked questions",
   faq: [
     {
@@ -254,16 +246,7 @@ export default async function Page({
       <SectorPageContent locale={locale} content={content} />
       <JsonLd
         data={[
-          serviceSchema(locale as "fr" | "en", [
-            {
-              name: "Sur Mesure Léger",
-              price: "2000",
-              description: isFr
-                ? "Automatisation sur mesure (dossier réglementaire CPNP/DIP) pour marque de cosmétique, connectée à vos outils de conformité"
-                : "Custom automation (CPNP/DIP regulatory file) for cosmetics brands, connected to your compliance tools",
-              url: pageUrl,
-            },
-          ]),
+          serviceSchema(locale as "fr" | "en"),
           breadcrumbSchema([
             { name: isFr ? "Accueil" : "Home", url: `https://nbhc.fr/${locale}` },
             { name: isFr ? "Marques de cosmétique & parfumerie" : "Cosmetics & fragrance brands", url: pageUrl },

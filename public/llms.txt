@@ -1,8 +1,8 @@
 # NBHC — Logiciels métier et outils sur mesure
 
 > NBHC (SAS, SIREN 102 637 899, Saint-Rémy, France) conçoit et développe
-des logiciels. Trois produits lui appartiennent : Devizly, Vlogyz et
-internbullet. NBHC construit aussi des outils sur mesure pour les
+des logiciels. Deux produits lui appartiennent : Devizly et Vlogyz.
+NBHC construit aussi des outils sur mesure pour les
 entreprises dont le métier ne rentre dans aucun logiciel du marché.
 
 ## Produits
@@ -14,13 +14,6 @@ Les factures sortent au format Factur-X.
 - [Vlogyz](https://vlogyz.com) — bientôt disponible. Montage vidéo pour
 créateurs de contenu : transcription, coupe des silences, sous-titres
 synchronisés, b-roll et titres animés, au format vertical.
-- internbullet — en préparation. Candidature directe pour un stage, une
-alternance ou un emploi. Dans la version actuelle, pas encore ouverte, la
-personne apporte une entreprise ou une offre ; l'outil vérifie son site et
-cherche son adresse publiée, puis la personne écrit et envoie elle-même. En
-construction : l'IA cherchera les entreprises qui correspondent au profil,
-puis préparera pour chacune un mail et un CV adapté, à relire avant l'envoi.
-
 ## Outils sur mesure
 
 Un outil sur mesure est un logiciel construit autour des règles d'une

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 
-const QUESTIONS = [1, 2, 3, 4, 5, 6] as const;
+const QUESTIONS = [1, 2, 3, 4, 5] as const;
 
 /* Les rangées ne sont plus masquées au chargement puis révélées au défilement :
    la section est lisible telle qu'elle est servie. Une réponse s'ouvre et se

@@ -2,11 +2,11 @@ import { useTranslations } from "next-intl";
 
 const CALENDLY_URL = "https://calendly.com/saasnhia/30min";
 
-/* Trois tuiles, trois écrans réels : le premier écran montre ce que NBHC a
+/* Deux tuiles, deux écrans réels : le premier écran montre ce que NBHC a
    construit avant d'en parler. Chaque tuile renvoie à sa section ; l'état de
    chaque produit est écrit dessous, sans rien arrondir. */
 type Tuile = {
-  id: "devizly" | "vlogyz" | "internbullet";
+  id: "devizly" | "vlogyz";
   src: string;
   width: number;
   height: number;
@@ -33,14 +33,6 @@ const TUILES: Tuile[] = [
     height: 471,
     position: "50% 50%",
     zoom: 1,
-  },
-  {
-    id: "internbullet",
-    src: "/ecrans/internbullet-fiche-640.webp",
-    width: 640,
-    height: 576,
-    position: "0% 0%",
-    zoom: 1.7,
   },
 ];
 
@@ -109,7 +101,7 @@ export default function Hero() {
           </div>
         </div>
 
-        <ul className="entree entree-2 list-none m-0 p-0 grid gap-5 min-[760px]:grid-cols-3 mt-16 max-[900px]:mt-10">
+        <ul className="entree entree-2 list-none m-0 p-0 grid gap-5 min-[760px]:grid-cols-2 mt-16 max-[900px]:mt-10">
           {TUILES.map((tu, i) => (
             <li key={tu.id}>
               <a

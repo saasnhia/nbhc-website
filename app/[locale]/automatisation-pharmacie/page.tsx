@@ -88,11 +88,6 @@ const contentFr: SectorContent = {
   geoTitle: "Marseille et sa région, et au-delà",
   geoText:
     "L'offre s'adresse à toute officine en France, quel que soit son profil (titulaire seul, plusieurs pharmaciens, groupement).",
-  pricingTitle: "Tarification",
-  pricingIntro:
-    "Diagnostic gratuit de 30 minutes, systématique et sans engagement. La détection des patients éligibles au BPM, par exemple, démarre à 2 000 € HT — une automatisation sur mesure, connectée à votre logiciel métier.",
-  pricingNote:
-    "Les montants d'actes mentionnés ci-dessus (BPM, entretiens pharmaceutiques) sont des barèmes conventionnels publics de l'Assurance Maladie — pas un gain que NBHC produit ou garantit. Aucun résultat chiffré n'est promis : NBHC n'a aucune référence client officine à ce jour.",
   faqTitle: "Questions fréquentes",
   faq: [
     {
@@ -192,11 +187,6 @@ const contentEn: SectorContent = {
   geoTitle: "Marseille and its region, and beyond",
   geoText:
     "The offer is open to any pharmacy in France, whatever its profile (single pharmacist, several pharmacists, group).",
-  pricingTitle: "Pricing",
-  pricingIntro:
-    "Free 30-minute diagnostic, systematic and with no commitment. Detecting patients eligible for BPM, for instance, starts at €2,000 excl. VAT — a custom automation, connected to your pharmacy management software.",
-  pricingNote:
-    "The act amounts mentioned above (BPM, pharmacist consultations) are public conventional rates from French health insurance — not a gain NBHC produces or guarantees. No numeric result is promised: NBHC has no pharmacy client reference to date.",
   faqTitle: "Frequently asked questions",
   faq: [
     {
@@ -345,16 +335,7 @@ export default async function Page({
       <SectorPageContent locale={locale} content={content} mise="asp" />
       <JsonLd
         data={[
-          serviceSchema(locale as "fr" | "en", [
-            {
-              name: "Sur Mesure Léger",
-              price: "2000",
-              description: isFr
-                ? "Automatisation sur mesure pour officine, connectée à votre logiciel métier"
-                : "Custom automation for pharmacies, connected to your pharmacy management software",
-              url: pageUrl,
-            },
-          ]),
+          serviceSchema(locale as "fr" | "en"),
           breadcrumbSchema([
             { name: isFr ? "Accueil" : "Home", url: `https://nbhc.fr/${locale}` },
             {

@@ -2,7 +2,6 @@
   "nav": {
     "howItWorks": "Méthode",
     "sectors": "Pour qui",
-    "pricing": "Tarifs",
     "faq": "FAQ",
     "blog": "Blog",
     "cta": "Réserver 30 min",
@@ -13,7 +12,7 @@
   "hero": {
     "titleLine1": "On construit des logiciels métier.",
     "titleLine2": "Le prochain peut être le vôtre.",
-    "subtitle": "Devizly est en production, Vlogyz en liste d’attente, internbullet en préparation. Et un outil sur mesure est en cours pour une agence de voyage.",
+    "subtitle": "Devizly est en production, Vlogyz en liste d’attente. Et un outil sur mesure est en cours pour une agence de voyage.",
     "ctaPrimary": "Parler de votre outil",
     "ctaSecondary": "Voir les produits",
     "ctaNote": "30 minutes, gratuit",
@@ -29,12 +28,6 @@
         "what": "Montage vidéo pour créateurs",
         "status": "Liste d’attente",
         "alt": "Image d’une vidéo de présentation de Vlogyz : quatre mots-clés détectés et leurs plans d’illustration"
-      },
-      "internbullet": {
-        "name": "internbullet",
-        "what": "Candidatures de stage, d’alternance et d’emploi",
-        "status": "En préparation",
-        "alt": "Écran d’internbullet : la fiche d’une candidature prête, avec un jeu de données fictif"
       }
     },
     "custom": {
@@ -68,8 +61,8 @@
   },
   "products": {
     "eyebrow": "Nos produits",
-    "title": "Devizly est en production. Vlogyz et internbullet arrivent.",
-    "subtitle": "Trois logiciels qu’on conçoit et qu’on développe nous-mêmes. Les images ci-dessous viennent des produits, pas d’une maquette : chaque légende dit ce qu’elle montre.",
+    "title": "Devizly est en production. Vlogyz arrive.",
+    "subtitle": "Deux logiciels qu’on conçoit et qu’on développe nous-mêmes. Les images ci-dessous viennent des produits, pas d’une maquette : chaque légende dit ce qu’elle montre.",
     "devizlyName": "Devizly",
     "devizlyBadge": "En production",
     "devizlyLink": "Ouvrir devizly.fr",
@@ -78,11 +71,6 @@
     "vlogyzLink": "Rejoindre la liste d’attente",
     "devizlyFor": "Devis et factures pour indépendants et artisans",
     "vlogyzFor": "Montage vidéo pour créateurs de contenu",
-    "internbulletName": "internbullet",
-    "internbulletBadge": "En préparation",
-    "internbulletFor": "Candidatures directes : stage, alternance, emploi",
-    "internbulletQuote": "Le fondateur de NBHC a trouvé son stage avec sa propre méthode et Claude Code. internbullet veut en faire un outil pour d’autres étudiants.",
-    "internbulletLink": "Être prévenu de l’ouverture",
     "devizlySteps": [
       "Vous décrivez la prestation en langage courant",
       "Devizly rédige le devis, vous l’ajustez",
@@ -95,44 +83,28 @@
       "La vidéo sort au format vertical, avec b-roll et titres animés"
     ],
     "vlogyzNote": "Pas encore ouvert au public : la liste d’attente est sur vlogyz.com.",
-    "internbulletSteps": [
-      "Vous donnerez votre CV, vos expériences et ce que vous cherchez",
-      "L’IA cherchera les entreprises qui correspondent à votre profil",
-      "Pour chacune, elle préparera un mail personnalisé et un CV adapté, à relire avant l’envoi"
-    ],
-    "internbulletNote": "Stage, alternance, puis CDD et CDI, en France comme à l’étranger. Rien ne part sans que vous l’ayez relu.",
     "devizlyAlt1": "Écran « Nouveau devis » de Devizly : la prestation décrite en langage courant à gauche, les lignes du devis à droite",
     "devizlyAlt2": "Le devis tel que le client le reçoit : lignes, total, boutons pour payer, accepter et signer",
     "devizlyBar2": "Le devis, côté client",
     "devizlyCaption": "Écrans réels de Devizly, avec un compte et des clients de démonstration.",
     "vlogyzAlt1": "Image d’une vidéo de présentation de Vlogyz : quatre mots-clés détectés dans la voix, et le plan d’illustration choisi pour chacun",
     "vlogyzBar1": "Vidéo de présentation · b-roll",
-    "vlogyzCaption": "Image extraite d’une vidéo de présentation de Vlogyz. L’application n’est pas encore ouverte au public.",
-    "internbulletAlt1": "Fiche d’une candidature dans internbullet : l’adresse trouvée sur le site de l’entreprise, deux faits relevés avec leur page d’origine, le mail, et les boutons pour l’ouvrir dans sa messagerie",
-    "internbulletBar1": "internbullet · la fiche d’une candidature",
-    "internbulletAlt2": "Liste des candidatures dans internbullet : l’état de chacune et ce qu’il reste à faire",
-    "internbulletBar2": "internbullet · le suivi",
-    "internbulletCaption": "Écrans d’internbullet tel qu’il est aujourd’hui, avec un jeu de données fictif. Le mail fait partie de ce jeu : l’outil ne l’écrit pas. La recherche par l’IA et le CV adapté sont en construction et ne sont pas montrés.",
-    "internbulletStepsTitle": "En construction",
-    "internbulletTodayTitle": "Aujourd’hui, dans la version de test, pas encore ouverte",
-    "internbulletToday": "Vous apportez une entreprise ou une offre. L’outil vérifie son site et cherche son adresse publiée. Puis vous écrivez et envoyez vous-même."
+    "vlogyzCaption": "Image extraite d’une vidéo de présentation de Vlogyz. L’application n’est pas encore ouverte au public."
   },
   "faq": {
     "eyebrow": "FAQ",
     "title": "Les questions qu’on nous pose",
     "subtitle": "Pour les autres, le premier échange de 30 minutes est fait pour ça.",
     "q1": "NBHC est une agence ou un éditeur de logiciels ?",
-    "a1": "Les deux. On développe nos propres produits : Devizly, déjà en production, puis Vlogyz et internbullet, qui ne sont pas encore ouverts. Et on construit des outils sur mesure pour des entreprises. Ce qu’on apprend sur les premiers sert aux seconds.",
+    "a1": "Les deux. On développe nos propres produits : Devizly, déjà en production, et Vlogyz, pas encore ouvert. Et on construit des outils sur mesure pour des entreprises. Ce qu’on apprend sur les premiers sert aux seconds.",
     "q2": "Qu’est-ce qu’un outil sur mesure, concrètement ?",
     "a2": "Un logiciel construit autour de vos règles : vos tarifs, vos cas particuliers, votre façon de préparer un devis ou une facture. Il s’appuie sur vos données existantes et vos conseillers gardent la main sur chaque décision.",
     "q3": "Combien ça coûte ?",
     "a3": "Le premier échange de 30 minutes est gratuit. Ensuite, le périmètre et le prix sont écrits avant de commencer : vous savez ce qui sera construit et ce que vous paierez.",
     "q4": "À qui appartient l’outil une fois livré ?",
     "a4": "À vous. Ce qu’on construit pour vous vous appartient, et vous le gardez si la collaboration s’arrête.",
-    "q5": "Quand internbullet sera-t-il ouvert ?",
-    "a5": "Il est en préparation. Dans la version actuelle, pas encore ouverte, vous apportez une entreprise ou une offre ; l’outil vérifie son site et cherche son adresse publiée, puis vous écrivez et envoyez vous-même. En construction : l’IA cherchera les entreprises qui correspondent à votre profil, puis préparera pour chacune un mail et un CV adapté, à relire avant l’envoi. Écrivez à contact@nbhc.fr pour être prévenu de l’ouverture.",
-    "q6": "Et si un outil n’est pas la bonne réponse ?",
-    "a6": "On vous le dit au premier échange. Un tableur bien tenu ou un logiciel du marché suffit parfois, et dans ce cas on ne construit rien."
+    "q5": "Et si un outil n’est pas la bonne réponse ?",
+    "a5": "On vous le dit au premier échange. Un tableur bien tenu ou un logiciel du marché suffit parfois, et dans ce cas on ne construit rien."
   },
   "contact": {
     "eyebrow": "Premier échange",
@@ -166,8 +138,7 @@
     "cgv": "CGV",
     "cgu": "CGU",
     "copyright": "© 2026 SAS NBHC — SIREN 102 637 899 · 55 Rue Henri Clément, 71100 Saint-Rémy · Tous droits réservés",
-    "custom": "Sur mesure",
-    "internbullet": "internbullet"
+    "custom": "Sur mesure"
   },
   "automationFlows": {
     "sport": {
@@ -1091,14 +1062,10 @@
     "f1Text": "Devizly est ouvert : vous pouvez l’essayer avant même de nous parler.",
     "f1Link": "Essayer Devizly",
     "f1Href": "https://devizly.fr",
-    "f2Title": "Une méthode testée par son fondateur",
-    "f2Text": "Il a trouvé son stage avec sa propre méthode et Claude Code. internbullet veut en faire un outil, en préparation.",
-    "f2Link": "Voir ses écrans",
-    "f2Href": "#internbullet",
-    "f3Title": "Un projet sur mesure en cours",
-    "f3Text": "Un outil de devis pour une agence de voyage : démonstration présentée, construction prévue à partir de février 2027.",
-    "f3Link": "Voir où il en est",
-    "f3Href": "#sur-mesure",
+    "f2Title": "Un projet sur mesure en cours",
+    "f2Text": "Un outil de devis pour une agence de voyage : démonstration présentée, construction prévue à partir de février 2027.",
+    "f2Link": "Voir où il en est",
+    "f2Href": "#sur-mesure",
     "guaranteesTitle": "Ce qui vous protège",
     "g1Title": "Vous parlez à celui qui construit",
     "g1Text": "Pas d’intermédiaire entre vous et la personne qui écrit le code.",

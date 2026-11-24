@@ -67,9 +67,6 @@ export type SectorContent = {
   automations: Automation[];
   geoTitle: string;
   geoText: string;
-  pricingTitle: string;
-  pricingIntro: string;
-  pricingNote?: React.ReactNode;
   faqTitle?: string;
   faq?: FaqItem[];
   ctaText: string;
