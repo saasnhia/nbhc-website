@@ -249,6 +249,7 @@ export default function Nav() {
         <Link
           href={`/${locale}`}
           data-cursor="link"
+          aria-label={locale === "en" ? "NBHC, home" : "NBHC, accueil"}
           className="no-underline flex items-center"
         >
           <Logo variant="nav" />

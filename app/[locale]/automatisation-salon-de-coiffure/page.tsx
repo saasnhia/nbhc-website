@@ -18,7 +18,7 @@ const FLOW_MSG_KEY: Record<string, string> = {
 };
 
 const contentFr: SectorContent = {
-  eyebrow: "SALONS DE COIFFURE",
+  eyebrow: "Salons de coiffure",
   h1: "Le salon qui ne décroche jamais, ce n'est plus une cliente qui raccroche",
   intro:
     "Décrocher pendant une prestation, relancer une cliente au bon moment, retrouver la formule couleur, suivre les cartes cadeaux : ce sont des tâches qui se font entre deux clientes — c'est-à-dire rarement dans le bon timing. On les automatise — vous restez la coiffeuse ou le salon qui décide, valide et reçoit. On détecte, on prépare, on propose — jamais on ne s'engage à votre place.",
@@ -101,9 +101,9 @@ const contentFr: SectorContent = {
   ],
   ctaText:
     "30 minutes pour identifier ce qui vous prend le plus de temps entre les appels ratés, les relances et le suivi clientèle, et voir si une automatisation vaut le coup pour votre salon.",
-  ctaButton: "Réserver mon diagnostic gratuit →",
+  ctaButton: "Réserver mon diagnostic gratuit",
   diagnosticNote: "30 minutes, gratuit, sans engagement.",
-  relatedSectorsTitle: "Autres secteurs accompagnés",
+  relatedSectorsTitle: "Les autres métiers",
   relatedSectors: [
     { label: "Restaurants", href: "/fr/automatisation-restaurant" },
     { label: "Salles de sport & instituts bien-être", href: "/fr/automatisation-salle-de-sport" },
@@ -113,7 +113,7 @@ const contentFr: SectorContent = {
 };
 
 const contentEn: SectorContent = {
-  eyebrow: "HAIR SALONS",
+  eyebrow: "Hair salons",
   h1: "A salon that never misses a call means clients who never hang up",
   intro:
     "Answering during a service, following up a client at the right time, finding the color formula, tracking gift cards: these are tasks that happen between two clients — which is rarely the right timing. We automate them — you stay the hairdresser or salon that decides, approves and welcomes. We detect, prepare, propose — we never commit on your behalf.",
@@ -196,9 +196,9 @@ const contentEn: SectorContent = {
   ],
   ctaText:
     "30 minutes to identify what's taking up the most of your time between missed calls, follow-ups and client tracking, and see whether automation is worth it for your salon.",
-  ctaButton: "Book my free diagnostic →",
+  ctaButton: "Book my free diagnostic",
   diagnosticNote: "30 minutes, free, no commitment.",
-  relatedSectorsTitle: "Other sectors we support",
+  relatedSectorsTitle: "Other trades",
   relatedSectors: [
     { label: "Restaurants", href: "/en/automatisation-restaurant" },
     { label: "Gyms & wellness centers", href: "/en/automatisation-salle-de-sport" },

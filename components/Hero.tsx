@@ -58,9 +58,7 @@ export default function Hero() {
             }}
           >
             <span className="block">{t("titleLine1")}</span>
-            <span className="block" style={{ color: "var(--gold-light)" }}>
-              {t("titleLine2")}
-            </span>
+            <span className="block">{t("titleLine2")}</span>
           </h1>
 
           <p

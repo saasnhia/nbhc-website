@@ -22,7 +22,7 @@ const FLOW_MSG_KEY: Record<string, string> = {
 };
 
 const contentFr: SectorContent = {
-  eyebrow: "SALLES DE SPORT · STUDIOS · INSTITUTS BIEN-ÊTRE",
+  eyebrow: "Salles de sport, studios et instituts bien-être",
   h1: "Automatisez les tâches qui vous font perdre des adhérents",
   intro:
     "Entre les cours à donner, l'accueil et les soins, personne n'a le temps de relancer un abonnement à échéance ou de reprendre une place libérée par un no-show. On automatise ces tâches précises pour que rien ne se perde.",
@@ -109,9 +109,9 @@ const contentFr: SectorContent = {
   ],
   ctaText:
     "30 minutes suffisent pour identifier où vous perdez du temps et de l'argent sur des tâches répétitives, et voir si une automatisation vaut le coup pour vous.",
-  ctaButton: "Réserver mon diagnostic gratuit →",
+  ctaButton: "Réserver mon diagnostic gratuit",
   diagnosticNote: "30 minutes, gratuit, sans engagement.",
-  relatedSectorsTitle: "Autres secteurs accompagnés",
+  relatedSectorsTitle: "Les autres métiers",
   relatedSectors: [
     { label: "Associations sportives (loi 1901)", href: "/fr/automatisation-association-sportive" },
     { label: "Garages et carrosseries", href: "/fr/automatisation-garage-automobile" },
@@ -121,7 +121,7 @@ const contentFr: SectorContent = {
 };
 
 const contentEn: SectorContent = {
-  eyebrow: "GYMS · STUDIOS · WELLNESS CENTERS",
+  eyebrow: "Gyms, studios and wellness centres",
   h1: "Automate the tasks that are quietly costing you members",
   intro:
     "Between classes, front-desk duty and treatments, nobody has time to chase an expiring membership or refill a spot freed up by a no-show. We automate these specific tasks so nothing falls through the cracks.",
@@ -208,9 +208,9 @@ const contentEn: SectorContent = {
   ],
   ctaText:
     "30 minutes is enough to identify where you're losing time and money on repetitive tasks, and see whether automation is worth it for you.",
-  ctaButton: "Book my free diagnostic →",
+  ctaButton: "Book my free diagnostic",
   diagnosticNote: "30 minutes, free, no commitment.",
-  relatedSectorsTitle: "Other sectors we support",
+  relatedSectorsTitle: "Other trades",
   relatedSectors: [
     { label: "Sports associations (non-profit)", href: "/en/automatisation-association-sportive" },
     { label: "Garages and auto body shops", href: "/en/automatisation-garage-automobile" },

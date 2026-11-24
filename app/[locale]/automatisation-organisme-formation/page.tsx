@@ -16,7 +16,7 @@ const FLOW_MSG_KEY: Record<string, string> = {
 };
 
 const contentFr: SectorContent = {
-  eyebrow: "ORGANISMES DE FORMATION · FORMATEURS INDÉPENDANTS · CFA",
+  eyebrow: "Organismes de formation, formateurs indépendants et CFA",
   h1: "Moins de temps sur la paperasse Qualiopi, plus de temps sur la pédagogie",
   intro:
     "Émargements à archiver, dossiers OPCO à relancer, convocations à envoyer, preuves à rassembler avant l'audit Qualiopi : la charge administrative d'un organisme de formation ne vient pas du métier, elle vient de tout ce qui l'entoure. On automatise ces tâches précises — vous restez la personne qui décide, qui valide et qui facture.",
@@ -97,9 +97,9 @@ const contentFr: SectorContent = {
   ],
   ctaText:
     "30 minutes pour identifier ce qui vous prend le plus de temps entre l'administratif OPCO, l'émargement et la préparation d'audit, et voir si une automatisation vaut le coup pour vous.",
-  ctaButton: "Réserver mon diagnostic gratuit →",
+  ctaButton: "Réserver mon diagnostic gratuit",
   diagnosticNote: "30 minutes, gratuit, sans engagement.",
-  relatedSectorsTitle: "Autres secteurs accompagnés",
+  relatedSectorsTitle: "Les autres métiers",
   relatedSectors: [
     { label: "Salles de sport & instituts bien-être", href: "/fr/automatisation-salle-de-sport" },
     { label: "Garages et carrosseries", href: "/fr/automatisation-garage-automobile" },
@@ -109,7 +109,7 @@ const contentFr: SectorContent = {
 };
 
 const contentEn: SectorContent = {
-  eyebrow: "TRAINING ORGANIZATIONS · INDEPENDENT TRAINERS · APPRENTICESHIP CENTERS",
+  eyebrow: "Training organisations, independent trainers and apprenticeship centres",
   h1: "Less time on Qualiopi paperwork, more time on teaching",
   intro:
     "Attendance sheets to archive, OPCO funding files to follow up, notices to send, evidence to gather before a Qualiopi audit: the administrative load of a training organization doesn't come from the trade itself, it comes from everything around it. We automate these specific tasks — you stay the one who decides, approves and bills.",
@@ -190,9 +190,9 @@ const contentEn: SectorContent = {
   ],
   ctaText:
     "30 minutes to identify what's taking up the most of your time between OPCO admin, attendance tracking and audit prep, and see whether automation is worth it for you.",
-  ctaButton: "Book my free diagnostic →",
+  ctaButton: "Book my free diagnostic",
   diagnosticNote: "30 minutes, free, no commitment.",
-  relatedSectorsTitle: "Other sectors we support",
+  relatedSectorsTitle: "Other trades",
   relatedSectors: [
     { label: "Gyms & wellness centers", href: "/en/automatisation-salle-de-sport" },
     { label: "Garages and body shops", href: "/en/automatisation-garage-automobile" },

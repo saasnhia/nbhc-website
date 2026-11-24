@@ -12,7 +12,7 @@
   "hero": {
     "titleLine1": "We build business software.",
     "titleLine2": "The next one can be yours.",
-    "subtitle": "Devizly is live, Vlogyz has a waiting list. And a custom tool is under way for a travel agency.",
+    "subtitle": "Devizly is live, Vlogyz has a waiting list. And a custom tool is being prepared for a travel agency.",
     "ctaPrimary": "Talk about your tool",
     "ctaSecondary": "See the products",
     "ctaNote": "30 minutes, free",
@@ -37,7 +37,6 @@
     }
   },
   "howItWorks": {
-    "eyebrow": "Method",
     "title": "From the first call to delivery",
     "subtitle": "Four steps. You know what will be built and at what price before signing.",
     "step1Title": "We understand your day-to-day",
@@ -47,7 +46,7 @@
     "step2Desc": "We look at your data and your software, then write down what will be built. You approve it before signing.",
     "step2Badge": "before signing",
     "step3Title": "We build and test on your real cases",
-    "step3Desc": "The tool is tuned to your vocabulary and your rules. Not a mock-up: a tool that runs.",
+    "step3Desc": "The tool is tuned to your vocabulary and your rules, then tried on your real files before delivery.",
     "step3Badge": "on your real cases",
     "step4Title": "We deliver, you decide what’s next",
     "step4Desc": "The tool is tested and delivered. Ongoing support is optional, never imposed.",
@@ -60,9 +59,8 @@
     "step4Out": "The tool in service, and everything built for you"
   },
   "products": {
-    "eyebrow": "Our products",
     "title": "Devizly is live. Vlogyz is on its way.",
-    "subtitle": "Two pieces of software we design and develop ourselves. The images below come from the products, not from a mock-up: each caption says what it shows.",
+    "subtitle": "Two pieces of software we design and develop ourselves. The images come from the products or their presentation video, not from a redrawn mock-up: each caption says what it shows.",
     "devizlyName": "Devizly",
     "devizlyBadge": "Live",
     "devizlyLink": "Open devizly.fr",
@@ -88,11 +86,11 @@
     "devizlyBar2": "The quote, client side",
     "devizlyCaption": "Real Devizly screens, with a demonstration account and clients. The interface is in French.",
     "vlogyzAlt1": "Frame from a Vlogyz presentation video: four keywords detected in the voice, and the illustration shot chosen for each",
-    "vlogyzBar1": "Presentation video · b-roll",
-    "vlogyzCaption": "Frame taken from a Vlogyz presentation video. The application is not open to the public yet."
+    "vlogyzBar1": "Vlogyz presentation video",
+    "vlogyzCaption": "Frame taken from a Vlogyz presentation video. The application is not open to the public yet.",
+    "devizlyBar1": "Devizly, new quote"
   },
   "faq": {
-    "eyebrow": "FAQ",
     "title": "The questions we get asked",
     "subtitle": "For the others, the first 30-minute call is made for that.",
     "q1": "Is NBHC an agency or a software publisher?",
@@ -107,13 +105,11 @@
     "a5": "We tell you during the first call. A well-kept spreadsheet or off-the-shelf software is sometimes enough, and in that case we build nothing."
   },
   "contact": {
-    "eyebrow": "First call",
     "title": "Let’s talk about",
     "titleGold": "your tool",
     "description": "30 minutes on video. You show what gets redone by hand at your company. We tell you whether a tool can take it over, and if it can’t we tell you that too.",
     "calendlyButton": "Book a slot",
     "calendlyAlt": "Prefer to write? contact@nbhc.fr",
-    "emailDirect": "Direct email",
     "siren": "SIREN",
     "headquarters": "Headquarters"
   },
@@ -929,21 +925,11 @@
     "videoAriaStudio": "Presentation video of a studio flat, made from photographs"
   },
   "custom": {
-    "eyebrow": "Custom tools",
     "title": "A request comes in. The tool prepares the quote. You approve.",
-    "subtitle": "We build software around your rules: your prices, your special cases, your way of quoting. It redoes for you the calculation someone redoes by hand for every file.",
-    "p1Title": "It starts from the client’s request",
-    "p1Text": "The message comes in as it was written. The tool pulls out what the quote needs: who, when, for how long, under which conditions.",
-    "p2Title": "Every line cites its source",
-    "p2Text": "A value is shown with the client’s sentence that supports it. No sentence, no value: your advisor sees what is missing and asks for it.",
-    "p3Title": "Your prices stay yours",
-    "p3Text": "The tool works out who pays for what. Amounts come from your price list, and the calculation reads line by line.",
-    "p4Title": "It builds on what you already have",
-    "p4Text": "The demonstration builds on the tours the agency publishes on its website. The advisors keep the decision.",
+    "subtitle": "We build software around your rules: your prices, your special cases, your way of quoting. The tool does the calculation someone redoes by hand today for every file.",
     "terms": "First 30-minute call, free. Scope and price are written down before we start. What we build for you belongs to you.",
     "cta": "Describe your case",
     "demo": {
-      "messageLabel": "The client’s message",
       "m1": "Hello, there will be ",
       "c1": "two of us, Marc and me, from 4 to 12 May 2027",
       "m2": ": Hanoi, Ha Long Bay then Hoi An. My sister Claire ",
@@ -976,26 +962,8 @@
         "room": "Single",
         "source": "“a room of her own”"
       },
-      "amounts": "Amounts come from your price list. The tool invents none: it works out the structure, your advisor approves.",
-      "caption": "Built demonstration, on a fictional example of a trip for three. The same principle applies to a job site, a training course or a subscription.",
-      "routeLabel": "The route, stops and dates taken from your catalogue",
-      "e1": {
-        "place": "Hanoi",
-        "dates": "4 to 6 May · 2 nights",
-        "present": "Julie, Marc"
-      },
-      "e2": {
-        "place": "Ha Long Bay",
-        "dates": "6 to 8 May · 2 nights",
-        "present": "Julie, Marc"
-      },
-      "e3": {
-        "place": "Hoi An",
-        "dates": "8 to 12 May · 4 nights",
-        "present": "Julie, Marc, Claire"
-      }
+      "amountsShort": "Amounts come from your price list."
     },
-    "demoTitle": "The same example, in detail",
     "project": {
       "eyebrow": "Project under way",
       "title": "A custom quoting tool, for a travel agency",
@@ -1026,8 +994,6 @@
       "s1Title": "The request comes in",
       "s1From": "From: Julie",
       "s1When": "Received this morning",
-      "s1Mid": ". My sister ",
-      "s1Text": "An email, written the way the client talks.",
       "s2Title": "The tool applies your rules",
       "rule1If": "Partial stay",
       "rule1Then": "only the nights spent count",
@@ -1035,12 +1001,10 @@
       "rule2Then": "counted separately from the others",
       "rule3If": "Prices",
       "rule3Then": "from your price list, never invented",
-      "s2Text": "Your rules, written once in the tool.",
       "s3Title": "The quote is ready to approve",
-      "s3Text": "Who pays for what, line by line.",
       "validate": "Approve",
       "caption": "Fictional example. The same path applies to a job site, a training course or a subscription.",
-      "label": "An example: a request from three travellers"
+      "replay": "Replay the demo"
     },
     "beforeTitle": "Today, by hand",
     "afterTitle": "With the tool",
@@ -1054,7 +1018,6 @@
     "a4": "The answer is ready to review as soon as the request is read"
   },
   "trust": {
-    "eyebrow": "Why us",
     "title": "We are starting out, and we say so",
     "subtitle": "NBHC has not delivered a custom tool to a client yet. Rather than dress that up, here is what exists today, and what protects you if you are among the first.",
     "factsTitle": "What exists today",
@@ -1065,7 +1028,7 @@
     "f2Title": "One custom project under way",
     "f2Text": "A quoting tool for a travel agency: demonstration shown, build planned from February 2027.",
     "f2Link": "See where it stands",
-    "f2Href": "#sur-mesure",
+    "f2Href": "#projet",
     "guaranteesTitle": "What protects you",
     "g1Title": "You talk to the person who builds",
     "g1Text": "No intermediary between you and the person writing the code.",

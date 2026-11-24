@@ -21,7 +21,7 @@ const FLOW_MSG_KEY: Record<string, string> = {
 };
 
 const contentFr: SectorContent = {
-  eyebrow: "OFFICINES DE PHARMACIE",
+  eyebrow: "Officines de pharmacie",
   h1: "Le back-office qui vous fait perdre du temps, pas les patients",
   intro:
     "Détecter les patients éligibles au Bilan Partagé de Médication, relancer un rejet de tiers-payant, préparer une inspection qualité : ce sont des tâches de fond, répétitives, qui n'ont rien à voir avec le conseil au comptoir. On les automatise — vous restez le pharmacien qui décide, mène l'entretien et facture. NBHC n'est ni professionnel de santé ni éditeur de logiciel agréé Assurance Maladie : on détecte, on prépare, on rappelle — jamais on ne soumet ou ne facture à votre place.",
@@ -108,9 +108,9 @@ const contentFr: SectorContent = {
   ],
   ctaText:
     "30 minutes pour identifier ce qui vous prend le plus de temps entre la détection des patients éligibles, les ruptures et le tiers-payant, et voir si une automatisation vaut le coup pour votre officine.",
-  ctaButton: "Réserver mon diagnostic gratuit →",
+  ctaButton: "Réserver mon diagnostic gratuit",
   diagnosticNote: "30 minutes, gratuit, sans engagement.",
-  relatedSectorsTitle: "Autres secteurs accompagnés",
+  relatedSectorsTitle: "Les autres métiers",
   relatedSectors: [
     { label: "Organismes de formation", href: "/fr/automatisation-organisme-formation" },
     { label: "Salles de sport & instituts bien-être", href: "/fr/automatisation-salle-de-sport" },
@@ -120,7 +120,7 @@ const contentFr: SectorContent = {
 };
 
 const contentEn: SectorContent = {
-  eyebrow: "PHARMACIES",
+  eyebrow: "Pharmacies",
   h1: "The back-office work that wastes your time, not your patients",
   intro:
     "Detecting patients eligible for a shared medication review, following up a third-party payer rejection, preparing a quality inspection: these are recurring background tasks with nothing to do with counter advice. We automate them — you stay the pharmacist who decides, leads the consultation and bills. NBHC is neither a healthcare professional nor an approved health-insurance software vendor: we detect, prepare, remind — we never submit or bill on your behalf.",
@@ -207,9 +207,9 @@ const contentEn: SectorContent = {
   ],
   ctaText:
     "30 minutes to identify what's taking up the most of your time between detecting eligible patients, shortages and third-party payer follow-up, and see whether automation is worth it for your pharmacy.",
-  ctaButton: "Book my free diagnostic →",
+  ctaButton: "Book my free diagnostic",
   diagnosticNote: "30 minutes, free, no commitment.",
-  relatedSectorsTitle: "Other sectors we support",
+  relatedSectorsTitle: "Other trades",
   relatedSectors: [
     { label: "Training organizations", href: "/en/automatisation-organisme-formation" },
     { label: "Gyms & wellness centers", href: "/en/automatisation-salle-de-sport" },

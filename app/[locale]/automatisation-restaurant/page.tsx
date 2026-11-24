@@ -18,7 +18,7 @@ const FLOW_MSG_KEY: Record<string, string> = {
 };
 
 const contentFr: SectorContent = {
-  eyebrow: "RESTAURANTS",
+  eyebrow: "Restaurants",
   h1: "Le téléphone qui sonne pendant le coup de feu ne doit plus être un client perdu",
   intro:
     "Décrocher pendant le service, relancer les no-show, répondre aux avis, recontacter la base clients par WhatsApp : ce sont des tâches qui se font quand la salle a le temps — c'est-à-dire rarement. On les automatise — vous restez le restaurateur qui décide, valide et sert. On détecte, on prépare, on propose — jamais on ne s'engage à votre place.",
@@ -105,9 +105,9 @@ const contentFr: SectorContent = {
   ],
   ctaText:
     "30 minutes pour identifier ce qui vous prend le plus de temps entre les appels ratés, les no-show et la relation client, et voir si une automatisation vaut le coup pour votre restaurant.",
-  ctaButton: "Réserver mon diagnostic gratuit →",
+  ctaButton: "Réserver mon diagnostic gratuit",
   diagnosticNote: "30 minutes, gratuit, sans engagement.",
-  relatedSectorsTitle: "Autres secteurs accompagnés",
+  relatedSectorsTitle: "Les autres métiers",
   relatedSectors: [
     { label: "Salons de coiffure", href: "/fr/automatisation-salon-de-coiffure" },
     { label: "Salles de sport & instituts bien-être", href: "/fr/automatisation-salle-de-sport" },
@@ -117,7 +117,7 @@ const contentFr: SectorContent = {
 };
 
 const contentEn: SectorContent = {
-  eyebrow: "RESTAURANTS",
+  eyebrow: "Restaurants",
   h1: "A phone ringing during the rush shouldn't mean a lost customer",
   intro:
     "Answering during service, following up no-shows, replying to reviews, reaching out to your customer base on WhatsApp: these are tasks that get done when the floor has time — which is rarely. We automate them — you stay the restaurant owner who decides, approves and serves. We detect, prepare, propose — we never commit on your behalf.",
@@ -201,9 +201,9 @@ const contentEn: SectorContent = {
   ],
   ctaText:
     "30 minutes to identify what's taking up the most of your time between missed calls, no-shows and customer relations, and see whether automation is worth it for your restaurant.",
-  ctaButton: "Book my free diagnostic →",
+  ctaButton: "Book my free diagnostic",
   diagnosticNote: "30 minutes, free, no commitment.",
-  relatedSectorsTitle: "Other sectors we support",
+  relatedSectorsTitle: "Other trades",
   relatedSectors: [
     { label: "Hair salons", href: "/en/automatisation-salon-de-coiffure" },
     { label: "Gyms & wellness centers", href: "/en/automatisation-salle-de-sport" },

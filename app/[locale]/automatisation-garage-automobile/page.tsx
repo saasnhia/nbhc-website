@@ -19,7 +19,7 @@ const FLOW_MSG_KEY: Record<string, string> = {
 };
 
 const contentFr: SectorContent = {
-  eyebrow: "GARAGES · CARROSSERIES INDÉPENDANTES",
+  eyebrow: "Garages et carrosseries indépendantes",
   h1: "Ne perdez plus un client parce que vous étiez sous une voiture",
   intro:
     "Le patron d'un garage indépendant est à l'atelier, pas au téléphone. Chaque appel raté pendant une intervention est un client qui essaie le garage d'à côté. On automatise l'accueil téléphonique, les relances de devis et les rappels d'entretien pour que rien ne se perde entre deux interventions.",
@@ -35,7 +35,7 @@ const contentFr: SectorContent = {
     {
       title: "Les devis envoyés puis jamais relancés",
       description:
-        "Un devis pour une distribution ou un embrayage qui traîne sans relance a statistiquement beaucoup moins de chances d'être signé qu'un devis suivi à J+3, J+7 et J+14.",
+        "Un devis pour une distribution ou un embrayage envoyé puis laissé sans nouvelles finit souvent oublié par le client, qui demande ailleurs. Une relance à J+3, J+7 et J+14 le remet sous ses yeux.",
     },
     {
       title: "Les révisions et contrôles techniques jamais rappelés",
@@ -91,7 +91,7 @@ const contentFr: SectorContent = {
     {
       question: "L'IA téléphonique va rendre mon garage impersonnel ?",
       answer:
-        "Non — elle prend le relais uniquement quand vous êtes occupé à l'atelier. Elle se présente au nom de votre garage et vous transmet chaque demande. La plupart des clients ne se rendent même pas compte qu'ils ont parlé à un assistant automatisé.",
+        "Non — elle prend le relais uniquement quand vous êtes occupé à l'atelier. Elle se présente au nom de votre garage, dit d'emblée qu'elle est un assistant automatique, et vous transmet chaque demande.",
     },
     {
       question: "Ça marche avec mon logiciel de gestion garage actuel ?",
@@ -106,9 +106,9 @@ const contentFr: SectorContent = {
   ],
   ctaText:
     "30 minutes pour évaluer combien d'appels, de devis ou de rappels d'entretien vous laissez filer aujourd'hui, et si une automatisation ciblée vaut le coup pour votre garage.",
-  ctaButton: "Réserver mon diagnostic gratuit →",
+  ctaButton: "Réserver mon diagnostic gratuit",
   diagnosticNote: "30 minutes, gratuit, sans engagement.",
-  relatedSectorsTitle: "Autres secteurs accompagnés",
+  relatedSectorsTitle: "Les autres métiers",
   relatedSectors: [
     { label: "Salles de sport & instituts bien-être", href: "/fr/automatisation-salle-de-sport" },
     { label: "Associations sportives (loi 1901)", href: "/fr/automatisation-association-sportive" },
@@ -118,7 +118,7 @@ const contentFr: SectorContent = {
 };
 
 const contentEn: SectorContent = {
-  eyebrow: "INDEPENDENT GARAGES & BODY SHOPS",
+  eyebrow: "Independent garages and body shops",
   h1: "Stop losing customers because you were under a car",
   intro:
     "An independent garage owner is in the shop, not on the phone. Every missed call during a repair is a customer trying the garage down the street. We automate phone reception, quote follow-ups and service reminders so nothing gets lost between two jobs.",
@@ -134,7 +134,7 @@ const contentEn: SectorContent = {
     {
       title: "Quotes sent and never followed up",
       description:
-        "A quote for a timing belt or clutch job left without follow-up has statistically much lower odds of being signed than one followed up at day 3, 7 and 14.",
+        "A quote for a timing belt or clutch job sent and then left without news often ends up forgotten by the customer, who asks elsewhere. A follow-up at day 3, 7 and 14 puts it back in front of them.",
     },
     {
       title: "Service and inspection reminders never sent",
@@ -190,7 +190,7 @@ const contentEn: SectorContent = {
     {
       question: "Will the AI phone agent make my garage feel impersonal?",
       answer:
-        "No — it only takes over when you're busy in the shop. It introduces itself as your garage and passes every request on to you. Most customers don't even realize they spoke to an automated assistant.",
+        "No — it only takes over when you're busy in the shop. It introduces itself on behalf of your garage, says from the start that it is an automated assistant, and passes every request on to you.",
     },
     {
       question: "Does it work with my current garage management software?",
@@ -205,9 +205,9 @@ const contentEn: SectorContent = {
   ],
   ctaText:
     "30 minutes to assess how many calls, quotes or service reminders you're currently letting slip, and whether a targeted automation is worth it for your garage.",
-  ctaButton: "Book my free diagnostic →",
+  ctaButton: "Book my free diagnostic",
   diagnosticNote: "30 minutes, free, no commitment.",
-  relatedSectorsTitle: "Other sectors we support",
+  relatedSectorsTitle: "Other trades",
   relatedSectors: [
     { label: "Gyms & wellness centers", href: "/en/automatisation-salle-de-sport" },
     { label: "Sports associations (non-profit)", href: "/en/automatisation-association-sportive" },

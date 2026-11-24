@@ -19,7 +19,7 @@ const FLOW_MSG_KEY: Record<string, string> = {
 };
 
 const contentFr: SectorContent = {
-  eyebrow: "ARTISANS · TPE DU BÂTIMENT",
+  eyebrow: "Artisans et TPE du bâtiment",
   h1: "Le soir, vous devriez être chez vous — pas sur vos devis",
   intro:
     "Plombier, électricien, peintre, menuisier : le temps passé sur les devis, les relances et la facturation est du temps non facturé, souvent pris le soir ou le week-end. On automatise ces tâches précises pour que votre temps aille au chantier, pas à la paperasse.",
@@ -100,9 +100,9 @@ const contentFr: SectorContent = {
   ],
   ctaText:
     "30 minutes pour identifier ce qui vous prend le plus de temps entre les devis, les relances et la facturation, et voir si une automatisation vaut le coup pour vous.",
-  ctaButton: "Réserver mon diagnostic gratuit →",
+  ctaButton: "Réserver mon diagnostic gratuit",
   diagnosticNote: "30 minutes, gratuit, sans engagement.",
-  relatedSectorsTitle: "Autres secteurs accompagnés",
+  relatedSectorsTitle: "Les autres métiers",
   relatedSectors: [
     { label: "Salles de sport & instituts bien-être", href: "/fr/automatisation-salle-de-sport" },
     { label: "Associations sportives (loi 1901)", href: "/fr/automatisation-association-sportive" },
@@ -116,7 +116,7 @@ const contentFr: SectorContent = {
 };
 
 const contentEn: SectorContent = {
-  eyebrow: "TRADESPEOPLE · CONSTRUCTION SMES",
+  eyebrow: "Tradespeople and small construction firms",
   h1: "Your evenings should be yours — not spent on quotes",
   intro:
     "Plumber, electrician, painter, carpenter: time spent on quotes, follow-ups and invoicing is unbilled time, often done in the evening or on weekends. We automate these specific tasks so your time goes to the job site, not the paperwork.",
@@ -197,9 +197,9 @@ const contentEn: SectorContent = {
   ],
   ctaText:
     "30 minutes to identify what's taking up the most of your time between quotes, follow-ups and invoicing, and see whether automation is worth it for you.",
-  ctaButton: "Book my free diagnostic →",
+  ctaButton: "Book my free diagnostic",
   diagnosticNote: "30 minutes, free, no commitment.",
-  relatedSectorsTitle: "Other sectors we support",
+  relatedSectorsTitle: "Other trades",
   relatedSectors: [
     { label: "Gyms & wellness centers", href: "/en/automatisation-salle-de-sport" },
     { label: "Sports associations (non-profit)", href: "/en/automatisation-association-sportive" },

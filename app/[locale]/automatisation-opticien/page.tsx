@@ -19,7 +19,7 @@ const FLOW_MSG_KEY: Record<string, string> = {
 };
 
 const contentFr: SectorContent = {
-  eyebrow: "MAGASINS D'OPTIQUE · RÉSEAUX MULTI-BOUTIQUES",
+  eyebrow: "Magasins d'optique et réseaux multi-boutiques",
   h1: "Le client qui ne revient jamais renouveler, ce n'est pas une fatalité",
   intro:
     "Un client équipé il y a deux ans qu'on ne relance jamais, une commande prête que personne n'a prévenu, un stock qui ne dit pas la même chose d'une boutique à l'autre : ce sont des tâches de fond, répétitives, qui n'ont rien à voir avec l'examen de vue ou le conseil en magasin. On les automatise — vous restez l'opticien qui examine, conseille et vend. NBHC n'est ni opticien-optométriste ni professionnel de santé : on détecte, on prépare, on rappelle — jamais on ne réalise l'examen ni ne facture à votre place.",
@@ -100,9 +100,9 @@ const contentFr: SectorContent = {
   ],
   ctaText:
     "30 minutes pour identifier ce qui vous prend le plus de temps entre le renouvellement client, le suivi fabrication et le stock multi-boutiques, et voir si une automatisation vaut le coup pour votre enseigne.",
-  ctaButton: "Réserver mon diagnostic gratuit →",
+  ctaButton: "Réserver mon diagnostic gratuit",
   diagnosticNote: "30 minutes, gratuit, sans engagement.",
-  relatedSectorsTitle: "Autres secteurs accompagnés",
+  relatedSectorsTitle: "Les autres métiers",
   relatedSectors: [
     { label: "Marques de cosmétique & parfumerie", href: "/fr/automatisation-marque-cosmetique" },
     { label: "Officines de pharmacie", href: "/fr/automatisation-pharmacie" },
@@ -112,7 +112,7 @@ const contentFr: SectorContent = {
 };
 
 const contentEn: SectorContent = {
-  eyebrow: "OPTICAL STORES · MULTI-STORE NETWORKS",
+  eyebrow: "Optical stores and multi-store networks",
   h1: "The client who never comes back to renew isn't inevitable",
   intro:
     "A client fitted two years ago who's never followed up, a ready order nobody flagged, stock that doesn't match from one store to another: these are recurring background tasks with nothing to do with the eye exam or in-store advice. We automate them — you stay the optician who examines, advises and sells. NBHC is neither an optician-optometrist nor a healthcare professional: we detect, prepare, remind — we never perform the exam or bill on your behalf.",
@@ -193,9 +193,9 @@ const contentEn: SectorContent = {
   ],
   ctaText:
     "30 minutes to identify what's taking up the most of your time between client renewal, order tracking and multi-store stock, and see whether automation is worth it for your stores.",
-  ctaButton: "Book my free diagnostic →",
+  ctaButton: "Book my free diagnostic",
   diagnosticNote: "30 minutes, free, no commitment.",
-  relatedSectorsTitle: "Other sectors we support",
+  relatedSectorsTitle: "Other trades",
   relatedSectors: [
     { label: "Cosmetics & fragrance brands", href: "/en/automatisation-marque-cosmetique" },
     { label: "Pharmacies", href: "/en/automatisation-pharmacie" },

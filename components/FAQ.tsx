@@ -18,9 +18,6 @@ export default function FAQ() {
       className="py-28 px-10 max-[900px]:px-5 max-[900px]:py-16"
       style={{ maxWidth: 880, margin: "0 auto" }}
     >
-      <div style={{ fontSize: 14, color: "var(--gold-light)", marginBottom: 12 }}>
-        {t("eyebrow")}
-      </div>
       <h2
         style={{
           fontFamily: "var(--font-syne)",

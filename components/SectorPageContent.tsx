@@ -107,33 +107,6 @@ export default function SectorPageContent({
   return (
     <main style={{ background: "var(--bg)" }}>
       <Nav />
-      <style>{`
-        .automation-card {
-          transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
-        }
-        .flow-node {
-          transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-        @media (hover: hover) and (pointer: fine) {
-          .automation-card:hover {
-            transform: translateY(-3px);
-            border-color: var(--gold-border);
-            box-shadow: 0 20px 44px -16px rgba(0,0,0,0.4), 0 0 0 1px rgba(196,151,58,0.08);
-          }
-          .automation-card:hover .flow-node {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 18px -8px rgba(0,0,0,0.35);
-          }
-          .automation-card:hover .flow-node--validation {
-            box-shadow: 0 0 0 3px rgba(196,151,58,0.14), 0 8px 18px -8px rgba(0,0,0,0.35);
-          }
-        }
-        @media (prefers-reduced-motion: reduce) {
-          .automation-card, .flow-node { transition: none !important; }
-          .automation-card:hover { transform: none !important; }
-          .automation-card:hover .flow-node { transform: none !important; }
-        }
-      `}</style>
       <div
         style={{
           margin: "0 auto",
@@ -155,13 +128,9 @@ export default function SectorPageContent({
         </Link>
 
         {/* Hero */}
-        <div
-          className="text-[11px] font-medium tracking-[3px] uppercase mb-4 flex items-center gap-2"
-          style={{ color: "var(--gold)" }}
-        >
-          <span className="block w-4 h-px" style={{ background: "var(--gold)" }} />
+        <p className="m-0 mb-4" style={{ fontSize: 15, color: "var(--gold-light)" }}>
           {content.eyebrow}
-        </div>
+        </p>
         <h1
           style={{
             fontFamily: "var(--font-syne)",
@@ -213,34 +182,27 @@ export default function SectorPageContent({
           >
             {content.painIntro}
           </p>
-          <div className="grid grid-cols-2 max-[700px]:grid-cols-1 gap-4">
+          <ul className="list-none m-0 p-0 grid grid-cols-2 max-[700px]:grid-cols-1 gap-x-12">
             {content.painPoints.map((p) => (
-              <div
-                key={p.title}
-                style={{
-                  padding: 24,
-                  background: "rgba(255,255,255,0.02)",
-                  border: "1px solid var(--border)",
-                  borderRadius: "var(--radius)",
-                }}
-              >
-                <div
+              <li key={p.title} style={{ padding: "20px 0", borderTop: "1px solid var(--border)" }}>
+                <h3
                   style={{
                     fontFamily: "var(--font-syne)",
-                    fontSize: 16,
-                    fontWeight: 700,
+                    fontSize: 17,
+                    fontWeight: 600,
+                    lineHeight: 1.3,
                     color: "var(--text)",
-                    marginBottom: 8,
+                    margin: "0 0 8px",
                   }}
                 >
-                  <span style={{ color: "#f87171" }}>↳</span> {p.title}
-                </div>
-                <p style={{ color: "var(--text-muted)", fontSize: 14, lineHeight: 1.65, margin: 0 }}>
+                  {p.title}
+                </h3>
+                <p style={{ color: "var(--text-muted)", fontSize: 15, lineHeight: 1.65, margin: 0 }}>
                   {p.description}
                 </p>
-              </div>
+              </li>
             ))}
-          </div>
+          </ul>
         </section>
 
         {/* Automations */}
@@ -338,22 +300,6 @@ export default function SectorPageContent({
                         }}
                       />
                       <div className={hasFlow ? texteCol : ""}>
-                        <div className="flex items-center gap-3 flex-wrap" style={{ marginBottom: 12 }}>
-                          <span
-                            style={{
-                              fontSize: 11,
-                              fontWeight: 700,
-                              letterSpacing: 1,
-                              color: "var(--gold)",
-                              background: "var(--gold-dim)",
-                              border: "1px solid var(--gold-border)",
-                              borderRadius: 999,
-                              padding: "3px 10px",
-                            }}
-                          >
-                            {a.code}
-                          </span>
-                        </div>
                         <h3
                           style={{
                             fontFamily: "var(--font-syne)",
@@ -431,31 +377,18 @@ export default function SectorPageContent({
                     className={`flex items-center gap-3 flex-wrap ${wide ? "" : `${textCol} lg:row-start-1`}`}
                     style={{ marginBottom: 10 }}
                   >
-                    <span
-                      style={{
-                        fontSize: 11,
-                        fontWeight: 700,
-                        letterSpacing: 1,
-                        color: "var(--gold)",
-                        background: "var(--gold-dim)",
-                        border: "1px solid var(--gold-border)",
-                        borderRadius: 999,
-                        padding: "3px 10px",
-                      }}
-                    >
-                      {a.code}
-                    </span>
-                    <span
+                    <h3
+                      className="lg:text-[19px]"
                       style={{
                         fontFamily: "var(--font-syne)",
                         fontSize: 17,
                         fontWeight: 700,
                         color: "var(--text)",
+                        margin: 0,
                       }}
-                      className="lg:text-[19px]"
                     >
                       {a.title}
-                    </span>
+                    </h3>
                   </div>
                   {hasFlow && (
                     <div
@@ -508,27 +441,19 @@ export default function SectorPageContent({
         </section>
 
         {/* Geo */}
-        <section
-          style={{
-            marginBottom: 64,
-            padding: 28,
-            background: "rgba(196,151,58,0.04)",
-            border: "1px solid var(--gold-border)",
-            borderRadius: "var(--radius)",
-          }}
-        >
+        <section style={{ marginBottom: 64, paddingTop: 24, borderTop: "1px solid var(--border)" }}>
           <h2
             style={{
               fontFamily: "var(--font-syne)",
               fontSize: 20,
-              fontWeight: 700,
-              color: "var(--gold-light)",
-              marginBottom: 10,
+              fontWeight: 600,
+              color: "var(--text)",
+              marginBottom: 8,
             }}
           >
             {content.geoTitle}
           </h2>
-          <p style={{ color: "var(--text-muted)", fontSize: 14, lineHeight: 1.7, margin: 0 }}>
+          <p style={{ color: "var(--text-muted)", fontSize: 15, lineHeight: 1.7, margin: 0, maxWidth: 680 }}>
             {content.geoText}
           </p>
         </section>
@@ -604,7 +529,7 @@ export default function SectorPageContent({
           >
             {content.ctaButton}
           </a>
-          <p style={{ color: "var(--text-dim)", fontSize: 12, marginTop: 16 }}>
+          <p style={{ color: "var(--text-muted)", fontSize: 13, marginTop: 16 }}>
             {content.diagnosticNote}
           </p>
         </section>
@@ -614,11 +539,9 @@ export default function SectorPageContent({
           <h2
             style={{
               fontFamily: "var(--font-syne)",
-              fontSize: 15,
-              fontWeight: 700,
-              textTransform: "uppercase",
-              letterSpacing: 1,
-              color: "var(--text-muted)",
+              fontSize: 17,
+              fontWeight: 600,
+              color: "var(--text)",
               marginBottom: 16,
             }}
           >
@@ -638,7 +561,7 @@ export default function SectorPageContent({
                   borderRadius: 999,
                 }}
               >
-                {r.label} &rarr;
+                {r.label}
               </Link>
             ))}
             {content.relatedArticle && (
@@ -653,7 +576,7 @@ export default function SectorPageContent({
                   borderRadius: 999,
                 }}
               >
-                {content.relatedArticle.label} &rarr;
+                {content.relatedArticle.label}
               </Link>
             )}
           </div>

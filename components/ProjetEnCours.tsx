@@ -45,14 +45,10 @@ export default function ProjetEnCours() {
   const t = useTranslations("custom.project");
 
   return (
+    <section id="projet" style={{ borderBottom: "1px solid var(--border)" }}>
     <div
-      className="grid gap-10 min-[1000px]:gap-20 min-[1000px]:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] mt-20 max-[900px]:mt-12"
-      style={{
-        padding: "32px",
-        background: "var(--surface)",
-        border: "1px solid var(--border)",
-        borderRadius: 16,
-      }}
+      className="grid gap-10 min-[1000px]:gap-20 min-[1000px]:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] px-10 max-[900px]:px-5 py-28 max-[900px]:py-16"
+      style={{ maxWidth: 1200, margin: "0 auto" }}
     >
       <div>
         <div
@@ -65,20 +61,20 @@ export default function ProjetEnCours() {
           />
           {t("eyebrow")}
         </div>
-        <h3
+        <h2
           style={{
             fontFamily: "var(--font-syne)",
             fontWeight: 600,
-            fontSize: "clamp(22px, 2.2vw, 28px)",
-            lineHeight: 1.2,
-            letterSpacing: "-0.01em",
+            fontSize: "clamp(28px, 3.4vw, 44px)",
+            lineHeight: 1.1,
+            letterSpacing: "-0.02em",
             color: "var(--text)",
-            marginBottom: 16,
+            marginBottom: 20,
           }}
         >
           {t("title")}
-        </h3>
-        <p style={{ fontSize: 15, lineHeight: 1.7, color: "var(--text-muted)" }}>
+        </h2>
+        <p style={{ fontSize: 16, lineHeight: 1.7, color: "var(--text-muted)" }}>
           {t("text")}
         </p>
         <p
@@ -158,5 +154,6 @@ export default function ProjetEnCours() {
         ))}
       </ol>
     </div>
+    </section>
   );
 }

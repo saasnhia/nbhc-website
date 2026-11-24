@@ -18,7 +18,7 @@ const FLOW_MSG_KEY: Record<string, string> = {
 };
 
 const contentFr: SectorContent = {
-  eyebrow: "MARQUES DE COSMÉTIQUE & PARFUMERIE",
+  eyebrow: "Marques de cosmétique et de parfumerie",
   h1: "Le dossier réglementaire qui traîne, ce n'est plus un lancement qui attend",
   intro:
     "Préparer un dossier CPNP à chaque nouvelle référence, garder le stock synchronisé entre boutiques et e-shop, suivre les avis sur plusieurs plateformes, gérer les échantillons envoyés aux créateurs de contenu : ce sont des tâches opérationnelles répétitives, qui n'ont rien à voir avec la création ou la stratégie de marque. On les automatise — vous restez la marque qui décide, valide et déclare. On détecte, on prépare, on propose — jamais on ne déclare ou ne facture à votre place.",
@@ -100,9 +100,9 @@ const contentFr: SectorContent = {
   ],
   ctaText:
     "30 minutes pour identifier ce qui vous prend le plus de temps entre la conformité réglementaire, la synchronisation du stock et le suivi des revendeurs, et voir si une automatisation vaut le coup pour votre marque.",
-  ctaButton: "Réserver mon diagnostic gratuit →",
+  ctaButton: "Réserver mon diagnostic gratuit",
   diagnosticNote: "30 minutes, gratuit, sans engagement.",
-  relatedSectorsTitle: "Autres secteurs accompagnés",
+  relatedSectorsTitle: "Les autres métiers",
   relatedSectors: [
     { label: "Salons de coiffure", href: "/fr/automatisation-salon-de-coiffure" },
     { label: "Officines de pharmacie", href: "/fr/automatisation-pharmacie" },
@@ -112,7 +112,7 @@ const contentFr: SectorContent = {
 };
 
 const contentEn: SectorContent = {
-  eyebrow: "COSMETICS & FRAGRANCE BRANDS",
+  eyebrow: "Cosmetics and fragrance brands",
   h1: "A lagging regulatory file shouldn't mean a launch left waiting",
   intro:
     "Preparing a CPNP file for every new reference, keeping stock in sync between stores and your e-shop, tracking reviews across platforms, managing samples sent to content creators: these are repetitive operational tasks that have nothing to do with creating or steering the brand. We automate them — you stay the brand that decides, validates and files. We detect, prepare, propose — we never file or bill on your behalf.",
@@ -193,9 +193,9 @@ const contentEn: SectorContent = {
   ],
   ctaText:
     "30 minutes to identify what's taking up the most of your time between regulatory compliance, stock sync and reseller tracking, and see whether automation is worth it for your brand.",
-  ctaButton: "Book my free diagnostic →",
+  ctaButton: "Book my free diagnostic",
   diagnosticNote: "30 minutes, free, no commitment.",
-  relatedSectorsTitle: "Other sectors we support",
+  relatedSectorsTitle: "Other trades",
   relatedSectors: [
     { label: "Hair salons", href: "/en/automatisation-salon-de-coiffure" },
     { label: "Pharmacies", href: "/en/automatisation-pharmacie" },

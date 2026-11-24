@@ -1,6 +1,5 @@
 import { useTranslations } from "next-intl";
 import EcranReel from "./EcranReel";
-import Apparition from "./Apparition";
 
 type IdProduit = "devizly" | "vlogyz";
 
@@ -32,7 +31,7 @@ function Ecrans({ id }: { id: IdProduit }) {
           width={830}
           height={787}
           alt={t("devizlyAlt1")}
-          barre="devizly.fr · Nouveau devis"
+          barre={t("devizlyBar1")}
           sizes="640px"
         />
         <EcranReel
@@ -65,20 +64,6 @@ function Ecrans({ id }: { id: IdProduit }) {
   );
 }
 
-function Fleche() {
-  return (
-    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-      <path
-        d="M2 7h10M7 2l5 5-5 5"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
 export default function Portfolio() {
   const t = useTranslations("products");
 
@@ -89,9 +74,6 @@ export default function Portfolio() {
         style={{ maxWidth: 1200, margin: "0 auto" }}
       >
         <div style={{ maxWidth: 760 }}>
-          <div style={{ fontSize: 14, color: "var(--gold-light)", marginBottom: 12 }}>
-            {t("eyebrow")}
-          </div>
           <h2
             style={{
               fontFamily: "var(--font-syne)",
@@ -167,7 +149,6 @@ export default function Portfolio() {
                   className="lien-or inline-flex items-center gap-2 text-[15px] font-medium"
                 >
                   {t(`${p.id}Link`)}
-                  <Fleche />
                 </a>
               </div>
 
@@ -209,9 +190,7 @@ export default function Portfolio() {
             </div>
 
             <figure className="m-0">
-              <Apparition>
-                <Ecrans id={p.id} />
-              </Apparition>
+              <Ecrans id={p.id} />
               <figcaption style={{ marginTop: 16, fontSize: 13, color: "var(--text-muted)" }}>
                 {t(`${p.id}Caption`)}
               </figcaption>

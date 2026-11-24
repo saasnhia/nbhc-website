@@ -12,7 +12,7 @@
   "hero": {
     "titleLine1": "On construit des logiciels métier.",
     "titleLine2": "Le prochain peut être le vôtre.",
-    "subtitle": "Devizly est en production, Vlogyz en liste d’attente. Et un outil sur mesure est en cours pour une agence de voyage.",
+    "subtitle": "Devizly est en production, Vlogyz en liste d’attente. Et un outil sur mesure se prépare pour une agence de voyage.",
     "ctaPrimary": "Parler de votre outil",
     "ctaSecondary": "Voir les produits",
     "ctaNote": "30 minutes, gratuit",
@@ -37,7 +37,6 @@
     }
   },
   "howItWorks": {
-    "eyebrow": "Méthode",
     "title": "Du premier échange à la livraison",
     "subtitle": "Quatre étapes. Vous savez ce qui sera construit et à quel prix avant de signer.",
     "step1Title": "On comprend votre quotidien",
@@ -47,7 +46,7 @@
     "step2Desc": "On regarde vos données et vos logiciels, puis on écrit ce qui sera construit. Vous le validez avant de signer.",
     "step2Badge": "avant de signer",
     "step3Title": "On construit et on teste sur vos vrais cas",
-    "step3Desc": "L’outil est réglé sur votre vocabulaire et vos règles. Pas de maquette : un outil qui tourne.",
+    "step3Desc": "L’outil est réglé sur votre vocabulaire et vos règles, puis essayé sur vos vrais dossiers avant la livraison.",
     "step3Badge": "sur vos vrais cas",
     "step4Title": "On livre, vous décidez de la suite",
     "step4Desc": "L’outil est testé et livré. L’accompagnement ensuite est optionnel, jamais imposé.",
@@ -60,9 +59,8 @@
     "step4Out": "L’outil en service, et tout ce qui a été construit pour vous"
   },
   "products": {
-    "eyebrow": "Nos produits",
     "title": "Devizly est en production. Vlogyz arrive.",
-    "subtitle": "Deux logiciels qu’on conçoit et qu’on développe nous-mêmes. Les images ci-dessous viennent des produits, pas d’une maquette : chaque légende dit ce qu’elle montre.",
+    "subtitle": "Deux logiciels qu’on conçoit et qu’on développe nous-mêmes. Les images viennent des produits ou de leur vidéo de présentation, pas d’une maquette redessinée : chaque légende dit ce qu’elle montre.",
     "devizlyName": "Devizly",
     "devizlyBadge": "En production",
     "devizlyLink": "Ouvrir devizly.fr",
@@ -88,11 +86,11 @@
     "devizlyBar2": "Le devis, côté client",
     "devizlyCaption": "Écrans réels de Devizly, avec un compte et des clients de démonstration.",
     "vlogyzAlt1": "Image d’une vidéo de présentation de Vlogyz : quatre mots-clés détectés dans la voix, et le plan d’illustration choisi pour chacun",
-    "vlogyzBar1": "Vidéo de présentation · b-roll",
-    "vlogyzCaption": "Image extraite d’une vidéo de présentation de Vlogyz. L’application n’est pas encore ouverte au public."
+    "vlogyzBar1": "Vidéo de présentation de Vlogyz",
+    "vlogyzCaption": "Image extraite d’une vidéo de présentation de Vlogyz. L’application n’est pas encore ouverte au public.",
+    "devizlyBar1": "Devizly, nouveau devis"
   },
   "faq": {
-    "eyebrow": "FAQ",
     "title": "Les questions qu’on nous pose",
     "subtitle": "Pour les autres, le premier échange de 30 minutes est fait pour ça.",
     "q1": "NBHC est une agence ou un éditeur de logiciels ?",
@@ -107,13 +105,11 @@
     "a5": "On vous le dit au premier échange. Un tableur bien tenu ou un logiciel du marché suffit parfois, et dans ce cas on ne construit rien."
   },
   "contact": {
-    "eyebrow": "Premier échange",
     "title": "Parlons de",
     "titleGold": "votre outil",
     "description": "30 minutes en visio. Vous montrez ce qui se refait à la main chez vous. On vous dit si un outil peut le prendre en charge, et si ce n’est pas le cas on vous le dit aussi.",
     "calendlyButton": "Réserver un créneau",
     "calendlyAlt": "Préférez écrire ? contact@nbhc.fr",
-    "emailDirect": "Email direct",
     "siren": "SIREN",
     "headquarters": "Siège"
   },
@@ -929,21 +925,11 @@
     "videoAriaStudio": "Vidéo de présentation d'un studio, réalisée à partir de photos"
   },
   "custom": {
-    "eyebrow": "Sur mesure",
     "title": "Une demande arrive. L’outil prépare le devis. Vous validez.",
-    "subtitle": "On construit un logiciel autour de vos règles : vos tarifs, vos cas particuliers, votre façon de chiffrer. Il refait pour vous le calcul que quelqu’un refait à la main à chaque dossier.",
-    "p1Title": "Il part de la demande du client",
-    "p1Text": "Le message arrive comme il a été écrit. L’outil en tire ce qu’il faut pour le devis : qui, quand, combien de temps, dans quelles conditions.",
-    "p2Title": "Chaque ligne cite sa source",
-    "p2Text": "Une valeur s’affiche avec la phrase du client qui la fonde. Sans phrase, pas de valeur : votre conseiller voit ce qui manque et le demande.",
-    "p3Title": "Vos prix restent les vôtres",
-    "p3Text": "L’outil établit qui paie quoi. Les montants viennent de votre grille, et le calcul se lit ligne par ligne.",
-    "p4Title": "Il s’appuie sur ce que vous avez déjà",
-    "p4Text": "La démonstration s’appuie sur les circuits que l’agence publie sur son site. Les conseillers gardent la décision.",
+    "subtitle": "On construit un logiciel autour de vos règles : vos tarifs, vos cas particuliers, votre façon de chiffrer. L’outil fait le calcul que quelqu’un refait aujourd’hui à la main à chaque dossier.",
     "terms": "Premier échange de 30 minutes, gratuit. Le périmètre et le prix sont écrits avant de commencer. Ce qu’on construit pour vous vous appartient.",
     "cta": "Décrire votre cas",
     "demo": {
-      "messageLabel": "Le message du client",
       "m1": "Bonjour, nous partons ",
       "c1": "à deux, Marc et moi, du 4 au 12 mai 2027",
       "m2": " : Hanoï, la baie d’Halong puis Hoi An. Ma sœur Claire ",
@@ -960,42 +946,24 @@
         "nights": "8 nuits",
         "dates": "du 4 au 12 mai",
         "room": "Double, partagée",
-        "source": "« à deux, Marc et moi »"
+        "source": "« à deux, Marc et moi »"
       },
       "r2": {
         "who": "Marc",
         "nights": "8 nuits",
         "dates": "du 4 au 12 mai",
         "room": "Double, partagée",
-        "source": "« à deux, Marc et moi »"
+        "source": "« à deux, Marc et moi »"
       },
       "r3": {
         "who": "Claire",
         "nights": "4 nuits",
         "dates": "du 8 au 12 mai, à Hoi An",
         "room": "Individuelle",
-        "source": "« une chambre seule »"
+        "source": "« une chambre seule »"
       },
-      "amounts": "Les montants viennent de votre grille tarifaire. L’outil n’en invente aucun : il établit la structure, votre conseiller valide.",
-      "caption": "Démonstration construite, sur un exemple fictif de voyage à trois. Le principe est le même pour un chantier, une formation ou un abonnement.",
-      "routeLabel": "Le parcours, étapes et dates tirées de votre catalogue",
-      "e1": {
-        "place": "Hanoï",
-        "dates": "4 au 6 mai · 2 nuits",
-        "present": "Julie, Marc"
-      },
-      "e2": {
-        "place": "Baie d’Halong",
-        "dates": "6 au 8 mai · 2 nuits",
-        "present": "Julie, Marc"
-      },
-      "e3": {
-        "place": "Hoi An",
-        "dates": "8 au 12 mai · 4 nuits",
-        "present": "Julie, Marc, Claire"
-      }
+      "amountsShort": "Les montants viennent de votre grille."
     },
-    "demoTitle": "Le même exemple, en détail",
     "project": {
       "eyebrow": "Projet en cours",
       "title": "Un outil de devis sur mesure, pour une agence de voyage",
@@ -1026,8 +994,6 @@
       "s1Title": "La demande arrive",
       "s1From": "De : Julie",
       "s1When": "Reçu ce matin",
-      "s1Mid": ". Ma sœur ",
-      "s1Text": "Un mail, écrit comme le client parle.",
       "s2Title": "L’outil applique vos règles",
       "rule1If": "Séjour partiel",
       "rule1Then": "seules les nuits passées comptent",
@@ -1035,12 +1001,10 @@
       "rule2Then": "comptée à part des autres",
       "rule3If": "Les prix",
       "rule3Then": "ceux de votre grille, jamais inventés",
-      "s2Text": "Vos règles, écrites une fois dans l’outil.",
       "s3Title": "Le devis est prêt à valider",
-      "s3Text": "Qui paie quoi, ligne par ligne.",
       "validate": "Valider",
       "caption": "Exemple fictif. Le même chemin vaut pour un chantier, une formation ou un abonnement.",
-      "label": "Un exemple : la demande de trois voyageurs"
+      "replay": "Rejouer la démonstration"
     },
     "beforeTitle": "Aujourd’hui, à la main",
     "afterTitle": "Avec l’outil",
@@ -1054,7 +1018,6 @@
     "a4": "La réponse est prête à relire dès que la demande est lue"
   },
   "trust": {
-    "eyebrow": "Pourquoi nous",
     "title": "On démarre, et on vous le dit",
     "subtitle": "NBHC n’a pas encore de client livré en sur-mesure. Plutôt que de l’habiller, voici ce qui existe aujourd’hui, et ce qui vous protège si vous êtes parmi les premiers.",
     "factsTitle": "Ce qui existe aujourd’hui",
@@ -1065,7 +1028,7 @@
     "f2Title": "Un projet sur mesure en cours",
     "f2Text": "Un outil de devis pour une agence de voyage : démonstration présentée, construction prévue à partir de février 2027.",
     "f2Link": "Voir où il en est",
-    "f2Href": "#sur-mesure",
+    "f2Href": "#projet",
     "guaranteesTitle": "Ce qui vous protège",
     "g1Title": "Vous parlez à celui qui construit",
     "g1Text": "Pas d’intermédiaire entre vous et la personne qui écrit le code.",

@@ -3,6 +3,7 @@ import Nav from "@/components/Nav";
 import Hero from "@/components/Hero";
 import Portfolio from "@/components/Portfolio";
 import SurMesure from "@/components/SurMesure";
+import ProjetEnCours from "@/components/ProjetEnCours";
 import Confiance from "@/components/Confiance";
 import Methode from "@/components/Methode";
 import FAQ from "@/components/FAQ";
@@ -57,6 +58,7 @@ export default async function Home({
       <Hero />
       <Portfolio />
       <SurMesure />
+      <ProjetEnCours />
       <Confiance />
       <Methode />
       <FAQ />

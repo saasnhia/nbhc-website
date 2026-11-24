@@ -14,7 +14,7 @@ const FLOW_MSG_KEY: Record<string, string> = {
 };
 
 const contentFr: SectorContent = {
-  eyebrow: "ASSOCIATIONS SPORTIVES · LOI 1901",
+  eyebrow: "Associations sportives loi 1901",
   h1: "Libérez du temps à vos bénévoles, pas votre budget",
   intro:
     "Un club sportif tourne sur des bénévoles qui gèrent l'administratif en plus de leur travail. On automatise les tâches répétitives de rentrée et de suivi — sans jamais remplacer le lien humain qui fait vivre le club.",
@@ -89,9 +89,9 @@ const contentFr: SectorContent = {
   ],
   ctaText:
     "30 minutes pour voir ce qu'on peut automatiser dans la gestion de votre club, et ce qui est réaliste pour votre budget.",
-  ctaButton: "Réserver mon diagnostic gratuit →",
+  ctaButton: "Réserver mon diagnostic gratuit",
   diagnosticNote: "30 minutes, gratuit, sans engagement.",
-  relatedSectorsTitle: "Autres secteurs accompagnés",
+  relatedSectorsTitle: "Les autres métiers",
   relatedSectors: [
     { label: "Salles de sport & instituts bien-être", href: "/fr/automatisation-salle-de-sport" },
     { label: "Garages et carrosseries", href: "/fr/automatisation-garage-automobile" },
@@ -101,7 +101,7 @@ const contentFr: SectorContent = {
 };
 
 const contentEn: SectorContent = {
-  eyebrow: "SPORTS ASSOCIATIONS · NON-PROFIT",
+  eyebrow: "Non-profit sports associations",
   h1: "Free up your volunteers' time, not your budget",
   intro:
     "A sports club runs on volunteers who handle admin work on top of their day job. We automate the repetitive sign-up-season and follow-up tasks — without ever replacing the human connection that keeps the club alive.",
@@ -176,9 +176,9 @@ const contentEn: SectorContent = {
   ],
   ctaText:
     "30 minutes to see what can be automated in your club's management, and what is realistic for your budget.",
-  ctaButton: "Book my free diagnostic →",
+  ctaButton: "Book my free diagnostic",
   diagnosticNote: "30 minutes, free, no commitment.",
-  relatedSectorsTitle: "Other sectors we support",
+  relatedSectorsTitle: "Other trades",
   relatedSectors: [
     { label: "Gyms & wellness centers", href: "/en/automatisation-salle-de-sport" },
     { label: "Garages and auto body shops", href: "/en/automatisation-garage-automobile" },
